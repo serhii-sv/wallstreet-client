@@ -1,0 +1,21 @@
+@extends('layouts.customer')
+@section('title', __('User agreement'))
+@section('content')
+    <main role="main" style="background: white">
+        <div class="page">
+            <svg class="before-svg" viewBox="0 0 1950 65.242325" height="65.242325" width="1950">
+                <path d="M 975,65.242324 H 0 V 35.889669 6.53701 L 21.25,5.88359 42.5,5.23016 88.000004,4.21053 133.5,3.19089 184,2.14419 234.5,1.09749 430.5,0.54874 626.5,0 l 85,1.14503 85,1.14503 46.5,0.96431 46.5,0.96431 41,1.0362 41,1.0362 49.5,1.48571 49.5,1.48571 42,1.50324 42,1.50325 48.5,1.99247 48.5,1.99247 43,2.013562 43,2.013565 38.5,2.004288 38.5,2.004288 43.5,2.486247 43.5,2.486246 47.5,3.01284 47.5,3.01284 36,2.496047 36,2.496046 13,0.97181 13,0.97181 40,3.03931 40,3.039311 48,3.987707 48,3.987708 38.4368,3.482384 38.4368,3.482385 h 1.3132 1.3132 v 1 1 z"></path>
+            </svg>
+            @include('partials.breadcrumbs')
+            <div class="container">
+                <h2 class="page-title page-title--line">User<span>Agreement</span>
+                </h2>
+                <div class="text">
+                    <p><strong>Please read the following terms carefully before registering an account on our website.</strong></p>
+                    <p>You agree to be of legal age in your country to partake in this program, and in all the cases your minimal age must be 18 years. We are not available to the general public and is opened only to the qualified members of Luminex, the use of this site is restricted to our members and to individuals personally invited by them. Every deposit is considered to be a private transaction between the Luminex and its Member. As a private transaction, this program is exempt from the US Securities Act of 1933, the US Securities Exchange Act of 1934 and the US Investment Company Act of 1940 and all other rules, regulations and amendments thereof. We are not FDIC insured. We are not a licensed bank or a security firm. You agree that all information, communications, materials coming from Luminex are unsolicited and must be kept private, confidential and protected from any disclosure. Moreover, the information, communications and materials contained herein are not to be regarded as an offer, nor a solicitation for investments in any jurisdiction which deems non-public offers or solicitations unlawful, nor to any person to whom it will be unlawful to make such offer or solicitation. All the data given by a member to Luminex will be only privately used and not disclosed to any third parties. Luminex is not responsible or liable for any loss of data. You agree to hold all principals and members harmless of any liability. You are investing at your own risk and you agree that a past performance is not an explicit guarantee for the same future performance. You agree that all information, communications and materials you will find on this site are intended to be regarded as an informational and educational matter and not an investment advice. We reserve the right to change the rules, commissions and rates of the program at any time and at our sole discretion without notice, especially in order to respect the integrity and security of the members' interests. You agree that it is your sole responsibility to review the current terms. Luminex is not responsible or liable for any damages, losses and costs resulting from any violation of the conditions and terms and/or use of our website by a member. You guarantee to Luminex that you will not use this site in any illegal way and you agree to respect your local, national and international laws. Abuse of referral program is forbidden. All the involved accounts will be blocked. Don't post any bad votes on any public forums and without contacting Luminex support team first. Maybe there was a technical problem with your transaction, so please always make sure you get a reply from our support team. We will not tolerate SPAM or any type of UCE in this program. SPAM violators will be immediately and permanently removed from the program. Luminex reserves the right to accept or decline any member for membership without explanation. If you do not agree with the above disclaimer, please do not go any further.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+@endsection

@@ -1,0 +1,112 @@
+[2018-10-05 13:03:36] local.ERROR: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Models-decoded/Currency.php): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Models-decoded/Currency.php): failed to open stream: No such file or directory at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Models\\\\Curr...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Providers/AppServiceProvider.php(104): spl_autoload_call('App\\\\Models\\\\Curr...')
+#5 [internal function]: App\\Providers\\AppServiceProvider->boot()
+#6 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#7 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#9 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/Container.php(549): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#10 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(792): Illuminate\\Container\\Container->call(Array)
+#11 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(775): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\AppServiceProvider))
+#12 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\AppServiceProvider), 28)
+#13 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(776): array_walk(Array, Object(Closure))
+#14 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#15 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(213): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#16 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#17 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#18 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#19 /Users/hyipium/WWW/hyipium-engine/public/index.php(59): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#20 /Users/hyipium/.composer/vendor/laravel/valet/server.php(147): require('/Users/hyipium/...')
+#21 {main}
+"} 
+[2018-10-05 13:03:36] local.ERROR: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Jobs\\\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\\\Jobs\\\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(326): App\\Exceptions\\Handler->render(Object(Illuminate\\Http\\Request), Object(ErrorException))
+#6 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(120): Illuminate\\Foundation\\Http\\Kernel->renderException(Object(Illuminate\\Http\\Request), Object(ErrorException))
+#7 /Users/hyipium/WWW/hyipium-engine/public/index.php(59): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 /Users/hyipium/.composer/vendor/laravel/valet/server.php(147): require('/Users/hyipium/...')
+#9 {main}
+"} 
+[2018-10-05 13:03:36] local.ERROR: Uncaught ErrorException: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory in /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444
+Stack trace:
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\Autoload\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Jobs\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\Jobs\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(O {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Uncaught ErrorException: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory in /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444
+Stack trace:
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Jobs\\\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\\\Jobs\\\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\\Exceptions\\Handler->render(O at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 {main}
+"} 
+[2018-10-05 13:06:37] local.ERROR: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Models-decoded/Currency.php): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Models-decoded/Currency.php): failed to open stream: No such file or directory at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Models\\\\Curr...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Providers/AppServiceProvider.php(104): spl_autoload_call('App\\\\Models\\\\Curr...')
+#5 [internal function]: App\\Providers\\AppServiceProvider->boot()
+#6 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#7 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#9 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Container/Container.php(549): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#10 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(792): Illuminate\\Container\\Container->call(Array)
+#11 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(775): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\AppServiceProvider))
+#12 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\AppServiceProvider), 28)
+#13 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(776): array_walk(Array, Object(Closure))
+#14 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#15 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(213): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#16 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#17 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#18 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#19 /Users/hyipium/WWW/hyipium-engine/public/index.php(59): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#20 /Users/hyipium/.composer/vendor/laravel/valet/server.php(147): require('/Users/hyipium/...')
+#21 {main}
+"} 
+[2018-10-05 13:06:37] local.ERROR: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Jobs\\\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\\\Jobs\\\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(326): App\\Exceptions\\Handler->render(Object(Illuminate\\Http\\Request), Object(ErrorException))
+#6 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(120): Illuminate\\Foundation\\Http\\Kernel->renderException(Object(Illuminate\\Http\\Request), Object(ErrorException))
+#7 /Users/hyipium/WWW/hyipium-engine/public/index.php(59): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#8 /Users/hyipium/.composer/vendor/laravel/valet/server.php(147): require('/Users/hyipium/...')
+#9 {main}
+"} 
+[2018-10-05 13:06:37] local.ERROR: Uncaught ErrorException: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory in /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444
+Stack trace:
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\Autoload\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Jobs\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\Jobs\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(O {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Uncaught ErrorException: include(/Users/hyipium/WWW/hyipium-engine/vendor/composer/../../app/Jobs-decoded/SendLogsJob.php): failed to open stream: No such file or directory in /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444
+Stack trace:
+#0 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/hyipium/...', 444, Array)
+#1 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(444): include()
+#2 /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php(322): Composer\\Autoload\\includeFile('/Users/hyipium/...')
+#3 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Jobs\\\\SendLo...')
+#4 /Users/hyipium/WWW/hyipium-engine/app/Exceptions/Handler.php(62): spl_autoload_call('App\\\\Jobs\\\\SendLo...')
+#5 /Users/hyipium/WWW/hyipium-engine/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\\Exceptions\\Handler->render(O at /Users/hyipium/WWW/hyipium-engine/vendor/composer/ClassLoader.php:444)
+[stacktrace]
+#0 {main}
+"} 

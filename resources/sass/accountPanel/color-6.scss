@@ -1,0 +1,140 @@
+/*! -----------------------------------------------------------------------------------
+
+    Template Name: Cuba Admin
+    Template URI: http://admin.pixelstrap.com/cuba/theme
+    Description: This is Admin theme
+    Author: Pixelstrap
+    Author URI: https://themeforest.net/user/pixelstrap
+
+-----------------------------------------------------------------------------------
+
+
+ */
+
+// *** utils ***
+
+
+@import "accountPanel/utils/variables";
+
+:root {
+    --theme-deafult: #7366ff;
+    --theme-secondary: #f73164;
+}
+
+$primary-color: #3949ab;
+$secondary-color : #4fc3f7;
+$gradient-primary: linear-gradient($secondary-color, $primary-color);
+$gradient-primary-direction: linear-gradient(to right, lighten($primary-color, 10%), darken($primary-color, 8%));
+$gradient-secondary-direction: linear-gradient(to right, lighten($secondary-color, 10%), darken($secondary-color, 5%));
+$all-focus-outline-color: $primary-color;
+$code-tag-color: $primary-color;
+$list-group-active-bg-color: $primary-color;
+$list-group-active-border-color: $primary-color;
+$tour-color: $primary-color;
+$main-header-right-toggle-color : $primary-color;
+$main-header-right-nav-icon-color : $primary-color;
+$light-body-bg-color: rgba($primary-color, 0.10);
+$page-body-bg-color: $light-color;
+$pre-tag-bg-color: rgba($primary-color, 0.05);
+// *** base ***
+@import "accountPanel/base/reset";
+@import "accountPanel/base/typography";
+
+
+//  *** components ***
+@import "accountPanel/components/according";
+@import "accountPanel/components/alert";
+@import "accountPanel/components/avatars";
+@import "accountPanel/components/badge";
+@import "accountPanel/components/bookmark";
+@import "accountPanel/components/breadcrumb";
+@import "accountPanel/components/builders";
+
+@import "accountPanel/components/buttons";
+
+@import "accountPanel/components/card";
+@import "accountPanel/components/color";
+@import "accountPanel/components/datatable";
+@import "accountPanel/components/datepicker";
+@import "accountPanel/components/dropdown";
+@import "accountPanel/components/form-builder";
+@import "accountPanel/components/form-input";
+@import "accountPanel/components/form-wizard";
+@import "accountPanel/components/forms";
+@import "accountPanel/components/form_builder-2";
+@import "accountPanel/components/icons";
+@import "accountPanel/components/list";
+@import "accountPanel/components/loader";
+@import "accountPanel/components/popover";
+@import "accountPanel/components/print";
+@import "accountPanel/components/radio";
+@import "accountPanel/components/ribbon";
+@import "accountPanel/components/switch";
+@import "accountPanel/components/tab";
+@import "accountPanel/components/table";
+@import "accountPanel/components/touchspin";
+@import "accountPanel/components/tour";
+@import "accountPanel/components/tree";
+@import "accountPanel/components/typeahead-search";
+
+
+
+//	*** pages ***
+
+@import "accountPanel/pages/blog";
+@import "accountPanel/pages/bookmark-app";
+@import "accountPanel/pages/cart";
+@import "accountPanel/pages/chart";
+@import "accountPanel/pages/chat";
+@import "accountPanel/pages/checkout";
+@import "accountPanel/pages/comingsoon";
+@import "accountPanel/pages/contacts";
+@import "accountPanel/pages/dashboard_2";
+@import "accountPanel/pages/dashboard_default";
+@import "accountPanel/pages/ecommerce";
+@import "accountPanel/pages/email-application";
+@import "accountPanel/pages/errorpage";
+@import "accountPanel/pages/faq";
+@import "accountPanel/pages/file";
+@import "accountPanel/pages/gallery";
+@import "accountPanel/pages/internationalization";
+@import "accountPanel/pages/job-search";
+@import "accountPanel/pages/jsgrid";
+@import "accountPanel/pages/kanban";
+@import "accountPanel/pages/knowledgebase";
+@import "accountPanel/pages/landing";
+@import "accountPanel/pages/language";
+@import "accountPanel/pages/learning";
+@import "accountPanel/pages/login";
+@import "accountPanel/pages/megaoption";
+@import "accountPanel/pages/order-history";
+@import "accountPanel/pages/page";
+@import "accountPanel/pages/pricing";
+@import "accountPanel/pages/progress";
+@import "accountPanel/pages/projectlist";
+@import "accountPanel/pages/social-app";
+@import "accountPanel/pages/task";
+@import "accountPanel/pages/timeline-v";
+@import "accountPanel/pages/timeliny";
+@import "accountPanel/pages/user-profile";
+@import "accountPanel/pages/wishlist";
+
+
+/* ---------------------
+	*** themes ***
+-----------------------*/
+@import "accountPanel/themes/dark";
+@import "accountPanel/themes/dark-sidebar";
+@import "accountPanel/themes/theme-customizer";
+
+// *** layout ***
+
+@import "accountPanel/layout/footer";
+@import "accountPanel/layout/grid";
+@import "accountPanel/layout/header";
+@import "accountPanel/layout/navs";
+@import "accountPanel/layout/search";
+@import "accountPanel/layout/select2";
+@import "accountPanel/layout/sidebar";
+@import "accountPanel/layout/rtl";
+@import "accountPanel/layout/box-layout";
