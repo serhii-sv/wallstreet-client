@@ -7,3 +7,10 @@ function canEditLang()
     }
     return false;
 }
+
+function checkRequestOnEdit() : bool {
+    if (request()->get('edit') && request()->get('edit') == 'true'){
+        return true;
+    }
+    return false;
+}

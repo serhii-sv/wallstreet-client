@@ -84,7 +84,6 @@ class AppServiceProvider extends ServiceProvider
         Transaction::observe(TransactionObserver::class);
         TransactionType::observe(TransactionTypeObserver::class);
         User::observe(UserObserver::class);
-        \App\User::observe(UserObserver::class);
         Wallet::observe(WalletObserver::class);
     }
 
