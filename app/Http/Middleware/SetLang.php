@@ -41,7 +41,7 @@ class SetLang
             setcookie('lang', $locale, Carbon::now()->addDays(365)->timestamp, '/');
         }
 
-        App::setLocale($locale);
+        app()->setLocale($locale);
         Carbon::setLocale($locale);
 
         return $next($request);

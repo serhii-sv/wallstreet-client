@@ -63,6 +63,10 @@ return [
             'folder' => env('DO_SPACES_FOLDER'),
         ],
 
+        'lang' => [
+            'driver' => 'local',
+            'root' => app('path.resources'). '/lang'
+        ]
     ],
 
     /*

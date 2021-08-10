@@ -14,6 +14,7 @@ class CustomerPagesController extends Controller
 {
     public function aboutUs()
     {
+        //$texts = Storage::disk('lang')->exists($lang . '.json') ? json_decode(Storage::disk('lang')->get($lang . '.json'), true) : [];
         return view('customer.aboutus');
     }
 

@@ -33,7 +33,8 @@ class User extends Authenticatable
     // Append additional fields to the model
     protected $appends = [
         'short_name',
-        'last_activity'
+        'last_activity',
+        'my_id'
     ];
 
     /**

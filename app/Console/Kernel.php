@@ -25,14 +25,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        GenerateDemoDataCommand::class,
-        CreateRootCommand::class,
-        CreateAdminCommand::class,
-        InstallScriptCommand::class,
-        RegisterCurrenciesCommand::class,
-        RegisterPaymentSystemsCommand::class,
-        CheckPaymentSystemsConnectionsCommand::class,
-        DepositQueueCommand::class,
+
     ];
 
     /**
