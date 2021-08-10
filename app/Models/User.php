@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasReferral;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,7 @@ class User extends Authenticatable
     use HasPermissions;
     use Uuids;
     use Impersonate;
+    use HasReferral;
 
     public $keyType = 'string';
     /** @var bool $incrementing */
