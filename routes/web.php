@@ -38,6 +38,8 @@ Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::group(['middleware' => ['auth', '2fa']], function () {
+    Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('accountPanel.dashboard');
 
     Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('accountPanel.settings.security');
