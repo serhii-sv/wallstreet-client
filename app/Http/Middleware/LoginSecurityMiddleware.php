@@ -20,10 +20,6 @@ class LoginSecurityMiddleware
     {
         $authenticator = app(Google2FAAuthenticator::class)->boot($request);
 
-        if(!auth()->user()->loginSecurity()->first()){
-            return redirect('/2fa');
-        }
-
         if ($authenticator->isAuthenticated()) {
             return $next($request);
         }

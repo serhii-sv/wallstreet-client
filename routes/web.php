@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth', '2fa']], function () {
 
 
 Route::group(['prefix'=>'2fa'], function(){
-    Route::get('/', [\App\Http\Controllers\LoginSecurityController::class, 'show2faForm']);
+    Route::get('/', [\App\Http\Controllers\LoginSecurityController::class, 'show2faForm'])->name('2fa');
     Route::post('/generateSecret', [\App\Http\Controllers\LoginSecurityController::class, 'generate2faSecret'])->name('generate2faSecret');
     Route::post('/enable2fa', [\App\Http\Controllers\LoginSecurityController::class, 'enable2fa'])->name('enable2fa');
     Route::post('/disable2fa', [\App\Http\Controllers\LoginSecurityController::class, 'disable2fa'])->name('disable2fa');
