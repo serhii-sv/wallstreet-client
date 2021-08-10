@@ -71,7 +71,6 @@ class AppServiceProvider extends ServiceProvider
          * Base observers
          */
         Currency::observe(CurrencyObserver::class);
-        CloudFile::observe(CloudFileObserver::class);
         Deposit::observe(DepositObserver::class);
         Faq::observe(FaqObserver::class);
         Language::observe(LanguageObserver::class);

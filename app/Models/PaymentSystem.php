@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use App\Models\UserTasks\Tasks;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -67,11 +66,11 @@ class PaymentSystem extends Model
     {
         return $this->hasMany(Transaction::class, 'payment_system_id');
     }
-    
+
     public function transactions_enter() {
         return $this->hasMany(Transaction::class, 'payment_system_id')->whereIn('type_id', [TransactionType::where('name', 'enter')->select('id')->get()->toArray()]);
     }
-    
+
     public function transactions_withdraw() {
         return $this->hasMany(Transaction::class, 'payment_system_id')->whereIn('type_id', [TransactionType::where('name', 'withdraw')->select('id')->get()->toArray()]);
     }

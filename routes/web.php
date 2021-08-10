@@ -14,19 +14,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
 
-Route::get('/', [\App\Http\Controllers\Customer\MainController::class, 'index'])->name('customer.main');
-Route::get('/aboutus', [\App\Http\Controllers\Customer\AboutUsController::class, 'index'])->name('customer.aboutus');
-Route::get('/documents', [\App\Http\Controllers\Customer\DocumentsController::class, 'index'])->name('customer.documents');
-Route::get('/investors', [\App\Http\Controllers\Customer\InvestorsController::class, 'index'])->name('customer.investors');
-Route::get('/partners', [\App\Http\Controllers\Customer\PartnersController::class, 'index'])->name('customer.partners');
-Route::get('/contact', [\App\Http\Controllers\Customer\ContactController::class, 'index'])->name('customer.contact');
+Route::get('/', [\App\Http\Controllers\CustomerPagesController::class, 'homepage'])->name('customer.main');
+Route::get('/aboutus', [\App\Http\Controllers\CustomerPagesController::class, 'aboutUs'])->name('customer.aboutus');
+Route::get('/documents', [\App\Http\Controllers\CustomerPagesController::class, 'documents'])->name('customer.documents');
+Route::get('/investors', [\App\Http\Controllers\CustomerPagesController::class, 'investors'])->name('customer.investors');
+Route::get('/partners', [\App\Http\Controllers\CustomerPagesController::class, 'partners'])->name('customer.partners');
+Route::get('/contact', [\App\Http\Controllers\CustomerPagesController::class, 'contacts'])->name('customer.contact');
+Route::get('/faq', [\App\Http\Controllers\CustomerPagesController::class, 'faq'])->name('customer.faq');
+Route::get('/agreement', [\App\Http\Controllers\CustomerPagesController::class, 'agreement'])->name('customer.agreement');
+
 /*Route::get('/payout', [\App\Http\Controllers\Customer\PayoutController::class, 'index'])->name('customer.payout');
 
 Route::get('/support', [\App\Http\Controllers\Customer\SupportController::class, 'index'])->name('customer.support');
 Route::post('/support', [\App\Http\Controllers\Customer\SupportController::class, 'send'])->name('customer.support');*/
 
-Route::get('/faq', [\App\Http\Controllers\Customer\FaqController::class, 'index'])->name('customer.faq');
-Route::get('/agreement', [\App\Http\Controllers\Customer\AgreementController::class, 'index'])->name('customer.agreement');
+
 
 // Technical
 Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
