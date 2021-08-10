@@ -18,6 +18,12 @@
                     <h4 class="title mb-20">Welcome To Hyipland</h4>
                     <form method="POST" action="{{ route('login') }}" class="account-form">
                         @csrf
+                        @error('g-recaptcha-response')
+                        <small class="red-text ml-7" >
+                            {{ $message }}
+                        </small>
+                        @enderror
+                        <input type="hidden" name="g-recaptcha-response" id="recaptcha">
                         <div class="form-group">
                             <label for="sign-up">Your Email </label>
                             <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -60,8 +66,16 @@
     </div>
 @endsection
 
-
-
-
-
+@push('js')
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptchav3.sitekey') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('recaptchav3.sitekey') }}', {action: 'login'}).then(function(token) {
+                if (token) {
+                    document.getElementById('recaptcha').value = token;
+                }
+            });
+        });
+    </script>
+@endpush
 

@@ -65,6 +65,18 @@ class LoginController extends Controller
         $user_log->save();
     }
 
+    protected function validateLogin(\Illuminate\Http\Request $request) {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'g-recaptcha-response' => config('app.env') == 'production'
+                ? 'required|recaptchav3:login,0.5'
+                : '',
+        ], [
+            'recaptchav3' => 'Captcha error! Try again',
+        ]);
+    }
+
     public function username(){
         $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'login';
         request()->merge([$field => request()->email]);
