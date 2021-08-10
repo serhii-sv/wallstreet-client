@@ -27,10 +27,6 @@
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.dashboard') }}">
                             <i data-feather="home"></i><span class="lan-3">Dashboard</span>
                         </a>
-                        {{--<ul class="sidebar-submenu">
-                            <li><a class="lan-4" href="index.html">Default</a></li>
-                            <li><a class="lan-5" href="dashboard-02.html">Ecommerce</a></li>
-                        </ul>--}}
                     </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="#"><i data-feather="settings"></i><span class="lan-6">Настройки</span></a>
@@ -38,6 +34,12 @@
                             <li><a href="{{ route('accountPanel.settings.security') }}">Безопасность</a></li>
                             <li><a href="chart-widget.html">Другое</a></li>
                         </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="{{ route('logout') }}">
+                            <i data-feather="log-out"></i><span>Logout</span>
+                        </a>
                     </li>
 
                 </ul>
