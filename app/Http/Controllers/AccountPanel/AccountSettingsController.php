@@ -28,7 +28,7 @@ class AccountSettingsController extends Controller
     public function securitySettings()
     {
         return view('accountPanel.settings-security')
-            ->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable);
+            ->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
     }
 
     public function setNewPassword(Request $request){
@@ -46,13 +46,25 @@ class AccountSettingsController extends Controller
 
         $google2FASetting = $user->loginSecurity()->first();
 
-        //$google2FASetting->{Config::get('otp_secret_column')} = $request->ffa_field;
+        if($request->ffa_field === "true" && !$user->loginSecurity()->first()){
+            return response()
+                ->json([
+                    'result' => 'redirect',
+                    'to' => route('2fa')
+                ], 200);
+        }
+
+        if($request->ffa_field === "false" && !$user->loginSecurity()->first()) {
+            return true;
+        }
 
         $google2FASetting->google2fa_enable = $request->ffa_field;
 
         $google2FASetting->save();
 
         return true;
+
+        //$google2FASetting->{Config::get('otp_secret_column')} = $request->ffa_field;
     }
 
     public function setNewSettings(Request $request)

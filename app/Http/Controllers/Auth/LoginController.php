@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\LoginSecurity;
+use App\Models\UserAuthLog;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -41,10 +41,45 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    {
+        //
+        $this->createUserAuthLog($request, $user);
+    }
+
     public function logout(Request $request) {
         session()->forget('google2fa');
 
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function createUserAuthLog($request, $user) {
+        $user_log = new UserAuthLog();
+        $user_log->user_id = $user->id;
+        $user_log->ip = $request->ip();
+        $user->hasAnyRole([
+            'admin',
+            'root',
+        ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
+        $user_log->save();
+    }
+
+    protected function validateLogin(\Illuminate\Http\Request $request) {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'g-recaptcha-response' => config('app.env') == 'production'
+                ? 'required|recaptchav3:login,0.5'
+                : '',
+        ], [
+            'recaptchav3' => 'Captcha error! Try again',
+        ]);
+    }
+
+    public function username(){
+        $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'login';
+        request()->merge([$field => request()->email]);
+        return $field;
     }
 }

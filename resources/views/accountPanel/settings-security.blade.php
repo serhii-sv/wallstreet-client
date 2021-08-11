@@ -107,6 +107,11 @@
                     type: 'post',
                     data: 'ffa_field=' + $('#ffa_field').is(':checked'),
                     success: (response) => {
+                        console.log(response);
+
+                        if(response.result === 'redirect')
+                            window.location.replace(response.to);
+
                         $.notify('<i class="fa fa-bell-o"></i><strong>Данные обновлены</strong> 2FA был изменен', {
                             type: 'theme',
                             allow_dismiss: true,

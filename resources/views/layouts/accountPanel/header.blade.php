@@ -295,7 +295,7 @@
                 <li class="profile-nav onhover-dropdown p-0 me-0">
                     <div class="media profile-media"><img class="b-r-10" src="{{ asset('accountPanel/images/dashboard/profile.jpg') }}" alt="">
                         <div class="media-body"><span>{{$user->name}}</span>
-                            <p class="mb-0 font-roboto">{{$user->roles()->first() ?? "Customer"}} <i class="middle fa fa-angle-down"></i></p>
+                            <p class="mb-0 font-roboto">{{$user->roles()->first()->name ?? "Customer"}} <i class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">

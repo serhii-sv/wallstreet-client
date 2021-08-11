@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -65,11 +66,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (isset($_COOKIE['partner_id'])) {
+            $partner_id = $_COOKIE['partner_id'];
+        } elseif (isset($data['partner_id'])) {
+            $partner_id = $data['partner_id'];
+        } else {
+            $partner_id = null;
+        }
+
+        /** @var User|null $partner */
+        $partner = null !== $partner_id
+            ? User::where('my_id', $partner_id)->first()
+            : null;
+
+        if (empty($data['login'])) {
+            $data['login'] = $data['email'];
+        }
+
+        $myId = Helper::generateMyId();
+
+        /** @var User $user */
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'login' => $data['login'],
-            'password' => Hash::make($data['password']),
+            'name'       => $data['name'] ?? '',
+            'email'      => $data['email'],
+            'login'      => $data['login'],
+            'password'   => Hash::make($data['password']),
+            'partner_id' => null !== $partner ? $partner->my_id : null,
+            'my_id'      => $myId,
         ]);
     }
 }
