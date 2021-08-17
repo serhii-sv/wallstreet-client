@@ -28,12 +28,19 @@
                             <i data-feather="home"></i><span class="lan-3">Dashboard</span>
                         </a>
                     </li>
+                  <li class="sidebar-list">
+                    {{--<label class="badge badge-success">2</label>--}}
+                    <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.transactions') }}">
+                      <i data-feather="home"></i><span>Все операции</span>
+                    </a>
+                  </li>
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
                             <i data-feather="home"></i><span>Вывод</span>
                         </a>
                     </li>
+                  
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="#"><i data-feather="settings"></i><span class="lan-6">Настройки</span></a>
                         <ul class="sidebar-submenu">
