@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/chartist.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/date-picker.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/select2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/sweetalert2.css') }}">
     <style>
         .pagination {
             /* Pagination button styling */

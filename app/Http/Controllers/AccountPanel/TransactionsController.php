@@ -24,6 +24,7 @@ class TransactionsController extends Controller
         $user = Auth::user();
         return view('accountPanel.transactions.index',[
             'transactions' => Transaction::where('user_id', $user->id)->paginate(10),
+            'transactions_count' => Transaction::where('user_id', $user->id)->count(),
         ]);
     }
 

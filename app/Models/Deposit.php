@@ -130,47 +130,40 @@ class Deposit extends Model
     {
         return $value;
     }
-
-    /**
-     * @param $field
-     * @return Deposit|null
-     * @throws \Exception
-     */
-    public static function addDeposit($field, bool $force=false)
+    
+    public static function addDeposit($field,Currency $currency, bool $force=false)
     {
         /** @var User $user */
         $user     = isset($field['user']) ? $field['user'] : Auth::user();
-
+        
         /** @var Rate $rate */
         $rate     = Rate::findOrFail($field['rate_id']);
-
+        
         /** @var Wallet $wallet */
-        $wallet   = Wallet::where('user_id', $user->id)->where('currency_id', $rate->currency_id)->firstOrFail();
+        $wallet   = Wallet::where('user_id', $user->id)->where('currency_id', $currency->id)->firstOrFail();
         $amount   = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
-
-        if ($rate->currency_id != $wallet->currency_id) {
+        
+        if ($currency->id != $wallet->currency_id) {
             throw new \Exception('Wrong currency ID');
         }
-
+        
         if (false === $force) {
             if ($amount < $rate->min || $amount > $rate->max) {
                 throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
             }
-
+            
             if (abs($amount) > abs($wallet->balance)) {
                 throw new \Exception('Not enough money at your balance.');
             }
         }
-
-        /** @var Currency $currency */
-        $currency = $rate->currency()->first();
-
+        
+        
         /**
          * LUMINEX SPECIAL
          */
         $highPercent = 1.28;
-
+        
         if ($amount >= 1000 && $currency->code == 'USD') {
             $rate->daily = $highPercent;
         } elseif ($amount >= 0.02989986 && $currency->code == 'BTC') {
@@ -195,10 +188,10 @@ class Deposit extends Model
             $rate->daily = $highPercent;
         }
         // -------------------------------------------
-
+        
         $deposit                    = new Deposit;
         $deposit->rate_id           = $rate->id;
-        $deposit->currency_id       = $rate->currency_id;
+        $deposit->currency_id       = $currency->id;
         $deposit->wallet_id         = $wallet->id;
         $deposit->user_id           = $user->id;
         $deposit->invested          = $amount;
@@ -212,22 +205,22 @@ class Deposit extends Model
         $deposit->condition         = 'create';
         $deposit->datetime_closing  = now()->addDays($rate->duration);
         $deposit->created_at        = isset($field['created_at']) ? $field['created_at'] : now();
-
+        
         $transaction = $deposit->save()
             ? Transaction::createDeposit($deposit)
             : null;
-
+        
         if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
             $wallet->accrueToPartner($amount, 'refill');
-
+            
             $transaction->update(['approved' => true]);
             $deposit->update(['active' => true]);
-
+            
             // send notification to user
             $data = [
                 'deposit' => $deposit
             ];
-//            $deposit->user->sendNotification('deposit_opened', $data);
+            //            $deposit->user->sendNotification('deposit_opened', $data);
             return ($deposit->createSequence())
                 ? $deposit
                 : null;

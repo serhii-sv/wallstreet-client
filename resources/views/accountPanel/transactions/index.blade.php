@@ -6,7 +6,7 @@
     <div class="row second-chart-list third-news-update">
       <div class="card">
         <div class="card-header">
-          <h5>Все операции</h5>
+          <h5>Всего операций: {{ $transactions_count ?? 0 }}</h5>
         </div>
         <div class="card-block row">
           <div class="col-sm-12 col-lg-12 col-xl-12">

@@ -11,6 +11,7 @@ use App\Http\Controllers\AccountPanel\DashboardController;
 use App\Http\Controllers\AccountPanel\ProfileCOntroller;
 use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
+use App\Http\Controllers\DepositsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
     
         Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions');
+        Route::resource('/deposits', DepositsController::class);
     
         Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
         Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
