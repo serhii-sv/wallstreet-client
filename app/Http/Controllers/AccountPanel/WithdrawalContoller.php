@@ -22,7 +22,6 @@ class WithdrawalContoller extends Controller
     
     public function addWithdrawal(Request $request) {
         $request->validate([
-           'payment_system' => 'required|uuid',
            'amount' => 'required',
            'wallet_id' => 'required|uuid',
         ]);
@@ -31,9 +30,7 @@ class WithdrawalContoller extends Controller
         if (empty($wallet)){
             return back()->with('error', 'Кошелька не существует!');
         }
-//        if ($wallet->payment_system_id != $request->get('payment_system')){
-//            return back()->with('error', 'Платёжная система не доступна для этой операции!');
-//        }
+
         if ($wallet->balance >= $amount)
         {
             $transaction = Transaction::withdraw($wallet, $amount);

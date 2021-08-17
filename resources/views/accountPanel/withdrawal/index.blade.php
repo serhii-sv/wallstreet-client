@@ -25,13 +25,15 @@
                         <div class="card-body">
                           <h3>{{ $item->currency->name }}</h3>
                           <h1>{{ $item->balance ?? 0 }}{{ $item->currency->symbol }}</h1>
-                          <h6 class="mb-2">Выберите платёжную систему</h6>
-                          <select class="js-example-basic-single col-sm-12" name="payment_system">
-                            @forelse($payment_systems as $payment_system)
-                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>
-                            @empty
-                            @endforelse
-                          </select>
+                          <h6 class="mb-2">Платёжная система</h6>
+                          <p>{{ $item->paymentSystem->name }}</p>
+{{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}
+{{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}
+{{--                            @forelse($payment_systems as $payment_system)--}}
+{{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}
+{{--                            @empty--}}
+{{--                            @endforelse--}}
+{{--                          </select>--}}
                           <h6 class="mb-2 mt-2">Введите сумму</h6>
                           <div class="input-group">
                             <span class="input-group-text">{{ $item->currency->symbol }}</span>

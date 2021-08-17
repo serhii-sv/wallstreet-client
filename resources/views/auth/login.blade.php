@@ -16,6 +16,7 @@
             <div class="account-wrapper">
                 <div class="account-body">
                     <h4 class="title mb-20">Welcome To Hyipland</h4>
+                    @include('partials.inform')
                     <form method="POST" action="{{ route('login') }}" class="account-form">
                         @csrf
                         @error('g-recaptcha-response')
