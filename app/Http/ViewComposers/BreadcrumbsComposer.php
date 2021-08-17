@@ -34,11 +34,20 @@ class BreadcrumbsComposer
      * @return void
      */
     public function compose(View $view) {
+        $route_data = [
+            'default' => '',
+            'accountPanel.settings.security' => 'Настройки безопасности',
+            'accountPanel.dashboard' => 'Главная',
+            'accountPanel.profile' => 'Редактирование профиля',
+        ];
+        if (array_key_exists(Route::getCurrentRoute()->getName(), $route_data))
+        {
+            $key = Route::getCurrentRoute()->getName();
+        }else{
+            $key = 'default';
+        }
         $view
-            ->with('breadcrumbs', [
-                'accountPanel.settings.security' => 'Настройки безопасности',
-                'accountPanel.dashboard' => 'Главная'
-            ][Route::getCurrentRoute()->getName()]);
+            ->with('breadcrumbs', $route_data[$key]);
 
     }
 }

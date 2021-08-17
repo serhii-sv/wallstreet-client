@@ -8,7 +8,9 @@
 
 use App\Http\Controllers\AccountPanel\AccountSettingsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
+use App\Http\Controllers\AccountPanel\ProfileCOntroller;
 use App\Http\Controllers\AccountPanel\TransactionsController;
+use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,19 +39,29 @@ Auth::routes();
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
-Route::group(['middleware' => ['auth', '2fa']], function () {
-    Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('accountPanel.dashboard');
 
-    Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('accountPanel.settings.security');
-
-    Route::get('/transactions', [TransactionsController::class, 'index'])->name('accountPanel.transactions');
-
-    Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('accountPanel.settings.setPassword');
-    Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('accountPanel.settings.set2FA');
-
+Route::group(['middleware' => ['auth']], function () {
     Route::post('/ajax/set-user-location', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserLocationInfo'])->name('ajax.set.user.location');
+    Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
+   
+    Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/Withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
+        Route::post('/Withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
+        
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+        Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
+        Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
+    
+        Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions');
+    
+        Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
+        Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
+        
+    });
 });
 
 

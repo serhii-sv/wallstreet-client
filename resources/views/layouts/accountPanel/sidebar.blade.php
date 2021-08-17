@@ -29,6 +29,12 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
+                            <i data-feather="home"></i><span>Вывод</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="#"><i data-feather="settings"></i><span class="lan-6">Настройки</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('accountPanel.settings.security') }}">Безопасность</a></li>

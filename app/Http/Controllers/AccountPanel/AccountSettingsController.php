@@ -7,6 +7,7 @@ use App\Services\SettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 
 class AccountSettingsController extends Controller
 {
@@ -15,60 +16,75 @@ class AccountSettingsController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
-
+    
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function securitySettings()
-    {
-        return view('accountPanel.settings-security')
-            ->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
+    public function securitySettings() {
+        return view('accountPanel.settings-security')->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
     }
-
-    public function setNewPassword(Request $request){
+    
+    public function setNewPassword(Request $request) {
         $user = Auth::user();
-        $user->password = $request->password;
-        $user->unhashed_password = $request->password;
-
-        $user->save();
-
-        return true;
+        if ($request->password_old) {
+            if ($request->password) {
+                if (Hash::check($request->password_old, $user->password)) {
+                    $user->password = $request->password;
+                    $user->unhashed_password = $request->password;
+                    if ($user->save()) {
+                        return json_encode([
+                            'status' => 'good',
+                            'msg' => 'Пароль успешно изменён!',
+                        ]);
+                    }
+                }
+                return json_encode([
+                    'status' => 'bad',
+                    'msg' => 'Старый пароль введён неверно!',
+                ]);
+            }
+            return json_encode([
+                'status' => 'bad',
+                'msg' => 'Вы не ввели новый пароль!',
+            ]);
+        }
+        return json_encode([
+            'status' => 'bad',
+            'msg' => 'Вы не ввели старый пароль!',
+        ]);
     }
-
-    public function setNewFFASetting(Request $request){
+    
+    public function setNewFFASetting(Request $request) {
         $user = Auth::user();
-
+        
         $google2FASetting = $user->loginSecurity()->first();
-
-        if($request->ffa_field === "true" && !$user->loginSecurity()->first()){
-            return response()
-                ->json([
+        
+        if ($request->ffa_field === "true" && !$user->loginSecurity()->first()) {
+            return response()->json([
                     'result' => 'redirect',
-                    'to' => route('2fa')
+                    'to' => route('2fa'),
                 ], 200);
         }
-
-        if($request->ffa_field === "false" && !$user->loginSecurity()->first()) {
+        
+        if ($request->ffa_field === "false" && !$user->loginSecurity()->first()) {
             return true;
         }
-
+        
         $google2FASetting->google2fa_enable = $request->ffa_field;
-
+        
         $google2FASetting->save();
-
+        
         return true;
-
+        
         //$google2FASetting->{Config::get('otp_secret_column')} = $request->ffa_field;
     }
-
-    public function setNewSettings(Request $request)
-    {
+    
+    public function setNewSettings(Request $request) {
         /*$settingsService = SettingsService::init();
 
         $settingsService->registerSettings();*/

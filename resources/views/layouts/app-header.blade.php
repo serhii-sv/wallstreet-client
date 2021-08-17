@@ -150,47 +150,47 @@
                 </ul>
               </div>
             </li>
-              @guest
-                <li>
-                  <a href="{{ route('login') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                      @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='Sign In' contenteditable="true">{{ __('Sign In') }}</editor_block>
-                      @else
-                          {{ __('Sign In') }}
-                      @endif
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('register') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                      @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='Sign Up' contenteditable="true">{{ __('Sign Up') }}</editor_block>
-                      @else
-                          {{ __('Sign Up') }}
-                      @endif
-                  </a>
-                </li>
-              @endguest
-
-              @auth
-                  <li>
-                      <a href="{{ route('accountPanel.dashboard') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                          @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Go to panel' contenteditable="true">{{ __('Go to panel') }}</editor_block>
-                          @else
-                              {{ __('Go to panel') }}
-                          @endif
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('logout') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                          @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Sign out' contenteditable="true">{{ __('Sign out') }}</editor_block>
-                          @else
-                              {{ __('Sign out') }}
-                          @endif
-                      </a>
-                  </li>
-              @endauth
+            @guest
+              <li>
+                <a href="{{ route('login') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Sign In' contenteditable="true">{{ __('Sign In') }}</editor_block>
+                  @else
+                    {{ __('Sign In') }}
+                  @endif
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('register') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Sign Up' contenteditable="true">{{ __('Sign Up') }}</editor_block>
+                  @else
+                    {{ __('Sign Up') }}
+                  @endif
+                </a>
+              </li>
+            @endguest
+            
+            @auth
+              <li>
+                <a href="{{ route('accountPanel.dashboard') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Go to panel' contenteditable="true">{{ __('Go to panel') }}</editor_block>
+                  @else
+                    {{ __('Go to panel') }}
+                  @endif
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('logout') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Sign out' contenteditable="true">{{ __('Sign out') }}</editor_block>
+                  @else
+                    {{ __('Sign out') }}
+                  @endif
+                </a>
+              </li>
+            @endauth
           </ul>
         </div>
       </div>
@@ -218,39 +218,39 @@
                 <editor_block data-name='About' contenteditable="true">{{ __('About') }}</editor_block>
               @else
                 {{ __('About') }}
-                @endif</a>
+              @endif</a>
           </li>
           <li>
             <a href="{{ route('customer.partners') }}">@if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='Affiliate' contenteditable="true">{{ __('Affiliate') }}</editor_block>
               @else
                 {{ __('Affiliate') }}
-                @endif</a>
+              @endif</a>
           </li>
           <li>
             <a href="{{ route('customer.faq') }}">@if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='Faqs' contenteditable="true">{{ __('Faqs') }}</editor_block>
               @else
                 {{ __('Faqs') }}
-                @endif</a>
+              @endif</a>
           </li>
           <li>
             <a href="{{ route('customer.contact') }}">@if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='Contact' contenteditable="true">{{ __('Contact') }}</editor_block>
               @else
                 {{ __('Contact') }}
-                @endif</a>
+              @endif</a>
           </li>
-        @guest
-          <li class="pr-0">
-            <a href="#" class="custom-button"
-                @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='Join Us' contenteditable="true">{{ __('Join Us') }}</editor_block>
-              @else
-                {{ __('Join Us') }}
+          @guest
+            <li class="pr-0">
+              <a href="{{ route('login') }}" class="custom-button"
+                  @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Join Us' contenteditable="true">{{ __('Join Us') }}</editor_block>
+                @else
+                  {{ __('Join Us') }}
                 @endif</a>
-          </li>
-        @endguest
+            </li>
+          @endguest
         </ul>
         <div class="header-bar d-lg-none">
           <span></span>

@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -191,4 +193,5 @@ class User extends Authenticatable
     public function setPasswordAttribute($password){
         $this->attributes['password'] = Hash::make($password);
     }
+    
 }

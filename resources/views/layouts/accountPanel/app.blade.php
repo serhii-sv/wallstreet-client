@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/chartist.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/date-picker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/select2.css') }}">
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/bootstrap.css') }}">
@@ -111,6 +112,8 @@
 <script src="{{ asset('accountPanel/js/typeahead/typeahead.custom.js') }}"></script>
 <script src="{{ asset('accountPanel/js/typeahead-search/handlebars.js') }}"></script>
 <script src="{{ asset('accountPanel/js/typeahead-search/typeahead-custom.js') }}"></script>
+  <script src="{{ asset('accountPanel/js/select2/select2.full.min.js') }}"></script>
+  <script src="{{ asset('accountPanel/js/select2/select2-custom.js') }}"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{ asset('accountPanel/js/script.js') }}"></script>
