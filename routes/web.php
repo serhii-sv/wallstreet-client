@@ -48,6 +48,8 @@ Route::group(['middleware' => ['auth']], function () {
    
     Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
+        
         Route::get('/Withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
         Route::post('/Withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
         

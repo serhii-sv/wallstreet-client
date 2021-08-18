@@ -28,6 +28,12 @@
                             <i data-feather="home"></i><span class="lan-3">Dashboard</span>
                         </a>
                     </li>
+                    <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.profile') }}">
+                            <i data-feather="home"></i><span>Профиль</span>
+                        </a>
+                    </li>
                   <li class="sidebar-list">
                     {{--<label class="badge badge-success">2</label>--}}
                     <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.index') }}">

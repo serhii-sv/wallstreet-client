@@ -27,35 +27,41 @@
         </div>
       @endif
       
-      <div class="col-xl-4 col-lg-12 xl-50 morning-sec box-col-12">
-        <div class="card o-hidden profile-greeting">
-          <div class="card-body">
-            <div class="media">
-              <div class="badge-groups w-100">
-                <div class="badge f-12"><i class="me-1" data-feather="clock"></i>
-                  <span id="txt"></span>
+      <div class="col-xl-3 risk-col xl-100 box-col-12">
+        <div class="card total-users">
+          <div class="card-header card-no-border pb-3 pt-3">
+            <h5>Перевод</h5>
+          </div>
+          <div class="card-body pt-0">
+            <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
+              @csrf
+              <div class="apex-chart-container goal-status text-center row">
+                <div class="rate-card col-xl-12">
+                  <h6 class="mb-2 mt-2 f-w-400">Пользователь</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
+                  </div>
+                  <h6 class="mb-2 mt-2 f-w-400">Введите сумму</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <select class="form-select form-control-inverse-fill " name="wallet_id">
+                      <option value="" disabled selected hidden>Выберите кошелёк</option>
+                      @forelse($wallets as $wallet)
+                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                      @empty
+                      @endforelse
+                    </select>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn" >Перевести</button>
                 </div>
-                <div class="badge f-12"><i class="fa fa-spin fa-cog f-14"></i></div>
               </div>
-            </div>
-            <div class="greeting-user text-center">
-              <div class="profile-vector">
-                <img class="img-fluid" src="{{ asset('accountPanel/images/dashboard/welcome.png')}}" alt=""></div>
-              <h4 class="f-w-600">
-                <span id="greeting">Good Morning</span>
-                <span class="right-circle"><i class="fa fa-check-circle f-14 middle"></i></span>
-              </h4>
-              <p>
-                <span> Today's earrning is $405 & your sales increase rate is 3.7 over the last 24 hours</span>
-              </p>
-              <div class="whatsnew-btn">
-                <a class="btn btn-primary">Whats New !</a>
-              </div>
-              <div class="left-icon"><i class="fa fa-bell"> </i></div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
+      
       <div class="col-xl-8 xl-100 dashboard-sec box-col-12">
         <div class="card earning-card">
           <div class="card-body p-0">
@@ -529,3 +535,34 @@
     </div>
   </div>
 @endsection
+
+@push('scripts')
+  <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+      $(".form-control-inverse-fill").select2();
+    });
+
+  
+    
+    $(".send-money-to-user-btn").on('click', function (e) {
+      e.preventDefault();
+      swal({
+        title: "Вы уверены?",
+        text: "С вашего баланса будут списаны денежные средства!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          //create-deposit-form
+          $(".send-money-to-user-form").submit();
+          swal("Подождите немного!", {
+            icon: "success",
+          });
+        }
+      });
+    });
+  </script>
+@endpush
