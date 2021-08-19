@@ -12,6 +12,7 @@ use App\Http\Controllers\AccountPanel\DashboardController;
 use App\Http\Controllers\AccountPanel\ProfileController;
 use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
+use App\Http\Controllers\Ajax\NotificationsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,7 +46,8 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name(
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/ajax/set-user-location', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserLocationInfo'])->name('ajax.set.user.location');
     Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
-   
+    Route::post('/ajax/notification/status/read', [NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
+    
     Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');

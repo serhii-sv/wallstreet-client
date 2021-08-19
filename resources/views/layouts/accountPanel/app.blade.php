@@ -153,7 +153,7 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('accountPanel/js/script.js') }}"></script>
-    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>
+{{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
     <!-- login js-->
     <!-- Plugin used-->
     
@@ -270,5 +270,43 @@
       });
     </script>
     @stack('scripts')
+    <script>
+      $(document).ready(function () {
+        $(".notification-dropdown li.notification").on('click', function (e) {
+          e.preventDefault();
+          var $notification_count;
+          var $count = parseInt($(".notification-box").find('.badge').text());
+    
+          if ($count > 0) {
+            var $id = parseInt($(this).attr('data-id'));
+            $.ajax({
+              url: "/ajax/notification/status/read",
+              method: 'post',
+              data: 'id=' + $id,
+              headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function success(data) {
+                var $data = $.parseJSON(data);
+                
+                if ($data['status'] == 'good') {
+                  $(".notification-dropdown li.notification[data-id='" + $id + "']").remove();
+                  $notification_count = $data['notification_count'];
+                  $(".notification-box").find('.badge').text($notification_count);
+            
+                  if ($notification_count == 0) {
+                    $(".notification-box").find('.badge').remove();
+                    $(".notification-dropdown").append('<li class="notification"><p><i class="fa fa-circle-o me-3 font-success"> </i>Уведомлений нет! <span class="pull-right"></span></p></li>');
+                  }
+                }
+              }
+            });
+          } else {
+            $(".notification-button").find('.notification-badge').remove();
+            $("#notifications-dropdown").find('h6 span.badge').remove();
+          }
+        });
+      })
+    </script>
   </body>
 </html>

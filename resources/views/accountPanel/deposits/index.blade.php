@@ -40,6 +40,14 @@
                         <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
                       </tr>
                     @endforeach
+                  @else
+                    <tr>
+                      <td class="p-0" colspan="6">
+                        <div class="alert alert-light inverse alert-dismissible fade show" role="alert"><i class="icon-alert txt-dark"></i>
+                          <p style="font-size: 16px;">Депозитов нет</p>
+                        </div>
+                      </td>
+                    </tr>
                   @endif
                 </tbody>
               </table>

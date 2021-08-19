@@ -24,7 +24,7 @@
                 </thead>
                 <tbody>
                   @if(isset($transactions) && !empty($transactions))
-                    @foreach($transactions as $operation)
+                    @forelse($transactions as $operation)
                       <tr>
                         <th scope="row">{{ $loop->iteration  }}</th>
                         <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
@@ -45,7 +45,23 @@
                           @endswitch</td>
                         <td>{{ $operation->created_at->format('d-m-Y H:i') }}</td>
                       </tr>
-                    @endforeach
+                    @empty
+                      <tr>
+                        <td class="p-0" colspan="6">
+                          <div class="alert alert-light inverse alert-dismissible fade show" role="alert"><i class="icon-alert txt-dark"></i>
+                            <p style="font-size: 16px;">Операций нет</p>
+                          </div>
+                        </td>
+                      </tr>
+                    @endforelse
+                  @else
+                  <tr>
+                    <td class="p-0" colspan="6">
+                      <div class="alert alert-light inverse alert-dismissible fade show" role="alert"><i class="icon-alert txt-dark"></i>
+                        <p style="font-size: 16px;">Операций нет</p>
+                      </div>
+                    </td>
+                  </tr>
                   @endif
                 </tbody>
               </table>

@@ -21,7 +21,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(
             ['layouts.accountPanel.header'], 'App\Http\ViewComposers\DashboardComposer'
         );
-
+        View::composer(
+            ['layouts.accountPanel.header'], 'App\Http\ViewComposers\NavbarComposer'
+        );
         View::composer(
             ['layouts.accountPanel.breadcrumbs'], 'App\Http\ViewComposers\BreadcrumbsComposer'
         );
