@@ -207,6 +207,68 @@
         fillInPage();
       });
     </script>
+    <script>
+      $(document).ready(function () {
+        @if(session()->has('short_error'))
+        $.notify({
+              title: 'Ошибка',
+              message: '{{ session()->get('short_error') }}'
+            },
+            {
+              type: 'danger',
+              allow_dismiss: false,
+              newest_on_top: false,
+              mouse_over: false,
+              showProgressbar: false,
+              spacing: 10,
+              timer: 4000,
+              placement: {
+                from: 'top',
+                align: 'right'
+              },
+              offset: {
+                x: 30,
+                y: 30
+              },
+              delay: 1000,
+              z_index: 10000,
+              animate: {
+                enter: 'animated pulse',
+                exit: 'animated pulse'
+              }
+            });
+        @endif
+        @if(session()->has('short_success'))
+        $.notify({
+              title: 'Успех!',
+              message: '{{ session()->get('short_success') }}'
+            },
+            {
+              type: 'success',
+              allow_dismiss: false,
+              newest_on_top: false,
+              mouse_over: false,
+              showProgressbar: false,
+              spacing: 10,
+              timer: 4000,
+              placement: {
+                from: 'top',
+                align: 'right'
+              },
+              offset: {
+                x: 30,
+                y: 30
+              },
+              delay: 1000,
+              z_index: 10000,
+              animate: {
+                enter: 'animated pulse',
+                exit: 'animated pulse'
+              }
+            });
+        @endif
+      });
+    </script>
     @stack('scripts')
   </body>
 </html>

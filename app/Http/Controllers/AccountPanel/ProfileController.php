@@ -33,7 +33,7 @@ class ProfileController extends Controller
     
     public function updatePhoto(Request $request) {
         $request->validate([
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
     
         $file       = $request->file('avatar');

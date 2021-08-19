@@ -23,7 +23,7 @@ class TransactionsController extends Controller
     public function index(Request $request) {
         $user = Auth::user();
         return view('accountPanel.transactions.index',[
-            'transactions' => Transaction::where('user_id', $user->id)->paginate(10),
+            'transactions' => Transaction::where('user_id', $user->id)->orderByDesc('created_at')->paginate(10),
             'transactions_count' => Transaction::where('user_id', $user->id)->count(),
         ]);
     }
