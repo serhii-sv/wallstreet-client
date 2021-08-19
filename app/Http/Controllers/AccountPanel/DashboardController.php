@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
+use App\Models\TransactionType;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -42,8 +45,8 @@ class DashboardController extends Controller
         ]);
         $request_user = $request->get('user');
         $user = Auth::user();
-        $to_user = User::where('login', $request_user)->orWhere('email', $request_user)->first();
-        if ($user === $to_user){
+        $recipient_user = User::where('login', $request_user)->orWhere('email', $request_user)->first();
+        if ($user === $recipient_user){
             return back()->with('short_error', 'Нельзя переводить самому себе!');
         }
         $amount = abs($request->get('amount'));
@@ -52,12 +55,26 @@ class DashboardController extends Controller
             return back()->with('short_error', 'Недостаточно средств!');
         }
     
-        $to_user_wallet = Wallet::where('user_id', $to_user->id)->where('currency_id', $wallet->currency_id)->firstOrFail();
- 
-       // $wallet->removeAmount($amount);
-        dd($to_user_wallet);
-        dd($wallet);
-        
-        return back()->with('short_success', 'Средства успешно переведены пользователю ' . $to_user->name .'!');
+        $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)->where('currency_id', $wallet->currency_id)->first();
+        if (empty($recipient_user_wallet)){
+            return back()->with('short_error', 'У пользователя нет кошелька с указанной валютой!');
+        }
+      
+        $commission = TransactionType::getByName('transfer_out')->commission;
+        DB::beginTransaction();
+        try{
+            $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount - $amount * $commission * 0.01]);
+            $wallet->update(['balance' => $wallet->balance - $amount - $amount * $commission * 0.01]);
+            
+            if (Transaction::transferMoney($wallet, $amount,$user, $recipient_user)){
+                DB::commit();
+                return back()->with('short_success', 'Средства успешно переведены пользователю ' . $recipient_user->name .'!');
+            }else{
+                throw new \Exception('Не удалось создать перевод');
+            }
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return back()->with('short_error', 'Ошибка! '. $exception->getMessage());
+        }
     }
 }

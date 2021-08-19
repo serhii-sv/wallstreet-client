@@ -10,6 +10,7 @@ use App\Traits\ConvertCurrency;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Wallet extends Model
 {
@@ -347,6 +348,5 @@ class Wallet extends Model
             }
         }
     }
-
 
 }
