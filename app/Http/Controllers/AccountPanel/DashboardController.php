@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -30,10 +31,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $wallets = Wallet::where('user_id', Auth::user()->id)->get();
+        $user = Auth::user();
+        $wallets = Wallet::where('user_id', $user->id)->get();
         
         return view('accountPanel.dashboard',[
             'wallets' => $wallets,
+            'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5)
         ]);
     }
     

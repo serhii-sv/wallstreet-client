@@ -54,15 +54,72 @@
                       @endforelse
                     </select>
                   </div>
-                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn" >Перевести</button>
+                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn">Перевести</button>
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-      
-    
+      <div class="col-xl-9 xl-100 box-col-12">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-header pt-4 pb-4">
+                <h4 class="mb-0">Последние 5 депозитов</h4>
+              </div>
+              <div class="card-body pt-3 pb-3">
+                <div class="best-seller-table responsive-tbl">
+                  <div class="item">
+                    <div class="table-responsive product-list">
+                      <table class="table table-bordernone">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Баланс</th>
+                            <th>Название</th>
+                            <th>Прошло дней</th>
+                            <th>Начислено</th>
+                            <th>Статус</th>
+                            <th class="text-end">Дата открытия</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(isset($deposits) && !empty($deposits))
+                            @foreach($deposits as $deposit)
+                              <tr>
+                                <th scope="row">{{ $loop->iteration  }}</th>
+                                <td>
+                                  <span class="">$ {{ number_format($deposit->balance, 2, '.', ',') ?? 0 }}</span>
+                                </td>
+                                <td>{{ $deposit->rate->name ?? '' }}</td>
+                                <td>
+                                  {{ Carbon\Carbon::now()->diffInDays($deposit->created_at) }}/{{ $deposit->duration }}
+                                </td>
+                                <th scope="col">
+                                  <div class="span badge rounded-pill pill-badge-primary">$ {{ number_format($deposit->balance - $deposit->invested, 2, '.', ',') ?? 0 }}</div>
+                                </th>
+                                <th scope="col">
+                                  @if($deposit->active)
+                                    <span class="font-primary">В работе</span>
+                                  @else
+                                    <span class="font-danger">Закрыт</span>
+                                  @endif
+                                </th>
+                                <td class="text-end">{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
+                              </tr>
+                            @endforeach
+                          @endif
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 @endsection
@@ -73,8 +130,7 @@
     $(document).ready(function () {
       $(".form-control-inverse-fill").select2();
     });
-
-  
+    
     
     $(".send-money-to-user-btn").on('click', function (e) {
       e.preventDefault();
