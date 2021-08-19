@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AccountPanel;
 
+use App\Http\Controllers\Controller;
 use App\Models\Deposit;
 use App\Models\Rate;
 use App\Models\Transaction;

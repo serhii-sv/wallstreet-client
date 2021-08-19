@@ -7,11 +7,11 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\AccountPanel\AccountSettingsController;
+use App\Http\Controllers\AccountPanel\DepositsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
-use App\Http\Controllers\AccountPanel\ProfileCOntroller;
+use App\Http\Controllers\AccountPanel\ProfileController;
 use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
-use App\Http\Controllers\DepositsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
