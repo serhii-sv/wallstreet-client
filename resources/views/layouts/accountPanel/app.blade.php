@@ -72,7 +72,8 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
   </head>
-  <body onload="startTime()">
+  <body onload="startTime()" class="{{ ($themeSettings['theme-dark'] == 'true') ? 'dark-only' : '' }}">
+
     <div class="loader-wrapper">
       <div class="loader-index">
         <span></span>
@@ -153,8 +154,8 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('accountPanel/js/script.js') }}"></script>
-{{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
-    <!-- login js-->
+  {{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
+  <!-- login js-->
     <!-- Plugin used-->
     
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
@@ -276,7 +277,7 @@
           e.preventDefault();
           var $notification_count;
           var $count = parseInt($(".notification-box").find('.badge').text());
-    
+          
           if ($count > 0) {
             var $id = parseInt($(this).attr('data-id'));
             $.ajax({
@@ -293,7 +294,7 @@
                   $(".notification-dropdown li.notification[data-id='" + $id + "']").remove();
                   $notification_count = $data['notification_count'];
                   $(".notification-box").find('.badge').text($notification_count);
-            
+                  
                   if ($notification_count == 0) {
                     $(".notification-box").find('.badge').remove();
                     $(".notification-dropdown").append('<li class="notification"><p><i class="fa fa-circle-o me-3 font-success"> </i>Уведомлений нет! <span class="pull-right"></span></p></li>');
@@ -307,6 +308,71 @@
           }
         });
       })
+    </script>
+    <script>
+      $(document).ready(function () {
+        $(".mode").on("click", function () {
+          var $themeDark = false;
+          
+          if (!$('.mode i').hasClass("fa-lightbulb-o")) {
+            $themeDark = true;
+          } else {
+            $themeDark = false;
+          }
+          //  $('.mode i').hasClass()
+          
+          // var color = $(this).attr("data-attr");
+          //  localStorage.setItem('body', 'dark-only');
+          
+          $.ajax({
+            url: '/theme-settings',
+            method: 'post',
+            data: {
+              '_token': $('meta[name="csrf-token"]').attr('content'),
+              'theme-dark': $themeDark,
+            },
+            success: (response) => {
+              if (response.success) {
+                if ($themeDark) {
+                  $('.mode i').removeClass("fa-moon-o").addClass("fa-lightbulb-o");
+                  $('body').addClass("dark-only");
+                } else {
+                  $('body').removeClass("dark-only");
+                  $('.mode i').addClass("fa-moon-o").removeClass("fa-lightbulb-o");
+                }
+              }
+              $.notify({
+                    title: response.success ? 'Успешно!' : 'Ошибка!',
+                    message: response.message,
+                  },
+                  {
+                    type: response.success ? 'success' : 'danger',
+                    allow_dismiss: false,
+                    newest_on_top: false,
+                    mouse_over: false,
+                    showProgressbar: false,
+                    spacing: 10,
+                    timer: 2000,
+                    placement: {
+                      from: 'top',
+                      align: 'right'
+                    },
+                    offset: {
+                      x: 30,
+                      y: 30
+                    },
+                    delay: 1000,
+                    z_index: 10000,
+                    animate: {
+                      enter: 'animated pulse',
+                      exit: 'animated pulse'
+                    }
+                  });
+            }
+          })
+          
+        });
+      });
     </script>
   </body>
 </html>
