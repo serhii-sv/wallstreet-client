@@ -47,26 +47,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/ajax/set-user-location', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserLocationInfo'])->name('ajax.set.user.location');
     Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
     Route::post('/ajax/notification/status/read', [NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
-    
+
     Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
-        
+
         Route::get('/Withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
         Route::post('/Withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
-        
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
         Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
         Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
+        Route::post('/profile/upload-documents', [ProfileController::class, 'uploadDocuments'])->name('profile.upload-documents');
         Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
-    
+
         Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions');
         Route::resource('/deposits', DepositsController::class);
-    
+
         Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
         Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
-        
+
     });
 });
 

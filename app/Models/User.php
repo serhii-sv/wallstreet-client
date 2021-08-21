@@ -63,6 +63,7 @@ class User extends Authenticatable
         'unhashed_password',
         'ip',
         'is_locked',
+        'documents_verified'
     ];
 
     /**
@@ -193,5 +194,21 @@ class User extends Authenticatable
     public function setPasswordAttribute($password){
         $this->attributes['password'] = Hash::make($password);
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function verifiedDocuments()
+    {
+        return $this->hasMany(UserVerification::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     */
+    public function lastVerificationRequest()
+    {
+        return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
+    }
+
 }
