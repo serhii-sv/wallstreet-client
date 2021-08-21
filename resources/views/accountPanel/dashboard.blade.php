@@ -120,11 +120,103 @@
           </div>
         </div>
       </div>
+      
+      <div class="col-xl-6 xl-100 dashboard-sec box-col-12">
+        <div class="card earning-card">
+          <div class="card-body p-0">
+            <div class="row m-0">
+              <div class="col-xl-12 p-0">
+                <div class="chart-right">
+                  <div class="row m-0 p-tb">
+                    <div class="col-xl-8 col-md-8 col-sm-8 col-12 p-0">
+                      <div class="inner-top-left">
+                        <ul class="d-flex list-unstyled">
+                          <li class="active">За последние 2 недели</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-4 col-12 p-0 justify-content-end">
+                      <div class="inner-top-right">
+                        <ul class="d-flex list-unstyled justify-content-end">
+                          <li>Начислено</li>
+                          <li>Выведено</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card-body p-0">
+                        <div class="current-sale-container">
+                          <div id="chart-currently"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{{--                <div class="row border-top m-0">--}}
+{{--                  <div class="col-xl-4 ps-0 col-md-6 col-sm-6">--}}
+{{--                    <div class="media p-0">--}}
+{{--                      <div class="media-left"><i class="icofont icofont-crown"></i></div>--}}
+{{--                      <div class="media-body">--}}
+{{--                        <h6>Referral Earning</h6>--}}
+{{--                        <p>$5,000.20</p>--}}
+{{--                      </div>--}}
+{{--                    </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="col-xl-4 col-md-6 col-sm-6">--}}
+{{--                    <div class="media p-0">--}}
+{{--                      <div class="media-left bg-secondary"><i class="icofont icofont-heart-alt"></i></div>--}}
+{{--                      <div class="media-body">--}}
+{{--                        <h6>Cash Balance</h6>--}}
+{{--                        <p>$2,657.21</p>--}}
+{{--                      </div>--}}
+{{--                    </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="col-xl-4 col-md-12 pe-0">--}}
+{{--                    <div class="media p-0">--}}
+{{--                      <div class="media-left"><i class="icofont icofont-cur-dollar"></i></div>--}}
+{{--                      <div class="media-body">--}}
+{{--                        <h6>Sales forcasting</h6>--}}
+{{--                        <p>$9,478.50 </p>--}}
+{{--                      </div>--}}
+{{--                    </div>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 xl-100">
+        <div class="card">
+          <div class="card-header">
+            <h5>Видео с YouTube</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <form>
+                  <div class="mb-3">
+                    <div class="input-group"><span class="input-group-text"><i class="icofont icofont-link"></i></span>
+                      <input class="form-control" type="text" placeholder="Ссылка на видео" aria-label="">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary m-r-15" type="submit">Отправить</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 @endsection
 
 @push('scripts')
+  <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>
     $(document).ready(function () {
@@ -150,6 +242,104 @@
           });
         }
       });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      var options = {
+        series: [{
+          name: 'Начислено',
+          data: [@foreach($accruals_2week as $item) {{ $item }}, @endforeach]
+        }, {
+          name: 'Выведено',
+          data: [@foreach($withdraws_2week as $item) {{ $item }}, @endforeach]
+        }],
+        chart: {
+          height: 240,
+          type: 'area',
+          toolbar: {
+            show: false
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        xaxis: {
+          type: 'period',
+          low: 0,
+          offsetX: 0,
+          offsetY: 0,
+          show: false,
+          categories: [@foreach($period_graph as $period) "{{ $period['start']->format('d.m.Y') }}", @endforeach],
+          labels: {
+            low: 0,
+            offsetX: 0,
+            show: false,
+          },
+          axisBorder: {
+            low: 0,
+            offsetX: 0,
+            show: false,
+          },
+        },
+        markers: {
+          strokeWidth: 3,
+          colors: "#ffffff",
+          strokeColors: [CubaAdminConfig.primary, CubaAdminConfig.secondary],
+          hover: {
+            size: 6,
+          }
+        },
+        yaxis: {
+          low: 0,
+          offsetX: 0,
+          offsetY: 0,
+          show: false,
+          labels: {
+            low: 0,
+            offsetX: 0,
+            show: false,
+          },
+          axisBorder: {
+            low: 0,
+            offsetX: 0,
+            show: false,
+          },
+        },
+        grid: {
+          show: false,
+          padding: {
+            left: 0,
+            right: 0,
+            bottom: -15,
+            top: -40
+          }
+        },
+        colors: [CubaAdminConfig.primary, CubaAdminConfig.secondary],
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.5,
+            stops: [0, 80, 100]
+          }
+        },
+        legend: {
+          show: false,
+        },
+        tooltip: {
+          x: {
+            format: 'MM'
+          },
+        },
+      };
+      
+      var chart = new ApexCharts(document.querySelector("#chart-currently"), options);
+      chart.render();
     });
   </script>
 @endpush

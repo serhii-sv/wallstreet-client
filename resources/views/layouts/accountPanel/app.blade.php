@@ -139,7 +139,6 @@
     <script src="{{ asset('accountPanel/js/chart/apex-chart/apex-chart.js') }}"></script>
     <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
     <script src="{{ asset('accountPanel/js/notify/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
     <script src="{{ asset('accountPanel/js/notify/index.js') }}"></script>
     <script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.js') }}"></script>
     <script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.en.js') }}"></script>
