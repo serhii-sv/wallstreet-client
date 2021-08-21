@@ -211,4 +211,8 @@ class User extends Authenticatable
         return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
     }
 
+    public function themeSettings()
+    {
+        return $this->hasOne(UserThemeSetting::class);
+    }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\AccountPanel\ProfileController;
 use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
+use App\Http\Controllers\Ajax\UserThemeSettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/theme-settings', [UserThemeSettingController::class, 'store'])->name('theme-settings');
+
         Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
+        Route::post('/dashboard/store-user-video', [DashboardController::class, 'storeUserVideo'])->name('dashboard.store.user.video');
 
         Route::get('/Withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
         Route::post('/Withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');

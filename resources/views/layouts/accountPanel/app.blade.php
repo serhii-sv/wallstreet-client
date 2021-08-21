@@ -4,20 +4,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-          content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords"
-          content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
-          rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/font-awesome.css') }}">
     <!-- ico-font-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/icofont.css') }}">
@@ -38,25 +34,21 @@
         .pagination {
             /* Pagination button styling */
         }
-
         .pagination {
             display: flex;
             align-items: center;
             justify-content: flex-end;
         }
-
         .pagination li {
             height: auto;
             margin: 0 2px;
         }
-
         .pagination a, .pagination span {
             display: block;
             margin-top: 0.25rem;
             padding: 0.25em 0.65em;
             border: 1px solid transparent;
         }
-
         .pagination li.active span,
         .pagination a:hover {
             color: white !important;
@@ -75,10 +67,9 @@
     <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('accountPanel/css/vendors/dropzone.css')}}">
 </head>
-<body onload="startTime()">
+<body onload="startTime()" class="{{ ($themeSettings['theme-dark'] == 'true') ? 'dark-only' : '' }}">
+
 <div class="loader-wrapper">
     <div class="loader-index">
         <span></span>
@@ -144,7 +135,6 @@
 <script src="{{ asset('accountPanel/js/chart/apex-chart/apex-chart.js') }}"></script>
 <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
 <script src="{{ asset('accountPanel/js/notify/bootstrap-notify.min.js') }}"></script>
-<script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
 <script src="{{ asset('accountPanel/js/notify/index.js') }}"></script>
 <script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.js') }}"></script>
 <script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.en.js') }}"></script>
@@ -347,5 +337,70 @@
         });
     })
 </script>
-</body>
+<script>
+    $(document).ready(function () {
+        $(".mode").on("click", function () {
+            var $themeDark = false;
+
+            if (!$('.mode i').hasClass("fa-lightbulb-o")) {
+                $themeDark = true;
+            } else {
+                $themeDark = false;
+            }
+            //  $('.mode i').hasClass()
+
+            // var color = $(this).attr("data-attr");
+            //  localStorage.setItem('body', 'dark-only');
+
+            $.ajax({
+                url: '/theme-settings',
+                method: 'post',
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'theme-dark': $themeDark,
+                },
+                success: (response) => {
+                    if (response.success) {
+                        if ($themeDark) {
+                            $('.mode i').removeClass("fa-moon-o").addClass("fa-lightbulb-o");
+                            $('body').addClass("dark-only");
+                        } else {
+                            $('body').removeClass("dark-only");
+                            $('.mode i').addClass("fa-moon-o").removeClass("fa-lightbulb-o");
+                        }
+                    }
+                    $.notify({
+                            title: response.success ? 'Успешно!' : 'Ошибка!',
+                            message: response.message,
+                        },
+                        {
+                            type: response.success ? 'success' : 'danger',
+                            allow_dismiss: false,
+                            newest_on_top: false,
+                            mouse_over: false,
+                            showProgressbar: false,
+                            spacing: 10,
+                            timer: 2000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                            delay: 1000,
+                            z_index: 10000,
+                            animate: {
+                                enter: 'animated pulse',
+                                exit: 'animated pulse'
+                            }
+                        });
+                }
+            })
+
+        });
+    });
+</script>
+  </body>
 </html>

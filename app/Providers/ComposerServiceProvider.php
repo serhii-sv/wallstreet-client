@@ -6,6 +6,10 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\AppComposer;
+use App\Http\ViewComposers\BreadcrumbsComposer;
+use App\Http\ViewComposers\DashboardComposer;
+use App\Http\ViewComposers\NavbarComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,13 +23,16 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            ['layouts.accountPanel.header'], 'App\Http\ViewComposers\DashboardComposer'
+            ['layouts.accountPanel.header'], DashboardComposer::class
         );
         View::composer(
-            ['layouts.accountPanel.header'], 'App\Http\ViewComposers\NavbarComposer'
+            ['layouts.accountPanel.app'], AppComposer::class
         );
         View::composer(
-            ['layouts.accountPanel.breadcrumbs'], 'App\Http\ViewComposers\BreadcrumbsComposer'
+            ['layouts.accountPanel.header'], NavbarComposer::class
+        );
+        View::composer(
+            ['layouts.accountPanel.breadcrumbs'], BreadcrumbsComposer::class
         );
     }
 

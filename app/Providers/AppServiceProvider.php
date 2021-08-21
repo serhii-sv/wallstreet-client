@@ -18,6 +18,7 @@ use App\Models\Rate;
 use App\Models\Referral;
 use App\Models\Reviews;
 use App\Models\Setting;
+
 //use App\Models\TplDefaultLang;
 use App\Models\Transaction;
 use App\Models\TransactionType;
@@ -51,22 +52,28 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-
+    public function boot() {
+        
+        if (!session()->has('lang')) {
+            $lang = Language::where('default', true)->first();
+            if (!empty($lang))
+                session()->put('lang', $lang->code);
+            else
+                session()->put('lang', 'en');
+        }
         Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();
-
+            
             if (null === $user) {
                 return false;
             }
-
+            
             return $user->hasRole([
                 'root',
             ]);
         });
-
+        
         /*
          * Base observers
          */
@@ -85,14 +92,13 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Wallet::observe(WalletObserver::class);
     }
-
+    
     /**
      * Register any application services.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         //
     }
 }

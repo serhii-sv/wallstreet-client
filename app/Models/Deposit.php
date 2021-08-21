@@ -110,6 +110,10 @@ class Deposit extends Model
     {
         return $this->wallet->first()->paymentSystem();
     }
+    
+    public function getDepositQueues() {
+        return $this->hasMany(DepositQueue::class, 'deposit_id','id');
+    }
 
     /**
      * @param $value
@@ -258,6 +262,7 @@ class Deposit extends Model
 
         return true;
     }
+    
 
     /**
      * @return bool
