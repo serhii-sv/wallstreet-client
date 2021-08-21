@@ -154,62 +154,64 @@
                     </div>
                   </div>
                 </div>
-{{--                <div class="row border-top m-0">--}}
-{{--                  <div class="col-xl-4 ps-0 col-md-6 col-sm-6">--}}
-{{--                    <div class="media p-0">--}}
-{{--                      <div class="media-left"><i class="icofont icofont-crown"></i></div>--}}
-{{--                      <div class="media-body">--}}
-{{--                        <h6>Referral Earning</h6>--}}
-{{--                        <p>$5,000.20</p>--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-xl-4 col-md-6 col-sm-6">--}}
-{{--                    <div class="media p-0">--}}
-{{--                      <div class="media-left bg-secondary"><i class="icofont icofont-heart-alt"></i></div>--}}
-{{--                      <div class="media-body">--}}
-{{--                        <h6>Cash Balance</h6>--}}
-{{--                        <p>$2,657.21</p>--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-xl-4 col-md-12 pe-0">--}}
-{{--                    <div class="media p-0">--}}
-{{--                      <div class="media-left"><i class="icofont icofont-cur-dollar"></i></div>--}}
-{{--                      <div class="media-body">--}}
-{{--                        <h6>Sales forcasting</h6>--}}
-{{--                        <p>$9,478.50 </p>--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
+                <div class="row border-top m-0">
+                  <div class="col-xl-4 ps-0 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left bg-primary"><i class="icofont icofont-cur-dollar"></i></div>
+                      <div class="media-body">
+                        <h6>Заработок в сек</h6>
+                        <p>$ {{ number_format($total_revenue/604800, 5, '.',',') ?? 0 }}/сек</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left bg-secondary"><i class="icofont icofont-cur-dollar"></i></div>
+                      <div class="media-body">
+                        <h6>Заработок в час</h6>
+                        <p>$ {{ number_format(($total_revenue/604800) * 3600, 4, '.',',') ?? 0 }}/час</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-12 pe-0">
+                    <div class="media p-0">
+                      <div class="media-left bg-success"><i class="icofont icofont-cur-dollar"></i></div>
+                      <div class="media-body">
+                        <h6>Заработок в сутки</h6>
+                        <p>$ {{ number_format(($total_revenue/604800) * 86400, 2, '.',',') ?? 0 }}/день</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xl-6 xl-100">
-        <div class="card">
-          <div class="card-header">
-            <h5>Видео с YouTube</h5>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <form>
+        <form method="post" action="{{ route('accountPanel.dashboard.store.user.video') }}">
+          @csrf
+          <div class="card">
+            <div class="card-header">
+              <h5>Видео с YouTube</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
                   <div class="mb-3">
-                    <div class="input-group"><span class="input-group-text"><i class="icofont icofont-link"></i></span>
-                      <input class="form-control" type="text" placeholder="Ссылка на видео" aria-label="">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="icofont icofont-link"></i></span>
+                      <input class="form-control" name="video" value="{{ old('video') ?? '' }}" type="text" placeholder="Ссылка на видео" aria-label="">
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
+            <div class="card-footer">
+              <button class="btn btn-primary m-r-15" type="submit">Отправить</button>
+            </div>
           </div>
-          <div class="card-footer">
-            <button class="btn btn-primary m-r-15" type="submit">Отправить</button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -248,11 +250,11 @@
     $(document).ready(function () {
       var options = {
         series: [{
-          name: 'Начислено',
-          data: [@foreach($accruals_2week as $item) {{ $item }}, @endforeach]
+          name: 'Начислено, $',
+          data: [@foreach($accruals_2week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
         }, {
-          name: 'Выведено',
-          data: [@foreach($withdraws_2week as $item) {{ $item }}, @endforeach]
+          name: 'Выведено, $',
+          data: [@foreach($withdraws_2week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
         }],
         chart: {
           height: 240,

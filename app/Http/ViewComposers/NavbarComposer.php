@@ -5,6 +5,7 @@ namespace App\Http\ViewComposers;
 
 
 use App\Models\Currency;
+use App\Models\Language;
 use App\Models\Setting;
 use App\Modules\Parsers\FixerModule;
 use Illuminate\Support\Facades\Auth;
@@ -42,5 +43,7 @@ class NavbarComposer
             $view->with('currency_rates', $rates);
         }
         
+        $view->with('languages', Language::all());
+        $view->with('default_language', Language::where('default', 'true')->first());
     }
 }
