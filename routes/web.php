@@ -73,6 +73,16 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
 
+            Route::prefix('support-tasks')->as('support-tasks.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'create'])->name('create');
+                Route::get('/show/{id}', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'show'])->name('show');
+                Route::post('/store', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'store'])->name('store');
+
+                Route::prefix('messages')->as('messages.')->group(function () {
+                    Route::post('{id}/store', [\App\Http\Controllers\AccountPanel\SupportTaskMessageController::class, 'store'])->name('store');
+                });
+            });
         });
     });
 

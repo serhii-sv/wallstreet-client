@@ -19,6 +19,9 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ *
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -28,11 +31,17 @@ class User extends Authenticatable
     use Impersonate;
     use HasReferral;
 
+    /**
+     * @var string
+     */
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
 
     // Append additional fields to the model
+    /**
+     * @var string[]
+     */
     protected $appends = [
         'short_name',
         'last_activity',
@@ -85,6 +94,9 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'id');
     }
@@ -148,6 +160,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function loginSecurity()
     {
         return $this->hasOne('App\Models\LoginSecurity');
@@ -169,6 +184,9 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function roles(): BelongsToMany
     {
         return $this->morphToMany(
@@ -180,6 +198,9 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function permissions(): BelongsToMany
     {
         return $this->morphToMany(
@@ -191,6 +212,9 @@ class User extends Authenticatable
         )->withTimestamps();
     }
 
+    /**
+     * @param $password
+     */
     public function setPasswordAttribute($password){
         $this->attributes['password'] = Hash::make($password);
     }
@@ -211,8 +235,19 @@ class User extends Authenticatable
         return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function themeSettings()
     {
         return $this->hasOne(UserThemeSetting::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function supportTasks()
+    {
+        return $this->hasMany(SupportTask::class);
     }
 }
