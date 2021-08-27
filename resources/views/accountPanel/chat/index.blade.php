@@ -185,7 +185,7 @@
           }
         };
         
-        var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
+        var conn = new WebSocket((window.location.protocol === "http:" ? "ws" : "wss") + "://" + window.location.host + ":8080");
         
         conn.onmessage = function ($data) {
           $data = $.parseJSON($data.data);
@@ -225,6 +225,14 @@
             current_user: "{{ auth()->user()->id }}",
           }));
         }
+        conn.onclose = function(event) {
+          if (event.wasClean) {
+            console.log('Соединение закрыто чисто');
+          } else {
+            console.log('Обрыв соединения'); // например, "убит" процесс сервера
+          }
+          console.log('Код: ' + event.code + ' причина: ' + event.reason);
+        };
         
         function send($message) {
           var data = $message;

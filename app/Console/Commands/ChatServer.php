@@ -8,6 +8,8 @@ use Illuminate\Console\Command;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
+use React\Socket\SecureServer;
+use React\Socket\Server;
 
 class ChatServer extends Command
 {
@@ -42,14 +44,13 @@ class ChatServer extends Command
      */
     public function handle()
     {
-
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
                     new WebSocketController()
                 )
             ),
-            6001
+            8080
         );
         $this->info('Сервер запущен');
         $server->run();
