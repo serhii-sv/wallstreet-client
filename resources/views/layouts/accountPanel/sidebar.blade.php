@@ -73,6 +73,12 @@
                     </li>
 
                     <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.support-tasks.index') }}">
+                            <i data-feather="info"></i>{{ __('Support tasks') }}</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="{{ route('logout') }}">
                             <i data-feather="log-out"></i><span>{{ __('Logout') }}</span>
                         </a>

@@ -7,22 +7,21 @@ namespace App\Http\ViewComposers;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Setting;
-use App\Modules\Parsers\FixerModule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class NavbarComposer
 {
-    
+
     public function compose(View $view) {
         if (Auth::check()) {
             $view->with('counts', [
                 'notifications' => \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
             ]);
             $view->with('navbar_notifications', \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->get());
-            
+
             $currencies = Currency::all();
-            
+
             $rates = [];
             foreach ($currencies as $currency) {
                 if (!(strtolower($currency->code) == 'usd')) {
@@ -42,7 +41,7 @@ class NavbarComposer
             }
             $view->with('currency_rates', $rates);
         }
-        
+
         $view->with('languages', Language::all());
         $view->with('default_language', Language::where('default', 'true')->first());
     }

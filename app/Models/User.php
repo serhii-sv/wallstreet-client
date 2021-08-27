@@ -19,6 +19,9 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ *
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -28,11 +31,17 @@ class User extends Authenticatable
     use Impersonate;
     use HasReferral;
     
+    /**
+     * @var string
+     */
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
     
     // Append additional fields to the model
+    /**
+     * @var string[]
+     */
     protected $appends = [
         'short_name',
         'last_activity',
@@ -63,6 +72,7 @@ class User extends Authenticatable
         'unhashed_password',
         'ip',
         'is_locked',
+        'documents_verified'
     ];
     
     /**
@@ -116,6 +126,11 @@ class User extends Authenticatable
         return $balances;
     }
     
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'my_id');
     }
@@ -179,8 +194,11 @@ class User extends Authenticatable
             'last_seen' => $currentDate->format("j \of M"),
         ];
     }
-    
-    public function loginSecurity() {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function loginSecurity()
+    {
         return $this->hasOne('App\Models\LoginSecurity');
     }
     
@@ -226,9 +244,6 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
     
-    public function themeSettings() {
-        return $this->hasOne(UserThemeSetting::class);
-    }
     
     public function getReferralChat() {
         $user_partner = auth()->user()->id;
@@ -249,5 +264,35 @@ class User extends Authenticatable
         return $chat->id;
     }
     
-  
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function verifiedDocuments()
+    {
+        return $this->hasMany(UserVerification::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     */
+    public function lastVerificationRequest()
+    {
+        return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function themeSettings()
+    {
+        return $this->hasOne(UserThemeSetting::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function supportTasks()
+    {
+        return $this->hasMany(SupportTask::class);
+    }
 }

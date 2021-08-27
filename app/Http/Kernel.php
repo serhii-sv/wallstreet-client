@@ -6,6 +6,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckSiteEnabled;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -75,6 +76,8 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'locked.user' => \App\Http\Middleware\LockedUser::class,
         '2fa' => \App\Http\Middleware\LoginSecurityMiddleware::class,
+
+        'checkSiteEnabled' => CheckSiteEnabled::class
 
     ];
 }
