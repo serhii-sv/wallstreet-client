@@ -27,7 +27,7 @@
                         <div class="avatar ">
                           <label class="position-relative" style="cursor: pointer;">
                             <input type="file" name="avatar" class="profile-avatar-input d-none">
-                            <img class="avatar-image img-100 rounded-circle" style="height: 100px;" alt="" src="{{ route('accountPanel.profile.get.avatar', auth()->user()->id) }}" data-old="{{ route('accountPanel.profile.get.avatar', auth()->user()->id) }}">
+                            <img class="avatar-image img-100 rounded-circle" style="height: 100px;" alt="" src="{{ auth()->user()->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/16.png') }}" data-old="{{ route('accountPanel.profile.get.avatar', auth()->user()->id) }}">
                           </label>
                         </div>
                         <button class="btn btn-pill btn-success btn-air-success btn-xs">Загрузить</button>

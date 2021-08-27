@@ -10,10 +10,12 @@ use App\Http\Controllers\AccountPanel\AccountSettingsController;
 use App\Http\Controllers\AccountPanel\DepositsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
 use App\Http\Controllers\AccountPanel\ProfileController;
+use App\Http\Controllers\AccountPanel\ReferralsController;
 use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +56,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
         Route::post('/dashboard/store-user-video', [DashboardController::class, 'storeUserVideo'])->name('dashboard.store.user.video');
+    
+        Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals');
         
         Route::get('/Withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
         Route::post('/Withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
@@ -70,6 +74,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
         Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
         
+        Route::get('/chat/{chat_id?}', [ChatController::class, 'index'])->name('chat');
+        Route::get('/message/send', [ChatController::class, 'send']);
     });
 });
 

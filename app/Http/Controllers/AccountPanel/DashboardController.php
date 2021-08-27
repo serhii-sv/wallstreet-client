@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AccountPanel;
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
 use App\Models\DepositQueue;
+use App\Models\Notification;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -32,7 +33,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-      
+        
         $user = Auth::user();
         $wallets = Wallet::where('user_id', $user->id)->get();
         $withdraw_type = TransactionType::where('name', 'withdraw')->first();
@@ -48,18 +49,18 @@ class DashboardController extends Controller
         foreach ($period_graph as $period) {
             $accruals_2week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_2weeks_' . $period['start']->format('d.m.Y'), 60, function () use ($accruals_ids, $user, $period) {
                 return Transaction::where('user_id', $user->id)->whereIn('type_id', $accruals_ids)->where('approved', 1)->whereBetween('created_at', [
-                        $period['start'],
-                        $period['end'],
-                    ])->sum('main_currency_amount');
+                    $period['start'],
+                    $period['end'],
+                ])->sum('main_currency_amount');
             });
             $withdraws_2week[$period['start']->format('d.m.Y')] = cache()->remember('withdraws_2week_' . $period['start']->format('d.m.Y'), 60, function () use ($withdraw_type, $user, $period) {
                 return Transaction::where('user_id', $user->id)->where('type_id', $withdraw_type->id)->where('approved', 1)->whereBetween('created_at', [
-                        $period['start'],
-                        $period['end'],
-                    ])->sum('main_currency_amount');
+                    $period['start'],
+                    $period['end'],
+                ])->sum('main_currency_amount');
             });
         }
-        $deposit = Deposit::where('user_id', $user->id)->where('datetime_closing', '>', Carbon::now())->where('active',true)->get();
+        $deposit = Deposit::where('user_id', $user->id)->where('datetime_closing', '>', Carbon::now())->where('active', true)->get();
         $total_revenue = 0;
         foreach ($deposit as $item) {
             $total_revenue += $item->daily * $item->invested * 0.01 * $item->duration;
@@ -105,6 +106,22 @@ class DashboardController extends Controller
             $wallet->update(['balance' => $wallet->balance - $amount - $amount * $commission * 0.01]);
             
             if (Transaction::transferMoney($wallet, $amount, $user, $recipient_user)) {
+                
+                $notification_data = [
+                    'notification_name' => 'Перевод средств',
+                    'amount' => $amount . $wallet->currency->symbol,
+                    'user' => $recipient_user,
+                    'from_user' => Auth::user(),
+                ];
+                Notification::sendNotification($notification_data, 'new_transfer_in');
+                $notification_data = [
+                    'notification_name' => 'Перевод средств',
+                    'amount' => $amount . $wallet->currency->symbol,
+                    'user' => Auth::user(),
+                    'to_user' => $recipient_user,
+                ];
+                Notification::sendNotification($notification_data, 'new_transfer_out');
+                
                 DB::commit();
                 return back()->with('short_success', 'Средства успешно переведены пользователю ' . $recipient_user->name . '!');
             } else {
@@ -132,7 +149,7 @@ class DashboardController extends Controller
     
     public function storeUserVideo(Request $request) {
         $video = $request->get('video');
-        if (!strlen($video)>0){
+        if (!strlen($video) > 0) {
             return back()->with('short_error', 'Поле "Ссылка на видео" обязательно для заполнения!');
         }
         
@@ -140,7 +157,7 @@ class DashboardController extends Controller
         $user_video->link = $video;
         $user_video->user_id = Auth::user()->id;
         
-        if ($user_video->save()){
+        if ($user_video->save()) {
             return back()->with('short_success', 'Ваше видео передано в обработку!');
         }
         return back()->with('short_error', 'Не удалось загрузить!');

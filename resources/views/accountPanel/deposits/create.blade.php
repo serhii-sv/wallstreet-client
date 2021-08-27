@@ -25,7 +25,7 @@
                           <h5>В день {{ $item->daily }}%</h5>
                           <h6>Длительность: {{ $item->duration }}</h6>
                           <h4 class="mb-2">Можно внести </h4>
-                          <p style="font-size: 15px;">от <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до <strong>{{ number_format($item->max, 2,'.',',') }}$</strong></p>
+                          <p style="font-size: 15px;">от <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
                           {{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}
                           {{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}
                           {{--                            @forelse($payment_systems as $payment_system)--}}

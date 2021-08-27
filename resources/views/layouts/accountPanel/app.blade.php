@@ -72,8 +72,7 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
   </head>
-  <body onload="startTime()" class="{{ ($themeSettings['theme-dark'] == 'true') ? 'dark-only' : '' }}">
-
+  <body onload="startTime()" class="{{ (isset($themeSettings['theme-dark']) && $themeSettings['theme-dark'] == 'true') ? 'dark-only' : '' }}">
     <div class="loader-wrapper">
       <div class="loader-index">
         <span></span>
@@ -153,6 +152,7 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('accountPanel/js/script.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
   {{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
   <!-- login js-->
     <!-- Plugin used-->

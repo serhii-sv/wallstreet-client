@@ -6,6 +6,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ChatServer;
 use App\Console\Commands\CheckPaymentSystemsConnectionsCommand;
 use App\Console\Commands\CreateAdminCommand;
 use App\Console\Commands\DepositQueueCommand;
@@ -25,7 +26,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-
+        ChatServer::class,
     ];
 
     /**

@@ -70,7 +70,7 @@
       
     </style>
     
-    <div class="left-header col-10 horizontal-wrapper ps-0">
+    <div class="left-header col-9 horizontal-wrapper ps-0">
       <div class="currency-rates">
         <div class="wrapper">
         @forelse($currency_rates as $key => $rates)
@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div class="nav-right col-2 pull-right right-header p-0">
+    <div class="nav-right col-3 pull-right right-header p-0">
       <ul class="nav-menus">
         <li class="language-nav">
           <div class="translate_wrapper">

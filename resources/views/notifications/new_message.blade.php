@@ -1,0 +1,1 @@
+Вам пришло сообщение от {{ App\Models\User::where('id', $from_user)->first()->login }}

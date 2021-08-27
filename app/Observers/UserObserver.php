@@ -48,7 +48,11 @@ class UserObserver
     public function created(User $user)
     {
         Wallet::registerWallets($user);
-
+        
+        if (null !== $user->partner) {
+            $user->generatePartnerTree($user->partner);
+        }
+        
         cache()->forget('counts.users');
     }
 
@@ -64,7 +68,9 @@ class UserObserver
         if (empty($user->login)) {
             $user->login = $user->email;
         }
-
+        if (null === $user->my_id || empty($user->my_id)) {
+            $user->generateMyId();
+        }
     }
 
     /**

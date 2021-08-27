@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Rate;
 use App\Models\Transaction;
@@ -39,6 +40,8 @@ class DepositsController extends Controller
         $user = isset($data['user']) ? $data['user'] : Auth::user();
         $rate = Rate::findOrFail($request->get('rate_id'));
         $wallet = Wallet::where('user_id', $user->id)->where('id', $request->get('wallet_id'))->firstOrFail();
+        $toCurrency = Currency::where('code', 'USD')->first();
+    
         
         if ($amount < $rate->min) {
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита меньше, чем минимальная ставка тарифного плана!');
@@ -46,7 +49,10 @@ class DepositsController extends Controller
         if ($amount > $rate->max) {
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита больше, чем максимальная ставка тарифного плана!');
         }
-        if (abs($amount) > abs($wallet->balance)) {
+        $balance = $wallet->convertToCurrency($wallet->currency()->first(), $toCurrency, abs($wallet->balance));
+        if (abs($amount) > $balance) {
+            dump($balance);
+            dd($amount);
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
         }
         $deposit                    = new Deposit;
@@ -68,8 +74,10 @@ class DepositsController extends Controller
         $transaction = $deposit->save()
             ? Transaction::createDeposit($deposit)
             : null;
-
-        if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
+        
+        $amount_in_currency = $wallet->convertToCurrency($toCurrency, $wallet->currency()->first(),  abs($amount));
+        
+        if (null != $transaction && $deposit->wallet->removeAmount($amount_in_currency)) {
             $wallet->accrueToPartner($amount, 'refill');
 
             $transaction->update(['approved' => true]);

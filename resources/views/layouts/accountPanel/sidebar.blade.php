@@ -34,6 +34,12 @@
                           <i data-feather="user"></i><span>{{ __('Profile') }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}">
+                          <i data-feather="user"></i><span>{{ __('Chat') }}</span>
+                        </a>
+                    </li>
                   <li class="sidebar-list">
                     {{--<label class="badge badge-success">2</label>--}}
                     <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.index') }}">
@@ -50,6 +56,12 @@
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
                           <i data-feather="dollar-sign"></i><span>{{ __('Withdraw') }}</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}">
+                          <i data-feather="dollar-sign"></i><span>{{ __('Refferals') }}</span>
                         </a>
                     </li>
                   

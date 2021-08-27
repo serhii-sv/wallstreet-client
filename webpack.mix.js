@@ -30,6 +30,8 @@ function mixAssetsDir(query, cb) {
     });
 }
 
+mix.js('resources/js/app.js','public/js');
+
 const sassOptions = {
     precision: 5
 };
@@ -86,8 +88,8 @@ mix.copy('resources/js/bootstrap-colorpicker.min.js', 'public/js/bootstrap-color
 //     mix.setResourceRoot("/materialize-material-design-admin-template/laravel/demo-1/");
 // }
 
-mixAssetsDir('sass/accountPanel/*/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
-mixAssetsDir('sass/accountPanel/*/*/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
-mixAssetsDir('sass/accountPanel/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
+// mixAssetsDir('sass/accountPanel/*/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
+// mixAssetsDir('sass/accountPanel/*/*/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
+// mixAssetsDir('sass/accountPanel/*.scss', (src, dest) => mix.sass(src, dest.replace(/(\\|\/)sass(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), {sassOptions}));
 
 //mix.sass('./resources/sass/accountPanel/*.scss', 'public/accountPanel/');
