@@ -172,38 +172,24 @@
             $(this).val('');
           }
         });
-        let connection_resolvers = [];
-        let waitForConnection = () => {
-          return new Promise((resolve, reject) => {
-            if (ws.readyState === WebSocket.OPEN) {
-              resolve();
-            }
-            else {
-              connection_resolvers.push({resolve, reject});
-            }
-          });
-        }
+  
         var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
-        conn.addEventListener('open', () => {
-          connection_resolvers.forEach(r => r.resolve())
-        });
-        conn.onopen = function ($data) {
-          console.log("Соединение установлено");
-          
-          conn.send(JSON.stringify({
-            status: "check",
-            chat: "{{ $chat->id }}",
-            user_partner: "{{ $chat->user_partner()->first()->id }}",
-            user_referral: "{{ $chat->user_referral()->first()->id }}",
-            current_user: "{{ auth()->user()->id }}",
-          }));
-        }
+        
+        var wsSend = function ($data){
+          if(!conn.readyState){
+            setTimeout(function (){
+              wsSend($data);
+            }, 100)
+          }else{
+            conn.send($data);
+          }
+        };
         
         conn.onmessage = function ($data) {
           $data = $.parseJSON($data.data);
- 
+    
           if ($data.chat == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
-            
+      
             $(".chat-msg-list").append('<li>' +
                 '<div class="message my-message mb-0">' +
                 '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">' +
@@ -224,10 +210,19 @@
                 ' </div>' +
                 '</li>');
           }
-  
+    
           scrollChat();
         };
-        
+        conn.onopen = function ($data) {
+          console.log("Соединение установлено");
+          wsSend(JSON.stringify({
+            status: "check",
+            chat: "{{ $chat->id }}",
+            user_partner: "{{ $chat->user_partner()->first()->id }}",
+            user_referral: "{{ $chat->user_referral()->first()->id }}",
+            current_user: "{{ auth()->user()->id }}",
+          }));
+        }
         function send($message) {
           var data = $message;
           var now = new Date;

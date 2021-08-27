@@ -42,7 +42,7 @@ class ChatServer extends Command
      */
     public function handle()
     {
-        $this->info('Сервер запущен');
+
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
@@ -51,7 +51,8 @@ class ChatServer extends Command
             ),
             6001
         );
-    
+        $this->info('Сервер запущен');
         $server->run();
+     
     }
 }
