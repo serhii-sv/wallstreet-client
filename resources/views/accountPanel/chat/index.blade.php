@@ -172,8 +172,8 @@
             $(this).val('');
           }
         });
-        
-        var conn = new WebSocket('ws://localhost:6001');
+  
+        var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
         
         conn.onopen = function ($data) {
           console.log("Соединение установлено");
