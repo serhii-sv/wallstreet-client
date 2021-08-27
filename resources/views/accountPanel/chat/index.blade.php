@@ -252,7 +252,7 @@
         $(".send-message-btn").on('click', function (e) {
           var $message = $("#message-to-send").val();
           if ($message.length > 0) {
-            send($message);
+            wsSend($message);
           }
           $("#message-to-send").val('');
         });
