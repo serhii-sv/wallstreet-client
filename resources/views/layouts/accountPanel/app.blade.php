@@ -159,52 +159,6 @@
     
     <script type="text/javascript">
       $.ajaxSetup({
-=======
-</div>
-<!-- latest jquery-->
-<script src="{{ asset('accountPanel/js/jquery-3.5.1.min.js') }}"></script>
-<!-- Bootstrap js-->
-<script src="{{ asset('accountPanel/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-<!-- feather icon js-->
-<script src="{{ asset('accountPanel/js/icons/feather-icon/feather.min.js') }}"></script>
-<script src="{{ asset('accountPanel/js/icons/feather-icon/feather-icon.js') }}"></script>
-<!-- scrollbar js-->
-<script src="{{ asset('accountPanel/js/scrollbar/simplebar.js') }}"></script>
-<script src="{{ asset('accountPanel/js/scrollbar/custom.js') }}"></script>
-<!-- Sidebar jquery-->
-<script src="{{ asset('accountPanel/js/config.js') }}"></script>
-<!-- Plugins JS start-->
-<script src="{{ asset('accountPanel/js/sidebar-menu.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/chartist/chartist.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/chartist/chartist-plugin-tooltip.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/knob/knob.min.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/knob/knob-chart.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/apex-chart/apex-chart.js') }}"></script>
-<script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
-<script src="{{ asset('accountPanel/js/notify/bootstrap-notify.min.js') }}"></script>
-<script src="{{ asset('accountPanel/js/notify/index.js') }}"></script>
-<script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.js') }}"></script>
-<script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-<script src="{{ asset('accountPanel/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
-<script src="{{ asset('accountPanel/js/typeahead/handlebars.js') }}"></script>
-<script src="{{ asset('accountPanel/js/typeahead/typeahead.bundle.js') }}"></script>
-<script src="{{ asset('accountPanel/js/typeahead/typeahead.custom.js') }}"></script>
-<script src="{{ asset('accountPanel/js/typeahead-search/handlebars.js') }}"></script>
-<script src="{{ asset('accountPanel/js/typeahead-search/typeahead-custom.js') }}"></script>
-<script src="{{ asset('accountPanel/js/select2/select2.full.min.js') }}"></script>
-<script src="{{ asset('accountPanel/js/select2/select2-custom.js') }}"></script>
-<!-- Plugins JS Ends-->
-<!-- Theme js-->
-<script src="{{ asset('accountPanel/js/script.js') }}"></script>
-{{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
-<!-- login js-->
-<!-- Plugin used-->
-
-<script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-    $.ajaxSetup({
->>>>>>> ca050fead8ec47dcacaeec17d0c5615a8cda9014
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
