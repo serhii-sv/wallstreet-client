@@ -172,12 +172,24 @@
             $(this).val('');
           }
         });
-  
+        let connection_resolvers = [];
+        let waitForConnection = () => {
+          return new Promise((resolve, reject) => {
+            if (ws.readyState === WebSocket.OPEN) {
+              resolve();
+            }
+            else {
+              connection_resolvers.push({resolve, reject});
+            }
+          });
+        }
         var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
-        
+        conn.addEventListener('open', () => {
+          connection_resolvers.forEach(r => r.resolve())
+        });
         conn.onopen = function ($data) {
           console.log("Соединение установлено");
-
+          
           conn.send(JSON.stringify({
             status: "check",
             chat: "{{ $chat->id }}",
