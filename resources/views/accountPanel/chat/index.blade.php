@@ -115,7 +115,7 @@
                           @endforeach
                         @endif
                       
-                       
+                      
                       </ul>
                     
                     </div>
@@ -148,23 +148,25 @@
   
   @if($chat)
     <script>
-      $(document).ready(function () {
+      window.onload = function () {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
           "July", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
-        function scrollChat(){
+        
+        function scrollChat() {
           var container = $('.chat-history'),
               scrollTo = $('.chat-msg-list');
           container.scrollTop(scrollTo.prop('scrollHeight'));
         }
+        
         scrollChat();
         
         function addZeroBefore(n) {
           return (n < 10 ? '0' : '') + n;
         }
-  
-        $("#message-to-send").keyup(function(event){
-          if(event.keyCode == 13){
+        
+        $("#message-to-send").keyup(function (event) {
+          if (event.keyCode == 13) {
             var $message = $(this).val();
             if ($message.length > 0) {
               send($message);
@@ -172,24 +174,24 @@
             $(this).val('');
           }
         });
-  
-        var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
         
-        var wsSend = function ($data){
-          if(!conn.readyState){
-            setTimeout(function (){
+        var wsSend = function ($data) {
+          if (!conn.readyState) {
+            setTimeout(function () {
               wsSend($data);
             }, 100)
-          }else{
+          } else {
             conn.send($data);
           }
         };
         
+        var conn = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + "://" + window.location.host + ":6001");
+        
         conn.onmessage = function ($data) {
           $data = $.parseJSON($data.data);
-    
+          
           if ($data.chat == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
-      
+            
             $(".chat-msg-list").append('<li>' +
                 '<div class="message my-message mb-0">' +
                 '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">' +
@@ -210,7 +212,7 @@
                 ' </div>' +
                 '</li>');
           }
-    
+          
           scrollChat();
         };
         conn.onopen = function ($data) {
@@ -223,6 +225,7 @@
             current_user: "{{ auth()->user()->id }}",
           }));
         }
+        
         function send($message) {
           var data = $message;
           var now = new Date;
@@ -253,7 +256,7 @@
           }
           $("#message-to-send").val('');
         });
-      });
+      };
     </script>
   @endif
 @endpush

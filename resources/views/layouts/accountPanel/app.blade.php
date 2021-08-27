@@ -69,7 +69,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
 
 </head>
-<body onload="startTime()" class="{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}">
+<body class="{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}">
 
 <div class="loader-wrapper">
     <div class="loader-index">
