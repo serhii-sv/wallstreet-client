@@ -60,6 +60,12 @@
                     </li>
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.currency.exchange') }}">
+                          <i data-feather="dollar-sign"></i><span>{{ __('Currency exchange') }}</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}">
                           <i data-feather="dollar-sign"></i><span>{{ __('Refferals') }}</span>
                         </a>

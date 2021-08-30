@@ -67,6 +67,7 @@
     <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
+    @stack('styles')
 
 </head>
 <body class="{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}">
@@ -98,10 +99,10 @@
     <!-- Page Sidebar Ends-->
         <div class="page-body">
             <div class="container-fluid">
-                <div class="page-title">
+                <div class="page-title @yield('title.show')">
                     <div class="row">
                         <div class="col-6">
-                            <h3>@yield('title')</h3>
+                            <h3 class="">@yield('title')</h3>
                         </div>
                         @include('layouts.accountPanel.breadcrumbs')
                     </div>

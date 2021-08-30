@@ -145,7 +145,7 @@
   </div>
 @endsection
 @push('scripts')
-  
+
   @if($chat)
     <script>
       window.onload = function () {
@@ -175,17 +175,9 @@
           }
         });
         
-        var wsSend = function ($data) {
-          if (!conn.readyState) {
-            setTimeout(function () {
-              wsSend($data);
-            }, 100)
-          } else {
-            conn.send($data);
-          }
-        };
+     
         
-        var conn = new WebSocket((window.location.protocol === "http:" ? "ws" : "wss") + "://" + window.location.host + ":8080");
+        var conn = new WebSocket((window.location.protocol === "http:" ? "ws" : "wss") + "://" + window.location.host + ":6001");
         
         conn.onmessage = function ($data) {
           $data = $.parseJSON($data.data);
@@ -217,7 +209,7 @@
         };
         conn.onopen = function ($data) {
           console.log("Соединение установлено");
-          wsSend(JSON.stringify({
+          send(JSON.stringify({
             status: "check",
             chat: "{{ $chat->id }}",
             user_partner: "{{ $chat->user_partner()->first()->id }}",
@@ -260,7 +252,7 @@
         $(".send-message-btn").on('click', function (e) {
           var $message = $("#message-to-send").val();
           if ($message.length > 0) {
-            wsSend($message);
+            send($message);
           }
           $("#message-to-send").val('');
         });

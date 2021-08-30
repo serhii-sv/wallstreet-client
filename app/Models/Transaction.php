@@ -388,37 +388,64 @@ class Transaction extends Model
     }
     
     public static function transferMoney($wallet, $amount, $fromUser, $toUser) {
-      
-            $type_in = TransactionType::getByName('transfer_in');
-            $type_out = TransactionType::getByName('transfer_out');
-            $to_user_wallet = Wallet::where('user_id', $toUser->id)->where('currency_id', $wallet->currency_id)->firstOrFail();
-            $transaction_in = self::create([
-                'type_id' => $type_in->id,
-                'commission' => $type_in->commission,
-                'user_id' => $toUser->id,
-                'currency_id' => $to_user_wallet->currency->id,
-                'wallet_id' => $to_user_wallet->id,
-                'payment_system_id' => $to_user_wallet->paymentSystem->id,
-                'amount' => $amount,
-                'approved' => true,
-            ]);
-            $transaction_out = self::create([
-                'type_id' => $type_out->id,
-                'commission' => $type_out->commission,
-                'user_id' => $fromUser->id,
-                'currency_id' => $wallet->currency->id,
-                'wallet_id' => $wallet->id,
-                'payment_system_id' => $wallet->paymentSystem->id,
-                'amount' => $amount,
-                'approved' => true,
-            ]);
-            $transaction_in->save();
-            $transaction_out->save();
-            if ($transaction_in && $transaction_out)
-                return true;
-     
-            return false;
-    
         
+        $type_in = TransactionType::getByName('transfer_in');
+        $type_out = TransactionType::getByName('transfer_out');
+        $to_user_wallet = Wallet::where('user_id', $toUser->id)->where('currency_id', $wallet->currency_id)->firstOrFail();
+        $transaction_in = self::create([
+            'type_id' => $type_in->id,
+            'commission' => $type_in->commission,
+            'user_id' => $toUser->id,
+            'currency_id' => $to_user_wallet->currency->id,
+            'wallet_id' => $to_user_wallet->id,
+            'payment_system_id' => $to_user_wallet->paymentSystem->id,
+            'amount' => $amount,
+            'approved' => true,
+        ]);
+        $transaction_out = self::create([
+            'type_id' => $type_out->id,
+            'commission' => $type_out->commission,
+            'user_id' => $fromUser->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            'payment_system_id' => $wallet->paymentSystem->id,
+            'amount' => $amount,
+            'approved' => true,
+        ]);
+        $transaction_in->save();
+        $transaction_out->save();
+        if ($transaction_in && $transaction_out)
+            return true;
+        
+        return false;
+    }
+    
+    public static function exchangeOutCurrency($wallet, $amount) {
+        $type = TransactionType::getByName('exchange_out');
+        $transaction = self::create([
+            'type_id' => $type->id,
+            'commission' => 0,
+            'user_id' => $wallet->user->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            'payment_system_id' => $wallet->paymentSystem->id,
+            'amount' => $amount,
+            'approved' => true,
+        ]);
+        return $transaction->save() ? $transaction : null;
+    }
+    public static function exchangeInCurrency($wallet, $amount) {
+        $type = TransactionType::getByName('exchange_in');
+        $transaction = self::create([
+            'type_id' => $type->id,
+            'commission' => 0,
+            'user_id' => $wallet->user->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            'payment_system_id' => $wallet->paymentSystem->id,
+            'amount' => $amount,
+            'approved' => true,
+        ]);
+        return $transaction->save() ? $transaction : null;
     }
 }

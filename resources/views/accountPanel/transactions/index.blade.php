@@ -29,7 +29,8 @@
                         <th scope="row">{{ $loop->iteration  }}</th>
                         <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
                         <td>
-                          <span class="">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+{{--                          <span class="">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>--}}
+                          <span class="">{{$operation->currency->symbol}} {{ number_format($operation->amount, $operation->currency->precision, '.', ',') ?? 0 }}</span>
                         </td>
                         <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
                         <td>@switch($operation->approved)

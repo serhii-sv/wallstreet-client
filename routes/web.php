@@ -16,6 +16,7 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CurrencyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +54,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
         Route::post('/ajax/notification/status/read', [NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
 
         Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
-    
+            
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/theme-settings', [UserThemeSettingController::class, 'store'])->name('theme-settings');
             Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
@@ -61,6 +62,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
             Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals');
     
+            Route::get('/currency-exchange', [CurrencyController::class, 'showCurrencyExchange'])->name('currency.exchange');
+            Route::post('/currency-exchange', [CurrencyController::class, 'currencyExchange'])->name('currency.exchange');
+            
             Route::get('/withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
     

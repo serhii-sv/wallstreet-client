@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PrivateChat;
+use App\Events\Test;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\User;
@@ -16,6 +17,7 @@ class ChatController extends Controller
     //
     
     public function index($chat_id = null) {
+      
         if ($chat_id !== null && Uuid::isValid($chat_id)) {
             $chat = Chat::where('id', $chat_id)->first();
             if ($chat->checkUser(Auth::user()->id)){

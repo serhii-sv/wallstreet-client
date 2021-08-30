@@ -51,8 +51,6 @@ class DepositsController extends Controller
         }
         $balance = $wallet->convertToCurrency($wallet->currency()->first(), $toCurrency, abs($wallet->balance));
         if (abs($amount) > $balance) {
-            dump($balance);
-            dd($amount);
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
         }
         $deposit                    = new Deposit;

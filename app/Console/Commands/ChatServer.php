@@ -50,7 +50,7 @@ class ChatServer extends Command
                     new WebSocketController()
                 )
             ),
-            8080
+            6001
         );
         $this->info('Сервер запущен');
         $server->run();
