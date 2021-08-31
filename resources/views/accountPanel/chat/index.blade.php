@@ -30,7 +30,7 @@
                       <li class="clearfix">
                         <a href="{{ route('accountPanel.chat', auth()->user()->partner()->first()->getPartnerChat()) }}">
                           <img class="rounded-circle user-image" src="{{ auth()->user()->partner()->first()->avatar ? route('accountPanel.profile.get.avatar',auth()->user()->partner()->first()->id) : asset('accountPanel/images/user/16.png')  }}" alt="">
-                          <div class="status-circle "></div>
+                          <div class="status-circle {{  auth()->user()->partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           <div class="about">
                             <div class="name">{{ auth()->user()->partner()->first()->login }}</div>
                             <div class="status">Partner</div>
@@ -43,7 +43,7 @@
                         <li class="clearfix">
                           <a href="{{ route('accountPanel.chat', $user->getReferralChat()) }}">
                             <img class="rounded-circle user-image" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar',$user->id) : asset('accountPanel/images/user/16.png') }}" alt="">
-                            <div class="status-circle "></div>
+                            <div class="status-circle {{ $user->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                             <div class="about">
                               <div class="name">{{ $user->login }}</div>
                               <div class="status">Referral</div>
@@ -145,8 +145,94 @@
   </div>
 @endsection
 @push('scripts')
-
   @if($chat)
+  <script src="{{ asset('/js/app.js') }}"></script>
+{{--  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>--}}
+  <script>
+    $(document).ready(function () {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+        "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+      function scrollChat() {
+        var container = $('.chat-history'),
+            scrollTo = $('.chat-msg-list');
+        container.scrollTop(scrollTo.prop('scrollHeight'));
+      }
+      scrollChat();
+  
+     // Pusher.logToConsole = true;
+    
+      window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
+        var $data = data;
+        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
+            $(".chat-msg-list").append('<li>' +
+                '<div class="message my-message mb-0">' +
+                '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">' +
+                '   <div class="message-data text-end">' +
+                '    <span class="message-data-time">' + $data.time + '</span>' +
+                '   </div>' +
+                $data.message +
+                '  </div>' +
+                '</li>');
+          } else {
+            $(".chat-msg-list").append('<li class="clearfix">' +
+                '<div class="message other-message pull-right">' +
+                '<img class="rounded-circle float-end chat-user-img img-30" src="{{ $companion->avatar ? route('accountPanel.profile.get.avatar',$companion->id) : asset('accountPanel/images/user/16.png') }}" alt="">' +
+                '<div class="message-data">' +
+                '  <span class="message-data-time">' + $data.time + '</span>' +
+                ' </div>' +
+                $data.message +
+                ' </div>' +
+                '</li>');
+          }
+        scrollChat();
+      });
+    
+      $(".send-message-btn").on('click', function (e) {
+        var $message = $("#message-to-send").val();
+        if ($message.length > 0) {
+          var $options = {
+            method: "post",
+            url: "{{ route('accountPanel.chat.send.message') }}",
+            data: {
+              user: "{{ auth()->user()->id }}",
+              message: $message,
+              chat_id: "{{ $chat->id }}",
+              type: "message",
+            }
+          }
+          window.axios($options);
+        }
+        $("#message-to-send").val('');
+      });
+      $("#message-to-send").keyup(function (event) {
+        if (event.keyCode == 13) {
+          var $message = $(this).val();
+          if ($message.length > 0) {
+            var $options = {
+              method: "post",
+              url: "{{ route('accountPanel.chat.send.message') }}",
+              data: {
+                user: "{{ auth()->user()->id }}",
+                message: $message,
+                chat_id: "{{ $chat->id }}",
+                type: "message",
+              }
+            }
+            window.axios($options);
+          }
+          $(this).val('');
+        }
+      });
+  
+      function addZeroBefore(n) {
+        return (n < 10 ? '0' : '') + n;
+      }
+    });
+    
+  </script>
+  @endif
+  {{--@if($chat)
     <script>
       window.onload = function () {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -174,9 +260,6 @@
             $(this).val('');
           }
         });
-        
-     
-        
         var conn = new WebSocket((window.location.protocol === "http:" ? "ws" : "wss") + "://" + window.location.host + ":6001");
         
         conn.onmessage = function ($data) {
@@ -258,5 +341,5 @@
         });
       };
     </script>
-  @endif
+  @endif--}}
 @endpush

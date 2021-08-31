@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AccountPanel;
 
+use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use App\Models\Transaction;
 use App\Models\Wallet;

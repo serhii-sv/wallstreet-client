@@ -6,6 +6,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckPermissions;
 use App\Http\Middleware\CheckSiteEnabled;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -42,7 +43,6 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-
             \App\Http\Middleware\SetLang::class,
             \App\Http\Middleware\SetLastActivity::class,
         ],
@@ -76,7 +76,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'locked.user' => \App\Http\Middleware\LockedUser::class,
         '2fa' => \App\Http\Middleware\LoginSecurityMiddleware::class,
-
+        'permission.check' => CheckPermissions::class,
         'checkSiteEnabled' => CheckSiteEnabled::class
 
     ];

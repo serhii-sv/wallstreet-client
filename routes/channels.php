@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -14,7 +15,12 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-//Broadcast::channel('chat.{chat_id}', function ($user, $chat_id) {
+//Broadcast::channel('private-chat', function ($user, $chat_id) {
 //    return true;
 //});
-
+Broadcast::channel('chat.{chat_id}', function ($user, $chat_id) {
+    $chat = Chat::where('id', $chat_id)->first();
+    if ($chat->checkUser($user->id)) {
+        return true;
+    }
+});

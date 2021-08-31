@@ -7,6 +7,8 @@
 //use Illuminate\Routing\Route;
 
 use App\Http\Controllers\AccountPanel\AccountSettingsController;
+use App\Http\Controllers\AccountPanel\CalendarController;
+use App\Http\Controllers\AccountPanel\CurrencyController;
 use App\Http\Controllers\AccountPanel\DepositsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
 use App\Http\Controllers\AccountPanel\ProfileController;
@@ -15,8 +17,7 @@ use App\Http\Controllers\AccountPanel\TransactionsController;
 use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\AccountPanel\ChatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,12 +56,16 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
         Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
             
+            Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('log')->middleware('permission.check');
+            
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/theme-settings', [UserThemeSettingController::class, 'store'])->name('theme-settings');
             Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
             Route::post('/dashboard/store-user-video', [DashboardController::class, 'storeUserVideo'])->name('dashboard.store.user.video');
-    
+            
             Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals');
+            
+            Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     
             Route::get('/currency-exchange', [CurrencyController::class, 'showCurrencyExchange'])->name('currency.exchange');
             Route::post('/currency-exchange', [CurrencyController::class, 'currencyExchange'])->name('currency.exchange');
@@ -83,6 +88,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
     
             Route::get('/chat/{chat_id?}', [ChatController::class, 'index'])->name('chat');
+            Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send.message');
             
             Route::prefix('support-tasks')->as('support-tasks.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'index'])->name('index');
@@ -103,7 +109,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
         Route::post('/generateSecret', [\App\Http\Controllers\LoginSecurityController::class, 'generate2faSecret'])->name('generate2faSecret');
         Route::post('/enable2fa', [\App\Http\Controllers\LoginSecurityController::class, 'enable2fa'])->name('enable2fa');
         Route::post('/disable2fa', [\App\Http\Controllers\LoginSecurityController::class, 'disable2fa'])->name('disable2fa');
-
+        
         // 2fa middleware
         Route::post('/2faVerify', function () {
             return redirect(URL()->previous());

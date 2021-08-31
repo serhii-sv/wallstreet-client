@@ -40,6 +40,12 @@
                           <i data-feather="user"></i><span>{{ __('Chat') }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-list">
+                        {{--<label class="badge badge-success">2</label>--}}
+                        <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.calendar') }}">
+                          <i data-feather="user"></i><span>{{ __('Calendar') }}</span>
+                        </a>
+                    </li>
                   <li class="sidebar-list">
                     {{--<label class="badge badge-success">2</label>--}}
                     <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.index') }}">
