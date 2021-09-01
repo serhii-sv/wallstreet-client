@@ -160,7 +160,7 @@
       }
       scrollChat();
   
-     // Pusher.logToConsole = true;
+      Pusher.logToConsole = true;
     
       window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
         var $data = data;
