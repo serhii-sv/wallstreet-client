@@ -14,9 +14,6 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        auth()->user()->update([
-            'last_activity_at' => now()
-        ]);
         if (! $request->expectsJson()) {
             return route('login');
         }
