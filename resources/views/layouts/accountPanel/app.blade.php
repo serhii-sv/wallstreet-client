@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/date-picker.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/select2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/sweetalert2.css') }}">
+    <!--Start of Tawk.to Script--> <script type="text/javascript"> var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date(); (function(){ var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0]; s1.async=true; s1.src='https://embed.tawk.to/612dc757649e0a0a5cd3c665/1fedd5c13'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0); })(); </script> <!--End of Tawk.to Script-->
     <style>
         .pagination {
             /* Pagination button styling */
@@ -155,9 +156,9 @@
   {{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
   <!-- login js-->
     <!-- Plugin used-->
-    
+
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
-    
+
     <script type="text/javascript">
       $.ajaxSetup({
         headers: {
