@@ -39,4 +39,11 @@ class Chat extends Model
         }
         return false;
     }
+    
+    public function getUnreadMessagesCount($user_id) {
+        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->count();
+    }
+    public function getUnreadMessages($user_id) {
+        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->get();
+    }
 }

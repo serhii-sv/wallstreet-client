@@ -22,6 +22,7 @@ class PrivateChat implements ShouldBroadcast
      * @return void
      */
     public $message;
+    public $message_id;
     public $user;
     public $chat_id;
     public $time;
@@ -31,6 +32,7 @@ class PrivateChat implements ShouldBroadcast
         $this->chat_id = $chatMessage->chat_id;
         $this->user = $chatMessage->user_id;
         $this->message = $chatMessage->message;
+        $this->message_id = $chatMessage->id;
         $this->time = $chatMessage->created_at->format('d.M H:i:s');
     }
     
@@ -44,6 +46,7 @@ class PrivateChat implements ShouldBroadcast
             'chat_id' => $this->chat_id,
             'message' => $this->message,
             'time' => $this->time,
+            'message_id' => $this->message_id,
         ];
     }
 }

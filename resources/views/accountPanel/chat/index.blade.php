@@ -28,26 +28,29 @@
                   <ul class="list">
                     @if(!empty(auth()->user()->partner()->first()))
                       <li class="clearfix">
-                        <a href="{{ route('accountPanel.chat', auth()->user()->partner()->first()->getPartnerChat()) }}">
+                        <a href="{{ route('accountPanel.chat', auth()->user()->partner()->first()->getPartnerChatId()) }}">
                           <img class="rounded-circle user-image" src="{{ auth()->user()->partner()->first()->avatar ? route('accountPanel.profile.get.avatar',auth()->user()->partner()->first()->id) : asset('accountPanel/images/user/16.png')  }}" alt="">
                           <div class="status-circle {{  auth()->user()->partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           <div class="about">
                             <div class="name">{{ auth()->user()->partner()->first()->login }}</div>
                             <div class="status">Partner</div>
+                          
                           </div>
+                          <span class="unread badge round-badge-primary">{{auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' .  auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
                         </a>
                       </li>
                     @endif
                     @if(!empty(auth()->user()->hasReferrals()))
                       @foreach(auth()->user()->referrals()->get() as $user)
                         <li class="clearfix">
-                          <a href="{{ route('accountPanel.chat', $user->getReferralChat()) }}">
+                          <a href="{{ route('accountPanel.chat', $user->getReferralChatId()) }}">
                             <img class="rounded-circle user-image" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar',$user->id) : asset('accountPanel/images/user/16.png') }}" alt="">
                             <div class="status-circle {{ $user->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                             <div class="about">
                               <div class="name">{{ $user->login }}</div>
                               <div class="status">Referral</div>
                             </div>
+                            <span class="unread badge round-badge-primary">{{ $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' . $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
                           </a>
                         </li>
                       @endforeach
@@ -146,25 +149,39 @@
 @endsection
 @push('scripts')
   @if($chat)
-  <script src="{{ asset('/js/app.js') }}"></script>
-{{--  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>--}}
-  <script>
-    $(document).ready(function () {
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-        "July", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ];
-      function scrollChat() {
-        var container = $('.chat-history'),
-            scrollTo = $('.chat-msg-list');
-        container.scrollTop(scrollTo.prop('scrollHeight'));
-      }
-      scrollChat();
-  
-      Pusher.logToConsole = true;
-    
-      window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
-        var $data = data;
-        if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
+    <script src="{{ asset('/js/app.js') }}"></script>
+    {{--  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>--}}
+    <script>
+      $(document).ready(function () {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+          "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        
+        function scrollChat() {
+          var container = $('.chat-history'),
+              scrollTo = $('.chat-msg-list');
+          container.scrollTop(scrollTo.prop('scrollHeight'));
+        }
+        
+        scrollChat();
+        Pusher.logToConsole = true;
+        window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
+          var $data = data;
+          var $message_id = $data.message_id;
+          
+          if (!($data.user == "{{ auth()->user()->id }}")) {
+            var $options = {
+              method: "post",
+              url: "{{ route('accountPanel.chat.message.read') }}",
+              data: {
+                user: "{{ auth()->user()->id }}",
+                message_id: $message_id,
+              }
+            }
+            window.axios($options);
+          }
+          
+          if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
             $(".chat-msg-list").append('<li>' +
                 '<div class="message my-message mb-0">' +
                 '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">' +
@@ -185,29 +202,11 @@
                 ' </div>' +
                 '</li>');
           }
-        scrollChat();
-      });
-    
-      $(".send-message-btn").on('click', function (e) {
-        var $message = $("#message-to-send").val();
-        if ($message.length > 0) {
-          var $options = {
-            method: "post",
-            url: "{{ route('accountPanel.chat.send.message') }}",
-            data: {
-              user: "{{ auth()->user()->id }}",
-              message: $message,
-              chat_id: "{{ $chat->id }}",
-              type: "message",
-            }
-          }
-          window.axios($options);
-        }
-        $("#message-to-send").val('');
-      });
-      $("#message-to-send").keyup(function (event) {
-        if (event.keyCode == 13) {
-          var $message = $(this).val();
+          scrollChat();
+        });
+        
+        $(".send-message-btn").on('click', function (e) {
+          var $message = $("#message-to-send").val();
           if ($message.length > 0) {
             var $options = {
               method: "post",
@@ -221,16 +220,34 @@
             }
             window.axios($options);
           }
-          $(this).val('');
+          $("#message-to-send").val('');
+        });
+        $("#message-to-send").keyup(function (event) {
+          if (event.keyCode == 13) {
+            var $message = $(this).val();
+            if ($message.length > 0) {
+              var $options = {
+                method: "post",
+                url: "{{ route('accountPanel.chat.send.message') }}",
+                data: {
+                  user: "{{ auth()->user()->id }}",
+                  message: $message,
+                  chat_id: "{{ $chat->id }}",
+                  type: "message",
+                }
+              }
+              window.axios($options);
+            }
+            $(this).val('');
+          }
+        });
+        
+        function addZeroBefore(n) {
+          return (n < 10 ? '0' : '') + n;
         }
       });
-  
-      function addZeroBefore(n) {
-        return (n < 10 ? '0' : '') + n;
-      }
-    });
     
-  </script>
+    </script>
   @endif
   {{--@if($chat)
     <script>

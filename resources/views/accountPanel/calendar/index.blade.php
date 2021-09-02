@@ -12,9 +12,6 @@
           <div class="col-sm-12 col-lg-12 col-xl-12">
             <div class="d-flex event-calendar">
               <div id="lnb">
-                <div class="lnb-new-schedule text-center">
-                  <button class="btn btn-primary" id="btn-new-schedule" type="button" data-bs-toggle="modal" data-bs-original-title="" title="">New schedule</button>
-                </div>
                 <div class="lnb-calendars" id="lnb-calendars">
                   <div>
                     <div class="lnb-calendars-item">
@@ -35,36 +32,6 @@
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
                         <span>Company</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(255, 85, 131); background-color: rgb(255, 85, 131);"></span>
-                        <span>Family</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="4" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(3, 189, 158); background-color: rgb(3, 189, 158);"></span>
-                        <span>Friend</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="5" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(187, 220, 0); background-color: rgb(187, 220, 0);"></span>
-                        <span>Travel</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="6" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(157, 157, 157); background-color: rgb(157, 157, 157);"></span>
-                        <span>etc</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="7" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(255, 187, 59); background-color: rgb(255, 187, 59);"></span>
-                        <span>Birthdays</span>
-                      </label></div>
-                    <div class="lnb-calendars-item">
-                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="8" checked="" data-bs-original-title="" title="">
-                        <span style="border-color: rgb(255, 64, 64); background-color: rgb(255, 64, 64);"></span>
-                        <span>National Holidays</span>
                       </label></div>
                   </div>
                 </div>
@@ -108,8 +75,8 @@
 @endpush
 @push('scripts')
   <script src="{{ asset('accountPanel/js/calendar/tui-code-snippet.min.js') }}"></script>
-  <script src="{{ asset('accountPanel/js/calendar/tui-time-picker.min.js') }}"></script>
-  <script src="{{ asset('accountPanel/js/calendar/tui-date-picker.min.js') }}"></script>
+ {{-- <script src="{{ asset('accountPanel/js/calendar/tui-time-picker.min.js') }}"></script>
+  <script src="{{ asset('accountPanel/js/calendar/tui-date-picker.min.js') }}"></script>--}}
   <script src="{{ asset('accountPanel/js/calendar/moment.min.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/chance.min.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/tui-calendar.js') }}"></script>

@@ -32,6 +32,9 @@ class ComposerServiceProvider extends ServiceProvider
             ['layouts.accountPanel.header'], NavbarComposer::class
         );
         View::composer(
+            ['layouts.accountPanel.sidebar'], NavbarComposer::class
+        );
+        View::composer(
             ['layouts.accountPanel.breadcrumbs'], BreadcrumbsComposer::class
         );
     }

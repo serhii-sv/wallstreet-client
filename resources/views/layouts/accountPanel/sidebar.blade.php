@@ -38,6 +38,7 @@
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}">
                           <i data-feather="user"></i><span>{{ __('Chat') }}</span>
+                          <span class="round-badge-primary badge ">{{ $total_unread_messages > 0 ? "+" . $total_unread_messages : 0 }}</span>
                         </a>
                     </li>
                     <li class="sidebar-list">

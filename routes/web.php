@@ -89,6 +89,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
             Route::get('/chat/{chat_id?}', [ChatController::class, 'index'])->name('chat');
             Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send.message');
+            Route::post('/chat/read-message', [ChatController::class, 'readMessage'])->name('chat.message.read');
             
             Route::prefix('support-tasks')->as('support-tasks.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\AccountPanel\SupportTaskController::class, 'index'])->name('index');
