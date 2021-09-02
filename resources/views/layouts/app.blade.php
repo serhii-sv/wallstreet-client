@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('theme/css/main.css') }}">
 
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+
   </head>
 
   <body>
