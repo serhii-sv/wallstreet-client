@@ -13,53 +13,64 @@
             <div class="d-flex event-calendar">
               <div id="lnb">
                 <div class="lnb-calendars" id="lnb-calendars">
-                  <div>
-                    <div class="lnb-calendars-item">
-                      <label>
-                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked="" data-bs-original-title="" title="">
-                        <span></span>
-                        <strong>View all</strong>
-                      </label>
-                    </div>
-                  </div>
+                  {{--       <div>
+                           <div class="lnb-calendars-item">
+                             <label>
+                               <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked="" data-bs-original-title="" title="">
+                               <span></span>
+                               <strong>Показать все</strong>
+                             </label>
+                           </div>
+                         </div>--}}
                   <div class="lnb-calendars-d1" id="calendarList">
                     <div class="lnb-calendars-item">
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="1" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
-                        <span>My Calendar</span>
-                      </label></div>
+                        <span>Начисления</span>
+                      </label>
+                    </div>
                     <div class="lnb-calendars-item">
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
-                        <span>Company</span>
-                      </label></div>
+                        <span>Выводы</span>
+                      </label>
+                    </div>
+                    <div class="lnb-calendars-item">
+                      <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="" data-bs-original-title="" title="">
+                        <span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
+                        <span>Рефералка</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
               <div id="right">
-                <div id="menu">
+                {{--<div id="menu">
                   <div class="dropdown d-inline">
-                    <button class="btn btn-default btn-sm dropdown-toggle" id="dropdownMenu-calendarType" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bs-original-title="" title=""><i class="calendar-icon ic_view_week" id="calendarTypeIcon" style="margin-right: 4px;"></i><span id="calendarTypeName">Weekly</span><i class="calendar-icon tui-full-calendar-dropdown-arrow"></i></button>
+                    <button class="btn btn-default btn-sm dropdown-toggle" id="dropdownMenu-calendarType" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bs-original-title="" title="">
+                      <i class="calendar-icon ic_view_week" id="calendarTypeIcon" style="margin-right: 4px;"></i>
+                      <span id="calendarTypeName">Weekly</span>
+                      <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                      <li role="presentation"><a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily" data-bs-original-title="" title=""><i class="calendar-icon ic_view_day"></i>Daily</a></li>
-                      <li role="presentation"><a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly" data-bs-original-title="" title=""><i class="calendar-icon ic_view_week"></i>Weekly</a></li>
-                      <li role="presentation"><a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly" data-bs-original-title="" title=""><i class="calendar-icon ic_view_month"></i>Month</a></li>
-                      <li class="dropdown-divider" role="presentation"></li>
-                      <li role="presentation"><a role="menuitem" data-action="toggle-workweek" data-bs-original-title="" title=""></a>
-                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="toggle-workweek" checked="" data-bs-original-title="" title=""><span class="checkbox-title"></span>Show weekends
+                      <li role="presentation">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily" data-bs-original-title="" title="">
+                          <i class="calendar-icon ic_view_day"></i>Daily
+                        </a>
                       </li>
-                      <li role="presentation"><a role="menuitem" data-action="toggle-start-day-1" data-bs-original-title="" title=""></a>
-                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="toggle-start-day-1" data-bs-original-title="" title=""><span class="checkbox-title"></span>Start Week on Monday
-                      </li>
-                      <li role="presentation"><a role="menuitem" data-action="toggle-narrow-weekend" data-bs-original-title="" title=""></a>
-                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="toggle-narrow-weekend" data-bs-original-title="" title=""><span class="checkbox-title"></span>Narrower than weekdays
+                      --}}{{--                      <li role="presentation"><a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly" data-bs-original-title="" title=""><i class="calendar-icon ic_view_week"></i>Weekly</a></li>--}}{{--
+                      <li role="presentation">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly" data-bs-original-title="" title="">
+                          <i class="calendar-icon ic_view_month"></i>Month
+                        </a>
                       </li>
                     </ul>
-                  </div><span id="menu-navi">
+                  </div>
+                  <span id="menu-navi">
                           <button class="btn btn-default btn-sm move-today" type="button" data-action="move-today" data-bs-original-title="" title="">Today</button>
                           <button class="btn btn-default btn-sm move-day" type="button" data-action="move-prev" data-bs-original-title="" title=""><i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i></button>
-                          <button class="btn btn-default btn-sm move-day" type="button" data-action="move-next" data-bs-original-title="" title=""><i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i></button></span><span class="render-range" id="renderRange">2021.08.29 ~  09.04</span>
-                </div>
+                          <button class="btn btn-default btn-sm move-day" type="button" data-action="move-next" data-bs-original-title="" title=""><i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i></button></span>
+                  <span class="render-range" id="renderRange">2021.08.29 ~  09.04</span>
+                </div>--}}
                 <div id="calendar"></div>
               </div>
             </div>
@@ -75,12 +86,148 @@
 @endpush
 @push('scripts')
   <script src="{{ asset('accountPanel/js/calendar/tui-code-snippet.min.js') }}"></script>
- {{-- <script src="{{ asset('accountPanel/js/calendar/tui-time-picker.min.js') }}"></script>
-  <script src="{{ asset('accountPanel/js/calendar/tui-date-picker.min.js') }}"></script>--}}
+  {{-- <script src="{{ asset('accountPanel/js/calendar/tui-time-picker.min.js') }}"></script>
+   <script src="{{ asset('accountPanel/js/calendar/tui-date-picker.min.js') }}"></script>--}}
   <script src="{{ asset('accountPanel/js/calendar/moment.min.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/chance.min.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/tui-calendar.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/calendars.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/schedules.js') }}"></script>
   <script src="{{ asset('accountPanel/js/calendar/app.js') }}"></script>
+  <script>
+    console.log(window.cal);
+    var title = "Test";
+    var isAllDay = true;
+    var start = new Date();
+    var end = new Date();
+    var calendarList = document.getElementById('calendarList');
+    var html = [];
+    CalendarList.forEach(function (calendar) {
+      @if($partners)
+      @foreach($partners as $day => $items)
+      @foreach($items as $item)
+        if (calendar.id == 1) {
+          window.cal.createSchedules([{
+            id: String(chance.guid()),
+            calendarId: calendar.id,
+            title: "Рефералка",
+            body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за рефералку",
+            isAllDay: isAllDay,
+            start: "{{ $day }}",
+            end: "{{ $day }}",
+            category: isAllDay ? 'allday' : 'time',
+            dueDateClass: '',
+            color: calendar.color,
+            bgColor: calendar.bgColor,
+            dragBgColor: calendar.bgColor,
+            borderColor: calendar.borderColor,
+          }]);
+        }
+      @endforeach
+      @endforeach
+      @endif
+      @if($bonuses)
+      @foreach($bonuses as $day => $items)
+      @foreach($items as $item)
+      if (calendar.id == 1) {
+        window.cal.createSchedules([{
+          id: String(chance.guid()),
+          calendarId: calendar.id,
+          title: "Бонус",
+          body: "Вам начислен бонус, в размере {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) ",
+          isAllDay: isAllDay,
+          start: "{{ $day }}",
+          end: "{{ $day }}",
+          category: isAllDay ? 'allday' : 'time',
+          dueDateClass: '',
+          color: calendar.color,
+          bgColor: calendar.bgColor,
+          dragBgColor: calendar.bgColor,
+          borderColor: calendar.borderColor,
+        }]);
+      }
+      @endforeach
+      @endforeach
+      @endif
+      @if($dividends)
+      @foreach($dividends as $day => $items)
+      @foreach($items as $item)
+      if (calendar.id == 1) {
+        window.cal.createSchedules([{
+          id: String(chance.guid()),
+          calendarId: calendar.id,
+          title: "Дивиденды",
+          body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за депозит {{ $item->rate->name ?? '' }}",
+          isAllDay: isAllDay,
+          start: "{{ $day }}",
+          end: "{{ $day }}",
+          category: isAllDay ? 'allday' : 'time',
+          dueDateClass: '',
+          color: calendar.color,
+          bgColor: calendar.bgColor,
+          dragBgColor: calendar.bgColor,
+          borderColor: calendar.borderColor,
+        }]);
+      }
+      @endforeach
+      @endforeach
+      @endif
+      @if($transfers)
+      @foreach($transfers as $day => $items)
+      @foreach($items as $item)
+      if (calendar.id == 1) {
+          window.cal.createSchedules([{
+            id: String(chance.guid()),
+            calendarId: calendar.id,
+            title: "Перевод средств",
+            body: "Вам перевели {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$)",
+            isAllDay: isAllDay,
+            start: "{{ $day }}",
+            end: "{{ $day }}",
+            category: isAllDay ? 'allday' : 'time',
+            dueDateClass: '',
+            color: calendar.color,
+            bgColor: calendar.bgColor,
+            dragBgColor: calendar.bgColor,
+            borderColor: calendar.borderColor,
+          }]);
+        }
+        @endforeach
+      @endforeach
+      @endif
+      
+      @foreach($withdraws as $day => $items)
+      @foreach($items as $item)
+      if (calendar.id == 2) {
+        window.cal.createSchedules([{
+          id: String(chance.guid()),
+          calendarId: calendar.id,
+          title: "Вывод средств",
+          body: "Вы вывели {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$)",
+          isAllDay: isAllDay,
+          start: "{{ $day }}",
+          end: "{{ $day }}",
+          category: isAllDay ? 'allday' : 'time',
+          dueDateClass: '',
+          color: calendar.color,
+          bgColor: calendar.bgColor,
+          dragBgColor: calendar.bgColor,
+          borderColor: calendar.borderColor,
+        }]);
+      }
+      @endforeach
+      @endforeach
+          
+          calendarList.innerHTML
+          = html.join('\n');
+      html.push('<div class="lnb-calendars-item"><label>' +
+          '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
+          '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
+          '<span>' + calendar.name + '</span>' +
+          '</label></div>'
+      );
+    });
+    calendarList.innerHTML = html.join('\n');
+  
+  </script>
 @endpush

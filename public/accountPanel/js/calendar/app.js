@@ -12,11 +12,12 @@
   var datePicker, selectedCalendar;
   
   cal = new Calendar('#calendar', {
-    defaultView: 'week',
+    defaultView: 'month',
     isReadOnly: true,
     useCreationPopup: useCreationPopup,
     useDetailPopup: useDetailPopup,
     calendars: CalendarList,
+    scheduleView: false,
     template: {
       milestone: function (model) {
         return '<span class="calendar-font-icon ic-milestone-b"></span> <span style="background-color: ' + model.bgColor + '">' + model.title + '</span>';
@@ -29,7 +30,37 @@
       }
     }
   });
-  
+  /*
+  var calendar = new Calendar('#calendar', {
+    defaultView: 'month',
+    taskView: true,
+    template: {
+      monthDayname: function(dayname) {
+        return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
+      }
+    }
+  });
+  calendar.createSchedules([
+    {
+      id: '1',
+      calendarId: '1',
+      title: 'my schedule',
+      category: 'time',
+      dueDateClass: '',
+      start: '2021-09-04T22:30:00+08:00',
+      end: '2021-09-04T02:30:00+08:00'
+    },
+    {
+      id: '2',
+      calendarId: '2',
+      title: 'second schedule',
+      category: 'time',
+      dueDateClass: '',
+      start: '2021-09-04T17:30:00+09:00',
+      end: '2021-09-04T17:31:00+09:00',
+      isReadOnly: true    // schedule is read-only
+    }
+  ]);*/
   // event handlers
   cal.on({
     'clickMore': function (e) {
@@ -140,14 +171,6 @@
         options.month.visibleWeeksCount = 0;
         viewName = 'month';
         break;
-      case 'toggle-weeks2':
-        options.month.visibleWeeksCount = 2;
-        viewName = 'month';
-        break;
-      case 'toggle-weeks3':
-        options.month.visibleWeeksCount = 3;
-        viewName = 'month';
-        break;
       case 'toggle-narrow-weekend':
         options.month.narrowWeekend = !options.month.narrowWeekend;
         options.week.narrowWeekend = !options.week.narrowWeekend;
@@ -155,13 +178,7 @@
         
         target.querySelector('input').checked = options.month.narrowWeekend;
         break;
-      case 'toggle-start-day-1':
-        options.month.startDayOfWeek = options.month.startDayOfWeek ? 0 : 1;
-        options.week.startDayOfWeek = options.week.startDayOfWeek ? 0 : 1;
-        viewName = cal.getViewName();
-        
-        target.querySelector('input').checked = options.month.startDayOfWeek;
-        break;
+     
       case 'toggle-workweek':
         options.month.workweek = !options.month.workweek;
         options.week.workweek = !options.week.workweek;
@@ -205,7 +222,7 @@
   function onNewSchedule() {
     var title = $('#new-schedule-title').val();
     var location = $('#new-schedule-location').val();
-    var isAllDay = document.getElementById('new-schedule-allday').checked;
+    var isAllDay = false;
     var start = datePicker.getStartDate();
     var end = datePicker.getEndDate();
     var calendar = selectedCalendar ? selectedCalendar : CalendarList[0];
