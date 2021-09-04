@@ -110,7 +110,7 @@
           window.cal.createSchedules([{
             id: String(chance.guid()),
             calendarId: calendar.id,
-            title: "Рефералка",
+            title: "Рефералка {{ $item->main_currency_amount }}$",
             body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за рефералку",
             isAllDay: isAllDay,
             start: "{{ $day }}",
@@ -133,7 +133,7 @@
         window.cal.createSchedules([{
           id: String(chance.guid()),
           calendarId: calendar.id,
-          title: "Бонус",
+          title: "Бонус {{ $item->main_currency_amount }}$",
           body: "Вам начислен бонус, в размере {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) ",
           isAllDay: isAllDay,
           start: "{{ $day }}",
@@ -156,7 +156,7 @@
         window.cal.createSchedules([{
           id: String(chance.guid()),
           calendarId: calendar.id,
-          title: "Дивиденды",
+          title: "Дивиденды {{ $item->main_currency_amount }}$",
           body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за депозит {{ $item->rate->name ?? '' }}",
           isAllDay: isAllDay,
           start: "{{ $day }}",
@@ -179,7 +179,7 @@
           window.cal.createSchedules([{
             id: String(chance.guid()),
             calendarId: calendar.id,
-            title: "Перевод средств",
+            title: "Перевод средств {{ $item->main_currency_amount }}$",
             body: "Вам перевели {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$)",
             isAllDay: isAllDay,
             start: "{{ $day }}",
@@ -202,7 +202,7 @@
         window.cal.createSchedules([{
           id: String(chance.guid()),
           calendarId: calendar.id,
-          title: "Вывод средств",
+          title: "Вывод средств {{ $item->main_currency_amount }}$",
           body: "Вы вывели {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$)",
           isAllDay: isAllDay,
           start: "{{ $day }}",
