@@ -37,14 +37,14 @@
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}">
-                          <i data-feather="user"></i><span>{{ __('Chat') }}</span>
+                          <i data-feather="message-circle"></i><span>{{ __('Chat') }}</span>
                           <span class="round-badge-primary badge ">{{ $total_unread_messages > 0 ? "+" . $total_unread_messages : 0 }}</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.calendar') }}">
-                          <i data-feather="user"></i><span>{{ __('Calendar') }}</span>
+                          <i data-feather="calendar"></i><span>{{ __('Calendar') }}</span>
                         </a>
                     </li>
                   <li class="sidebar-list">
@@ -56,7 +56,7 @@
                   <li class="sidebar-list">
                     {{--<label class="badge badge-success">2</label>--}}
                     <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.transactions') }}">
-                      <i data-feather="layers"></i>{{ __('All operations') }}</span>
+                      <i data-feather="list"></i><span>{{ __('All operations') }}</span>
                     </a>
                   </li>
                     <li class="sidebar-list">
@@ -68,13 +68,13 @@
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.currency.exchange') }}">
-                          <i data-feather="dollar-sign"></i><span>{{ __('Currency exchange') }}</span>
+                          <i data-feather="trending-down"></i><span>{{ __('Currency exchange') }}</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}">
-                          <i data-feather="dollar-sign"></i><span>{{ __('Refferals') }}</span>
+                          <i data-feather="users"></i><span>{{ __('Refferals') }}</span>
                         </a>
                     </li>
                   
@@ -88,7 +88,7 @@
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.support-tasks.index') }}">
-                            <i data-feather="info"></i>{{ __('Support tasks') }}</span>
+                            <i data-feather="info"></i><span>{{ __('Support tasks') }}</span>
                         </a>
                     </li>
                     <li class="sidebar-list">

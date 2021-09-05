@@ -43,7 +43,7 @@ class ChatController extends Controller
             $companionAvatar = false;
             $chat_messages = false;
         }
-        $myAvatar = Auth()->user()->avatar ? route('accountPanel.profile.get.avatar', Auth()->user()->id) : asset('accountPanel/images/user/16.png');
+        $myAvatar = Auth()->user()->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/user.png');
         return view('accountPanel.chat.index', [
             'chat_id' => $chat_id,
             'chat' => $chat,

@@ -85,7 +85,7 @@ class DashboardController extends Controller
         $request_user = $request->get('user');
         $user = Auth::user();
         $recipient_user = User::where('login', $request_user)->orWhere('email', $request_user)->first();
-        if ($user === $recipient_user) {
+        if ($user->id === $recipient_user->id) {
             return back()->with('short_error', 'Нельзя переводить самому себе!');
         }
         $amount = abs($request->get('amount'));

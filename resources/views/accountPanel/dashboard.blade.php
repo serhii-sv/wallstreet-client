@@ -12,11 +12,13 @@
               <div class="card o-hidden">
                 <div class="bg-primary b-r-4 card-body">
                   <div class="media static-top-widget">
-                    <div class="align-self-center text-center"><i data-feather="database"></i></div>
+                    <div class="align-self-center text-center">
+                      <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
+                    </div>
                     <div class="media-body">
                       <span class="m-0">Balance in {{ $item->currency->name }}</span>
                       <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
-                      <i class="icon-bg" data-feather="database"></i>
+                      <i class="icon-bg" data-feather="credit-card"></i>
                     </div>
                   </div>
                 </div>

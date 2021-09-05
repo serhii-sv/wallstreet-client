@@ -175,17 +175,12 @@
               </a>
             </li>
             <li>
-              <a href="#"><i data-feather="mail"></i>
-                <span>Inbox</span>
-              </a>
-            </li>
-            <li>
-              <a href="#"><i data-feather="file-text"></i>
+              <a href="{{ route('accountPanel.support-tasks.index') }}"><i data-feather="file-text"></i>
                 <span>Taskboard</span>
               </a>
             </li>
             <li>
-              <a href="#"><i data-feather="settings"></i>
+              <a href="{{ route('accountPanel.settings.security') }}"><i data-feather="settings"></i>
                 <span>Settings</span>
               </a>
             </li>

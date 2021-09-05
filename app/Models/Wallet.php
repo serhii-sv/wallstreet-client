@@ -100,8 +100,8 @@ class Wallet extends Model
         return $this;
     }
     
-    public function exchangeCurrency($wallet_from, $wallet_to, $amount,$commission = 0) {
-        if (Transaction::exchangeOutCurrency($wallet_from, $amount)) {
+    public function exchangeCurrency($wallet_from, $wallet_to, $amount, $commission = 0) {
+        if ($transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount)) {
             $wallet_from->removeAmount($amount);
         } else {
             return null;
@@ -110,14 +110,27 @@ class Wallet extends Model
         
         $balance = $this->convertToCurrency($this->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
         $balance = $this->convertToCurrency($toCurrency, $wallet_to->currency()->first(), $balance);
-        if (Transaction::exchangeInCurrency($wallet_to, $balance)) {
+        if ($transaction_in = Transaction::exchangeInCurrency($wallet_to, $balance)) {
             $wallet_to->update(['balance' => $wallet_to->balance + $balance]);
-            return true;
-        }else {
+            $currency_exchange = new CurrencyExchange();
+            $currency_exchange->user_id = $wallet_from->user_id;
+            $currency_exchange->transaction_in = $transaction_in->id;
+            $currency_exchange->transaction_out = $transaction_out->id;
+            $currency_exchange->currency_in = $wallet_to->currency()->first()->id;
+            $currency_exchange->currency_out = $wallet_from->currency()->first()->id;
+            $currency_exchange->amount_in = $transaction_in->amount;
+            $currency_exchange->amount_out = $transaction_out->amount;
+            $currency_exchange->main_currency_amount_in = $transaction_in->main_currency_amount;
+            $currency_exchange->main_currency_amount_out = $transaction_out->main_currency_amount;
+            $currency_exchange->commission = 1;
+            if ($currency_exchange->save()) {
+                return true;
+            }
+        } else {
             return false;
         }
     }
-    
+
     /**
      * @param $amount
      *

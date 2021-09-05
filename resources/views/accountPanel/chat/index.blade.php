@@ -11,7 +11,7 @@
               <!-- Chat left side Start-->
               <div class="chat-left-aside">
                 <div class="media">
-                  <img class="rounded-circle user-image" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">
+                  <img class="rounded-circle user-image" src="{{ $myAvatar ?? asset('accountPanel/images/user/user.png') }}" alt="">
                   <div class="about">
                     <div class="name f-w-600">{{ auth()->user()->name }}</div>
                     <div class="status">{{ auth()->user()->login }}</div>
@@ -29,7 +29,7 @@
                     @if(!empty(auth()->user()->partner()->first()))
                       <li class="clearfix">
                         <a href="{{ route('accountPanel.chat', auth()->user()->partner()->first()->getPartnerChatId()) }}">
-                          <img class="rounded-circle user-image" src="{{ auth()->user()->partner()->first()->avatar ? route('accountPanel.profile.get.avatar',auth()->user()->partner()->first()->id) : asset('accountPanel/images/user/16.png')  }}" alt="">
+                          <img class="rounded-circle user-image" src="{{ auth()->user()->partner()->first()->avatar ? route('accountPanel.profile.get.avatar',auth()->user()->partner()->first()->id) : asset('accountPanel/images/user/user.png')  }}" alt="">
                           <div class="status-circle {{  auth()->user()->partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           <div class="about">
                             <div class="name">{{ auth()->user()->partner()->first()->login }}</div>
@@ -44,7 +44,7 @@
                       @foreach(auth()->user()->referrals()->get() as $user)
                         <li class="clearfix">
                           <a href="{{ route('accountPanel.chat', $user->getReferralChatId()) }}">
-                            <img class="rounded-circle user-image" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar',$user->id) : asset('accountPanel/images/user/16.png') }}" alt="">
+                            <img class="rounded-circle user-image" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar',$user->id) : asset('accountPanel/images/user/user.png') }}" alt="">
                             <div class="status-circle {{ $user->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                             <div class="about">
                               <div class="name">{{ $user->login }}</div>
@@ -76,7 +76,7 @@
                   <!-- chat-header start-->
                     @if(!empty($companion))
                       <div class="chat-header clearfix">
-                        <img class="rounded-circle" src="{{ $companion->avatar ? route('accountPanel.profile.get.avatar',$companion->id) : asset('accountPanel/images/user/16.png') }}" alt="">
+                        <img class="rounded-circle" src="{{ $companion->avatar ? route('accountPanel.profile.get.avatar',$companion->id) : asset('accountPanel/images/user/user.png') }}" alt="">
                         <div class="about">
                           <div class="name">{{ $companion->name }}&nbsp;&nbsp;({{ $companion->login }})&nbsp;&nbsp;
                             <span class="font-primary f-12">{{ $companion->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}</span>
@@ -97,7 +97,7 @@
                             @if($message->user_id == auth()->user()->id)
                               <li>
                                 <div class="message my-message mb-0">
-                                  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">
+                                  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/user.png') }}" alt="">
                                   <div class="message-data text-end">
                                     <span class="message-data-time">{{ $message->created_at->format('d.M H:i:s') }}</span>
                                   </div>

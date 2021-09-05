@@ -28,7 +28,6 @@ class CurrencyController extends Controller
         ]);
         $amount = abs($request->get('amount'));
         $commission = 1;
-        $toCurrency = Currency::where('code', 'USD')->first();
         $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->first();
         $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_to'))->first();
         
