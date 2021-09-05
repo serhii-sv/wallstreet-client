@@ -108,6 +108,7 @@ class RegisterController extends Controller
                 'user' => $partner,
                 'referral' => $data['login'],
             ];
+
             Notification::sendNotification($notification_data, 'new_referral');
         }
         /** @var User $user */
