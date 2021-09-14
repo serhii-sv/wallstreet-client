@@ -79,6 +79,10 @@
                 <label class="form-label">Город</label>
                 <p><strong>{{ $user->city ?? 'Не указан' }}</strong></p>
               </div>
+              <div class="mb-3">
+                <label class="form-label">Реферальная ссылка</label>
+                <p><strong>{{ route('ref_link', $user->my_id) }}</strong></p>
+              </div>
             
             </div>
           </div>

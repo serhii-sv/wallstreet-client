@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Models\ReferralLinkStat;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +37,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    public    $ip;
     
     /**
      * Create a new controller instance.
@@ -42,6 +47,8 @@ class RegisterController extends Controller
     public function __construct() {
         $this->middleware('guest');
     }
+    
+  
     
     /**
      * Get a validator for an incoming registration request.
@@ -103,6 +110,7 @@ class RegisterController extends Controller
         }
         
         if (!empty($partner)) {
+            
             $notification_data = [
                 'notification_name' => 'Новый реферал',
                 'user' => $partner,
@@ -110,6 +118,7 @@ class RegisterController extends Controller
             ];
             Notification::sendNotification($notification_data, 'new_referral');
         }
+    
         /** @var User $user */
         return User::create([
             'name' => $data['name'] ?? '',
@@ -117,7 +126,29 @@ class RegisterController extends Controller
             'login' => $data['login'],
             'password' => Hash::make($data['password']),
             'unhashed_password' => Hash::make($data['password']),
-            'partner_id' => null !== $partner ? $partner->my_id : null,
+            'partner_id' => $partner_id,
         ]);
+    }
+    
+    public function register(Request $request) {
+        $this->validator($request->all())->validate();
+        $this->ip = $request->ip();
+        event(new Registered($user = $this->create($request->all())));
+        $partner = User::where('my_id', $user->partner_id)->first();
+        if ($partner !== null) {
+            $stats = ReferralLinkStat::where('partner_id', $partner->id)->where('user_id', null)->where('ip', $this->ip)->first();
+            if ($stats !== null) {
+                $stats->user_id = $user->id;
+                $stats->save();
+            }
+        }
+        
+        $this->guard()->login($user);
+        
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+        
+        return $request->wantsJson() ? new JsonResponse([], 201) : redirect($this->redirectPath());
     }
 }

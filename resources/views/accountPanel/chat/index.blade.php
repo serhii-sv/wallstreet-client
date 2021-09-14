@@ -165,6 +165,7 @@
         
         scrollChat();
         Pusher.logToConsole = true;
+        
         window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
           var $data = data;
           var $message_id = $data.message_id;

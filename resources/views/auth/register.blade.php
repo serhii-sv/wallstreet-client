@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label for="partner_id">Partner ID </label>
                             <input id="partner_id" type="text" class="form-control @error('partner_id') is-invalid @enderror" name="partner_id"
-                                   value="{{ old('partner_id') }}" autofocus>
+                                   value="{{ $_COOKIE["partner_id"] ??  old('partner_id')  }}" autofocus>
 
                             @error('partner_id')
                             <span class="invalid-feedback" role="alert">

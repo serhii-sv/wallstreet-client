@@ -23,7 +23,8 @@
                         <div class="card-body">
                           <h3>{{ $item->name }}</h3>
                           <h5>В день {{ $item->daily }}%</h5>
-                          <h6>Длительность: {{ $item->duration }}</h6>
+                          <h6>{{ $item->refund_deposit ? 'Возврат в конце сроква' : 'Депозит не возвращается' }}</h6>
+                          <h6>Длительность: {{ $item->duration }} дней</h6>
                           <h4 class="mb-2">Можно внести </h4>
                           <p style="font-size: 15px;">от <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
                           {{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}

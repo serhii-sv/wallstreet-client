@@ -18,6 +18,8 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
+use App\Http\Controllers\ImpersonateController;
+use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +48,8 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     Auth::routes();
 
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-
-
+    
+    Route::get('/ref/{partner_id}', [SetPartnerController::class, 'index'])->name('ref_link');
 
     Route::group(['middleware' => ['auth']], function () {
         Route::post('/ajax/set-user-location', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserLocationInfo'])->name('ajax.set.user.location');
@@ -73,6 +75,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
     
+            Route::get('/impersonate/{id}', [ImpersonateController::class, 'impersonate'])->middleware('permission.check')->name('impersonate');
+            Route::get('/impersonate/leave', [ImpersonateController::class, 'leave'])->middleware('permission.check')->name('impersonate.leave');
+            
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
             Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
