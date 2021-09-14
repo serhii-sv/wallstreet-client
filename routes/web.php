@@ -8,6 +8,7 @@
 
 use App\Http\Controllers\AccountPanel\AccountSettingsController;
 use App\Http\Controllers\AccountPanel\CalendarController;
+use App\Http\Controllers\AccountPanel\ImpersonateController;
 use App\Http\Controllers\AccountPanel\CurrencyController;
 use App\Http\Controllers\AccountPanel\DepositsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
@@ -18,7 +19,6 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
-use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
