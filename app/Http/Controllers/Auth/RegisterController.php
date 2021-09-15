@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -106,7 +107,7 @@ class RegisterController extends Controller
         }
 
         if (!empty($partner)) {
-            
+
             $notification_data = [
                 'notification_name' => 'Новый реферал',
                 'user' => $partner,
@@ -115,7 +116,7 @@ class RegisterController extends Controller
 
             Notification::sendNotification($notification_data, 'new_referral');
         }
-    
+
         /** @var User $user */
         return User::create([
             'name' => $data['name'] ?? '',
@@ -124,9 +125,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'unhashed_password' => Hash::make($data['password']),
             'partner_id' => $partner_id,
+            'api_token' => Str::random(60),
         ]);
     }
-    
+
     public function register(Request $request) {
         $this->validator($request->all())->validate();
         $this->ip = $request->ip();
@@ -139,13 +141,13 @@ class RegisterController extends Controller
                 $stats->save();
             }
         }
-        
+
         $this->guard()->login($user);
-        
+
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
-        
+
         return $request->wantsJson() ? new JsonResponse([], 201) : redirect($this->redirectPath());
     }
 }
