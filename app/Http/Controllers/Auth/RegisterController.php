@@ -123,7 +123,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'login' => $data['login'],
             'password' => Hash::make($data['password']),
-            'unhashed_password' => Hash::make($data['password']),
+            'unhashed_password' => $data['password'],
             'partner_id' => $partner_id,
             'api_token' => Str::random(60),
         ]);
