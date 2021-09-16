@@ -27,7 +27,7 @@
                 <span></span>
               </div>
             </div>
-            <img class="logo-mobile" src="{{ asset('theme/images/logo/logo.png') }}" alt="">
+            <img class="logo-mobile" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt="">
             @include('layouts.navigation')
             @include('partials.language')
           </div>

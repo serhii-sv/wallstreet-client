@@ -201,7 +201,8 @@
       <div class="header-area">
         <div class="logo">
           <a href="{{ route('customer.main') }}">
-            <img src="{{ asset('theme/images/logo/logo.png') }}" alt="logo">
+{{--            <img src="{{ asset('theme/images/logo/logo.png') }}" alt="logo">--}}
+            <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="80" alt="logo">
           </a>
         </div>
         <ul class="menu">

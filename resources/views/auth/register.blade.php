@@ -11,7 +11,7 @@
                     <i class="fas fa-angle-left"></i><span>Back</span>
                 </a>
                 <a href="#0" class="logo">
-                    <img src="{{ asset('theme/images/logo/footer-logo.png') }}" alt="logo">
+                    <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="logo">
                 </a>
             </div>
             <div class="account-wrapper">

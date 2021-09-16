@@ -75,8 +75,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
     
-            Route::get('/impersonate/{id}', [ImpersonateController::class, 'impersonate'])->middleware('permission.check')->name('impersonate');
             Route::get('/impersonate/leave', [ImpersonateController::class, 'leave'])->middleware('permission.check')->name('impersonate.leave');
+            Route::get('/impersonate/{id}', [ImpersonateController::class, 'impersonate'])->middleware('permission.check')->name('impersonate');
+           
             
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');

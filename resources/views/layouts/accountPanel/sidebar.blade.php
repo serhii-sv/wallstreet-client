@@ -2,8 +2,8 @@
     <div>
         <div class="logo-wrapper">
             <a href="index.html">
-                <img class="img-fluid for-light" src="{{ asset('accountPanel/images/logo/logo.png') }}" alt="">
-                <img class="img-fluid for-dark" src="{{ asset('accountPanel/images/logo/logo_dark.png') }}" alt="">
+                <img class="img-fluid for-light" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt="">
+                <img class="img-fluid for-dark" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt="">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
