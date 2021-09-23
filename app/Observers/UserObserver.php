@@ -9,6 +9,7 @@ namespace App\Observers;
 use App\Models\Deposit;
 use App\Models\DepositQueue;
 use App\Models\User;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 
 /**
@@ -52,8 +53,13 @@ class UserObserver
         if (null !== $user->partner) {
             $user->generatePartnerTree($user->partner);
         }
-        
-        cache()->forget('counts.users');
+        $sidebar_user_count = UserSidebarProperties::where('sb_prop','count_users')->get();
+    
+        foreach ($sidebar_user_count as $item){
+            $item->sb_val = $item->sb_val + 1;
+            $item->save();
+        }
+        //cache()->forget('counts.users');
     }
 
     /**

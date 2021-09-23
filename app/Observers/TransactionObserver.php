@@ -8,6 +8,8 @@ namespace App\Observers;
 
 use App\Models\Currency;
 use App\Models\Transaction;
+use App\Models\TransactionType;
+use App\Models\UserSidebarProperties;
 
 /**
  * Class TransactionObserver
@@ -26,7 +28,27 @@ class TransactionObserver
      */
     public function created(Transaction $transaction)
     {
-    
+        if ($transaction->type_id == TransactionType::getByName('withdraw')->id && $transaction->approved == false){
+            $withdrawals_amount = UserSidebarProperties::where('sb_prop','withdrawals_amount')->get();
+            foreach ($withdrawals_amount as $item) {
+                $item->sb_val = abs(intval($item->sb_val + $transaction->main_currency_amount));
+                $item->save();
+            }
+        }
+        if ($transaction->type_id == TransactionType::getByName('enter')->id && $transaction->approved == true){
+            $replenishments_amount = UserSidebarProperties::where('sb_prop','replenishments_amount')->get();
+            foreach ($replenishments_amount as $item) {
+                $item->sb_val = abs(intval($item->sb_val + $transaction->main_currency_amount));
+                $item->save();
+            }
+        }
+        if ($transaction->type_id == TransactionType::getByName('exchange_out')->id && $transaction->approved == true){
+            $currency_exchange_count = UserSidebarProperties::where('sb_prop','currency_exchange_count')->get();
+            foreach ($currency_exchange_count as $item) {
+                $item->sb_val = abs($item->sb_val + 1);
+                $item->save();
+            }
+        }
     }
 
     /**
