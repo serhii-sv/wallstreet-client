@@ -106,7 +106,7 @@ class RegisterController extends Controller
             $data['login'] = $data['email'];
         }
 
-        if (!empty($partner)) {
+        if ($partner !== null) {
 
             $notification_data = [
                 'notification_name' => 'Новый реферал',
