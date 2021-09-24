@@ -1928,7 +1928,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('theme/images/client/client01.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/b8fece448eec7a811df3a704a9648c97.jpeg') }}" alt="client">
                     </a>
                   </div>
                 </div>
@@ -1961,7 +1961,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('theme/images/client/client02.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/0007132196_20.jpeg') }}" alt="client">
                     </a>
                   </div>
                 </div>
@@ -1994,7 +1994,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('theme/images/client/client03.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/DiUkB_nXUAIpGjR.jpeg') }}" alt="client">
                     </a>
                   </div>
                 </div>
