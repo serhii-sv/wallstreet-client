@@ -100,14 +100,14 @@ class RegisterController extends Controller
         }
 
         /** @var User|null $partner */
-        $partner = null !== $partner_id ? User::where('my_id', $partner_id)->first() : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->first()->email ?? null);
+        $partner = null !== $partner_id ? User::where('my_id', $partner_id)->first() : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->first() ?? null);
 
         if (empty($data['login'])) {
             $data['login'] = $data['email'];
         }
 
         if ($partner !== null) {
-
+            
             $notification_data = [
                 'notification_name' => 'Новый реферал',
                 'user' => $partner,

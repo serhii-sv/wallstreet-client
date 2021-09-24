@@ -60,7 +60,7 @@ class Notification extends Model
         $notification_in->type_browser = true;
         if ($notification_in->save()) {
             $notification_user = new NotificationUser();
-            $notification_user->user_id = $data['user']->id;
+            $notification_user->user_id = $data['user'] ? $data['user']->id : null;
             $notification_user->notification_id = $notification_in->id;
             $notification_user->save();
         }
