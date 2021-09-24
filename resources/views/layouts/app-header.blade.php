@@ -170,7 +170,7 @@
                 </a>
               </li>
             @endguest
-            
+
             @auth
               <li>
                 <a href="{{ route('accountPanel.dashboard') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -206,14 +206,14 @@
           </a>
         </div>
         <ul class="menu">
-          <li>
-            <a href="{{ route('customer.main') }}">@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='Home' contenteditable="true">{{ __('Home') }}</editor_block>
-              @else
-                {{ __('Home') }}
-              @endif
-            </a>
-          </li>
+{{--          <li>--}}
+{{--            <a href="{{ route('customer.main') }}">@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                <editor_block data-name='Home' contenteditable="true">{{ __('Home') }}</editor_block>--}}
+{{--              @else--}}
+{{--                {{ __('Home') }}--}}
+{{--              @endif--}}
+{{--            </a>--}}
+{{--          </li>--}}
           <li>
             <a href="{{ route('customer.aboutus') }}">@if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='About' contenteditable="true">{{ __('About') }}</editor_block>

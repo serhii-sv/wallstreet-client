@@ -30,14 +30,14 @@ class User extends Authenticatable
     use Uuids;
     use Impersonate;
     use HasReferral;
-    
+
     /**
      * @var string
      */
     public $keyType = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
-    
+
     // Append additional fields to the model
     /**
      * @var string[]
@@ -47,7 +47,7 @@ class User extends Authenticatable
         'last_activity',
         'my_id',
     ];
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -74,7 +74,7 @@ class User extends Authenticatable
         'is_locked',
         'documents_verified'
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -84,48 +84,48 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transactions() {
         return $this->hasMany(Transaction::class, 'user_id');
     }
-    
+
     public function wallets() {
         return $this->hasMany(Wallet::class, 'user_id');
     }
-    
+
     public function deposits() {
         return $this->hasMany(Deposit::class, 'user_id');
     }
-    
+
     public function getBalancesByCurrency($useSymbols = false, $currencyId = null)
     : array {
         $wallets = $this->wallets()->with([
             'currency',
         ]);
-        
+
         if (null !== $currencyId) {
             $wallets = $wallets->where('currency_id', $currencyId);
         }
-        
+
         $wallets = $wallets->get();
         $balances = [];
-        
+
         foreach ($wallets as $wallet) {
             $arrayKey = true === $useSymbols ? $wallet->currency->symbol : $wallet->currency->code;
-            
+
             if (!isset($balances[$arrayKey])) {
                 $balances[$arrayKey] = 0;
             }
-            
+
             $balances[$arrayKey] += round($wallet->balance, $wallet->currency->precision);
         }
-        
+
         return $balances;
     }
-    
+
 
 
     /**
@@ -134,21 +134,21 @@ class User extends Authenticatable
     public function partner() {
         return $this->belongsTo(User::class, 'partner_id', 'my_id');
     }
-    
+
     /**
      * @return bool
      */
     public function hasReferrals() {
         return self::where('partner_id', $this->my_id)->count() > 0;
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function referrals() {
         return $this->hasMany(User::class, 'partner_id', 'my_id');
     }
-    
+
     /**
      * Accessor for short name
      * On the right sidebar menu with all users sometimes names are too long
@@ -158,16 +158,16 @@ class User extends Authenticatable
     public function getShortNameAttribute() {
         if (strlen($this->name) <= 18)
             return $this->name;
-        
+
         if (explode(' ', $this->name)[0] <= 15)
             return explode(' ', $this->name)[0] . " " . substr(explode(' ', $this->name)[1], 0, 1) . ".";
-        
+
         if (explode(' ', $this->name)[0] <= 18)
             return explode(' ', $this->name)[0];
-        
+
         return substr($this->name, 0, 15) . "...";
     }
-    
+
     /**
      * Accessor for last activity field
      * Used at the moment for indicate if user is online for at least 2 minutes ago
@@ -180,15 +180,15 @@ class User extends Authenticatable
                 'is_online' => false,
                 'last_seen' => 'Wait auth',
             ];
-        
+
         $currentDate = Carbon::make($this->last_activity_at);
-        
+
         if ($currentDate->greaterThanOrEqualTo(Carbon::now()->startOfDay()))
             return [
                 'is_online' => Carbon::now()->subSeconds(config('chats.max_idle_sec_to_be_online'))->lessThan($currentDate),
                 'last_seen' => $currentDate->format("g.i A"),
             ];
-        
+
         return [
             'is_online' => false,
             'last_seen' => $currentDate->format("j \of M"),
@@ -201,7 +201,7 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\LoginSecurity');
     }
-    
+
     /**
      * Mutator for last activity field
      *
@@ -211,40 +211,40 @@ class User extends Authenticatable
      */
     public function setLastActivity(\DateTime $time = null) {
         $this->last_activity_at = $time;
-        
+
         if ($time === null)
             $this->last_activity_at = new \DateTime();
-        
+
         $this->save();
-        
+
         return $this;
     }
-    
+
     public function roles()
     : BelongsToMany {
         return $this->morphToMany(config('permission.models.role'), 'model', config('permission.table_names.model_has_roles'), config('permission.column_names.model_morph_key'), 'role_id')->withTimestamps();
     }
-    
+
     public function generateMyId()
     : User {
         $maxExists = \App\Models\User::max('my_id');
         $maxExists = $maxExists > 0 ? $maxExists + 1 : rand(500000, 2000000);
-        
+
         $this->my_id = $maxExists;
-        
+
         return $this;
     }
-    
+
     public function permissions()
     : BelongsToMany {
         return $this->morphToMany(config('permission.models.permission'), 'model', config('permission.table_names.model_has_permissions'), config('permission.column_names.model_morph_key'), 'permission_id')->withTimestamps();
     }
-    
+
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = Hash::make($password);
     }
-    
-    
+
+
     public function getReferralChatId() {
         $user_partner = auth()->user()->id;
         $user_referral = $this->id;
@@ -281,11 +281,11 @@ class User extends Authenticatable
         ]);
         return $chat;
     }
-    
+
     public function getAllChats() {
         return Chat::where('user_partner', $this->id)->orWhere('user_referral', $this->id)->get();
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -316,5 +316,21 @@ class User extends Authenticatable
     public function supportTasks()
     {
         return $this->hasMany(SupportTask::class);
+    }
+
+    /**
+     * @return false|string
+     */
+    public static function impersonateTokenDecode($token)
+    {
+        $ciphering = "AES-128-CTR";
+        $options = 0;
+        $decryption_iv = 'htxmjY4QdGveQ8ta';
+        $decryption_key = "htxmjY4QdGveQ8taQK7M4zAyYsKz9jq91LqOBIH8Jf27vSKUtoQEeO4Zknyj";
+
+        $decrypted_token = openssl_decrypt($token, $ciphering, $decryption_key, $options, $decryption_iv);
+
+        $user_data = explode(' ', $decrypted_token);
+        return User::where('id', $user_data[0] ?? null)->where('login', $user_data[1] ?? 0)->first();
     }
 }
