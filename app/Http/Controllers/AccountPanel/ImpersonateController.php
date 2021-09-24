@@ -22,11 +22,14 @@ class ImpersonateController extends Controller
      */
     public function impersonate($id)
     {
+        $admin = User::impersonateTokenDecode(request()->token);
         $user = User::find($id);
 
-        if (null == $user) {
+        if (null == $user || null == $admin) {
             return back()->with('error', __('User not found'))->withInput();
         }
+
+        Auth::login($admin);
 
         Auth::user()->impersonate($user);
         return redirect(route('accountPanel.profile'));
