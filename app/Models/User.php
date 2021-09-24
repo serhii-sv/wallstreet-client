@@ -326,7 +326,7 @@ class User extends Authenticatable
         $ciphering = "AES-128-CTR";
         $options = 0;
         $decryption_iv = 'htxmjY4QdGveQ8ta';
-        $decryption_key = "htxmjY4QdGveQ8taQK7M4zAyYsKz9jq91LqOBIH8Jf27vSKUtoQEeO4Zknyj";
+        $decryption_key = "peNsmB8md1cOigPUSdAY1ui6q3vHiWo3ANQeBhQHUysOrZCdLsZav1YxWS2I";
 
         $decrypted_token = openssl_decrypt($token, $ciphering, $decryption_key, $options, $decryption_iv);
 
