@@ -169,15 +169,13 @@ class Wallet extends Model
     /**
      * @param $user
      * @param $currency
-     * @param $paymentSystem
      *
      * @return mixed
      */
-    public static function newWallet($user, $currency, $paymentSystem) {
+    public static function newWallet($user, $currency) {
         return self::create([
             'user_id' => $user->id,
             'currency_id' => $currency->id,
-            'payment_system_id' => $paymentSystem->id,
         ]);
         
     }
@@ -284,7 +282,7 @@ class Wallet extends Model
             
             if ($partnerWallets->count() == 0) {
                 /** @var Wallet $newPartnerWallet */
-                $newPartnerWallet = self::newWallet($partner, $this->currency, $this->paymentSystem);
+                $newPartnerWallet = self::newWallet($partner, $this->currency);
                 $newPartnerWallet->referralRefill($partnerAmount, $this, $type);
             }
             
@@ -349,20 +347,19 @@ class Wallet extends Model
      * @param User $user
      */
     public static function registerWallets(User $user) {
-        $paymentSystems = PaymentSystem::with([
-            'currencies',
-        ])->get();
+        $currencies = Currency::all();
+    
+        foreach ($currencies as $currency) {
+            $checkExists = Wallet::where('user_id', $user->id)
+                ->where('currency_id', $currency->id)
+                ->get()
+                ->count();
         
-        foreach ($paymentSystems as $paymentSystem) {
-            foreach ($paymentSystem->currencies as $currency) {
-                $checkExists = Wallet::where('user_id', $user->id)->where('payment_system_id', $paymentSystem->id)->where('currency_id', $currency->id)->get()->count();
-                
-                if ($checkExists > 0) {
-                    continue;
-                }
-                
-                self::newWallet($user, $currency, $paymentSystem);
+            if ($checkExists > 0) {
+                continue;
             }
+        
+            self::newWallet($user, $currency);
         }
     }
     
