@@ -41,9 +41,9 @@ class Wallet extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function paymentSystem() {
+    /*public function paymentSystem() {
         return $this->belongsTo(PaymentSystem::class, 'payment_system_id');
-    }
+    }*/
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -110,6 +110,8 @@ class Wallet extends Model
         
         $balance = $this->convertToCurrency($this->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
         $balance = $this->convertToCurrency($toCurrency, $wallet_to->currency()->first(), $balance);
+        dump($wallet_to->currency()->first());
+        dd($balance);
         if ($transaction_in = Transaction::exchangeInCurrency($wallet_to, $balance)) {
             $wallet_to->update(['balance' => $wallet_to->balance + $balance]);
             $currency_exchange = new CurrencyExchange();

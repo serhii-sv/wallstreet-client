@@ -105,12 +105,13 @@ class Transaction extends Model
     }
     
     /**
-     * @param $wallet
-     * @param $amount
+     * @param      $wallet
+     * @param      $amount
+     * @param null $paymentSystem
      *
      * @return mixed
      */
-    public static function enter($wallet, $amount) {
+    public static function enter($wallet, $amount, $paymentSystem = null) {
         $type = TransactionType::getByName('enter');
         $transaction = self::create([
             'type_id' => $type->id,
@@ -118,7 +119,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'payment_system_id' => $paymentSystem,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -127,20 +128,22 @@ class Transaction extends Model
     /**
      * @param Wallet $wallet
      * @param float  $amount
+     * @param        $payment_system_id
      *
      * @return Transaction|null
      * @throws \Exception
      */
-    public static function withdraw(Wallet $wallet, float $amount) {
-        $amount = (float)abs($amount);
+    public static function withdraw(Wallet $wallet, float $amount, $payment_system_id)
+    {
+        $amount         = (float) abs($amount);
         /** @var TransactionType $type */
-        $type = TransactionType::getByName('withdraw');
+        $type           = TransactionType::getByName('withdraw');
         /** @var User $user */
-        $user = $wallet->user()->first();
+        $user           = $wallet->user()->first();
         /** @var Currency $currency */
-        $currency = $wallet->currency()->first();
+        $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem = $wallet->paymentSystem()->first();
+        $paymentSystem  = $payment_system_id;
         
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
@@ -189,7 +192,6 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -211,7 +213,6 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'source' => $referral->id,
             'approved' => true,
@@ -234,7 +235,6 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'source' => null !== $referral ? $referral->id : null,
             'approved' => true,
@@ -262,7 +262,6 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -284,7 +283,6 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -306,7 +304,6 @@ class Transaction extends Model
             'rate_id' => null,
             'deposit_id' => null,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -398,7 +395,6 @@ class Transaction extends Model
             'user_id' => $toUser->id,
             'currency_id' => $to_user_wallet->currency->id,
             'wallet_id' => $to_user_wallet->id,
-            'payment_system_id' => $to_user_wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -408,7 +404,6 @@ class Transaction extends Model
             'user_id' => $fromUser->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -428,7 +423,6 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -442,7 +436,6 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
