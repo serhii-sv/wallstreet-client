@@ -126,30 +126,6 @@
         </style>
         <div class="col-6">
           <ul class="cart-area">
-            <li class="">
-              <div class="language">
-                <p class="language__name">
-                  <span>{{ !empty(session('lang')) ? session('lang') : 'cn' }}</span>
-                </p>
-                <ul class="language__list">
-                  <li class="language__item">
-                    <a href="{{ route('set.lang', ['locale' => 'en']) }}">
-                      <button class="language__button">English</button>
-                    </a>
-                  </li>
-                  <li class="language__item">
-                    <a href="{{ route('set.lang', ['locale' => 'ru']) }}">
-                      <button class="language__button">Russian</button>
-                    </a>
-                  </li>
-                  <li class="language__item">
-                    <a href="{{ route('set.lang', ['locale' => 'cn']) }}">
-                      <button class="language__button">Chinese</button>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
             @guest
               <li>
                 <a href="{{ route('login') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -191,6 +167,30 @@
                 </a>
               </li>
             @endauth
+                <li class="">
+                    <div class="language" style="margin-top: 10px">
+                        <p class="language__name">
+                            <span>{{ !empty(session('lang')) ? session('lang') : 'cn' }}</span>
+                        </p>
+                        <ul class="language__list">
+                            <li class="language__item">
+                                <a href="{{ route('set.lang', ['locale' => 'en']) }}">
+                                    <button class="language__button">English</button>
+                                </a>
+                            </li>
+                            <li class="language__item">
+                                <a href="{{ route('set.lang', ['locale' => 'ru']) }}">
+                                    <button class="language__button">Russian</button>
+                                </a>
+                            </li>
+                            <li class="language__item">
+                                <a href="{{ route('set.lang', ['locale' => 'cn']) }}">
+                                    <button class="language__button">Chinese</button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
           </ul>
         </div>
       </div>
