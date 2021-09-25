@@ -72,7 +72,8 @@ class User extends Authenticatable
         'unhashed_password',
         'ip',
         'is_locked',
-        'documents_verified'
+        'documents_verified',
+        'api_token'
     ];
 
     /**

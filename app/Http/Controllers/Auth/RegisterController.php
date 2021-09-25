@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -107,7 +108,7 @@ class RegisterController extends Controller
         }
 
         if ($partner !== null) {
-            
+
             $notification_data = [
                 'notification_name' => 'Новый реферал',
                 'user' => $partner,
@@ -122,7 +123,7 @@ class RegisterController extends Controller
             'name' => $data['name'] ?? '',
             'email' => $data['email'],
             'login' => $data['login'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'unhashed_password' => $data['password'],
             'partner_id' => $partner_id,
             'api_token' => Str::random(60),
