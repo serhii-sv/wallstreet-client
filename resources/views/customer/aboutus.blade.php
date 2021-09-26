@@ -371,14 +371,28 @@
               </div>
             </div>
           </div>
-          <div class="owl-carousel owl-theme investor-slider">
+          <div class="owl-carousel autoplay-stop owl-theme investor-slider">
             <div class="investor-item">
               <div class="investor-thumb">
                 <img src="{{ asset('theme/images/investor/investor1.png') }}" alt="investor">
               </div>
               <div class="investor-content">
-                <h5 class="title"><a href="#0">Sean Obrien</a></h5>
-                <h3 class="amount">$50,000.00</h3>
+                <h5 class="title">
+                    <a href="#0">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Sean Obrien' contenteditable="true">{{ __('Sean Obrien') }}</editor_block>
+                        @else
+                            {{ __('Sean Obrien') }}
+                        @endif
+                    </a>
+                </h5>
+                <h3 class="amount">
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$50,000.00' contenteditable="true">{{ __('$50,000.00') }}</editor_block>
+                    @else
+                        {{ __('$50,000.00') }}
+                    @endif
+                </h3>
               </div>
             </div>
             <div class="investor-item">
@@ -386,8 +400,22 @@
                 <img src="{{ asset('theme/images/investor/investor2.png') }}" alt="investor">
               </div>
               <div class="investor-content">
-                <h5 class="title"><a href="#0">Sylvia Fox</a></h5>
-                <h3 class="amount">$50,000.00</h3>
+                <h5 class="title">
+                    <a href="#0">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Sylvia Fox' contenteditable="true">{{ __('Sylvia Fox') }}</editor_block>
+                        @else
+                            {{ __('Sylvia Fox') }}
+                        @endif
+                    </a>
+                </h5>
+                <h3 class="amount">
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$60,000.00' contenteditable="true">{{ __('$60,000.00') }}</editor_block>
+                    @else
+                        {{ __('$60,000.00') }}
+                    @endif
+                </h3>
               </div>
             </div>
             <div class="investor-item">
@@ -395,8 +423,22 @@
                 <img src="{{ asset('theme/images/investor/investor3.png') }}" alt="investor">
               </div>
               <div class="investor-content">
-                <h5 class="title"><a href="#0">Dexter Nichols</a></h5>
-                <h3 class="amount">$50,000.00</h3>
+                <h5 class="title">
+                    <a href="#0">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Dexter Nichols' contenteditable="true">{{ __('Dexter Nichols') }}</editor_block>
+                        @else
+                            {{ __('Dexter Nichols') }}
+                        @endif
+                    </a>
+                </h5>
+                <h3 class="amount">
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$70,000.00' contenteditable="true">{{ __('$70,000.00') }}</editor_block>
+                    @else
+                        {{ __('$70,000.00') }}
+                    @endif
+                </h3>
               </div>
             </div>
             <div class="investor-item">
@@ -404,8 +446,22 @@
                 <img src="{{ asset('theme/images/investor/investor4.png') }}" alt="investor">
               </div>
               <div class="investor-content">
-                <h5 class="title"><a href="#0">Tami Oliver</a></h5>
-                <h3 class="amount">$50,000.00</h3>
+                <h5 class="title">
+                    <a href="#0">
+                        @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Tami Oliver' contenteditable="true">{{ __('Tami Oliver') }}</editor_block>
+                        @else
+                            {{ __('Tami Oliver') }}
+                        @endif
+                    </a>
+                </h5>
+                <h3 class="amount">
+                    @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='$40,000.00' contenteditable="true">{{ __('$40,000.00') }}</editor_block>
+                    @else
+                        {{ __('$40,000.00') }}
+                    @endif
+                </h3>
               </div>
             </div>
           </div>
@@ -511,7 +567,7 @@
                     </div>
                     <div class="client-thumb">
                       <a href="#0">
-                        <img src="{{ asset('theme/images/client/client01.png') }}" alt="client">
+                        <img src="{{ asset('theme/images/client/b8fece448eec7a811df3a704a9648c97.jpeg') }}" alt="client">
                       </a>
                     </div>
                   </div>
@@ -544,7 +600,7 @@
                     </div>
                     <div class="client-thumb">
                       <a href="#0">
-                        <img src="{{ asset('theme/images/client/client02.png') }}" alt="client">
+                        <img src="{{ asset('theme/images/client/0007132196_20.jpeg') }}" alt="client">
                       </a>
                     </div>
                   </div>
@@ -577,7 +633,7 @@
                     </div>
                     <div class="client-thumb">
                       <a href="#0">
-                        <img src="{{ asset('theme/images/client/client03.png') }}" alt="client">
+                        <img src="{{ asset('theme/images/client/DiUkB_nXUAIpGjR.jpeg') }}" alt="client">
                       </a>
                     </div>
                   </div>
@@ -595,3 +651,10 @@
     <!-- ==========Footer-Section Ends Here========== -->
     </div>
 @endsection
+      @push('js')
+          <script>
+              $(function () {
+                  $('.owl-carousel.autoplay-stop').trigger('stop.owl.autoplay');
+              })
+          </script>
+  @endpush
