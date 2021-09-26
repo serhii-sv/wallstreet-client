@@ -13,7 +13,13 @@
                 @endif</a>
             </li>
             <li>
-              <a href="Mailto:info@hyipland.com"><i class="flaticon-email"></i>info@hyipland.com</a>
+                @if(canEditLang() && checkRequestOnEdit())
+                    <a href="#"><i class="flaticon-email"></i>
+                        <editor_block data-name='support_email' contenteditable="true">{{ __('support_email') }}</editor_block>
+                    </a>
+                @else
+                    <a href="Mailto:{{ __('support_email') }}"><i class="flaticon-email"></i>{{ __('support_email') }}</a>
+                @endif
             </li>
           </ul>
         </div>
