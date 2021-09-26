@@ -2,7 +2,7 @@
   <div class="header-top">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-6">
+        <div class="col-4">
           <ul class="support-area">
             <li>
               <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -130,7 +130,66 @@
                 color: #fbc800
             }
         </style>
-        <div class="col-6">
+          <style>
+              .currency-rates{
+                  display: block;
+                  max-width: 100%;
+                  white-space: nowrap;
+                  overflow: hidden;
+
+              }
+              .currency-rates .wrapper{
+                  /*-webkit-animation: scroll 10s infinite linear;*/
+                  /*-moz-animation: scroll 10s infinite linear;*/
+                  animation: scroll 60s infinite linear;
+              }
+              .currency-rates span {
+                  margin: 0 15px;
+                  display: inline-block;
+              }
+              /*@-webkit-keyframes scroll {*/
+              /*    0% {*/
+              /*        -webkit-transform: translate(100%, 0);*/
+              /*        transform: translate(100%, 0);*/
+              /*    }*/
+              /*    100% {*/
+              /*        -webkit-transform: translate(-100%, 0);*/
+              /*        transform: translate(-100%, 0)*/
+              /*    }*/
+              /*}*/
+
+              /*@-moz-keyframes scroll {*/
+              /*    0% {*/
+              /*        -moz-transform: translate(100%, 0);*/
+              /*        transform: translate(100%, 0);*/
+              /*    }*/
+              /*    100% {*/
+              /*        -webkit-transform: translate(-100%, 0);*/
+              /*        transform: translate(-100%, 0)*/
+              /*    }*/
+              /*}*/
+
+              @keyframes scroll {
+                  0% {
+                      transform: translate(100%, 0);
+                  }
+                  100% {
+                      transform: translate(-400%, 0)
+                  }
+              }
+
+          </style>
+          <div class="col-4">
+              <div class="currency-rates">
+                  <div class="wrapper">
+                      @forelse($currency_rates as $key => $rates)
+                          <span>{{ $key }} - {{ $rates }}</span>
+                      @empty
+                      @endforelse
+                  </div>
+              </div>
+          </div>
+        <div class="col-4">
           <ul class="cart-area">
             @guest
               <li>
