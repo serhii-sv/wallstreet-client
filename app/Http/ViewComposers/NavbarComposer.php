@@ -45,8 +45,10 @@ class NavbarComposer
 //        $view->with('languages', Language::all());
         $view->with('default_language', Language::where('default', 'true')->first());
         $total_unread_messages = 0;
-        foreach (Auth::user()->getAllChats() as $item) {
-            $total_unread_messages += $item->getUnreadMessagesCount(Auth::user()->id);
+        if (\auth()->check()) {
+            foreach (Auth::user()->getAllChats() as $item) {
+                $total_unread_messages += $item->getUnreadMessagesCount(Auth::user()->id);
+            }
         }
         $view->with('total_unread_messages', $total_unread_messages);
     }
