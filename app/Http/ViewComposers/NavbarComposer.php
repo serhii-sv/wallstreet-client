@@ -42,7 +42,7 @@ class NavbarComposer
         }
         $view->with('currency_rates', $rates);
 
-//        $view->with('languages', Language::all());
+        $view->with('languages', Language::all());
         $view->with('default_language', Language::where('default', 'true')->first());
         $total_unread_messages = 0;
         if (\auth()->check()) {
