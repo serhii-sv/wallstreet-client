@@ -29,6 +29,9 @@ class ComposerServiceProvider extends ServiceProvider
             ['layouts.accountPanel.app'], AppComposer::class
         );
         View::composer(
+            ['layouts.app-header'], NavbarComposer::class
+        );
+        View::composer(
             ['layouts.accountPanel.header'], NavbarComposer::class
         );
         View::composer(

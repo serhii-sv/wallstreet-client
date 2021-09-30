@@ -96,7 +96,7 @@
         </li>
       </ul>
     </div>
-    <div class="footer-bottom">
+    {{--<div class="footer-bottom">
       <div class="footer-bottom-area">
         <div class="left">
           <p>&copy; 2020
@@ -135,6 +135,6 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div>--}}
   </div>
 </footer>

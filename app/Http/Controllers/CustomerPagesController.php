@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Language;
+use App\Models\Rate;
+use App\Models\RateGroup;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
@@ -53,7 +55,12 @@ class CustomerPagesController extends Controller
     }
     
     public function homepage() {
-        return view('customer.main');
+        $rate_groups = RateGroup::all();
+        $rates = Rate::all();
+        return view('customer.main', [
+            'rate_groups' => $rate_groups,
+            'rates' => $rates,
+        ]);
     }
     
     public function partners() {

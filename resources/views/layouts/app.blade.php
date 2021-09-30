@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('theme/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/css/main.css') }}">
-
+    @yield('styles')
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
   </head>
