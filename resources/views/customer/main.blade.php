@@ -2,11 +2,10 @@
 @section('title', __('Home'))
 @section('styles')
     <style>
-        .offer-item{
+        .offer-item {
             display: flex;
             justify-content: center;
-            background: none ;
-
+            background: none;
         }
     </style>
 @endsection
@@ -649,7 +648,7 @@
                 <div class="offer-wrapper owl-carousel owl-video-wrapper">
 
                     <div class="offer-item">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/eFhyyWUhezE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/SJms7JEKt8A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="offer-item">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/orPQs796ix8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -1032,8 +1031,30 @@
                                                 <div class="transaction-item">
                                                     <div class="transaction-header">
                                                         <h5 class="title">{{ $rate->name }}</h5>
-                                                        <span class="title">{{ $rate->overall ? 'Возврат суммы: да' : 'Возврат суммы: нет' }}</span>
-                                                        <span class="date">Дневная ставка {{ $rate->daily }}%</span>
+                                                        <span class="title">
+                                                            @if(canEditLang() && checkRequestOnEdit())
+                                                                @if($rate->overall)
+                                                                    <editor_block data-name='return deposit: true' contenteditable="true">{{ __('return deposit: true') }}</editor_block>
+                                                                @else
+                                                                    <editor_block data-name='return deposit: false' contenteditable="true">{{ __('return deposit: false') }}</editor_block>
+                                                                @endif
+
+                                                            @else
+                                                                @if($rate->overall)
+                                                                    <span class="date">{{ __('return deposit: true') }}</span>
+                                                                    @else
+                                                                    <span class="date">{{ __('return deposit: false') }}</span>
+                                                                @endif
+                                                            @endif
+
+                                                        </span>
+                                                        @if(canEditLang() && checkRequestOnEdit())
+                                                            <div>
+                                                                <editor_block data-name='Daily rate' contenteditable="true">{{ __('Daily rate') }} {{ $rate->daily }}%</editor_block>
+                                                            </div>
+                                                        @else
+                                                            <span class="date">{{ __('Daily rate') }} {{ $rate->daily }}%</span>
+                                                        @endif
                                                     </div>
                                                     <div class="transaction-thumb">
                                                         <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">
@@ -1311,6 +1332,136 @@
                                                 <editor_block data-name='3rd' contenteditable="true">{{ __('3rd') }}</editor_block>
                                             @else
                                                 {{ __('3rd') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="affiliate-wrapper">
+                            <div class="affiliate-item cl-4">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 4' contenteditable="true">{{ __('affiliate percent 4') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 4') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                        @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='4st' contenteditable="true">{{ __('4st') }}</editor_block>
+                                            @else
+                                                {{ __('4st') }}
+                                            @endif
+                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="affiliate-item cl-5">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 5' contenteditable="true">{{ __('affiliate percent 5') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 5') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='5nd' contenteditable="true">{{ __('5nd') }}</editor_block>
+                                            @else
+                                                {{ __('5nd') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="affiliate-item cl-6">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 6' contenteditable="true">{{ __('affiliate percent 6') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 6') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='6rd' contenteditable="true">{{ __('6rd') }}</editor_block>
+                                            @else
+                                                {{ __('6rd') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="affiliate-wrapper">
+                            <div class="affiliate-item cl-7">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 7' contenteditable="true">{{ __('affiliate percent 7') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 7') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                        @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='7st' contenteditable="true">{{ __('7st') }}</editor_block>
+                                            @else
+                                                {{ __('7st') }}
+                                            @endif
+                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="affiliate-item cl-8">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 8' contenteditable="true">{{ __('affiliate percent 8') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 8') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='8nd' contenteditable="true">{{ __('8nd') }}</editor_block>
+                                            @else
+                                                {{ __('8nd') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="affiliate-item cl-9">
+                                <div class="affiliate-inner">
+                                    <div class="affiliate-thumb">
+                                        <h3 class="title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='affiliate percent 9' contenteditable="true">{{ __('affiliate percent 9') }}</editor_block>
+                                            @else
+                                                {{ __('affiliate percent 9') }}
+                                            @endif
+                                        </h3>
+                                        <span class="remainder">%</span>
+                                        <span class="cont">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='9rd' contenteditable="true">{{ __('9rd') }}</editor_block>
+                                            @else
+                                                {{ __('9rd') }}
                                             @endif
                                         </span>
                                     </div>

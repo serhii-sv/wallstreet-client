@@ -173,7 +173,7 @@
                                         {{ __('Our goal is to be at the heart of the financial services industry') }}
                                     @endif</h3>
                                 <div class="author">
-                                    <img src="{{ asset('accountPanel/images/sertificate.jpg') }}" class="img-fluid mb-3" width="150" alt="">
+                                    <img src="{{ asset('accountPanel/images/sertificate.jpg') }}" class="img-fluid mb-3" width="450" alt="">
                                     <h6 class="subtitle">
                                         <a @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
                                                 <editor_block data-name='Adam Phelps' contenteditable="true">{{ __('Adam Phelps') }}</editor_block>

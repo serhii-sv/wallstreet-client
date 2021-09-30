@@ -1284,7 +1284,7 @@ input[type="submit"] {
 }
 
 .footer-top .logo {
-    max-width: 160px;
+    max-width: 560px;
 }
 
 .footer-top .logo a {
@@ -2765,6 +2765,48 @@ input[type="submit"] {
 
 .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .remainder {
     background: #e1586d;
+}
+.affiliate-item.cl-4 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #5d00e1;
+}
+
+.affiliate-item.cl-4 .affiliate-inner .affiliate-thumb .remainder {
+    background: #5d00e1;
+}
+.affiliate-item.cl-5 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #e1003c;
+}
+
+.affiliate-item.cl-5 .affiliate-inner .affiliate-thumb .remainder {
+    background: #e1003c;
+}
+.affiliate-item.cl-6 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #e100ba;
+}
+
+.affiliate-item.cl-6 .affiliate-inner .affiliate-thumb .remainder {
+    background: #e100ba;
+}
+.affiliate-item.cl-7 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #180085;
+}
+
+.affiliate-item.cl-7 .affiliate-inner .affiliate-thumb .remainder {
+    background: #180085;
+}
+.affiliate-item.cl-8 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #246f00;
+}
+
+.affiliate-item.cl-8 .affiliate-inner .affiliate-thumb .remainder {
+    background: #246f00;
+}
+.affiliate-item.cl-9 .affiliate-inner .affiliate-thumb .title, .affiliate-item.cl-three .affiliate-inner .affiliate-thumb .cont {
+    color: #cd5100;
+}
+
+.affiliate-item.cl-9 .affiliate-inner .affiliate-thumb .remainder {
+    background: #cd5100;
 }
 
 @media (max-width: 1199px) and (min-width: 992px) {
@@ -7815,7 +7857,7 @@ body *::-webkit-scrollbar-track {
     color: #ffffff;
     z-index: 999;
     bottom: 30px;
-    right: 30px;
+    left: 50px;
     position: fixed;
     border-radius: 5px;
     -webkit-transform: translateY(150px);

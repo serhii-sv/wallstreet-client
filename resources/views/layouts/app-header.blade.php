@@ -1,16 +1,17 @@
 <header class="header-section">
-    <div class="header-top">
+    <div class="currency-rates">
+        <div class="wrapper">
+            @forelse($currency_rates as $key => $rates)
+                <span>{{ $key }} - {{ $rates }}</span>
+            @empty
+            @endforelse
+        </div>
+    </div>
+    <div class="header-top p-0">
         <div class="container">
             <div class="row align-items-center">
                 <div class="left-header col-12 horizontal-wrapper ps-0">
-                    <div class="currency-rates">
-                        <div class="wrapper">
-                            @forelse($currency_rates as $key => $rates)
-                                <span>{{ $key }} - {{ $rates }}</span>
-                            @empty
-                            @endforelse
-                        </div>
-                    </div>
+
                 </div>
                 <style>
                     .currency-rates {
@@ -151,6 +152,7 @@
                         width: 100%;
                         margin-left: 0 !important;
                     }
+
                     .language__item:last-child {
                         border: none
                     }
@@ -248,9 +250,11 @@
         <div class="container">
             <div class="header-area">
                 <div class="logo">
-                    <a href="{{ route('customer.main') }}">
-                        <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="50" alt="logo">
-                    </a>
+                    @if(Route::is('customer.main'))
+                        <a href="{{ route('customer.main') }}">
+                            <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="50" alt="logo">
+                        </a>
+                    @endif
                 </div>
                 <ul class="menu">
                     @if(!Route::is('customer.main'))
@@ -291,16 +295,16 @@
                                 {{ __('Contact') }}
                             @endif</a>
                     </li>
-             {{--       @guest
-                        <li class="pr-0">
-                            <a href="{{ route('login') }}" class="custom-button"
-                                    @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='Join Us' contenteditable="true">{{ __('Join Us') }}</editor_block>
-                                @else
-                                    {{ __('Join Us') }}
-                                @endif</a>
-                        </li>
-                    @endguest--}}
+                    {{--       @guest
+                               <li class="pr-0">
+                                   <a href="{{ route('login') }}" class="custom-button"
+                                           @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                                           <editor_block data-name='Join Us' contenteditable="true">{{ __('Join Us') }}</editor_block>
+                                       @else
+                                           {{ __('Join Us') }}
+                                       @endif</a>
+                               </li>
+                           @endguest--}}
                     @guest
                         <li>
                             <a href="{{ route('login') }}" class="btn btn-pill btn-sm btn-success " style="color: white;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;"
