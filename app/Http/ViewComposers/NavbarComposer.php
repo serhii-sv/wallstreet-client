@@ -12,8 +12,9 @@ use Illuminate\View\View;
 
 class NavbarComposer
 {
-    
-    public function compose(View $view) {
+
+    public function compose(View $view)
+    {
         if (Auth::check()) {
             $view->with('counts', [
                 'notifications' => \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),

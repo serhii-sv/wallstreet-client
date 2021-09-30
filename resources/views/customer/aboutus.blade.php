@@ -665,3 +665,10 @@
         <!-- ==========Footer-Section Ends Here========== -->
         </div>
 @endsection
+      @push('js')
+          <script>
+              $(function () {
+                  $('.owl-carousel.autoplay-stop').trigger('stop.owl.autoplay');
+              })
+          </script>
+  @endpush
