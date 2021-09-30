@@ -1,5 +1,4 @@
 <header class="header-section">
-<<<<<<< HEAD
     <div class="header-top">
         <div class="container">
             <div class="row align-items-center">
@@ -152,8 +151,6 @@
                         width: 100%;
                         margin-left: 0 !important;
                     }
-
-<<<<<<< HEAD
                     .language__item:last-child {
                         border: none
                     }
