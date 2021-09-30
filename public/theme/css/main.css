@@ -3302,8 +3302,8 @@ div[class*="ball"] img {
 }
 
 .hover-tab-menu::after, .hover-tab-menu::before {
-    width: 600px;
-    height: 600px;
+    width: 535px;
+    height: 535px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
