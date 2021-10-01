@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Language;
+use App\Models\News;
 use App\Models\Rate;
 use App\Models\RateGroup;
 use Illuminate\Contracts\View\Factory;
@@ -73,5 +74,17 @@ class CustomerPagesController extends Controller
     
     public function reviews() {
         return view('customer.reviews');
+    }
+    
+    public function news($id = null) {
+        if ($id) {
+            return view('customer.news.show', [
+                'news' => News::where('id', $id)->firstOrFail(),
+            ]);
+        } else {
+            return view('customer.news.index', [
+                'news' => News::paginate(8),
+            ]);
+        }
     }
 }

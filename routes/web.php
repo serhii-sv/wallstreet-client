@@ -34,6 +34,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     Route::get('/contact', [\App\Http\Controllers\CustomerPagesController::class, 'contacts'])->name('customer.contact');
     Route::get('/faq', [\App\Http\Controllers\CustomerPagesController::class, 'faq'])->name('customer.faq');
     Route::get('/agreement', [\App\Http\Controllers\CustomerPagesController::class, 'agreement'])->name('customer.agreement');
+    Route::get('/news/{id?}', [\App\Http\Controllers\CustomerPagesController::class, 'news'])->name('customer.news');
 
     /*Route::get('/payout', [\App\Http\Controllers\Customer\PayoutController::class, 'index'])->name('customer.payout');
 

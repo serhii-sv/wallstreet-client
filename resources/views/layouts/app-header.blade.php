@@ -289,6 +289,13 @@
                             @endif</a>
                     </li>
                     <li>
+                        <a href="{{ route('customer.news') }}">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='news' contenteditable="true">{{ __('news') }}</editor_block>
+                            @else
+                                {{ __('news') }}
+                            @endif</a>
+                    </li>
+                    <li>
                         <a href="{{ route('customer.contact') }}">@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Contact' contenteditable="true">{{ __('Contact') }}</editor_block>
                             @else
