@@ -69,11 +69,6 @@
               </li>
               <li>
                   <a href="#0">
-                      <i class="fab fa-pinterest-p"></i>
-                  </a>
-              </li>
-              <li>
-                  <a href="#0">
                       <i class="fab fa-instagram"></i>
                   </a>
               </li>
