@@ -17,7 +17,7 @@
         <div class="header-logo-wrapper col-auto p-0">
             <div class="logo-wrapper">
                 <a href="/">
-                    <img class="img-fluid" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="">
+                    <img class="img-fluid" src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" alt="">
                 </a>
             </div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>

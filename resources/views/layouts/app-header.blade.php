@@ -252,7 +252,7 @@
                 <div class="logo">
                     @if(Route::is('customer.main'))
                         <a href="{{ route('customer.main') }}">
-                            <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="50" alt="logo">
+                            <img src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="150" alt="logo">
                         </a>
                     @endif
                 </div>

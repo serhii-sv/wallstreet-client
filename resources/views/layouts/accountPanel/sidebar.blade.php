@@ -2,8 +2,8 @@
     <div>
         <div class="logo-wrapper">
             <a href="index.html">
-                <img class="img-fluid for-light" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt="">
-                <img class="img-fluid for-dark" src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt="">
+                <img class="img-fluid for-light" src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="120" alt="">
+                <img class="img-fluid for-dark" src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="120" alt="">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
@@ -16,12 +16,12 @@
                     <li class="back-btn"><a href="index.html"><img class="img-fluid" src="{{ asset('accountPanel/images/logo/logo-icon.png') }}" alt=""></a>
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                     </li>
-                    {{--<li class="sidebar-main-title">
+                    <li class="sidebar-main-title">
                         <div>
                             <h6 class="lan-1">General</h6>
                             <p class="lan-2">Dashboards,widgets & layout.</p>
                         </div>
-                    </li>--}}
+                    </li>
                     <li class="sidebar-list">
                         {{--<label class="badge badge-success">2</label>--}}
                         <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.dashboard') }}">
