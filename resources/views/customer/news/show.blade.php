@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('News'))
+@section('title',   $news->getTitle(session()->get('lang')) )
 @section('styles')
     <style>
         .offer-item {
@@ -39,7 +39,9 @@
                         <div class="news-content">
                             {!!   $news->getContent(session()->get('lang')) !!}
                         </div>
-
+                        <div class="news-likes mt-4">
+                            <i class="fa fa-thumbs-o-up" style=""></i> <strong>{{ $news->likes }}</strong>
+                        </div>
                     </div>
                 </div>
             </div>

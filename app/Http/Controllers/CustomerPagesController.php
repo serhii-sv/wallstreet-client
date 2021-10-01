@@ -83,7 +83,7 @@ class CustomerPagesController extends Controller
             ]);
         } else {
             return view('customer.news.index', [
-                'news' => News::paginate(8),
+                'news' => News::paginate(9),
             ]);
         }
     }
