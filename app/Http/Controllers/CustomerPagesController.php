@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\News;
@@ -61,6 +62,7 @@ class CustomerPagesController extends Controller
         return view('customer.main', [
             'rate_groups' => $rate_groups,
             'rates' => $rates,
+          
         ]);
     }
     

@@ -43,7 +43,7 @@
                               @endforelse
                             </select>
                           </div>
-                          <h6 class="mb-2 mt-2">Введите сумму</h6>
+                          <h6 class="mb-2 mt-2">Введите сумму ($)</h6>
                           <div class="input-group">
                             <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                           </div>

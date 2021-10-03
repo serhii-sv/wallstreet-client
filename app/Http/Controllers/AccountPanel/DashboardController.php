@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Deposit;
 use App\Models\DepositQueue;
 use App\Models\Notification;
@@ -65,6 +66,17 @@ class DashboardController extends Controller
         foreach ($deposit as $item) {
             $total_revenue += $item->daily * $item->invested * 0.01 * $item->duration;
         }
+        $banners = Banner::all();
+ 
+        
+        $count_countries = 5;
+        $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
+        $countries_stat->map(function ($country) {
+            $country->count = cache()->remember('dshb.country_stat_count_' . $country->name, 0, function () use ($country) {
+                return User::where('country', $country->name)->count();
+            });
+        });
+        $countries_stat = $countries_stat->sortByDesc('count')->take(7);
         
         return view('accountPanel.dashboard', [
             'wallets' => $wallets,
@@ -73,6 +85,9 @@ class DashboardController extends Controller
             'withdraws_2week' => $withdraws_2week,
             'accruals_2week' => $accruals_2week,
             'total_revenue' => $total_revenue,
+            'banners' => $banners,
+            'countries_stat' => $countries_stat,
+            'users_videos' => UserVideo::where('approved', true)->orderByDesc('created_at')->limit(20)->get(),
         ]);
     }
     
