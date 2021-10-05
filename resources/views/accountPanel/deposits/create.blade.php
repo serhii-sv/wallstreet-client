@@ -48,10 +48,7 @@
                             <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                           </div>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block create-deposit-btn" >Пополнить баланс</button>
                         <button class="btn btn-lg btn-primary btn-block create-deposit-btn" >Инвестировать</button>
-                        <button class="btn btn-lg btn-primary btn-block create-deposit-btn" >Реинвестировать</button>
-                        <button class="btn btn-lg btn-primary btn-block create-deposit-btn" >Вывести с баланса</button>
                       </div>
                     </form>
                   </div>

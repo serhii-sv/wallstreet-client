@@ -602,8 +602,7 @@
             },
           },
           series: [{
-            name: 'Пользователей',
-            //data: [20, 100, 40, 30, 50, 80, 33],
+            name: 'Users',
             data: [@foreach($countries_stat as $item){{ intval($item->count) }} @if(!$loop->last), @endif @endforeach],
           }],
           stroke: {
@@ -620,7 +619,8 @@
                 },
                 
               }
-            }
+            },
+            
           },
           colors: [CubaAdminConfig.primary],
           
@@ -631,15 +631,21 @@
             strokeWidth: 3,
           },
           tooltip: {
+            enabled: false,
+            marker: {
+              show: false,
+            },
             y: {
               formatter: function (val) {
-                return val
+                return ''
               }
             }
           },
           yaxis: {
+            show: false,
             tickAmount: 7,
             labels: {
+              show: false,
               formatter: function (val, i) {
                 if (i % 2 === 0) {
                   return val
@@ -657,6 +663,7 @@
         );
         
         chart1.render();
+        
       });
     </script>
   @endif

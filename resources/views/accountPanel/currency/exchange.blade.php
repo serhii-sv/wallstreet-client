@@ -147,7 +147,14 @@
             opacity: 0.9,
             colors: ['#7366ff'],
           },
-          
+          tooltip:{
+            enabled: true,
+            x: {
+              show: true,
+              format: 'HH:mm:ss',
+              formatter: undefined,
+            },
+          },
           series: [{
             data: [@foreach($exchange_rate_log as $item){
               x: new Date({{ $item->date }}000),
