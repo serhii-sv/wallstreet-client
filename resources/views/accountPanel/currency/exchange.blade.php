@@ -8,7 +8,26 @@
       <div class="card">
         <div class="card-block row">
           <div class="col-12">
-  
+            <div class="donut-chart-widget">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Курс Sprint Token'а</h5>
+                  <div class="card-header-right">
+                    <ul class="list-unstyled card-option">
+                      <li><i class="fa fa-spin fa-cog"></i></li>
+                      <li><i class="view-html fa fa-code"></i></li>
+                      <li><i class="icofont icofont-maximize full-card"></i></li>
+                      <li><i class="icofont icofont-minus minimize-card"></i></li>
+                      <li><i class="icofont icofont-refresh reload-card"></i></li>
+                      <li><i class="icofont icofont-error close-card"></i></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-widget13"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -100,6 +119,90 @@
   <link rel="stylesheet" href="{{ asset('accountPanel/css/vendors/range-slider.css') }}">
 @endpush--}}
 @push('scripts')
+  <script src="{{ asset('accountPanel/js/chart/apex-chart/apex-chart.js') }}"></script>
+  <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
+  <script src="{{ asset('accountPanel/js/chart/apex-chart/chart-custom.js') }}"></script>
+  @if($exchange_rate_log)
+    
+    <script>
+      $(document).ready(function () {
+        // browser-candlestick chart
+        var optionscandlestickchart = {
+          chart: {
+            toolbar: {
+              show: false
+            },
+            height: 500,
+            type: 'candlestick',
+          },
+          plotOptions: {
+            candlestick: {
+              colors: {
+                upward: CubaAdminConfig.primary,
+                downward: CubaAdminConfig.secondary
+              }
+            }
+          },
+          fill: {
+            opacity: 0.9,
+            colors: ['#7366ff'],
+          },
+          
+          series: [{
+            data: [@foreach($exchange_rate_log as $item){
+              x: new Date({{ $item->date }}000),
+              y: [{{ $item->old_rate }}, {{ $item->old_rate > $item->new_rate ? $item->old_rate : $item->new_rate }}, {{ $item->old_rate < $item->new_rate ? $item->old_rate : $item->new_rate }}, {{ $item->new_rate }}]
+            },
+              @endforeach
+              /*{
+                x: new Date(1538780400000),
+                y: [6, 6, 1, 1]
+              },
+              {
+                x: new Date(1538782200000),
+                y: [1, 7, 1, 7]
+              },
+              {
+                x: new Date(1538783400000),
+                y: [7, 4, 7, 4]
+              },
+              {
+                x: new Date(1538784200000),
+                y: [4, 9, 4, 9]
+              },*/
+            ]
+          }],
+          title: {
+            text: 'last 40',
+            align: 'left'
+          },
+          xaxis: {
+            type: 'datetime',
+            labels: {
+              show: true,
+              datetimeFormatter: {
+                year: 'yyyy',
+                month: "MMM 'yy",
+                day: 'dd MMM',
+                hour: 'HH:mm',
+              },
+            }
+          },
+          yaxis: {
+            tooltip: {
+              enabled: true
+            }
+          }
+        }
+        
+        var chartcandlestickchart = new ApexCharts(
+            document.querySelector("#chart-widget13"),
+            optionscandlestickchart
+        );
+        chartcandlestickchart.render();
+      });
+    </script>
+  @endif
 {{--  <script src="{{ asset('accountPanel/js/range-slider/ion.rangeSlider.min.js') }}"></script>
   <script>
     var range_slider_custom = {

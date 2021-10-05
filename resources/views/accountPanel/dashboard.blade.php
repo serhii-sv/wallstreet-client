@@ -48,49 +48,41 @@
       </div>
     @endif
     <div class="row second-chart-list third-news-update">
-      
-      @if(!empty($wallets))
-        <div class="row">
-          @forelse($wallets as $item)
-            <div class="col-sm-6 col-xl-3 col-lg-6">
-              <div class="card o-hidden">
-                <div class="bg-primary b-r-4 card-body">
-                  <div class="media static-top-widget">
-                    <div class="align-self-center text-center">
-                      <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
-                    </div>
-                    <div class="media-body">
-                      <span class="m-0">Balance in {{ $item->currency->name }}</span>
-                      <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
-                      <i class="icon-bg" data-feather="credit-card"></i>
-                      <div class="mt-3">
-                        <a href="" class="btn btn-success">Пополнить</a>
-                        <a href="{{ route('accountPanel.withdrawal') }}" class="btn btn-danger">Вывести</a>
+      <div class="col-12">
+        @if(!empty($wallets))
+          <div class="row">
+            @forelse($wallets as $item)
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                <div class="card o-hidden">
+                  <div class="bg-primary b-r-4 card-body">
+                    <div class="media static-top-widget">
+                      <div class="align-self-center text-center">
+                        <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
+                      </div>
+                      <div class="media-body">
+                        <span class="m-0">Balance in {{ $item->currency->name }}</span>
+                        <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
+                        <i class="icon-bg" data-feather="credit-card"></i>
+                        <div class="mt-3">
+                          <a href="" class="btn btn-success">Пополнить</a>
+                          <a href="{{ route('accountPanel.withdrawal') }}" class="btn btn-danger">Вывести</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          @empty
-          @endforelse
-        </div>
-      @endif
+            @empty
+            @endforelse
+          </div>
+        @endif
+      </div>
+      
       <div class="col-xl-4 xl-50 appointment box-col-6">
         <div class="card">
           <div class="card-header">
             <div class="header-top">
               <h5 class="m-0">Популярность по странам</h5>
-              {{--  <div class="card-header-right-icon">
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">Year</button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Year</a>
-                      <a class="dropdown-item" href="#">Month</a>
-                      <a class="dropdown-item" href="#">Day</a>
-                    </div>
-                  </div>
-                </div>--}}
             </div>
           </div>
           <div class="card-Body">
@@ -467,9 +459,11 @@
       </div>
     </div>
   </div>
+  
 @endsection
 
 @push('scripts')
+
   <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>

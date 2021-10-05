@@ -4,8 +4,11 @@ namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
+use App\Models\ExchangeRateLog;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Wallet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +18,16 @@ class CurrencyController extends Controller
     //
     
     public function showCurrencyExchange() {
+        $sprint_rate = Setting::where('s_key', 'sprint_to_usd')->first();
+        if ($sprint_rate !== null) {
+            $exchange_rate_log = ExchangeRateLog::where('rate_id', $sprint_rate->id)->orderByDesc('date')->limit(40)->get();
+            $exchange_rate_log = $exchange_rate_log->sortBy('date');
+        } else {
+            $exchange_rate_log = false;
+        }
+     
         return view('accountPanel.currency.exchange', [
+            'exchange_rate_log' => $exchange_rate_log,
             'wallets' => Wallet::where('user_id', Auth::user()->id)->get(),
         ]);
     }

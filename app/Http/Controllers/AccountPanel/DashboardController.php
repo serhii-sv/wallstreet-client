@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Deposit;
 use App\Models\DepositQueue;
+use App\Models\ExchangeRateLog;
 use App\Models\Notification;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
@@ -78,7 +80,10 @@ class DashboardController extends Controller
         });
         $countries_stat = $countries_stat->sortByDesc('count')->take(7);
         
+     
+        
         return view('accountPanel.dashboard', [
+     
             'wallets' => $wallets,
             'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),
             'period_graph' => $period_graph,
