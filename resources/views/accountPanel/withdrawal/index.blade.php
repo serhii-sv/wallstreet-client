@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Dashboard'))
+@section('title', __('Withdrawal'))
 @section('content')
   
   <div class="container-fluid">
@@ -10,7 +10,7 @@
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                <h5>Simple Pricing Card</h5>
+                <h5>List of wallets </h5>
               </div>
               <div class="card-body row pricing-content">
                 <div class="mb-3">
@@ -45,6 +45,9 @@
                           <div class="input-group">
                             <span class="input-group-text">{{ $item->currency->symbol ?? '' }}</span>
                             <input class="form-control" type="text" name="amount">
+                          </div>
+                          <div>
+                            Комиссия 1$
                           </div>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block">Вывести</button>

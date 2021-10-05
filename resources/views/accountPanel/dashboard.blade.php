@@ -65,7 +65,7 @@
                       <i class="icon-bg" data-feather="credit-card"></i>
                       <div class="mt-3">
                         <a href="" class="btn btn-success">Пополнить</a>
-                        <a href="" class="btn btn-danger">Вывести</a>
+                        <a href="{{ route('accountPanel.withdrawal') }}" class="btn btn-danger">Вывести</a>
                       </div>
                     </div>
                   </div>
@@ -310,7 +310,7 @@
                               <div class="mb-3">
                                 <img src="{{  $users_video->user->avatar ? route('accountPanel.profile.get.avatar',$users_video->user->id) : asset('accountPanel/images/user/user.png')  }}" alt="">
                                 {{ $users_video->user->login ?? '' }}</div>
-                              {!!  $users_video->link !!}
+                              {!! htmlspecialchars_decode($users_video->link) !!}
                             </li>
                           @empty
                             <li class="mb-3" style="background: #fafafa; padding: 15px">

@@ -38,6 +38,7 @@ class Transaction extends Model
         'batch_id',
         'approved',
         'commission',
+        'commission_usd',
         'created_at',
     ];
     
@@ -144,13 +145,26 @@ class Transaction extends Model
         $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
         $paymentSystem  = $payment_system_id;
+    
+  
         
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
         }
         
         $commission = $type->commission;
+        $commission_usd = $type->commission_usd;
         $amountWithCommission = $amount / ((100 - $commission) * 0.01);
+        
+        /** @var Currency $toCurrency */
+        $toCurrency = Currency::where('code', 'USD')->first();
+        
+        $amount_in_usd = Wallet::convertToCurrencyStatic($wallet->currency, $toCurrency, $amountWithCommission);
+        $amountWithCommission = Wallet::convertToCurrencyStatic($toCurrency, $wallet->currency, $amount_in_usd + $commission_usd);
+        
+        if($amountWithCommission > $wallet->balance){
+           throw new \Exception(__('Maximum withdraw amount is ' . $wallet->balance ) );
+        }
         
         $psMinimumWithdrawArray = @json_decode($paymentSystem->minimum_withdraw, true);
         $psMinimumWithdraw = isset($psMinimumWithdrawArray[$currency->code]) ? $psMinimumWithdrawArray[$currency->code] : 0;
@@ -163,6 +177,7 @@ class Transaction extends Model
         $transaction = self::create([
             'type_id' => $type->id,
             'commission' => $type->commission,
+            'commission_usd' => $type->commission_usd,
             'user_id' => $user->id,
             'currency_id' => $currency->id,
             'wallet_id' => $wallet->id,

@@ -169,7 +169,7 @@ class DashboardController extends Controller
         }
         
         $user_video = new UserVideo();
-        $user_video->link = $video;
+        $user_video->link = htmlspecialchars($video);
         $user_video->user_id = Auth::user()->id;
         
         if ($user_video->save()) {
