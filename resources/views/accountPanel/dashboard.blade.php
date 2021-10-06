@@ -13,16 +13,7 @@
   </style>
 @endpush
 @section('content')
-  @forelse($banners as $banner)
-    <div class="">
-      <div class="selling-slide row">
-        <div class="col-xl-12 col-md-12">
-            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
-        </div>
-      </div>
-    </div>
-  @empty
-  @endforelse
+  
   <div class="container-fluid">
     @if($banners !== null)
       <div class="row mb-4">
@@ -472,6 +463,7 @@
 @endsection
 
 @push('scripts')
+
   <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>
