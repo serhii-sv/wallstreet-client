@@ -13,7 +13,16 @@
   </style>
 @endpush
 @section('content')
-  
+  @forelse($banners as $banner)
+    <div class="">
+      <div class="selling-slide row">
+        <div class="col-xl-12 col-md-12">
+            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  @empty
+  @endforelse
   <div class="container-fluid">
     @if($banners !== null)
       <div class="row mb-4">
@@ -463,7 +472,6 @@
 @endsection
 
 @push('scripts')
-
   <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>
@@ -603,13 +611,15 @@
           },
           series: [{
             name: 'Users',
-            data: [@foreach($countries_stat as $item){{ intval($item->count) }} @if(!$loop->last), @endif @endforeach],
+            /*data: [@foreach($countries_stat as $item){{ intval($item->count) }} @if(!$loop->last), @endif @endforeach],*/
+            data: [800, 454,900, 500,734,623,600],
           }],
           stroke: {
             width: 3,
             curve: 'smooth',
           },
-          labels: [@foreach($countries_stat as $item)"{{ $item->name }}" @if(!$loop->last), @endif @endforeach],
+          /*labels: [@foreach($countries_stat as $item)"{{ $item->name }}" @if(!$loop->last), @endif @endforeach],*/
+          labels: ['Сша', 'Китай', 'Россия', 'Сингапур', 'Германия', 'Австралия','Казахстан'],
           plotOptions: {
             radar: {
               size: 140,
