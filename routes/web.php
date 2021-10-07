@@ -85,7 +85,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
             Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
 
-            Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions');
+            Route::get('/transactions/{type?}', [TransactionsController::class, 'index'])->name('transactions');
             Route::resource('/deposits', DepositsController::class);
 
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');

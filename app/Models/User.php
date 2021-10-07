@@ -73,7 +73,11 @@ class User extends Authenticatable
         'ip',
         'is_locked',
         'documents_verified',
-        'api_token'
+        'api_token',
+        'country_manual',
+        'city_manual',
+        'telegram',
+        'index',
     ];
 
     /**

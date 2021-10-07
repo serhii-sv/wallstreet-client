@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CloudFile;
 use App\Models\CloudFileFolder;
 use App\Models\User;
+use App\Models\UserAuthLog;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +22,12 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $wallets = Wallet::where('user_id', auth()->user()->id)->with('currency')->get();
+        $auth_log = UserAuthLog::orderByDesc('created_at')->limit(10)->get();
         return view('accountPanel.profile.edit', [
             'user' => Auth::user(),
+            'auth_log' => $auth_log,
+            'wallets' => $wallets,
         ]);
     }
 

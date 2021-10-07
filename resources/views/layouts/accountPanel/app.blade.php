@@ -167,7 +167,7 @@
     <!-- Theme js-->
     <script src="{{ asset('accountPanel/js/script.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-  {{--    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>--}}
+      <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>
   <!-- login js-->
     <!-- Plugin used-->
 

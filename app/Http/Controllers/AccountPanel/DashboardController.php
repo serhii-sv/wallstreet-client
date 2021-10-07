@@ -27,6 +27,7 @@ class DashboardController extends Controller
      * @return void
      */
     public function __construct() {
+        
         $this->middleware('auth');
     }
     
@@ -69,7 +70,7 @@ class DashboardController extends Controller
             $total_revenue += $item->daily * $item->invested * 0.01 * $item->duration;
         }
         $banners = Banner::all();
- 
+        
         
         $count_countries = 5;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
@@ -80,10 +81,9 @@ class DashboardController extends Controller
         });
         $countries_stat = $countries_stat->sortByDesc('count')->take(7);
         
-     
         
         return view('accountPanel.dashboard', [
-     
+            
             'wallets' => $wallets,
             'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),
             'period_graph' => $period_graph,
@@ -114,7 +114,7 @@ class DashboardController extends Controller
             return back()->with('short_error', 'Недостаточно средств!');
         }
         
-        $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)->where('currency_id', $wallet->currency_id)->first();
+        $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)->first();
         if (empty($recipient_user_wallet)) {
             return back()->with('short_error', 'У пользователя нет кошелька с указанной валютой!');
         }

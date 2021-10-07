@@ -68,6 +68,10 @@
                 <p><strong>{{ $user->skype ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
+                <label class="form-label">Telegram</label>
+                <p><strong>{{ $user->telegram ?? 'Не указан' }}</strong></p>
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Пол</label>
                 <p><strong>{{ $user->sex ?? 'Не указан' }}</strong></p>
               </div>
@@ -154,6 +158,34 @@
                         value="{{ $user->skype ?? '' }}">
                   </div>
                 </div>
+                <div class="col-sm-6 col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Telegram</label>
+                    <input class="form-control" type="text" name="telegram"
+                        value="{{ $user->telegram ?? '' }}">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Индекс</label>
+                    <input class="form-control" type="text" name="index"
+                        value="{{ $user->index ?? '' }}">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Страна</label>
+                    <input class="form-control" type="text" name="country_manual"
+                        value="{{ $user->country_manual ?? '' }}">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Город</label>
+                    <input class="form-control" type="text" name="city_manual"
+                        value="{{ $user->city_manual ?? '' }}">
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card-footer text-end">
@@ -162,6 +194,30 @@
           </form>
         </div>
       </div>
+      @if(!empty($wallets))
+        <div class="row">
+          @forelse($wallets as $item)
+            <div class="col-sm-6 col-xl-3 col-lg-6">
+              <div class="card o-hidden">
+                <div class="bg-primary b-r-4 card-body">
+                  <div class="media static-top-widget">
+                    <div class="media-body ml-0">
+                      <span class="m-0">Balance in {{ $item->currency->name }}</span>
+                      <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
+                      <input type="text" name="external" value="{{ $item->external }}">
+                      <i class="icon-bg" data-feather="credit-card"></i>
+                      <div class="mt-3">
+                        <a href="" class="btn btn-success">Сохранить</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @empty
+          @endforelse
+        </div>
+      @endif
       @if(!$user->documents_verified)
         <div class="row">
           <div class="col-xl-12">
@@ -220,6 +276,39 @@
           </div>
         </div>
       @endif
+      <div class="row">
+        <div class="col">
+          <!-- Cod Box Copy begin -->
+          <div class="card">
+            <div class="card-header card-no-border">
+              <h5>История входов</h5>
+            </div>
+            <div class="card-body new-update pt-0">
+              <div class="activity-timeline">
+                @forelse($auth_log as $item)
+                <div class="media">
+                  <div class="activity-line"></div>
+                  <div class="activity-dot-secondary"></div>
+                  <div class="media-body">
+                    <span class="badge rounded-pill pill-badge-info">ip: {{ $item->ip }}</span>
+                    <p class="font-roboto">{{ $item->created_at->format('H:i:s d.F.Y') }}</p>
+                  </div>
+                </div>
+                @empty
+                @endforelse
+             {{--   <div class="media">
+                  <div class="activity-dot-primary"></div>
+                  <div class="media-body">
+                    <span>You liked James products</span>
+                    <p class="font-roboto">Aenean sit amet magna vel magna fringilla ferme.</p>
+                  </div>
+                </div>--}}
+              </div>
+            </div>
+          </div>
+          <!-- Cod Box Copy end -->
+        </div>
+      </div>
     </div>
   </div>
   <style>

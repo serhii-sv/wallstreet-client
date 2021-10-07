@@ -15,187 +15,8 @@
 @section('content')
   
   <div class="container-fluid">
-    @if($banners !== null)
-      <div class="row mb-4">
-        <div class="col">
-          <div class="offer-slider">
-            <div class="carousel slide" id="carouselExampleCaptions" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                @forelse($banners as $banner)
-                  <div class="carousel-item @if($loop->first) active @endif">
-                    <div class="selling-slide row">
-                      <div class="col-xl-12 col-md-12">
-                        <div class="center-img d-flex justify-content-center">
-                          <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                @empty
-                @endforelse
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endif
-    <div class="row second-chart-list third-news-update">
-      <div class="col-12">
-        @if(!empty($wallets))
-          <div class="row">
-            @forelse($wallets as $item)
-              <div class="col-sm-6 col-xl-3 col-lg-6">
-                <div class="card o-hidden">
-                  <div class="bg-primary b-r-4 card-body">
-                    <div class="media static-top-widget">
-                      <div class="align-self-center text-center">
-                        <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
-                      </div>
-                      <div class="media-body">
-                        <span class="m-0">Balance in {{ $item->currency->name }}</span>
-                        <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
-                        <i class="icon-bg" data-feather="credit-card"></i>
-                        <div class="mt-3">
-                          <a href="" class="btn btn-success">Пополнить</a>
-                          <a href="{{ route('accountPanel.withdrawal') }}" class="btn btn-danger">Вывести</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            @empty
-            @endforelse
-          </div>
-        @endif
-      </div>
-      
-      <div class="col-xl-4 xl-50 appointment box-col-6">
-        <div class="card">
-          <div class="card-header">
-            <div class="header-top">
-              <h5 class="m-0">Популярность по странам</h5>
-            </div>
-          </div>
-          <div class="card-Body">
-            <div class="radar-chart">
-              <div id="marketchart"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 risk-col xl-100 box-col-12">
-        <div class="card total-users">
-          <div class="card-header card-no-border pb-3 pt-3">
-            <h5>Перевод</h5>
-          </div>
-          <div class="card-body pt-0">
-            <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
-              @csrf
-              <div class="apex-chart-container goal-status text-center row">
-                <div class="rate-card col-xl-12">
-                  <h6 class="mb-2 mt-2 f-w-400">Пользователь</h6>
-                  <div class="input-group mb-3">
-                    <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
-                  </div>
-                  <h6 class="mb-2 mt-2 f-w-400">Введите сумму</h6>
-                  <div class="input-group mb-3">
-                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
-                  </div>
-                  <div class="input-group mb-3">
-                    <select class="form-select form-control-inverse-fill " name="wallet_id">
-                      <option value="" disabled selected hidden>Выберите кошелёк</option>
-                      @forelse($wallets as $wallet)
-                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
-                      @empty
-                      @endforelse
-                    </select>
-                  </div>
-                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn">Перевести</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-9 xl-100 box-col-12">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="card">
-              <div class="card-header pt-4 pb-4">
-                <h4 class="mb-0">Последние 5 депозитов</h4>
-              </div>
-              <div class="card-body pt-3 pb-3">
-                <div class="best-seller-table responsive-tbl">
-                  <div class="item">
-                    <div class="table-responsive product-list">
-                      <table class="table table-bordernone">
-                        <thead>
-                          <tr>
-                            <th>Баланс</th>
-                            <th>Название</th>
-                            <th>Инвестировано</th>
-                            <th>Прошло дней</th>
-                            <th>Начислено</th>
-                            <th>Статус</th>
-                            <th class="text-end">Дата открытия</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @if(isset($deposits) && !empty($deposits))
-                            @foreach($deposits as $deposit)
-                              <tr>
-                                <td>
-                                  <span class="">$ {{ number_format($deposit->balance, 2, '.', ',') ?? 0 }}</span>
-                                </td>
-                                <td>
-                                  <span>{{ $deposit->rate->name ?? '' }}</span>
-                                </td>
-                                <td>
-                                  <div class="span badge rounded-pill pill-badge-success">{{ $deposit->invested ?? '' }}</div>
-                                </td>
-                                <td>
-                                  @if(Carbon\Carbon::now()->diffInDays($deposit->created_at) > $deposit->duration)
-                                    {{ $deposit->duration }}/{{ $deposit->duration }}
-                                  @else
-                                    {{ Carbon\Carbon::now()->diffInDays($deposit->created_at) }}/{{ $deposit->duration }}
-                                  @endif
-                                </td>
-                                <td scope="col">
-                                  <div class="span badge rounded-pill pill-badge-primary">$ {{ number_format($deposit->balance - $deposit->invested, 2, '.', ',') ?? 0 }}</div>
-                                </td>
-                                <td scope="col">
-                                  @if($deposit->active)
-                                    <div class="span badge rounded-pill pill-badge-success">В работе</div>
-                                  @else
-                                    <div class="span badge rounded-pill pill-badge-danger">Закрыт</div>
-                                  @endif
-                                </td>
-                                <td class="text-end ">{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
-                              </tr>
-                            @endforeach
-                          @endif
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      
-      <div class="col-xl-6 xl-100 dashboard-sec box-col-12">
+    <div class="row">
+      <div class="col-xl-12 xl-100 dashboard-sec box-col-12">
         <div class="card earning-card">
           <div class="card-body p-0">
             <div class="row m-0">
@@ -265,7 +86,191 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-6 xl-100">
+    </div>
+    
+    <div class="row second-chart-list third-news-update">
+      <div class="col-12">
+        @if(!empty($wallets))
+          <div class="row">
+            @forelse($wallets as $item)
+              <div class="col-sm-6 col-xl-3 col-lg-6">
+                <div class="card o-hidden">
+                  <div class="bg-primary b-r-4 card-body" style="padding: 30px 15px;">
+                    <div class="media static-top-widget">
+                     {{-- <div class="align-self-center text-center">
+                        <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
+                      </div>--}}
+                      <div class="media-body ml-0">
+                        <span class="m-0">Balance in {{ $item->currency->name }}</span>
+                        <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
+                        <i class="icon-bg" data-feather="credit-card"></i>
+                        <div class="mt-3">
+                          <a href="" class="btn btn-success">Пополнить</a>
+                          <a href="{{ route('accountPanel.withdrawal') }}" class="btn btn-danger">Вывести</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @empty
+            @endforelse
+          </div>
+        @endif
+      </div>
+      @if($banners !== null)
+        <div class="row mb-4">
+          <div class="col">
+            <div class="offer-slider">
+              <div class="carousel slide" id="carouselExampleCaptions" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  @forelse($banners as $banner)
+                    <div class="carousel-item @if($loop->first) active @endif">
+                      <div class="selling-slide row">
+                        <div class="col-xl-12 col-md-12">
+                          <div class="center-img d-flex justify-content-center">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  @empty
+                  @endforelse
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
+      <div class="col-xl-12 xl-100 box-col-12">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-header pt-4 pb-4">
+                <h4 class="mb-0">Последние 5 депозитов</h4>
+              </div>
+              <div class="card-body pt-3 pb-3">
+                <div class="best-seller-table responsive-tbl">
+                  <div class="item">
+                    <div class="table-responsive product-list">
+                      <table class="table table-bordernone">
+                        <thead>
+                          <tr>
+                            <th>Баланс</th>
+                            <th>Название</th>
+                            <th>Инвестировано</th>
+                            <th>Прошло дней</th>
+                            <th>Начислено</th>
+                            <th>Статус</th>
+                            <th class="text-end">Дата открытия</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(isset($deposits) && !empty($deposits))
+                            @foreach($deposits as $deposit)
+                              <tr>
+                                <td>
+                                  <span class="">$ {{ number_format($deposit->balance, 2, '.', ',') ?? 0 }}</span>
+                                </td>
+                                <td>
+                                  <span>{{ $deposit->rate->name ?? '' }}</span>
+                                </td>
+                                <td>
+                                  <div class="span badge rounded-pill pill-badge-success">{{ $deposit->invested ?? '' }}</div>
+                                </td>
+                                <td>
+                                  @if(Carbon\Carbon::now()->diffInDays($deposit->created_at) > $deposit->duration)
+                                    {{ $deposit->duration }}/{{ $deposit->duration }}
+                                  @else
+                                    {{ Carbon\Carbon::now()->diffInDays($deposit->created_at) }}/{{ $deposit->duration }}
+                                  @endif
+                                </td>
+                                <td scope="col">
+                                  <div class="span badge rounded-pill pill-badge-primary">$ {{ number_format($deposit->balance - $deposit->invested, 2, '.', ',') ?? 0 }}</div>
+                                </td>
+                                <td scope="col">
+                                  @if($deposit->active)
+                                    <div class="span badge rounded-pill pill-badge-success">В работе</div>
+                                  @else
+                                    <div class="span badge rounded-pill pill-badge-danger">Закрыт</div>
+                                  @endif
+                                </td>
+                                <td class="text-end ">{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
+                              </tr>
+                            @endforeach
+                          @endif
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-xl-4 col-lg-6 xl-50 appointment box-col-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="header-top">
+              <h5 class="m-0">Популярность по странам</h5>
+            </div>
+          </div>
+          <div class="card-Body">
+            <div class="radar-chart">
+              <div id="marketchart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 risk-col xl-100 box-col-12">
+        <div class="card total-users">
+          <div class="card-header card-no-border pb-3 pt-3">
+            <h5>Перевод</h5>
+          </div>
+          <div class="card-body pt-0">
+            <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
+              @csrf
+              <div class="apex-chart-container goal-status text-center row">
+                <div class="rate-card col-xl-12">
+                  <h6 class="mb-2 mt-2 f-w-400">Пользователь</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
+                  </div>
+                  <h6 class="mb-2 mt-2 f-w-400">Введите сумму</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <select class="form-select form-control-inverse-fill " name="wallet_id">
+                      <option value="" disabled selected hidden>Выберите кошелёк</option>
+                      @forelse($wallets as $wallet)
+                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                      @empty
+                      @endforelse
+                    </select>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn">Перевести</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      <div class="col-lg-6 xl-100">
         
         <div class="card">
           <div class="card-header pb-3">
