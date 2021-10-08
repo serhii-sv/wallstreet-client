@@ -118,92 +118,52 @@
           </div>
         @endif
       </div>
-      @if($banners !== null)
-        <div class="row mb-4">
-          <div class="col">
-            <div class="offer-slider">
-              <div class="carousel slide" id="carouselExampleCaptions" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  @forelse($banners as $banner)
-                    <div class="carousel-item @if($loop->first) active @endif">
-                      <div class="selling-slide row">
-                        <div class="col-xl-12 col-md-12">
-                          <div class="center-img d-flex justify-content-center">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  @empty
-                  @endforelse
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      @endif
+     
       <div class="col-xl-12 xl-100 box-col-12">
         <div class="row">
           <div class="col-xl-12">
             <div class="card">
               <div class="card-header pt-4 pb-4">
-                <h4 class="mb-0">Последние 5 депозитов</h4>
+                <h4 class="mb-0">Последние 5 операций</h4>
               </div>
               <div class="card-body pt-3 pb-3">
-                <div class="best-seller-table responsive-tbl">
+                <div class="table-responsive">
                   <div class="item">
                     <div class="table-responsive product-list">
                       <table class="table table-bordernone">
                         <thead>
                           <tr>
-                            <th>Баланс</th>
-                            <th>Название</th>
-                            <th>Инвестировано</th>
-                            <th>Прошло дней</th>
-                            <th>Начислено</th>
+                            <th>Тип операции</th>
+                            <th>Сумма</th>
+                            <th>Платёжная система</th>
                             <th>Статус</th>
-                            <th class="text-end">Дата открытия</th>
+                            <th class="text-end">Дата операции</th>
                           </tr>
                         </thead>
                         <tbody>
-                          @if(isset($deposits) && !empty($deposits))
-                            @foreach($deposits as $deposit)
-                              <tr>
+                          @if(isset($transactions) && !empty($transactions))
+                            @foreach($transactions as $transaction)
+                              <tr style="vertical-align: middle;">
+                                <th scope="row">{{ $loop->iteration  }}</th>
+                                <td>{{ __('locale.' . $transaction->type->name) ?? 'Не указано' }}</td>
                                 <td>
-                                  <span class="">$ {{ number_format($deposit->balance, 2, '.', ',') ?? 0 }}</span>
+                                  <span class="">{{$transaction->currency->symbol}} {{ number_format($transaction->amount, $transaction->currency->precision, '.', ',') ?? 0 }}</span>
+                                  <br>
+                                  <span class="badge rounded-pill pill-badge-info">$ {{ number_format($transaction->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
                                 </td>
-                                <td>
-                                  <span>{{ $deposit->rate->name ?? '' }}</span>
-                                </td>
-                                <td>
-                                  <div class="span badge rounded-pill pill-badge-success">{{ $deposit->invested ?? '' }}</div>
-                                </td>
-                                <td>
-                                  @if(Carbon\Carbon::now()->diffInDays($deposit->created_at) > $deposit->duration)
-                                    {{ $deposit->duration }}/{{ $deposit->duration }}
-                                  @else
-                                    {{ Carbon\Carbon::now()->diffInDays($deposit->created_at) }}/{{ $deposit->duration }}
-                                  @endif
-                                </td>
-                                <td scope="col">
-                                  <div class="span badge rounded-pill pill-badge-primary">$ {{ number_format($deposit->balance - $deposit->invested, 2, '.', ',') ?? 0 }}</div>
-                                </td>
-                                <td scope="col">
-                                  @if($deposit->active)
-                                    <div class="span badge rounded-pill pill-badge-success">В работе</div>
-                                  @else
-                                    <div class="span badge rounded-pill pill-badge-danger">Закрыт</div>
-                                  @endif
-                                </td>
-                                <td class="text-end ">{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
+                                <td>{{ $transaction->paymentSystem->name ?? 'Не указано' }}</td>
+                                <td>@switch($transaction->approved)
+                                    @case(1)
+                                    <span class="btn-success p-2 ps-4 pe-4" style="display: inline-block; min-width: 200px;text-align: center">Подтверждён</span>
+                                    @break
+                                    @case(2)
+                                    <span class="btn-danger p-2 ps-4 pe-4" style="display: inline-block; min-width: 200px;text-align: center">Отклонён</span>
+                                    @break
+                                    @default
+                                    <span class="btn-light p-2 ps-4 pe-4" style="display: inline-block; min-width: 200px;text-align: center">Не подтверждён</span>
+                                    @break
+                                  @endswitch</td>
+                                <td>{{ $transaction->created_at->format('d-m-Y H:i') }}</td>
                               </tr>
                             @endforeach
                           @endif
@@ -218,7 +178,7 @@
         </div>
       </div>
       
-      <div class="col-xl-4 col-lg-6 xl-50 appointment box-col-6">
+      <div class="col-lg-6 appointment">
         <div class="card">
           <div class="card-header">
             <div class="header-top">
@@ -232,46 +192,8 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-lg-6 risk-col xl-100 box-col-12">
-        <div class="card total-users">
-          <div class="card-header card-no-border pb-3 pt-3">
-            <h5>Перевод</h5>
-          </div>
-          <div class="card-body pt-0">
-            <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
-              @csrf
-              <div class="apex-chart-container goal-status text-center row">
-                <div class="rate-card col-xl-12">
-                  <h6 class="mb-2 mt-2 f-w-400">Пользователь</h6>
-                  <div class="input-group mb-3">
-                    <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
-                  </div>
-                  <h6 class="mb-2 mt-2 f-w-400">Введите сумму</h6>
-                  <div class="input-group mb-3">
-                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
-                  </div>
-                  <div class="input-group mb-3">
-                    <select class="form-select form-control-inverse-fill " name="wallet_id">
-                      <option value="" disabled selected hidden>Выберите кошелёк</option>
-                      @forelse($wallets as $wallet)
-                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
-                      @empty
-                      @endforelse
-                    </select>
-                  </div>
-                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn">Перевести</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
       
-      
-      
-      
-      <div class="col-lg-6 xl-100">
-        
+      <div class="col-lg-6">
         <div class="card">
           <div class="card-header pb-3">
             <h5>Видеоролики</h5>
@@ -335,10 +257,89 @@
               </div>
             </div>
           </div>
-        
         </div>
-      
       </div>
+      
+      <div class="col-lg-6 risk-col ">
+        <div class="card total-users">
+          <div class="card-header card-no-border pb-3 pt-3">
+            <h5>Перевод</h5>
+          </div>
+          <div class="card-body pt-0">
+            <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
+              @csrf
+              <div class="apex-chart-container goal-status text-center">
+                <div class="rate-card">
+                  <h6 class="mb-2 mt-2 f-w-400">Пользователь</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
+                  </div>
+                  <h6 class="mb-2 mt-2 f-w-400">Введите сумму</h6>
+                  <div class="input-group mb-3">
+                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <select class="form-select form-control-inverse-fill " name="wallet_id">
+                      <option value="" disabled selected hidden>Выберите кошелёк</option>
+                      @forelse($wallets as $wallet)
+                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                      @empty
+                      @endforelse
+                    </select>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn">Перевести</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 risk-col ">
+        <div class="card height-equal" style="min-height: 331px;">
+          <div class="card-header">
+            <h5>Ваша реферальная ссылка</h5>
+          </div>
+          <div class="card-body">
+            <h4><i data-feather="link"></i> {{ route('ref_link', auth()->user()->my_id) }}</h4>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary btn-lg" onclick="copyToClipboard()">Скопировать</button>
+          </div>
+        </div>
+      </div>
+      @if($banners !== null)
+        <div class="row mb-4">
+          <div class="col">
+            <div class="offer-slider">
+              <div class="carousel slide" id="carouselExampleCaptions" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  @forelse($banners as $banner)
+                    <div class="carousel-item @if($loop->first) active @endif">
+                      <div class="selling-slide row">
+                        <div class="col-xl-12 col-md-12">
+                          <div class="center-img d-flex justify-content-center">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" class="img-fluid">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  @empty
+                  @endforelse
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -362,7 +363,7 @@
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/7.jpg') }}" alt="">
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/8.jpg') }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
                               <span>John keter</span>
@@ -400,7 +401,7 @@
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/16.png') }}" alt="">
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/5.jpg') }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
                               <span>loain deo</span>
@@ -419,7 +420,7 @@
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/11.png') }}" alt="">
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/4.jpg') }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
                               <span>Horen Hors</span>
@@ -438,7 +439,7 @@
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/3.jpg') }}" alt="">
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/2.png') }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
                               <span>fenter Jessy</span>
@@ -594,6 +595,42 @@
       var chart = new ApexCharts(document.querySelector("#chart-currently"), options);
       chart.render();
     });
+  </script>
+  <script>
+    function copyToClipboard() {
+      var inputc = document.body.appendChild(document.createElement("input"));
+      inputc.value = '{{ route('ref_link', auth()->user()->my_id) }}';
+      inputc.focus();
+      inputc.select();
+      document.execCommand('copy');
+      inputc.parentNode.removeChild(inputc);
+      $.notify({
+            message:'Ссылка скопирована!'
+          },
+          {
+            type:'success',
+            allow_dismiss:false,
+            newest_on_top:false ,
+            mouse_over:false,
+            showProgressbar:false,
+            spacing:10,
+            timer:2000,
+            placement:{
+              from:'top',
+              align:'center'
+            },
+            offset:{
+              x:30,
+              y:30
+            },
+            delay:1000 ,
+            z_index:10000,
+            animate:{
+              enter:'animated bounce',
+              exit:'animated bounce'
+            }
+          });
+    }
   </script>
   @if($countries_stat !== null)
     <script>
