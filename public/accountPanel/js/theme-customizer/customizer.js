@@ -42,7 +42,7 @@ $(document).ready(function () {
     localStorage.removeItem("dark");
     $("#color").attr("href", "../assets/css/" + color + ".css");
     $(".dark-only").removeClass('dark-only');
-    location.reload(true);
+  //  location.reload(true);
   });
   
   $(".customizer-color.dark li").on('click', function () {
