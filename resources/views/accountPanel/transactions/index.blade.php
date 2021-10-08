@@ -58,7 +58,11 @@
                             <br>
                             <span class="badge rounded-pill pill-badge-info">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
                           </td>
-                          <td>{{ $operation->paymentSystem->name ?? 'Не указано' }}</td>
+                          <td>
+                            {{ $operation->paymentSystem->name ?? 'Не указано' }}
+                            <br>
+                            <span class="badge rounded-pill pill-badge-info">{{ $operation->external ?? '' }}</span>
+                          </td>
                           <td>@switch($operation->approved)
                               @case(1)
                               <span class="btn-success p-2 ps-4 pe-4" style="display: inline-block; min-width: 200px;text-align: center">Подтверждён</span>

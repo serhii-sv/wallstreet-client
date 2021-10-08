@@ -26,9 +26,17 @@
                           <h3>{{ $item->currency->name }}</h3>
                           <h1>{{ $item->balance ?? 0 }}{{ $item->currency->symbol }}</h1>
                           <h6 class="mb-2">Выберите платёжную систему</h6>
-                          <select class="js-example-basic-single col-sm-12" name="payment_system">
+                          <select class="js-example-basic-single col-sm-12" name="wallet_detail">
+                            @php($i = 0)
                             @forelse($item->currency->paymentSystems()->get() as $payment_system)
-                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>
+                              @if($item->detail(auth()->user()->id, $payment_system->id)->first() !== null)
+                                @php($i++)
+                                <option value="{{ $item->detail(auth()->user()->id, $payment_system->id)->first()->id }}">{{ $payment_system->name }}</option>
+                              @else
+                              @endif
+                              @if($loop->last && $i == 0)
+                                  <option value="" disabled>Введите реквизиты для вывода</option>
+                                @endif
                             @empty
                               <option value="" disabled>Нет платёжной системы</option>
                             @endforelse

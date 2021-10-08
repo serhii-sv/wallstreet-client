@@ -83,6 +83,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/profile/upload-documents', [ProfileController::class, 'uploadDocuments'])->name('profile.upload-documents');
 
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+            Route::post('/profile/wallet-details/update', [ProfileController::class, 'updateWalletDetails'])->name('profile.wallet.details.update');
             Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
 
             Route::get('/transactions/{type?}', [TransactionsController::class, 'index'])->name('transactions');

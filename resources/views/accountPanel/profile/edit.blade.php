@@ -196,26 +196,71 @@
       </div>
       @if(!empty($wallets))
         <div class="row">
-          @forelse($wallets as $item)
-            <div class="col-sm-6 col-xl-3 col-lg-6">
-              <div class="card o-hidden">
-                <div class="bg-primary b-r-4 card-body">
-                  <div class="media static-top-widget">
-                    <div class="media-body ml-0">
-                      <span class="m-0">Balance in {{ $item->currency->name }}</span>
-                      <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
-                      <input type="text" name="external" value="{{ $item->external }}">
-                      <i class="icon-bg" data-feather="credit-card"></i>
-                      <div class="mt-3">
-                        <a href="" class="btn btn-success">Сохранить</a>
+          <div class="col-sm-12 col-xl-12 ">
+            <div class="card">
+              <div class="card-header">
+                <h5>Реквизиты платёжных систем</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3 tabs-responsive-side">
+                    <div class="nav flex-column nav-pills border-tab nav-left" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      @forelse($wallets as $wallet)
+                        <a class="nav-link @if($loop->first) active @endif" id="v-pills-{{ $wallet->id }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $wallet->id }}" role="tab" aria-controls="v-pills-{{ $wallet->id }}">{{ $wallet->currency->name }}</a>
+                      @empty
+                      @endforelse
+                      {{--  <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile">Profile</a>
+                        <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages">Inbox</a>
+                        <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings">Settings</a>--}}
+                    </div>
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="tab-content" id="v-pills-tabContent">
+                      @forelse($wallets as $wallet)
+                        <div class="tab-pane fade @if($loop->first) active show @endif" id="v-pills-{{ $wallet->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $wallet->id }}-tab">
+                          @forelse($wallet->currency->paymentSystems()->get() as $payment)
+                            <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
+                              @csrf
+                              <input type="hidden" name="payment_system_id" value="{{ $payment->id }}">
+                              <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                              <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
+                              <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
+                        
+                              <div class="row">
+                                <div class="col">
+                                  <div class="">
+                                    <label class="form-label" for="{{ $payment->id }}">{{ $payment->name }}</label>
+                                    <input class="form-control input-air-primary" id="{{ $payment->id }}" type="text" name="external" value="{{ $wallet->detail(auth()->user()->id, $payment->id)->first()->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                  </div>
+                                </div>
+                                <div class="col align-self-end">
+                                  <button class="btn btn-success">Сохранить</button>
+                                </div>
+                              </div>
+                            </form>
+                          @empty
+                          @endforelse
+                        </div>
+                      
+                      @empty
+                      @endforelse
+                      
+                      {{--<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
                       </div>
+                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                      </div>
+                      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                      </div>--}}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          @empty
-          @endforelse
+          </div>
         </div>
       @endif
       @if(!$user->documents_verified)
@@ -286,23 +331,23 @@
             <div class="card-body new-update pt-0">
               <div class="activity-timeline">
                 @forelse($auth_log as $item)
-                <div class="media">
-                  <div class="activity-line"></div>
-                  <div class="activity-dot-secondary"></div>
-                  <div class="media-body">
-                    <span class="badge rounded-pill pill-badge-info">ip: {{ $item->ip }}</span>
-                    <p class="font-roboto">{{ $item->created_at->format('H:i:s d.F.Y') }}</p>
+                  <div class="media">
+                    <div class="activity-line"></div>
+                    <div class="activity-dot-secondary"></div>
+                    <div class="media-body">
+                      <span class="badge rounded-pill pill-badge-info">ip: {{ $item->ip }}</span>
+                      <p class="font-roboto">{{ $item->created_at->format('H:i:s d.F.Y') }}</p>
+                    </div>
                   </div>
-                </div>
                 @empty
                 @endforelse
-             {{--   <div class="media">
-                  <div class="activity-dot-primary"></div>
-                  <div class="media-body">
-                    <span>You liked James products</span>
-                    <p class="font-roboto">Aenean sit amet magna vel magna fringilla ferme.</p>
-                  </div>
-                </div>--}}
+                {{--   <div class="media">
+                     <div class="activity-dot-primary"></div>
+                     <div class="media-body">
+                       <span>You liked James products</span>
+                       <p class="font-roboto">Aenean sit amet magna vel magna fringilla ferme.</p>
+                     </div>
+                   </div>--}}
               </div>
             </div>
           </div>
