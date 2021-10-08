@@ -40,7 +40,7 @@ $(document).ready(function () {
     localStorage.setItem("primary", primary);
     localStorage.setItem("secondary", secondary);
     localStorage.removeItem("dark");
-    $("#color").attr("href", "../assets/css/" + color + ".css");
+    $("#color").attr("href", "../../css/" + color + ".css");
     $(".dark-only").removeClass('dark-only');
   //  location.reload(true);
   });
@@ -54,7 +54,7 @@ $(document).ready(function () {
   
   
   if (localStorage.getItem("primary") != null) {
-    document.documentElement.style.setProperty('--theme-deafult', localStorage.getItem("primary"));
+    document.documentElement.style.setProperty('--theme-default', localStorage.getItem("primary"));
   }
   if (localStorage.getItem("secondary") != null) {
     document.documentElement.style.setProperty('--theme-secondary', localStorage.getItem("secondary"));
