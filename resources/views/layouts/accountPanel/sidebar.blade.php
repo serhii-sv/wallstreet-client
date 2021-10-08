@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper">
   <div>
     <div class="logo-wrapper">
-      <a href="index.html">
+      <a href="{{ route('customer.main') }}" target="_blank">
         <img class="img-fluid for-light" src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="120" alt="">
         <img class="img-fluid for-dark" src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="120" alt="">
       </a>
@@ -9,7 +9,7 @@
       <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
     </div>
     <div class="logo-icon-wrapper">
-      <a href="index.html"><img class="img-fluid" src="{{ asset('accountPanel/images/logo/logo-icon.png') }}" alt="">
+      <a href="{{ route('customer.main') }}" target="_blank"><img class="img-fluid" src="{{ asset('accountPanel/images/logo/logo-icon.png') }}" alt="">
       </a>
     </div>
     <nav class="sidebar-main">
