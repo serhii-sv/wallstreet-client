@@ -17,17 +17,17 @@
       <div id="sidebar-menu">
         <ul class="sidebar-links" id="simple-bar">
           <li class="back-btn">
-            <a href="index.html">
+            <a href="{{ route('customer.main') }}" target="_blank">
               <img class="img-fluid" src="{{ asset('accountPanel/images/logo/logo-icon.png') }}" alt=""></a>
             <div class="mobile-back text-end">
               <span>Back</span>
               <i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
           </li>
           <li class="sidebar-main-title">
-            <div>
+            <a href="{{ route('customer.main') }}" class="d-block" target="_blank">
               <h6 class="lan-1">General</h6>
               <p class="lan-2">Dashboards,widgets & layout.</p>
-            </div>
+            </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
@@ -50,13 +50,28 @@
               <span>{{ __('Deposits') }}</span>
             </a>
           </li>
+  
           <li class="sidebar-list">
-            {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.transactions') }}">
+            <a class="sidebar-link sidebar-title" href="#">
               <i data-feather="list"></i>
-              <span>{{ __('All operations') }}</span>
+              <span>{{ __('Transactions') }}</span>
             </a>
+            <ul class="sidebar-submenu">
+              <li class="">
+                <a class="" href="{{ route('accountPanel.transactions') }}">
+                  <i data-feather="list"></i>
+                  <span>{{ __('All transactions') }}</span>
+                </a>
+              </li>
+              <li class="">
+                <a class="" href="{{ route('accountPanel.calendar') }}">
+                  <i data-feather="calendar"></i>
+                  <span>{{ __('Calendar') }}</span>
+                </a>
+              </li>
+            </ul>
           </li>
+          
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
@@ -76,13 +91,6 @@
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}">
               <i data-feather="users"></i>
               <span>{{ __('Refferals') }}</span>
-            </a>
-          </li>
-          <li class="sidebar-list">
-            {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.calendar') }}">
-              <i data-feather="calendar"></i>
-              <span>{{ __('Calendar') }}</span>
             </a>
           </li>
           <li class="sidebar-list">

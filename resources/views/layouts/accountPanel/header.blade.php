@@ -94,7 +94,7 @@
                         <div class="current_lang">
                             <div class="lang">
                                 <i class="flag-icon flag-icon-@if(session()->get('lang') == 'en')us @else{{ session()->get('lang') }}@endif"></i>
-                                <span class="lang-txt">{{ strtoupper(session()->get('lang')) }}</span>
+                               {{-- <span class="lang-txt">{{ strtoupper(session()->get('lang')) }}</span>--}}
                             </div>
                         </div>
                         <div class="more_lang">
@@ -175,7 +175,7 @@
 
                 <li class="profile-nav onhover-dropdown p-0 me-0">
                     <div class="media profile-media">
-                        <img class="b-r-10" src="{{ asset('accountPanel/images/dashboard/profile.jpg') }}" alt="">
+                        <img class="b-r-10" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/user.png') }}" alt="" width="36" height="36">
                         <div class="media-body">
                             <span>{{$user->login}}</span>
                             <p class="mb-0 font-roboto">{{$user->roles()->first()->name ?? "Customer"}}

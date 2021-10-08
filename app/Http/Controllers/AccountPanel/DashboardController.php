@@ -45,19 +45,19 @@ class DashboardController extends Controller
         $dividend_type = TransactionType::where('name', 'dividend')->first();
         $accruals_ids = [];
         array_push($accruals_ids, $partner_type->id, $dividend_type->id);
-        $period_graph = $this->getPeriodDays(14);
-        $withdraws_2week = [];
-        $accruals_2week = [];
+        $period_graph = $this->getPeriodDays(7);
+        $withdraws_week = [];
+        $accruals_week = [];
         
         
         foreach ($period_graph as $period) {
-            $accruals_2week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_2weeks_' . $period['start']->format('d.m.Y'), 60, function () use ($accruals_ids, $user, $period) {
+            $accruals_week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_week_' . $period['start']->format('d.m.Y'), 60, function () use ($accruals_ids, $user, $period) {
                 return Transaction::where('user_id', $user->id)->whereIn('type_id', $accruals_ids)->where('approved', 1)->whereBetween('created_at', [
                     $period['start'],
                     $period['end'],
                 ])->sum('main_currency_amount');
             });
-            $withdraws_2week[$period['start']->format('d.m.Y')] = cache()->remember('withdraws_2week_' . $period['start']->format('d.m.Y'), 60, function () use ($withdraw_type, $user, $period) {
+            $withdraws_week[$period['start']->format('d.m.Y')] = cache()->remember('withdraws_week_' . $period['start']->format('d.m.Y'), 60, function () use ($withdraw_type, $user, $period) {
                 return Transaction::where('user_id', $user->id)->where('type_id', $withdraw_type->id)->where('approved', 1)->whereBetween('created_at', [
                     $period['start'],
                     $period['end'],
@@ -72,7 +72,6 @@ class DashboardController extends Controller
         $banners = Banner::all();
         
         
-        $count_countries = 5;
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
         $countries_stat->map(function ($country) {
             $country->count = cache()->remember('dshb.country_stat_count_' . $country->name, 0, function () use ($country) {
@@ -87,8 +86,8 @@ class DashboardController extends Controller
             'wallets' => $wallets,
            /* 'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),*/
             'period_graph' => $period_graph,
-            'withdraws_2week' => $withdraws_2week,
-            'accruals_2week' => $accruals_2week,
+            'withdraws_week' => $withdraws_week,
+            'accruals_week' => $accruals_week,
             'total_revenue' => $total_revenue,
             'banners' => $banners,
             'countries_stat' => $countries_stat,

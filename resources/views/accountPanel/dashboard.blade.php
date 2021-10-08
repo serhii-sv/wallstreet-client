@@ -26,7 +26,7 @@
                     <div class="col-xl-8 col-md-8 col-sm-8 col-12 p-0">
                       <div class="inner-top-left">
                         <ul class="d-flex list-unstyled">
-                          <li class="active">За последние 2 недели</li>
+                          <li class="active">За последние 7 дней</li>
                         </ul>
                       </div>
                     </div>
@@ -503,10 +503,10 @@
       var options = {
         series: [{
           name: 'Начислено, $',
-          data: [@foreach($accruals_2week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
+          data: [@foreach($accruals_week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
         }, {
           name: 'Выведено, $',
-          data: [@foreach($withdraws_2week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
+          data: [@foreach($withdraws_week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
         }],
         chart: {
           height: 240,
