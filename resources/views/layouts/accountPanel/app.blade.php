@@ -83,7 +83,7 @@
     @stack('styles')
   
   </head>
-  <body class="{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}">
+  <body class="{{--{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}--}}">
     
     <div class="loader-wrapper">
       <div class="loader-index">
