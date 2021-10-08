@@ -177,7 +177,7 @@
                     <div class="media profile-media">
                         <img class="b-r-10" src="{{ asset('accountPanel/images/dashboard/profile.jpg') }}" alt="">
                         <div class="media-body">
-                            <span>{{$user->name}}</span>
+                            <span>{{$user->login}}</span>
                             <p class="mb-0 font-roboto">{{$user->roles()->first()->name ?? "Customer"}}
                                 <i class="middle fa fa-angle-down"></i></p>
                         </div>
