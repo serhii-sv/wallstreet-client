@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Referral;
+use App\Models\ReferralLinkStat;
 use App\Models\TransactionType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class ReferralsController extends Controller
     public function index() {
         $user = Auth::user();
         $upliner = auth()->user()->partner()->first();
-        $referrals = Auth::user()->referrals()->distinct('id')->get();
+        //$referrals = Auth::user()->referrals()->distinct('id')->orderBy('pivot.line')->get();
+        $referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->get();
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
-        $transaction_type_revenue = TransactionType::where('name', 'close_dep')->first();
         $total_referral_invested = 0;
         $total_referral_revenue = 0;
         foreach ($referrals as $referral) {
@@ -34,8 +35,9 @@ class ReferralsController extends Controller
                 $total_referral_revenue += $diff;
             }
         }
-        //dump($total_referral_invested);
-        //dd($referrals);
+        $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
+        $referral_link_registered = ReferralLinkStat::where('partner_id', $user->id)->where('user_id','!=', null)->count();
+        
         return view('accountPanel.referrals.index', [
             'referrals' => $referrals,
             'total_referral_invested' => $total_referral_invested,
@@ -43,6 +45,10 @@ class ReferralsController extends Controller
             'upliner' => $upliner,
             'transaction_type_invest' => $transaction_type_invest,
             'total_referral_revenue' => $total_referral_revenue,
+            'registered_referrals' => $referrals->count(),
+            'registered_referral_count' => $referrals->count(),
+            'referral_link_registered' => $referral_link_registered,
+            'referral_link_clicks' => $referral_link_clicks,
         ]);
     }
 }

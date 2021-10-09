@@ -12,7 +12,9 @@
             <div class="card hovercard text-center">
               <div class="cardheader" style="background: url('{{ asset('accountPanel/images/other-images/profile-style-img3.png') }}') no-repeat; background-size: cover;max-height: 300px;"></div>
               <div class="user-image">
-                <div class="avatar"><img alt="" src="{{ $upliner->avatar ? route('accountPanel.profile.get.avatar', $upliner->id) : asset('accountPanel/images/user/user.png') }}"></div>
+                <div class="avatar">
+                  <img alt="" src="{{ $upliner->avatar ? route('accountPanel.profile.get.avatar', $upliner->id) : asset('accountPanel/images/user/user.png') }}">
+                </div>
                 <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
               </div>
               <div class="info">
@@ -27,8 +29,8 @@
                       </div>
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;...</h6>
-                          <span>...</span>
+                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;Переходов по реф. ссылке</h6>
+                          <span>{{ $referral_link_clicks ?? 0 }}</span>
                         </div>
                       </div>
                     </div>
@@ -61,32 +63,19 @@
                 </div>
                 <hr>
                 <div class="social-media">
-                  <ul class="list-inline">
-                    <li class="list-inline-item">
-                      <a href="#" data-bs-original-title="" title=""><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a href="#" data-bs-original-title="" title=""><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a href="#" data-bs-original-title="" title=""><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a href="#" data-bs-original-title="" title=""><i class="fa fa-instagram"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a href="#" data-bs-original-title="" title=""><i class="fa fa-rss"></i></a>
-                    </li>
-                  </ul>
+                  <h5>Поделитесь реферальной ссылкой в соц. сетях</h5>
+                  <script src="https://yastatic.net/share2/share.js"></script>
+                  <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
+                
                 </div>
                 <div class="follow">
                   <div class="row">
-                    <div class="col-6 text-md-end border-right">
-                      <div class="follow-num counter">25869</div>
+                    <div class="col-6 text-md-end">
+                      <div class="follow-num counter">{{ $referral_link_registered }}</div>
                       <span>Зарегестрированных партнёров</span>
                     </div>
-                    <div class="col-6 text-md-start">
-                      <div class="follow-num counter">659887</div>
+                    <div class="col-6 text-md-start border-right">
+                      <div class="follow-num counter">{{ $referrals->count() }}</div>
                       <span>Активных партнёров</span>
                     </div>
                   </div>
@@ -97,59 +86,67 @@
         </div>
       </div>
       
-      {{--<div class="row">
-        <div class="col-12">
-          @include('partials.inform')
-        </div>
-        <div class="col-xl-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="best-seller-table responsive-tbl mb-3">
-                <div class="item">
-                  <div class="table-responsive product-list">
-                    <table class="table table-bordernone">
-                      <thead>
+      
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="best-seller-table responsive-tbl">
+              <div class="item">
+                <div class="table-responsive product-list">
+                  <table class="table table-bordernone">
+                    <thead>
+                      <tr>
+                        <th class="f-22">
+                          Пользователь
+                        </th>
+                        <th>Телефон</th>
+                        <th>Дата/Время регистрации</th>
+                        <th>Логин аплайнера</th>
+                        <th>Инвестировано</th>
+                        <th>Начисления</th>
+                        <th>Вознаграждение</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @forelse($referrals as $referral)
                         <tr>
-                          <th class="f-22">Логин</th>
-                          <th >Сумма инвестиций, $</th>
-                          <th scope="col">Дата регистрации</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @if(isset($referrals) && !empty($referrals))
-                          @foreach($referrals as $referral)
-                            <tr>
-                              <td class="f-16">{{ $referral->login ?? '' }}</td>
-                            
-                              <td >
-                                <div class="span badge rounded-pill pill-badge-primary f-14 ">
-                                  ${{ number_format($referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount'), 2, '.',' ') }}
-                                </div>
-                               </td>
-                              <td >{{ $referral->created_at ?? '' }}</td>
-                            </tr>
-                          @endforeach
-                        @else
-                          <tr>
-                            <td class="p-0" colspan="6">
-                              <div class="alert alert-light inverse alert-dismissible fade show" role="alert"><i class="icon-alert txt-dark"></i>
-                                <p style="font-size: 16px;">Депозитов нет</p>
+                          <td>
+                            <div class="d-inline-block align-middle">
+                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $referral->image ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
+                              <div class="status-circle bg-primary"></div>
+                              <div class="d-inline-block">
+                                <span style="font-size: 18px;">{{ $referral->name }}</span>
+                                <p class="font-roboto" style="font-size: 15px;">{{ $referral->login }}</p>
                               </div>
-                            </td>
-                          </tr>
-                        @endif
-                      </tbody>
-                    </table>
-                  </div>
+                            </div>
+                          </td>
+                          <td>{{ $referral->phone ?? 'Не указан' }}</td>
+                          <td>{{ $referral->created_at->format('d.m.Y H:i:s') }}</td>
+                          <td>
+                            <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ $referral->partner->login }}</span>
+                          </td>
+                          <td>
+                            <span class="label">
+                              {{ number_format($referral->invested(), 2, '.', ' ') ?? 0 }}$
+                            </span>
+                          </td>
+                          <td class="">
+                            {{ number_format($referral->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
+                          </td>
+                          <td>
+                            {{ number_format($referral->deposit_reward(), 2, '.', ' ') }}$
+                          </td>
+                        </tr>
+                      @empty
+                      @endforelse
+                    </tbody>
+                  </table>
                 </div>
-              </div>
-              <div>
-                {{ $referrals->appends(request()->except('page'))->links() }}
               </div>
             </div>
           </div>
         </div>
-      </div>--}}
+      </div>
     </div>
   </div>
 @endsection
