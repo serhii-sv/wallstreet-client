@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Rate;
+use App\Models\RateGroup;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DepositsController extends Controller
 {
-    //
     public function index() {
         $user_id = auth()->user()->id;
         return view('accountPanel.deposits.index', [
@@ -23,7 +23,9 @@ class DepositsController extends Controller
     }
     
     public function create() {
+        $deposit_groups = RateGroup::all();
         return view('accountPanel.deposits.create', [
+            'deposit_groups' => $deposit_groups,
             'rates' => Rate::where('active', true)->orderBy('min', 'asc')->get(),
             'wallets' => Wallet::where('user_id', auth()->user()->id)->get(),
         ]);

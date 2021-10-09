@@ -346,7 +346,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $payment_system_id,
+            'payment_system_id' => $deposit->paymentSystem !== null ? $deposit->paymentSystem->id : null,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -368,7 +368,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
+            'payment_system_id' => $deposit->paymentSystem !== null ? $deposit->paymentSystem->id : '',
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;

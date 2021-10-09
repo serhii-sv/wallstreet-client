@@ -13,7 +13,11 @@
               <div class="cardheader" style="background: url('{{ asset('accountPanel/images/other-images/profile-style-img3.png') }}') no-repeat; background-size: cover;max-height: 300px;"></div>
               <div class="user-image">
                 <div class="avatar">
-                  <img alt="" src="{{ $upliner->avatar ? route('accountPanel.profile.get.avatar', $upliner->id) : asset('accountPanel/images/user/user.png') }}">
+                  @if(!$upliner)
+                    <img alt="" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar', $user->id) : asset('accountPanel/images/user/user.png') }}">
+                  @else
+                    <img alt="" src="{{ $upliner->avatar ? route('accountPanel.profile.get.avatar', $upliner->id) : asset('accountPanel/images/user/user.png') }}">
+                  @endif
                 </div>
                 <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
               </div>
@@ -38,10 +42,10 @@
                   <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
                     <div class="user-designation">
                       <div class="title">
-                        <a target="_blank" href="" data-bs-original-title="" title="">{{ $upliner->name }}</a>
+                        <a target="_blank" href="" data-bs-original-title="" title="">@if(!$upliner) {{ $user->name }} @else {{ $upliner->name }} @endif </a>
                       </div>
-                      <div class="desc">Логин: {{ $upliner->login }}</div>
-                      <div class="desc">Ваш аплайнер</div>
+                      <div class="desc">@if(!$upliner) Ваш логин: {{ $user->login }} @else {{ $upliner->login }} @endif </div>
+                      <div class="desc">@if($upliner) Ваш аплайнер @endif </div>
                     </div>
                   </div>
                   <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
@@ -75,7 +79,7 @@
                       <span>Зарегестрированных партнёров</span>
                     </div>
                     <div class="col-6 text-md-start border-right">
-                      <div class="follow-num counter">{{ $referrals->count() }}</div>
+                      <div class="follow-num counter">{{ $all_referrals->count() }}</div>
                       <span>Активных партнёров</span>
                     </div>
                   </div>
@@ -145,6 +149,7 @@
               </div>
             </div>
           </div>
+          {{ $referrals->links() }}
         </div>
       </div>
     </div>

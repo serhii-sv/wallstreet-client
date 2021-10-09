@@ -7,13 +7,41 @@
       
       @if(!empty($rates))
         <div class="row">
+          <div class="card height-equal">
+            <div class="card-header pb-3">
+              <h5>{{ __('Create deposit') }}</h5>
+            </div>
+            <div class="card-body pt-3">
+              <div class="mb-3">
+                @include('partials.inform')
+              </div>
+              <ul class="nav nav-dark" id="pills-darktab" role="tablist">
+                @forelse($deposit_groups as $group)
+                  <li class="nav-item">
+                    <a class="nav-link @if($loop->first) active @endif" id="pills-{{ $group->id }}-tab" data-bs-toggle="pill" href="#pills-{{ $group->id }}" role="tab" aria-controls="pills-{{ $group->id }}" aria-selected="false" data-bs-original-title="" title="">
+                      {{ $group->name }}
+                    </a>
+                  </li>
+                @empty
+                @endforelse
+              </ul>
+              <div class="tab-content" id="pills-darktabContent">
+                @forelse($deposit_groups as $group)
+                  <div class="tab-pane fade @if($loop->first) active show @endif" id="pills-{{ $group->id }}" role="tabpanel" aria-labelledby="pills-{{ $group->id }}-tab">
+                    <p class="mb-0 m-t-30">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,It has survived not only five</p>
+                  </div>
+                @empty
+                @endforelse
+              </div>
+            </div>
+          </div>
+          
+          
           <div class="col-sm-12">
             <div class="card">
        
               <div class="card-body row pricing-content">
-                <div class="mb-3">
-                  @include('partials.inform')
-                </div>
+               
                 @forelse($rates as $item)
                   <div class="col-xl-3 col-sm-6 xl-50 box-col-6">
                     <form action="{{ route('accountPanel.deposits.store') }}" class="create-deposit-form" method="post">
