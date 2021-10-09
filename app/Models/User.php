@@ -150,9 +150,9 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function referrals() {
+  /*  public function referrals() {
         return $this->hasMany(User::class, 'partner_id', 'my_id');
-    }
+    }*/
 
     /**
      * Accessor for short name

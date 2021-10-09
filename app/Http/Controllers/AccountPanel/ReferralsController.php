@@ -13,10 +13,17 @@ class ReferralsController extends Controller
 {
     
     public function index() {
-        $referrals = Auth::user()->referrals()->paginate(12);
+        $user = Auth::user();
+        $upliner = auth()->user()->partner()->first();
+        $referrals = Auth::user()->referrals()->distinct('id')->get();
+        $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
+        //$referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount'), 2, '.', ' ');
+        dd($referrals);
         return view('accountPanel.referrals.index', [
-            'referrals' => $referrals,
-            'transaction_type_invest' => TransactionType::where('name', 'create_dep')->first(),
+            //'referrals' => $referrals,
+            'user' => $user,
+            'upliner' => $upliner,
+            'transaction_type_invest' => $transaction_type_invest,
         ]);
     }
 }

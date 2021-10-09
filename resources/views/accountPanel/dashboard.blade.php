@@ -227,7 +227,7 @@
                           @forelse($users_videos as $users_video)
                             <li class="mb-3" style="background: #fafafa; padding: 15px">
                               <div class="mb-3">
-                                <img src="{{  $users_video->user->avatar ? route('accountPanel.profile.get.avatar',$users_video->user->id) : asset('accountPanel/images/user/user.png')  }}" alt="">
+                                <img src="{{  $users_video->user->avatar ? route('accountPanel.profile.get.avatar',$users_video->user->id) : asset('accountPanel/images/user/user.png')  }}" alt="" width="40" height="40" style="-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;">
                                 {{ $users_video->user->login ?? '' }}</div>
                               {!! htmlspecialchars_decode($users_video->link) !!}
                             </li>
