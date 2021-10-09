@@ -47,13 +47,13 @@
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
                           <h6><i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;Сумма инвестиций партнёров</h6>
-                          <span>2323$</span>
+                          <span>{{ number_format($total_referral_invested, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
                           <h6><i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;Сумма прибыли</h6>
-                          <span>111$</span>
+                          <span>{{ number_format($total_referral_revenue, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
                     </div>

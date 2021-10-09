@@ -74,7 +74,7 @@ class DashboardController extends Controller
         
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
         $countries_stat->map(function ($country) {
-            $country->count = cache()->remember('dshb.country_stat_count_' . $country->name, 0, function () use ($country) {
+            $country->count = cache()->remember('dshb.country_stat_count_' . $country->name, 60, function () use ($country) {
                 return User::where('country', $country->name)->count();
             });
         });
