@@ -62,7 +62,32 @@ class Deposit extends Model
         'datetime_closing',
         'created_at',
     ];
-
+    
+    /**
+     * @return int|mixed
+     */
+    public function total_assessed() {
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('amount');
+    }
+    /**
+     * @return int|mixed
+     */
+    public function total_assessed_main_currency() {
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('main_currency_amount');
+    }
+    
+    /**
+     * @return int|mixed
+     */
+    public function total_created_sum() {
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)->sum('amount');
+    }
+    /**
+     * @return int|mixed
+     */
+    public function total_created_sum_main_currency() {
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)->sum('main_currency_amount');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -268,47 +293,55 @@ class Deposit extends Model
      * @return bool
      * @throws \Throwable
      */
-    public function accrue()
-    {
+    
+    public function accrue() {
         if ($this->condition == 'blocked') {
             throw new \Exception('Accrue failed because deposit blocked');
         }
-
+        
         // проверяем статус депозита и оплату
         if ($this->condition == 'create' && $this->investTransaction()->approved) {
             $this->update(['condition' => 'onwork']);
         }
-
-        $countTransactions = Transaction::where('deposit_id', $this->id)
-                ->where('approved', true)
-                ->count() - 1; // минус 1 это открытие
-
+        
+        $countTransactions = Transaction::where('deposit_id', $this->id)->where('approved', true)->count() - 1; // минус 1 это открытие
+        
         if ($this->duration < $countTransactions || $this->condition != 'onwork') {
             throw new \Exception("error status deposit!");
         }
-
+        
         /** @var Wallet $wallet */
         $wallet = $this->wallet()->first();
-
+        
         /** @var User $user */
         $user = $this->user()->first();
-
+        
         $reinvest = $this->reinvest ?? 0;
         $amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
         $amountToWallet = $this->balance * $this->daily * 0.01 - $amountReinvest;
         $dividend = Transaction::dividend($wallet, $amountToWallet);
-
-        $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
-        $this->addBalance($amountReinvest);
-
-        $dividend->update(['approved' => true]);
-
+        
+        if ($dividend) {
+            $amount = abs($dividend->amount);
+            $notification_data = [
+                'notification_name' => 'Начисления по депозиту',
+                'user' => $user,
+                'deposit' => $this,
+                'amount' => $amount . $wallet->currency->symbol,
+                'days' => 'за '.$dividend->created_at->format('d.m.Y H:i:s'),
+            ];
+            Notification::sendNotification($notification_data, 'new_charge');
+            $wallet->addAmountWithAccrueToPartner($amount, 'deposit');
+            $this->addBalance($amount);
+            $dividend->update(['approved' => true]);
+        }
+        
         // send notification to user
         $data = [
             'dividend' => $dividend,
-            'deposit'  => $this
+            'deposit' => $this,
         ];
-//        $user->sendNotification('deposit_accrued', $data);
+        //        $user->sendNotification('deposit_accrued', $data);
         return true;
     }
 

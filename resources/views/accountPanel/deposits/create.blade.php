@@ -15,7 +15,7 @@
               <div class="mb-3">
                 @include('partials.inform')
               </div>
-              <ul class="nav nav-dark" id="pills-darktab" role="tablist">
+              <ul class="nav nav-dark mb-3" id="pills-darktab" role="tablist">
                 @forelse($deposit_groups as $group)
                   <li class="nav-item">
                     <a class="nav-link @if($loop->first) active @endif" id="pills-{{ $group->id }}-tab" data-bs-toggle="pill" href="#pills-{{ $group->id }}" role="tab" aria-controls="pills-{{ $group->id }}" aria-selected="false" data-bs-original-title="" title="">
@@ -28,7 +28,114 @@
               <div class="tab-content" id="pills-darktabContent">
                 @forelse($deposit_groups as $group)
                   <div class="tab-pane fade @if($loop->first) active show @endif" id="pills-{{ $group->id }}" role="tabpanel" aria-labelledby="pills-{{ $group->id }}-tab">
-                    <p class="mb-0 m-t-30">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,It has survived not only five</p>
+                    <div class="row">
+                      @forelse($rates as $item)
+                        @if($item->rate_group_id == $group->id)
+                          <div class="col-xl-3 col-sm-6 xl-50 box-col-6">
+                            <form action="{{ route('accountPanel.deposits.store') }}" class="create-deposit-form" method="post">
+                              <input type="hidden" name="rate_id" value="{{ $item->id }}">
+                              @csrf
+                              <div class="card text-center pricing-simple">
+                                <div class="card-body">
+                                  <h3>{{ $item->name }}</h3>
+                                  <h5>В день {{ $item->daily }}%</h5>
+                                  <h6>Длительность: {{ $item->duration }} дней</h6>
+                                  <h6>Реинвестирование: {{ $item->reinvest ? 'Есть' : 'Нет' }} </h6>
+                                  <h6>
+                                    <span class="span badge rounded-pill pill-badge-primary">
+                                      {{ $item->overall ? 'Возврат депозита: ' . $item->overall . '% в конце срока' : 'Депозит не возвращается' }}
+                                    </span>
+                                  </h6>
+                                  <h4 class="mb-2">Можно внести </h4>
+                                  <p style="font-size: 15px;">от
+                                    <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до
+                                    <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
+                                  {{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}
+                                  {{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}
+                                  {{--                            @forelse($payment_systems as $payment_system)--}}
+                                  {{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}
+                                  {{--                            @empty--}}
+                                  {{--                            @endforelse--}}
+                                  {{--                          </select>--}}
+                                  <div class="input-group">
+                                    <select class="form-select form-control-inverse-fill" name="wallet_id">
+                                      <option value="" disabled selected hidden>Выберите кошелёк</option>
+                                      @forelse($wallets as $wallet)
+                                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                                      @empty
+                                      @endforelse
+                                    </select>
+                                  </div>
+                                  <h6 class="mb-2 mt-2">Введите сумму ($)</h6>
+                                  <div class="input-group">
+                                    <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
+                                  </div>
+                                </div>
+                                <button class="btn btn-lg btn-primary btn-block create-deposit-btn">Инвестировать</button>
+                              </div>
+                            </form>
+                          </div>
+                        @endif
+                      @empty
+                      @endforelse
+                    </div>
+                    
+                    <div class="row second-chart-list third-news-update">
+                      <div class="col">
+                        <div class="card">
+                          <div class="card-block row">
+                            <div class="col-sm-12 col-lg-12 col-xl-12">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <thead class="bg-primary">
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Тарифный план</th>
+                                      <th scope="col">Валюта</th>
+                                      <th scope="col">Сумма инвестиций</th>
+                                      <th scope="col">Текущий баланс</th>
+                                      <th scope="col">Начислено</th>
+                                      <th scope="col">Дата открытия</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    @if($deposits !== null)
+                                      @php($i = 0)
+                                      @foreach($deposits as $deposit)
+                                        @if($group->id == $deposit->rate->rate_group_id)
+                                          @php($i++)
+                                          <tr>
+                                            <th scope="row">{{ $i  }}</th>
+                                            <td>{{ $deposit->rate->name }}</td>
+                                            <td>{{ $deposit->currency->name }}</td>
+                                            <td>
+                                              <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
+                                            </td>
+                                            <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
+                                            <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
+                                            <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
+                                          </tr>
+                                        @endif
+                                      @endforeach
+                                    @else
+                                      <tr>
+                                        <td class="p-0" colspan="6">
+                                          <div class="alert alert-light inverse alert-dismissible fade show" role="alert">
+                                            <i class="icon-alert txt-dark"></i>
+                                            <p style="font-size: 16px;">Депозитов нет</p>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    @endif
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
                   </div>
                 @empty
                 @endforelse
@@ -37,11 +144,11 @@
           </div>
           
           
-          <div class="col-sm-12">
+          {{--<div class="col-sm-12">
             <div class="card">
-       
+              
               <div class="card-body row pricing-content">
-               
+                
                 @forelse($rates as $item)
                   <div class="col-xl-3 col-sm-6 xl-50 box-col-6">
                     <form action="{{ route('accountPanel.deposits.store') }}" class="create-deposit-form" method="post">
@@ -54,19 +161,20 @@
                           <h6>{{ $item->refund_deposit ? 'Возврат в конце сроква' : 'Депозит не возвращается' }}</h6>
                           <h6>Длительность: {{ $item->duration }} дней</h6>
                           <h4 class="mb-2">Можно внести </h4>
-                          <p style="font-size: 15px;">от <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
-                          {{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}
-                          {{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}
-                          {{--                            @forelse($payment_systems as $payment_system)--}}
-                          {{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}
-                          {{--                            @empty--}}
-                          {{--                            @endforelse--}}
-                          {{--                          </select>--}}
+                          <p style="font-size: 15px;">от <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до
+                            <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
+                          --}}{{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}{{--
+                          --}}{{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}{{--
+                          --}}{{--                            @forelse($payment_systems as $payment_system)--}}{{--
+                          --}}{{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}{{--
+                          --}}{{--                            @empty--}}{{--
+                          --}}{{--                            @endforelse--}}{{--
+                          --}}{{--                          </select>--}}{{--
                           <div class="input-group">
                             <select class="form-select form-control-inverse-fill" name="wallet_id">
                               <option value="" disabled selected hidden>Выберите валюту</option>
                               @forelse($wallets as $wallet)
-                              <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                                <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
                               @empty
                               @endforelse
                             </select>
@@ -76,7 +184,7 @@
                             <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                           </div>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block create-deposit-btn" >Инвестировать</button>
+                        <button class="btn btn-lg btn-primary btn-block create-deposit-btn">Инвестировать</button>
                       </div>
                     </form>
                   </div>
@@ -84,7 +192,7 @@
                 @endforelse
               </div>
             </div>
-          </div>
+          </div>--}}
         
         </div>
       @endif
@@ -95,9 +203,9 @@
 @push('scripts')
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
       $(".form-control-inverse-fill").select2();
-    
+      
       $(".create-deposit-btn").on('click', function (e) {
         e.preventDefault();
         swal({
@@ -117,7 +225,6 @@
           }
         });
       });
-      
       
       
     });

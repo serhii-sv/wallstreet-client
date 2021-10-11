@@ -16,18 +16,24 @@ class DepositsController extends Controller
 {
     public function index() {
         $user_id = auth()->user()->id;
+        $deposits = Deposit::where('user_id', $user_id)->with('rate','currency')->orderByDesc('created_at')->paginate(10);
+        $deposit_groups = RateGroup::all();
         return view('accountPanel.deposits.index', [
-            'deposits' => Deposit::where('user_id', $user_id)->orderByDesc('created_at')->paginate(10),
+            'deposits' => $deposits,
+            'deposit_groups' => $deposit_groups,
             'deposits_count' => Deposit::where('user_id', $user_id)->count(),
         ]);
     }
     
     public function create() {
+        $user = auth()->user();
         $deposit_groups = RateGroup::all();
+        $deposits = Deposit::where('user_id', $user->id)->where('active', 'true')->with('rate','currency')->get();
         return view('accountPanel.deposits.create', [
             'deposit_groups' => $deposit_groups,
+            'deposits' => $deposits,
             'rates' => Rate::where('active', true)->orderBy('min', 'asc')->get(),
-            'wallets' => Wallet::where('user_id', auth()->user()->id)->get(),
+            'wallets' => Wallet::where('user_id', $user->id)->get(),
         ]);
     }
     
@@ -40,18 +46,31 @@ class DepositsController extends Controller
         $amount = abs($request->get('amount'));
         
         $user = isset($data['user']) ? $data['user'] : Auth::user();
-        $rate = Rate::findOrFail($request->get('rate_id'));
-        $wallet = Wallet::where('user_id', $user->id)->where('id', $request->get('wallet_id'))->firstOrFail();
-        $toCurrency = Currency::where('code', 'USD')->first();
-    
-        
-        if ($amount < $rate->min) {
-            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита меньше, чем минимальная ставка тарифного плана!');
+        $rate = Rate::where('id',$request->get('rate_id'))->where('active', true)->first();
+        if ($rate === null){
+            return redirect()->back()->with('error', 'Тарифный план не доступен!');
         }
-        if ($amount > $rate->max) {
-            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита больше, чем максимальная ставка тарифного плана!');
+        $wallet = Wallet::where('user_id', $user->id)->where('id', $request->get('wallet_id'))->first();
+        if ($wallet === null){
+            return redirect()->back()->with('error', 'Кошелька не существует!');
         }
-        $balance = $wallet->convertToCurrency($wallet->currency()->first(), $toCurrency, abs($wallet->balance));
+        $main_currency = Currency::where('code', 'USD')->first();
+        $currency = Currency::where('id', $wallet->currency_id)->first();
+        $deposit = Deposit::where('rate_id', $rate->id)->where('active', true)->where('user_id', Auth::user()->id)->where('wallet_id', $wallet->id)->first();
+        $rate_min = Wallet::convertToCurrencyStatic($main_currency,$currency, $rate->min);
+        $rate_max = Wallet::convertToCurrencyStatic($main_currency,$currency, $rate->max);
+  /*      dump($rate_min);
+        dd($rate_max);*/
+        if ($deposit !== null){
+            return redirect()->back()->with('error', 'По одному тарифному плану можно сделать только один депозит с одного кошелька!');
+        }
+        if ($amount < $rate_min) {
+            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита меньше, чем минимальная ставка тарифного плана - '. $rate_min . '!');
+        }
+        if ($amount > $rate_max) {
+            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита больше, чем максимальная ставка тарифного плана - '. $rate_max . '!');
+        }
+        $balance = abs($wallet->balance);
         if (abs($amount) > $balance) {
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
         }
@@ -75,9 +94,7 @@ class DepositsController extends Controller
             ? Transaction::createDeposit($deposit)
             : null;
         
-        $amount_in_currency = $wallet->convertToCurrency($toCurrency, $wallet->currency()->first(),  abs($amount));
-        
-        if (null != $transaction && $deposit->wallet->removeAmount($amount_in_currency)) {
+        if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
             $wallet->accrueToPartner($amount, 'refill');
 
             $transaction->update(['approved' => true]);

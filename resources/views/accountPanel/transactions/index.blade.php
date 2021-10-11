@@ -51,7 +51,7 @@
                     @if(isset($transactions) && !empty($transactions))
                       @forelse($transactions as $operation)
                         <tr>
-                          <th scope="row">{{ $loop->iteration  }}</th>
+                          <th scope="row">{{ $operation->iteration  }}</th>
                           <td>{{ __('locale.' . $operation->type->name) ?? 'Не указано' }}</td>
                           <td>
                             <span class="">{{$operation->currency->symbol}} {{ number_format($operation->amount, $operation->currency->precision, '.', ',') ?? 0 }}</span>

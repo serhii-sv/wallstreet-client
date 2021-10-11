@@ -18,11 +18,12 @@
               <table class="table">
                 <thead class="bg-primary">
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Тарифный план</th>
+                    <th scope="col">Валюта</th>
                     <th scope="col">Сумма инвестиций</th>
                     <th scope="col">Текущий баланс</th>
-                    <th scope="col">Осталось начислить</th>
-                    <th scope="col">Следующее начисление</th>
+                    <th scope="col">Начислено</th>
+                    <th scope="col">Статус</th>
                     <th scope="col">Дата открытия</th>
                   </tr>
                 </thead>
@@ -30,13 +31,22 @@
                   @if(isset($deposits) && !empty($deposits))
                     @foreach($deposits as $deposit)
                       <tr>
-                        <th scope="row">{{ $loop->iteration  }}</th>
+                        <td>{{ $deposit->rate->name }}</td>
+                        <td>{{ $deposit->currency->name }}</td>
                         <td>
-                          <span class="">$ {{ number_format($deposit->invested, 2, '.', ',') ?? 0 }}</span>
+                          <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
                         </td>
-                        <td>$ {{ number_format($deposit->invested, 2, '.', ',') ?? 0 }}</td>
-                        <th scope="col">?</th>
-                        <th scope="col">?</th>
+                        <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
+                        <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
+                        <th scope="col">
+                          @if($deposit->condition == 'create')
+                            <div class="span badge rounded-pill pill-badge-success">Депозит создан</div>
+                          @elseif($deposit->condition == 'onwork')
+                            <div class="span badge rounded-pill pill-badge-success">В работе</div>
+                          @elseif($deposit->condition == 'closed')
+                            <div class="span badge rounded-pill pill-badge-danger">Депозит закрыт</div>
+                          @endif
+                        </th>
                         <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
                       </tr>
                     @endforeach

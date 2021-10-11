@@ -19,7 +19,6 @@
                     <img alt="" src="{{ $upliner->avatar ? route('accountPanel.profile.get.avatar', $upliner->id) : asset('accountPanel/images/user/user.png') }}">
                   @endif
                 </div>
-                <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
               </div>
               <div class="info">
                 <div class="row">

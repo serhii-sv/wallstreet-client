@@ -27,10 +27,13 @@ class TransactionsController extends Controller
         $transactions = Transaction::where('user_id', $user->id)->when($type, function ($query) use ($type){
             return $query->where('type_id', $type);
         })->with('type', 'currency')->orderByDesc('created_at')->paginate(10);
+        $transactions_count = Transaction::where('user_id', $user->id)->when($type, function ($query) use ($type){
+            return $query->where('type_id', $type);
+        })->count();
         return view('accountPanel.transactions.index',[
             'transactions' => $transactions,
             'type' => $type,
-            'transactions_count' => $transactions->count(),
+            'transactions_count' => $transactions_count,
             'transaction_types' => $transaction_types,
         ]);
     }

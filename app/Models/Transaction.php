@@ -306,7 +306,7 @@ class Transaction extends Model
      *
      * @return null
      */
-    public static function dividend($wallet, $amount, $referral = null)
+    public static function dividend($wallet, $amount, $deposit, $referral = null)
     {
         $type = TransactionType::getByName('dividend');
         $transaction = self::create([
@@ -315,6 +315,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
+            'deposit_id' => $deposit->id,
            // 'payment_system_id' => $payment_system_id,
             'amount' => $amount,
             'source' => null !== $referral
@@ -346,7 +347,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem !== null ? $deposit->paymentSystem->id : null,
+            'payment_system_id' => null,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -368,7 +369,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem !== null ? $deposit->paymentSystem->id : '',
+            'payment_system_id' => null,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -390,7 +391,7 @@ class Transaction extends Model
             'rate_id' => null,
             'deposit_id' => null,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'payment_system_id' => null,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
