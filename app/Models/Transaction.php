@@ -330,6 +330,24 @@ class Transaction extends Model
         return $transaction->save() ? $transaction : null;
     }
     
+    public static function reinvest($wallet, $amount, $deposit, $referral = null) {
+        $type = TransactionType::getByName('reinvest');
+        $transaction = self::create([
+            'type_id' => $type->id,
+            'commission' => 0,
+            'user_id' => $wallet->user->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            'deposit_id' => $deposit->id,
+            'amount' => $amount,
+            'source' => null !== $referral
+                ? $referral->id
+                : null,
+            'approved' => true,
+        ]);
+        return $transaction->save() ? $transaction : null;
+    }
+    
     /**
      * @param      $deposit
      * @param null $payment_system_id
@@ -396,6 +414,8 @@ class Transaction extends Model
         ]);
         return $transaction->save() ? $transaction : null;
     }
+    
+   
 
     /**
      * @param string $type
