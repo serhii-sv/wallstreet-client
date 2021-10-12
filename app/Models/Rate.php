@@ -74,6 +74,10 @@ class Rate extends Model
     {
         return $this->hasMany(Transaction::class,'rate_id');
     }
+    public function group()
+    {
+        return $this->belongsTo(RateGroup::class,'rate_group_id');
+    }
 
     /**
      * @param $value

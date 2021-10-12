@@ -90,6 +90,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::resource('/deposits', DepositsController::class);
             Route::post('/deposits/set-reinvest', [DepositsController::class, 'setReinvestPercent' ])->name('deposits.set.reinvest');
             Route::post('/deposits/add-balance', [DepositsController::class, 'addBalance' ])->name('deposits.add.balance');
+            Route::post('/deposits/upgrade', [DepositsController::class, 'upgrade' ])->name('deposits.upgrade');
 
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');

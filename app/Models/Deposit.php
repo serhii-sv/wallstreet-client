@@ -138,6 +138,9 @@ class Deposit extends Model
         return $this->hasMany(DepositQueue::class, 'deposit_id', 'id');
     }
     
+    public function depositQueue() {
+        return $this->hasMany(DepositQueue::class);
+    }
     /**
      * @param $value
      *
@@ -451,5 +454,19 @@ class Deposit extends Model
             $balances[$item->code] = key_exists($item->code, $balances) ? $balances[$item->code] + $item->balance : $item->balance;
         }
         return $balances;
+    }
+    
+    public function canUpdate() {
+        if (!$this->rate->upgradable){
+            return false;
+        }
+        $to_currency = $this->currency;
+        $from_currency = Currency::where('code', 'USD')->first();
+        $rate_max = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $this->rate->max);
+        if ($rate_max > 0 && $this->balance > $rate_max)
+        {
+            return true;
+        }
+        return false;
     }
 }

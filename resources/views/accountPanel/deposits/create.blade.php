@@ -9,13 +9,7 @@
       @if(!empty($rates))
         <div class="row">
           <div class="card height-equal">
-            <div class="card-header pb-3">
-              <h5>{{ __('Create deposit') }}</h5>
-            </div>
-            <div class="card-body pt-3">
-              <div class="mb-3">
-                @include('partials.inform')
-              </div>
+            <div class="card-header pb-3 d-flex justify-content-center">
               <ul class="nav nav-dark mb-3" id="pills-darktab" role="tablist">
                 @forelse($deposit_groups as $group)
                   <li class="nav-item">
@@ -26,6 +20,12 @@
                 @empty
                 @endforelse
               </ul>
+            </div>
+            <div class="card-body pt-3">
+              <div class="mb-3">
+                @include('partials.inform')
+              </div>
+              
               <div class="tab-content" id="pills-darktabContent">
                 @forelse($deposit_groups as $group)
                   <div class="tab-pane fade @if($loop->first) active show @endif" id="pills-{{ $group->id }}" role="tabpanel" aria-labelledby="pills-{{ $group->id }}-tab">
@@ -41,19 +41,19 @@
                                   <h3>{{ $item->name }}</h3>
                                   <h5>В день {{ $item->daily }}%</h5>
                                   <h6>Длительность: {{ $item->duration }} дней</h6>
-                                  
-                                  <h6>Реинвестирование</h6>
-                                  <div class="form-group row">
-                                    <label class="col-md-12 col-form-label sm-left-text" for="u-range-{{ $item->id }}">Процент реинвестирования</label>
-                                    <div class="col-md-12">
-                                      <input id="u-range-{{ $item->id }}" type="hidden" class="irs-hidden-input range-slider @if(!$item->reinvest) disable @endif" tabindex="-1" name="reinvest" readonly="" data-bs-original-title="" title="">
-                                    </div>
-                                  </div>
-                                  <h6>
+                                  <h6>Реинвестирование: {{ $item->reinvest ? 'есть' : 'нет' }}</h6>
+                                  {{-- <h6>Реинвестирование</h6>
+                                   <div class="form-group row">
+                                     <label class="col-md-12 col-form-label sm-left-text" for="u-range-{{ $item->id }}">Процент реинвестирования</label>
+                                     <div class="col-md-12">
+                                       <input id="u-range-{{ $item->id }}" type="hidden" class="irs-hidden-input range-slider @if(!$item->reinvest) disable @endif" tabindex="-1" name="reinvest" readonly="" data-bs-original-title="" title="">
+                                     </div>
+                                   </div>--}}
+                                  <h5>
                                     <span class="span badge rounded-pill pill-badge-primary">
                                       {{ $item->overall ? 'Возврат депозита: ' . $item->overall . '% в конце срока' : 'Депозит не возвращается' }}
                                     </span>
-                                  </h6>
+                                  </h5>
                                   <h4 class="mb-2">Можно внести </h4>
                                   <p style="font-size: 15px;">от
                                     <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до
@@ -74,7 +74,7 @@
                                       @endforelse
                                     </select>
                                   </div>
-                                  <h6 class="mb-2 mt-2">Введите сумму ($)</h6>
+                                  <h6 class="mb-2 mt-2">Введите сумму</h6>
                                   <div class="input-group">
                                     <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                                   </div>
@@ -87,129 +87,134 @@
                       @empty
                       @endforelse
                     </div>
-                    
-                    <div class="row second-chart-list third-news-update">
-                      <div class="col">
-                        <div class="card">
-                          <div class="card-block row">
-                            <div class="col-sm-12 col-lg-12 col-xl-12">
-                              <div class="table-responsive">
-                                <table class="table">
-                                  <thead class="bg-primary">
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">Тарифный план</th>
-                                      <th scope="col">Валюта</th>
-                                      <th scope="col">Сумма инвестиций</th>
-                                      <th scope="col">Текущий баланс</th>
-                                      <th scope="col">Начислено</th>
-                                      <th scope="col">Дата открытия</th>
-                                      <th></th>
-                                      <th></th>
-                                      <th></th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    @if($deposits !== null)
-                                      @php($i = 0)
-                                      @foreach($deposits as $deposit)
-                                        @if($group->id == $deposit->rate->rate_group_id)
-                                          @php($i++)
-                                          <tr style="vertical-align: middle;">
-                                            <th scope="row">{{ $i  }}</th>
-                                            <td>{{ $deposit->rate->name }}</td>
-                                            <td>{{ $deposit->currency->name }}</td>
-                                            <td>
-                                              <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
-                                            </td>
-                                            <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
-                                            <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
-                                            <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
-                                            <td>
-                                              <form action="{{ route('accountPanel.deposits.set.reinvest') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
-                                                <label class="col-md-12 col-form-label sm-left-text" for="u-range-{{ $item->id }}">Процент реинвестирования</label>
-                                                <div class="col-md-12 text-center">
-                                                  <input id="u-range-{{ $deposit->id }}" type="hidden" class="irs-hidden-input deposit-range-slider @if(!$deposit->rate->reinvest) disable @endif" tabindex="-1" name="reinvest" readonly="" data-bs-original-title="" title="">
-                                                </div>
-                                                <div class="text-center">
-                                                  <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2 @if(!$deposit->rate->reinvest) disabled @endif">Применить</button>
-                                                </div>
-                                              </form>
-                                              @push('scripts')
-                                                <script>
-                                                  $(document).ready(function () {
-                                                    if ($("#u-range-{{ $deposit->id }}").hasClass('disable')) {
-                                                      $("#u-range-{{ $deposit->id }}").ionRangeSlider({
-                                                        min: 0,
-                                                        max: 100,
-                                                        from: {{ $deposit->reinvest }},
-                                                        disable: true,
-                                                        postfix: "%"
-                                                      })
-                                                    } else {
-                                                      $("#u-range-{{ $deposit->id }}").ionRangeSlider({
-                                                        min: 0,
-                                                        max: 100,
-                                                        from: {{ $deposit->reinvest }},
-                                                        postfix: "%"
-                                                      })
-                                                    }
-                                                  });
-                                                </script>
-                                              @endpush
-                                            </td>
-                                            <td>
-                                              <form action="{{ route('accountPanel.deposits.add.balance') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
-                                                <input type="hidden" name="wallet_id" value="{{ $deposit->wallet->id }}">
-                                                <div class="text-center">
-                                                 Баланс: {{ $deposit->wallet->balance }} {{ $deposit->currency->symbol }}
-                                                </div>
-                                                <div class="text-center">
-                                                  <input class="form-control input-air-primary" id="" type="text" placeholder="" name="amount" data-bs-original-title="" title="">
-                                                </div>
-                                                <div class="text-center">
-                                                  <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2">Пополнить</button>
-                                                </div>
-                                              </form>
-                                            </td>
-                                            <td>
-                                              <form action="">
-                                                @csrf
-                                                <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
-                                                <div class="text-center">
-                                                  <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2">Апгрейд</button>
-                                                </div>
-                                              </form>
-                                            </td>
-                                          </tr>
-                                        @endif
-                                      @endforeach
-                                    @else
-                                      <tr>
-                                        <td class="p-0" colspan="6">
-                                          <div class="alert alert-light inverse alert-dismissible fade show" role="alert">
-                                            <i class="icon-alert txt-dark"></i>
-                                            <p style="font-size: 16px;">Депозитов нет</p>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    @endif
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  
                   </div>
                 @empty
                 @endforelse
+              </div>
+              <div class="row second-chart-list third-news-update">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-block row">
+                      <div class="col-sm-12 col-lg-12 col-xl-12">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead class="bg-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Тарифный план</th>
+                                <th scope="col">Валюта</th>
+                                <th scope="col">Сумма инвестиций</th>
+                                <th scope="col">Текущий баланс</th>
+                                <th scope="col">Начислено</th>
+                                <th scope="col">Дата открытия</th>
+                                <th>Реинвестирование</th>
+                                <th>Пополнить</th>
+                                <th>Апгрейд</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @if($deposits !== null)
+                                @foreach($deposits as $deposit)
+                                  {{--@if($group->id == $deposit->rate->rate_group_id)--}}
+                                  <tr style="vertical-align: middle;">
+                                    <th scope="row">{{ $deposit->int_id  }}</th>
+                                    <td>
+                                      {{ $deposit->rate->name }}
+                                    </td>
+                                    <td>{{ $deposit->currency->name }}</td>
+                                    <td>
+                                      <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
+                                    </td>
+                                    <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
+                                    <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
+                                    <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
+                                    <td>
+                                      <form action="{{ route('accountPanel.deposits.set.reinvest') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
+                                        <label class="col-md-12 col-form-label sm-left-text" for="u-range-{{ $deposit->id }}">Процент реинвестирования</label>
+                                        <div class="col-md-12 text-center">
+                                          <input id="u-range-{{ $deposit->id }}" type="hidden" class="irs-hidden-input deposit-range-slider @if(!$deposit->rate->reinvest) disable @endif" tabindex="-1" name="reinvest" readonly="" data-bs-original-title="" title="">
+                                        </div>
+                                        <div class="text-center">
+                                          <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2 @if(!$deposit->rate->reinvest) disabled @endif">Применить</button>
+                                        </div>
+                                      </form>
+                                      @push('scripts')
+                                        <script>
+                                          $(document).ready(function () {
+                                            if ($("#u-range-{{ $deposit->id }}").hasClass('disable')) {
+                                              $("#u-range-{{ $deposit->id }}").ionRangeSlider({
+                                                min: 0,
+                                                max: 100,
+                                                from: {{ $deposit->reinvest }},
+                                                disable: true,
+                                                postfix: "%"
+                                              })
+                                            } else {
+                                              $("#u-range-{{ $deposit->id }}").ionRangeSlider({
+                                                min: 0,
+                                                max: 100,
+                                                from: {{ $deposit->reinvest }},
+                                                postfix: "%"
+                                              })
+                                            }
+                                          });
+                                        </script>
+                                      @endpush
+                                    </td>
+                                    <td>
+                                      <form action="{{ route('accountPanel.deposits.add.balance') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
+                                        <input type="hidden" name="wallet_id" value="{{ $deposit->wallet->id }}">
+                                        <div class="text-center">
+                                          Баланс: {{ $deposit->wallet->balance }} {{ $deposit->currency->symbol }}
+                                        </div>
+                                        <div class="text-center">
+                                          <input class="form-control input-air-primary" id="" type="text" placeholder="" name="amount" data-bs-original-title="" title="">
+                                        </div>
+                                        <div class="text-center">
+                                          <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2">Пополнить</button>
+                                        </div>
+                                      </form>
+                                    </td>
+                                    <td>
+                                      @if($deposit->canUpdate())
+                                        <div class="text-center">Средств достаточно для апгрейда</div>
+                                        <form action="{{ route('accountPanel.deposits.upgrade') }}" method="post">
+                                          @csrf
+                                          <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
+                                          <div class="text-center">
+                                            <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2">Апгрейд</button>
+                                          </div>
+                                        </form>
+                                      @else
+                                      @endif
+                                    </td>
+                                  </tr>
+                                  {{--@endif--}}
+                                @endforeach
+                              @else
+                                <tr>
+                                  <td class="p-0" colspan="6">
+                                    <div class="alert alert-light inverse alert-dismissible fade show" role="alert">
+                                      <i class="icon-alert txt-dark"></i>
+                                      <p style="font-size: 16px;">Депозитов нет</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                              @endif
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {{ $deposits->links() }}
               </div>
             </div>
           </div>
@@ -326,5 +331,8 @@
         }
       })
     });
+  </script>
+  <script>
+  
   </script>
 @endpush
