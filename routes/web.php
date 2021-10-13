@@ -19,6 +19,7 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
+use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -76,7 +77,10 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
-
+    
+            Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
+            Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
+            
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
             Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');

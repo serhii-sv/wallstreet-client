@@ -74,6 +74,13 @@
           
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.replenishment') }}">
+              <i data-feather="dollar-sign"></i>
+              <span>{{ __('Replenishment') }}</span>
+            </a>
+          </li>
+          <li class="sidebar-list">
+            {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
               <i data-feather="dollar-sign"></i>
               <span>{{ __('Withdraw') }}</span>

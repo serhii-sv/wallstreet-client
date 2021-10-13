@@ -584,26 +584,26 @@
                         @endif
                       </p>
                       <div class="rating">
+                      <span>
+                          <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                          <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                          <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                          <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
-                        <span>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
+                          <i class="fas fa-star-half-alt"></i>
+                      </span>
                       </div>
                     </div>
                     <div class="client-thumb">
                       <a href="#0">
-                        <img src="{{ asset('theme/images/client/b8fece448eec7a811df3a704a9648c97.jpeg') }}" alt="client">
+                        <img src="{{ asset('theme/images/client/ysb-logo-social-v2.png') }}" alt="client">
                       </a>
                     </div>
                   </div>
@@ -617,26 +617,26 @@
                         @endif
                       </p>
                       <div class="rating">
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                       <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                       <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
-                        <span>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
+                       <i class="fas fa-star-half-alt"></i>
+                      </span>
                       </div>
                     </div>
                     <div class="client-thumb">
                       <a href="#0">
-                        <img src="{{ asset('theme/images/client/0007132196_20.jpeg') }}" alt="client">
+                        <img src="{{ asset('theme/images/client/binance-logo-og.png') }}" alt="client">
                       </a>
                     </div>
                   </div>
@@ -650,21 +650,21 @@
                         @endif
                       </p>
                       <div class="rating">
+                      <span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
+                        <i class="fas fa-star"></i>
+                      </span>
                         <span>
-                            <i class="fas fa-star"></i>
-                        </span>
-                        <span>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
+                        <i class="fas fa-star-half-alt"></i>
+                      </span>
                       </div>
                     </div>
                     <div class="client-thumb">
