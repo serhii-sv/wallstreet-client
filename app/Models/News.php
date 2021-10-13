@@ -35,6 +35,7 @@ class News extends Model
         'subject',
         'content',
         'created_at',
+        'views',
     ];
 
     /**

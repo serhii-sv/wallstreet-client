@@ -80,12 +80,15 @@ class CustomerPagesController extends Controller
     
     public function news($id = null) {
         if ($id) {
+            $news = News::where('id', $id)->firstOrFail();
+            $views = $news->views + 1;
+            $news->update(['views' => $views]);
             return view('customer.news.show', [
-                'news' => News::where('id', $id)->firstOrFail(),
+                'news' => $news,
             ]);
         } else {
             return view('customer.news.index', [
-                'news' => News::paginate(9),
+                'news' => News::orderByDesc('created_at')->paginate(9),
             ]);
         }
     }

@@ -57,7 +57,18 @@
                                         <div class="desc">
                                             {!!  Str::limit($item->getShortContent(session()->get('lang')), 100, '..' )  !!}
                                         </div>
+                                      <div class="d-flex justify-content-between mt-3">
+                                        <div class="likes d-flex align-items-center">
+                                          <i data-feather="thumbs-up" class="mr-2"></i>
+                                          {{ $item->likes ?? 0}}
+                                        </div>
+                                        <div class="views d-flex align-items-center">
+                                          <i data-feather="eye" class="mr-2"></i>
+                                          {{ $item->views ?? 0}}
+                                        </div>
+                                      </div>
                                     </div>
+                                  
                                 </a>
                             @empty
                             @endforelse
