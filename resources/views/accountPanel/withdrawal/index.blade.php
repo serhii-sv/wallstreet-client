@@ -69,7 +69,7 @@
             </div>
           </div>
           
-         {{-- <div class="col-sm-12">
+          <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
                 <h5>List of wallets </h5>
@@ -103,14 +103,6 @@
                               <option value="" disabled>Нет платёжной системы</option>
                             @endforelse
                           </select>
-                          --}}{{--<p>{{ $item->paymentSystem->name }}</p>--}}{{--
-                          --}}{{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}{{--
-                          --}}{{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}{{--
-                          --}}{{--                            @forelse($payment_systems as $payment_system)--}}{{--
-                          --}}{{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}{{--
-                          --}}{{--                            @empty--}}{{--
-                          --}}{{--                            @endforelse--}}{{--
-                          --}}{{--                          </select>--}}{{--
                           <h6 class="mb-2 mt-2">Введите сумму</h6>
                           <div class="input-group">
                             <span class="input-group-text">{{ $item->currency->symbol ?? '' }}</span>
@@ -128,7 +120,7 @@
                 @endforelse
               </div>
             </div>
-          </div>--}}
+          </div>
         
         </div>
       @endif

@@ -172,7 +172,7 @@
                                           Баланс: {{ $deposit->wallet->balance }} {{ $deposit->currency->symbol }}
                                         </div>
                                         <div class="text-center">
-                                          <input class="form-control input-air-primary" id="" type="text" placeholder="" name="amount" data-bs-original-title="" title="">
+                                          <input class="form-control input-air-primary" type="text" placeholder="" name="amount" data-bs-original-title="" title="">
                                         </div>
                                         <div class="text-center">
                                           <button class="btn btn-pill btn-success btn-air-success btn-sm mt-2">Пополнить</button>
@@ -190,6 +190,7 @@
                                           </div>
                                         </form>
                                       @else
+                                        <div class="text-center">Недоступен</div>
                                       @endif
                                     </td>
                                   </tr>

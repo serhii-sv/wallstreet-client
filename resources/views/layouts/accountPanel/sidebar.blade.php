@@ -43,13 +43,6 @@
               <span>{{ __('Create deposit') }}</span>
             </a>
           </li>
-          <li class="sidebar-list">
-            {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.index') }}">
-              <i data-feather="briefcase"></i>
-              <span>{{ __('Deposits') }}</span>
-            </a>
-          </li>
   
           <li class="sidebar-list">
             <a class="sidebar-link sidebar-title" href="#">
