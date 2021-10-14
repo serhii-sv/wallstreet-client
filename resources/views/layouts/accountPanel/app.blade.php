@@ -31,7 +31,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/date-picker.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/select2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/sweetalert2.css') }}">
-    <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
     <style>
         .unread {
             position: absolute;
@@ -78,9 +77,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/bootstrap.css') }}">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/style.css') }}">
-    <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
+   
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
+    <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
     @stack('styles')
   
   </head>
