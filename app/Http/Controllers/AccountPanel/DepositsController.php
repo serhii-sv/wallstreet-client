@@ -29,22 +29,61 @@ class DepositsController extends Controller
         $user = auth()->user();
         $deposit_groups = RateGroup::all();
         $deposits = Deposit::where('user_id', $user->id)->where('active', 'true')->orderByDesc('created_at')->with('rate', 'currency', 'wallet')->paginate(12);
+        $rates = Rate::where('active', true)->orderBy('min', 'asc')->get();
+        
         return view('accountPanel.deposits.create', [
             'deposit_groups' => $deposit_groups,
             'deposits' => $deposits,
-            'rates' => Rate::where('active', true)->orderBy('min', 'asc')->get(),
+            'rates' => $rates,
             'wallets' => Wallet::where('user_id', $user->id)->get(),
+        ]);
+    }
+    
+    public function getRateMinMax(Request $request) {
+        if ($request->ajax()) {
+            $rate_id = $request->get('rate_id');
+            $currency_id = $request->get('currency_id');
+            $rate = Rate::find($rate_id);
+            $currency = Currency::find($currency_id);
+            if ($rate === null){
+                return json_encode([
+                    'rate_min_max' => '0',
+                ]);
+            }
+            if ($currency === null){
+                return json_encode([
+                    'rate_min_max' => '0',
+                ]);
+            }
+            $currency_usd = Currency::where('code', 'USD')->first();
+            if ($currency_usd === null){
+                return json_encode([
+                    'rate_min_max' => '<strong>' .  number_format($rate->min, 2,'.',',') .'$</strong> до
+                                    <strong>' . number_format($rate->max, 2,'.',' ') .'$</strong>',
+                ]);
+            }
+            
+            $min = Wallet::convertToCurrencyStatic($currency_usd, $currency, $rate->min);
+            $max = Wallet::convertToCurrencyStatic($currency_usd, $currency, $rate->max);
+            
+            return json_encode([
+                'rate_min_max' => '<strong>' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</strong> до
+                <strong>' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</strong >',
+            ]);
+        }
+        return json_encode([
+            'rate_min_max' => '0',
         ]);
     }
     
     public function store(Request $request) {
         $request->validate([
-            'rate_id' => 'required|uuid',
-            'wallet_id' => 'required|uuid',
+            'rate_id' => 'required | uuid',
+            'wallet_id' => 'required | uuid',
             'amount' => 'required',
         ]);
-     
-        $amount = abs(doubleval(str_replace(',', '.',  $request->get('amount'))));
+        
+        $amount = abs(doubleval(str_replace(',', ' . ', $request->get('amount'))));
         
         $user = isset($data['user']) ? $data['user'] : Auth::user();
         $rate = Rate::where('id', $request->get('rate_id'))->where('active', true)->first();
@@ -61,19 +100,19 @@ class DepositsController extends Controller
         $deposit = Deposit::where('rate_id', $rate->id)->where('active', true)->where('user_id', Auth::user()->id)->where('wallet_id', $wallet->id)->first();
         $rate_min = Wallet::convertToCurrencyStatic($main_currency, $currency, $rate->min);
         $rate_max = Wallet::convertToCurrencyStatic($main_currency, $currency, $rate->max);
-
+        
         if ($deposit !== null) {
             return redirect()->back()->with('error', 'По одному тарифному плану можно сделать только один депозит с одного кошелька!');
         }
         if ($amount < $rate_min) {
-            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита меньше, чем минимальная ставка тарифного плана - ' . $rate_min . '!');
+            return redirect()->route('accountPanel . deposits . create')->with('error', 'Сумма депозита меньше, чем минимальная ставка тарифного плана - ' . $rate_min . '!');
         }
         if ($amount > $rate_max) {
-            return redirect()->route('accountPanel.deposits.create')->with('error', 'Сумма депозита больше, чем максимальная ставка тарифного плана - ' . $rate_max . '!');
+            return redirect()->route('accountPanel . deposits . create')->with('error', 'Сумма депозита больше, чем максимальная ставка тарифного плана - ' . $rate_max . '!');
         }
         $balance = abs($wallet->balance);
         if (abs($amount) > $balance) {
-            return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
+            return redirect()->route('accountPanel . deposits . create')->with('error', 'Недостаточно средств на балансе!');
         }
         $deposit = new Deposit;
         $deposit->rate_id = $rate->id;
@@ -114,16 +153,16 @@ class DepositsController extends Controller
     
     public function setReinvestPercent(Request $request) {
         $request->validate([
-            'deposit_id' => 'required|uuid',
+            'deposit_id' => 'required | uuid',
         ]);
         $reinvest = abs(intval($request->get('reinvest')));
         if ($reinvest < 0 || $reinvest > 100) {
-            return redirect()->back()->with('error', 'Ты нормальный? Процент от 0 до 100!');
+            return redirect()->back()->with('error', 'Ты нормальный ? Процент от 0 до 100!');
         }
         $deposit = Deposit::where('id', $request->get('deposit_id'))->where('active', true)->first();
         // Если на фронте все таки отправили форму
         if (!$deposit->rate->reinvest) {
-            return redirect()->back()->with('error', 'Ты нормальный?!');
+            return redirect()->back()->with('error', 'Ты нормальный ? !');
         }
         if ($deposit === null) {
             return redirect()->back()->with('error', 'Депозит не найден!');
@@ -133,15 +172,15 @@ class DepositsController extends Controller
         ])) {
             return redirect()->back()->with('success', 'Процентная ставка автореинвестирования успешно изменена!');
         } else {
-            return redirect()->back()->with('error', 'Возникли какие-то проблемы!');
+            return redirect()->back()->with('error', 'Возникли какие - то проблемы!');
         }
     }
     
     public function addBalance(Request $request) {
         $request->validate([
-            'deposit_id' => 'required|uuid',
-            'wallet_id' => 'required|uuid',
-            'amount' => 'required|numeric',
+            'deposit_id' => 'required | uuid',
+            'wallet_id' => 'required | uuid',
+            'amount' => 'required | numeric',
         ]);
         $deposit = Deposit::where('id', $request->get('deposit_id'))->where('user_id', Auth::user()->id)->where('active', true)->first();
         // Если на фронте все таки отправили форму
@@ -152,7 +191,7 @@ class DepositsController extends Controller
         if ($wallet === null) {
             return redirect()->back()->with('error', 'Кошелёк не найден!');
         }
-        $amount =  abs(doubleval(str_replace(',', '.',  $request->get('amount'))));
+        $amount = abs(doubleval(str_replace(',', ' . ', $request->get('amount'))));
         if ($amount > $wallet->balance) {
             return redirect()->back()->with('error', 'На балансе недостаточно средств!');
         }
@@ -170,7 +209,7 @@ class DepositsController extends Controller
     
     public function upgrade(Request $request) {
         $request->validate([
-            'deposit_id' => 'required|uuid',
+            'deposit_id' => 'required | uuid',
         ]);
         $deposit = Deposit::where('id', $request->get('deposit_id'))->where('user_id', Auth::user()->id)->where('active', true)->first();
         // Если на фронте все таки отправили форму
@@ -180,19 +219,19 @@ class DepositsController extends Controller
         $rate = $deposit->rate;
         $rate_group_id = $rate->rate_group_id;
         if ($deposit->canUpdate()) {
-         
+            
             $from_currency = $deposit->currency;
             $to_currency = Currency::where('code', 'USD')->first();
             $deposit_balance = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $deposit->balance);
             
-       
-            $check_deposit = Rate::where('rate_group_id', $rate_group_id)->where('max', '>', $deposit_balance)->orderBy('max', 'asc')->first();
+            
+            $check_deposit = Rate::where('rate_group_id', $rate_group_id)->where('max', ' > ', $deposit_balance)->orderBy('max', 'asc')->first();
             
             if ($check_deposit === null) {
                 return redirect()->back()->with('error', 'Депозит максимальный в своей группе!');
             }
             
-            $rate = Rate::where('rate_group_id', $rate_group_id)->where('id', '!=', $rate->id)->where('max', '>', $deposit_balance)->where('min', '<', $deposit_balance)->orderBy('min', 'asc')->first();
+            $rate = Rate::where('rate_group_id', $rate_group_id)->where('id', ' != ', $rate->id)->where('max', ' > ', $deposit_balance)->where('min', ' < ', $deposit_balance)->orderBy('min', 'asc')->first();
             
             $deposit_new = new Deposit;
             $deposit_new->rate_id = $rate->id;

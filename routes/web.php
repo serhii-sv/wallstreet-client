@@ -58,7 +58,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
         Route::post('/ajax/set-user-location', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserLocationInfo'])->name('ajax.set.user.location');
         Route::post('/ajax/set-user/geoip-table', [\App\Http\Controllers\Ajax\UserLocationController::class, 'setUserGeoipInfo'])->name('ajax.set.user.geoip.table');
         Route::post('/ajax/notification/status/read', [NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
+        Route::post('/ajax/get/rate-min-max', [DepositsController::class, 'getRateMinMax'])->name('ajax.get.rate.min.max');
 
+        
         Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
 
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('log')->middleware('permission.check');

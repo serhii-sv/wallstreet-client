@@ -55,21 +55,18 @@
                                     </span>
                                   </h5>
                                   <h4 class="mb-2">Можно внести </h4>
-                                  <p style="font-size: 15px;">от
+                                  <p class="rate-min-max-block" data-rate="{{ $item->id }}" style="font-size: 15px;">от
                                     <strong>{{ number_format($item->min, 2,'.',',') }}$</strong> до
-                                    <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong></p>
-                                  {{--                          <h6 class="mb-2">Выберите платёжную систему</h6>--}}
-                                  {{--                          <select class="js-example-basic-single col-sm-12" name="payment_system">--}}
-                                  {{--                            @forelse($payment_systems as $payment_system)--}}
-                                  {{--                              <option value="{{ $payment_system->id }}">{{ $payment_system->name }}</option>--}}
-                                  {{--                            @empty--}}
-                                  {{--                            @endforelse--}}
-                                  {{--                          </select>--}}
+                                    <strong>{{ number_format($item->max, 2,'.',' ') }}$</strong>
+                                  </p>
                                   <div class="input-group">
-                                    <select class="form-select form-control-inverse-fill" name="wallet_id">
+                                    <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
                                       <option value="" disabled selected hidden>Выберите кошелёк</option>
                                       @forelse($wallets as $wallet)
-                                        <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
+                                        <option value="{{ $wallet->id }}" data-currency="{{ $wallet->currency_id }}"
+                                            @if(old('wallet_id') == $wallet->id) selected="selected" @endif>
+                                          {{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}
+                                        </option>
                                       @empty
                                       @endforelse
                                     </select>
@@ -334,6 +331,32 @@
     });
   </script>
   <script>
-  
+    $(document).ready(function () {
+      $(".wallet-select").on('change', function () {
+        var $rate_id = $(this).attr('data-rate');
+        var $currency_id = $(this).find('option:selected').attr('data-currency');
+        var $url = "{{ route('ajax.get.rate.min.max') }}";
+        /*<strong>{{--{{ number_format($item->min, 2,'.',',') }}--}}$</strong> до
+        <strong>{{--{{ number_format($item->max, 2,'.',' ') }}--}}$</strong>*/
+        $(".rate-min-max-block[data-rate='" + $rate_id + "']").html('<div class="loader-box" style="height: 24px">' +
+            '<div class="loader-15"></div>' +
+            '</div>');
+        $.ajax({
+          url: $url,
+          method: 'post',
+          data: 'rate_id=' + $rate_id + '&currency_id=' + $currency_id,
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function success(data) {
+            var $data = $.parseJSON(data);
+       
+            $(".rate-min-max-block[data-rate='" + $rate_id + "']").html($data['rate_min_max']);
+     
+          }
+        });
+        
+      });
+    });
   </script>
 @endpush

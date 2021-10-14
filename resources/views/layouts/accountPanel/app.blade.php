@@ -421,5 +421,114 @@
           });
         });
       </script>
+    @if(canEditLang() && checkRequestOnEdit())
+      <script>
+        $(document).ready(function () {
+          class Request {
+            constructor() {
+              this.protocol = '';
+              this.domain = '';
+              this.params = {};
+            
+            }
+          
+            postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
+              callbackSuccess = callbackSuccess || function () {
+              };
+              callbackFail = callbackFail || function () {
+              };
+              callbackBefore = callbackBefore || function () {
+              };
+              callbackAfter = callbackAfter || function () {
+              };
+              method = method || 'POST';
+              data = data || {};
+              url = url || '';
+            
+              callbackBefore({}, data);
+            
+              $.ajax({
+                type: method,
+                url: url,
+                data: data,
+                headers: {
+                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                  if (data.error) {
+                    callbackFail({}, data);
+                    callbackAfter({}, data);
+                    return;
+                  }
+                  callbackSuccess(data.data, data);
+                  callbackAfter({}, data);
+                },
+                error: function (data) {
+                  callbackFail({}, data);
+                  callbackAfter({}, data);
+                }
+              });
+            }
+          
+            queryAjax(url, data, success, fail, before, after) {
+              data = data || {};
+              this.postJsonRequestAjax(
+                  url,
+                  'POST',
+                  this.objectMerge(data, this.params),
+                  success,
+                  fail,
+                  before,
+                  after
+              );
+            }
+          
+            objectMerge(a, b) {
+              return Object.assign(a, b);
+            }
+          
+            messageSuccess(mes, data) {
+              return {
+                error: false,
+                message: mes,
+                data: data || {}
+              };
+            }
+          
+            messageError(mes, data) {
+              return {
+                error: true,
+                message: mes,
+                data: data || {}
+              };
+            }
+          }
+        
+          $('editor_block')
+          .prop('contentEditable', true)
+          .focusin(function () {
+            let $this = $(this);
+          })
+          .focusout(function (e) {
+            let $this = $(this);
+          
+            (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
+                  name: $this.attr('data-name'),
+                  text: $this.text()
+                }, function (data, dataRaw) {
+                  console.log('Сохранено!');
+                  console.log($this.text());
+                }, function () {
+                
+                },
+                function () {
+                  console.log('Сохранение');
+                }
+            );
+          });
+        
+        });
+      </script>
+    @endif
   </body>
 </html>
