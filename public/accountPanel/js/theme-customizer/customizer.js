@@ -18,7 +18,7 @@ $(document).ready(function () {
     localStorage.setItem("primary", primary);
     localStorage.setItem("secondary", secondary);
     localStorage.removeItem("dark");
-    $("#color").attr("href", "../assets/css/" + color + ".css");
+    $("#color").attr("href", "../../css/" + color + ".css");
     $(".dark-only").removeClass('dark-only');
     location.reload(true);
   });
