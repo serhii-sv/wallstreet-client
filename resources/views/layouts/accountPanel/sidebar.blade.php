@@ -17,49 +17,49 @@
       <div id="sidebar-menu">
         <ul class="sidebar-links" id="simple-bar">
           <li class="back-btn">
-            <a href="{{ route('customer.main') }}" target="_blank">
+            <a href="{{ route('customer.main') }}" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <img class="img-fluid" src="{{ asset('accountPanel/images/logo/logo-icon.png') }}" alt=""></a>
             <div class="mobile-back text-end">
-              <span>Back</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Back' contenteditable="true">{{ __('Back') }}</editor_block> @else {{ __('Back') }} @endif</span>
               <i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
           </li>
           <li class="sidebar-main-title">
-            <a href="{{ route('customer.main') }}" class="d-block" target="_blank">
-              <h6 class="lan-1">General</h6>
-              <p class="lan-2">Dashboards,widgets & layout.</p>
+            <a href="{{ route('customer.main') }}" class="d-block" target="_blank" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <h6 class="lan-1">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='General' contenteditable="true">{{ __('General') }}</editor_block> @else {{ __('General') }} @endif</h6>
+              <p class="lan-2">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Dashboards,widgets & layout.' contenteditable="true">{{ __('Dashboards,widgets & layout.') }}</editor_block> @else {{ __('Dashboards,widgets & layout.') }} @endif</p>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.dashboard') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.dashboard') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="home"></i>
-              <span class="lan-3">{{ __('Dashboard') }}</span>
+              <span class="lan-3">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Dashboard' contenteditable="true">{{ __('Dashboard') }}</editor_block> @else {{ __('Dashboard') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.create') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.create') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="briefcase"></i>
-              <span>{{ __('Create deposit') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Create deposit' contenteditable="true">{{ __('Create deposit') }}</editor_block> @else {{ __('Create deposit') }} @endif</span>
             </a>
           </li>
   
           <li class="sidebar-list">
-            <a class="sidebar-link sidebar-title" href="#">
+            <a class="sidebar-link sidebar-title" href="#" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="list"></i>
-              <span>{{ __('Transactions') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Transactions' contenteditable="true">{{ __('Transactions') }}</editor_block> @else {{ __('Transactions') }} @endif</span>
             </a>
             <ul class="sidebar-submenu">
               <li class="">
-                <a class="" href="{{ route('accountPanel.transactions') }}">
+                <a class="" href="{{ route('accountPanel.transactions') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="list"></i>
-                  <span>{{ __('All transactions') }}</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='All transactions' contenteditable="true">{{ __('All transactions') }}</editor_block> @else {{ __('All transactions') }} @endif</span>
                 </a>
               </li>
               <li class="">
-                <a class="" href="{{ route('accountPanel.calendar') }}">
+                <a class="" href="{{ route('accountPanel.calendar') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="calendar"></i>
-                  <span>{{ __('Calendar') }}</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Calendar' contenteditable="true">{{ __('Calendar') }}</editor_block> @else {{ __('Calendar') }} @endif</span>
                 </a>
               </li>
             </ul>
@@ -67,68 +67,68 @@
           
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.replenishment') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.replenishment') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="dollar-sign"></i>
-              <span>{{ __('Replenishment') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block> @else {{ __('Replenishment') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="dollar-sign"></i>
-              <span>{{ __('Withdraw') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Withdraw' contenteditable="true">{{ __('Withdraw') }}</editor_block> @else {{ __('Withdraw') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.currency.exchange') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.currency.exchange') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="trending-down"></i>
-              <span>{{ __('Currency exchange') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="users"></i>
-              <span>{{ __('Refferals') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="message-circle"></i>
-              <span>{{ __('Chat') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Chat' contenteditable="true">{{ __('Chat') }}</editor_block> @else {{ __('Chat') }} @endif</span>
               <span class="round-badge-primary badge ">{{ $total_unread_messages > 0 ? "+" . $total_unread_messages : 0 }}</span>
             </a>
           </li>
           <li class="sidebar-list">
             <a class="sidebar-link sidebar-title" href="#"><i data-feather="settings"></i>
-              <span class="lan-6">Настройки</span>
+              <span class="lan-6" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Settings' contenteditable="true">{{ __('Settings') }}</editor_block> @else {{ __('Settings') }} @endif</span>
             </a>
             <ul class="sidebar-submenu">
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="" href="{{ route('accountPanel.profile') }}">
+                <a class="" href="{{ route('accountPanel.profile') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="user"></i>
-                  <span>{{ __('Profile') }}</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Profile' contenteditable="true">{{ __('Profile') }}</editor_block> @else {{ __('Profile') }} @endif</span>
                 </a>
               </li>
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="" href="{{ route('accountPanel.support-tasks.index') }}">
+                <a class="" href="{{ route('accountPanel.support-tasks.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="info"></i>
-                  <span>{{ __('Support tasks') }}</span>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Support tasks' contenteditable="true">{{ __('Support tasks') }}</editor_block> @else {{ __('Support tasks') }} @endif</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('accountPanel.settings.security') }}">{{ __('Security') }}</a>
+                <a href="{{ route('accountPanel.settings.security') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Security' contenteditable="true">{{ __('Security') }}</editor_block> @else {{ __('Security') }} @endif</a>
               </li>
             </ul>
           </li>
           <li class="sidebar-list">
-            <a class="sidebar-link sidebar-title" href="{{ route('logout') }}">
+            <a class="sidebar-link sidebar-title" href="{{ route('logout') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="log-out"></i>
-              <span>{{ __('Logout') }}</span>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Logout' contenteditable="true">{{ __('Logout') }}</editor_block> @else {{ __('Logout') }} @endif</span>
             </a>
           </li>
         </ul>

@@ -58,7 +58,7 @@ class DepositsController extends Controller
             $currency_usd = Currency::where('code', 'USD')->first();
             if ($currency_usd === null){
                 return json_encode([
-                    'rate_min_max' => '<strong>' .  number_format($rate->min, 2,'.',',') .'$</strong> до
+                    'rate_min_max' => '<strong>' .  number_format($rate->min, 2,'.',',') .'$</strong> -
                                     <strong>' . number_format($rate->max, 2,'.',' ') .'$</strong>',
                 ]);
             }
@@ -67,7 +67,7 @@ class DepositsController extends Controller
             $max = Wallet::convertToCurrencyStatic($currency_usd, $currency, $rate->max);
             
             return json_encode([
-                'rate_min_max' => '<strong>' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</strong> до
+                'rate_min_max' => '<strong>' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</strong> -
                 <strong>' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</strong >',
             ]);
         }

@@ -21,10 +21,10 @@
                                     <div class="tab-pane fade active show" id="pills-created" role="tabpanel" aria-labelledby="pills-created-tab">
                                         <div class="card mb-0">
                                             <div class="card-header d-flex align-items-center">
-                                                <h5 class="mb-0">{{ __('Created by me') }}</h5>
+                                                <h5 class="mb-0">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Created by me' contenteditable="true">{{ __('Created by me') }}</editor_block> @else {{ __('Created by me') }} @endif</h5>
                                                 <a href="{{ route('accountPanel.support-tasks.create') }}" class="badge-light-primary btn-block btn-mail m-0">
                                                     <i class="me-2" data-feather="check-circle"></i>
-                                                    {{ __('New Task') }}
+                                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='New Task' contenteditable="true">{{ __('New Task') }}</editor_block> @else {{ __('New Task') }} @endif
                                                 </a>
                                             </div>
                                             <div class="card-body p-0">
@@ -49,7 +49,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="d-flex justify-content-center">
-                                                                            <p>{{ __('No tasks') }}</p>
+                                                                            <p>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='No tasks' contenteditable="true">{{ __('No tasks') }}</editor_block> @else {{ __('No tasks') }} @endif</p>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

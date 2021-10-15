@@ -33,7 +33,7 @@
                           <div class="status-circle {{  auth()->user()->partner()->first()->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                           <div class="about">
                             <div class="name">{{ auth()->user()->partner()->first()->login }}</div>
-                            <div class="status">Partner</div>
+                            <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Partner' contenteditable="true">{{ __('Partner') }}</editor_block> @else {{ __('Partner') }} @endif</div>
                           
                           </div>
                           <span class="unread badge round-badge-primary">{{auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' .  auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
@@ -48,7 +48,7 @@
                             <div class="status-circle {{ $user->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                             <div class="about">
                               <div class="name">{{ $user->login }}</div>
-                              <div class="status">Referral</div>
+                              <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral' contenteditable="true">{{ __('Referral') }}</editor_block> @else {{ __('Referral') }} @endif</div>
                             </div>
                             <span class="unread badge round-badge-primary">{{ $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' . $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
                           </a>
@@ -81,7 +81,7 @@
                           <div class="name">{{ $companion->name }}&nbsp;&nbsp;({{ $companion->login }})&nbsp;&nbsp;
                             <span class="font-primary f-12">{{ $companion->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}</span>
                           </div>
-                          <div class="status">Last Seen {{ $companion->getLastActivityAttribute()['last_seen'] }}</div>
+                          <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Last Seen' contenteditable="true">{{ __('Last Seen') }}</editor_block> @else {{ __('Last Seen') }} @endif {{ $companion->getLastActivityAttribute()['last_seen'] }}</div>
                         </div>
                         <ul class="list-inline float-start float-sm-end chat-menu-icons">
                         
@@ -128,7 +128,7 @@
                         <div class="col-xl-12 d-flex">
                           <div class="input-group text-box">
                             <input class="form-control input-txt-bx" id="message-to-send" type="text" name="message-to-send" placeholder="Type a message.." data-bs-original-title="" title="">
-                            <button class="input-group-text btn btn-primary send-message-btn" type="button" data-bs-original-title="" title="">SEND</button>
+                            <button class="input-group-text btn btn-primary send-message-btn" type="button" data-bs-original-title="" title="">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Send' contenteditable="true">{{ __('Send') }}</editor_block> @else {{ __('Send') }} @endif</button>
                           </div>
                         </div>
                       </div>

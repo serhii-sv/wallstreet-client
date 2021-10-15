@@ -11,7 +11,7 @@
             <div class="donut-chart-widget">
               <div class="card">
                 <div class="card-header">
-                  <h5>Курс Sprint Token'а</h5>
+                  <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Sprint Token rate' contenteditable="true">{{ __('Sprint Token rate') }}</editor_block> @else {{ __('Sprint Token rate') }} @endif</h5>
                   <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                       <li><i class="fa fa-spin fa-cog"></i></li>
@@ -35,8 +35,8 @@
       <div class="col-xl-10 risk-col xl-100 box-col-12">
         <div class="card total-users">
           <div class="card-header card-no-border">
-            <h5 class="text-center">Обмен валют</h5>
-            <h6 class="font-primary text-center mb-0 mt-3">Комиссия 1$</h6>
+            <h5 class="text-center">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif</h5>
+            <h6 class="font-primary text-center mb-0 mt-3">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Commission 1 $' contenteditable="true">{{ __('Commission 1 $') }}</editor_block> @else {{ __('Commission 1 $') }} @endif</h6>
             <div class="text-center mt-4">
               @include('partials.inform')
             </div>
@@ -50,7 +50,7 @@
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="mb-2">
-                          <div class="col-form-label">Выберите первый кошелёк</div>
+                          <div class="col-form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose the first wallet' contenteditable="true">{{ __('Choose the first wallet') }}</editor_block> @else {{ __('Choose the first wallet') }} @endif</div>
                           <select class="exchange-first-wallet js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="wallet_from">
                             <option value="" hidden selected disabled>Выбрать</option>
                             @forelse($wallets as $wallet)
@@ -69,7 +69,7 @@
                       
                       <div class="col-lg">
                         <div class="mb-2">
-                          <div class="col-form-label">Выберите второй кошелёк</div>
+                          <div class="col-form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif</div>
                           <select class="exchange-second-wallet js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="wallet_to">
                             <option value="" hidden selected disabled>Выбрать</option>
                             @forelse($wallets as $wallet)
@@ -90,7 +90,7 @@
                     <div class="form-group row">
                      {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
                       <div class="col">
-                        <label class="form-label">Сколько хотите обменять?</label>
+                        <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='How much do you want to exchange?' contenteditable="true">{{ __('How much do you want to exchange?') }}</editor_block> @else {{ __('How much do you want to exchange?') }} @endif</label>
                         <div class="input-group mb-3">
                           <span class="input-group-text currency-symbol">?</span>
                           <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}" placeholder="0.1">
@@ -102,7 +102,7 @@
                     </div>
                   </li>
                   <li>
-                    <button class="btn-download btn btn-gradient f-w-500">Обменять</button>
+                    <button class="btn-download btn btn-gradient f-w-500">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Exchange' contenteditable="true">{{ __('Exchange') }}</editor_block> @else {{ __('Exchange') }} @endif</button>
                   </li>
                 </ul>
               </form>

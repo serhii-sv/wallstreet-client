@@ -6,7 +6,7 @@
     <div class="row second-chart-list third-news-update">
       <div class="card">
         <div class="card-header">
-          <h5>Календарь операций</h5>
+          <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Operations calendar' contenteditable="true">{{ __('Operations calendar') }}</editor_block> @else {{ __('Operations calendar') }} @endif</h5>
         </div>
         <div class="card-block row">
           <div class="col-sm-12 col-lg-12 col-xl-12">
@@ -26,19 +26,19 @@
                     <div class="lnb-calendars-item">
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="1" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
-                        <span>Начисления</span>
+                        <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Accruals' contenteditable="true">{{ __('Accruals') }}</editor_block> @else {{ __('Accruals') }} @endif</span>
                       </label>
                     </div>
                     <div class="lnb-calendars-item">
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
-                        <span>Выводы</span>
+                        <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Conclusions' contenteditable="true">{{ __('Conclusions') }}</editor_block> @else {{ __('Conclusions') }} @endif</span>
                       </label>
                     </div>
                     <div class="lnb-calendars-item">
                       <label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="" data-bs-original-title="" title="">
                         <span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
-                        <span>Рефералка</span>
+                        <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral' contenteditable="true">{{ __('Referral') }}</editor_block> @else {{ __('Referral') }} @endif</span>
                       </label>
                     </div>
                   </div>

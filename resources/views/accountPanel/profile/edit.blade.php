@@ -8,7 +8,7 @@
         <div class="col-xl-4">
           <div class="card">
             <div class="card-header pb-3 pt-3">
-              <h4 class="card-title mb-0">My Profile</h4>
+              <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='My Profile' contenteditable="true">{{ __('My Profile') }}</editor_block> @else {{ __('My Profile') }} @endif</h4>
               <div class="card-options">
                 <a class="card-options-collapse" href="#" data-bs-toggle="card-collapse">
                   <i class="fe fe-chevron-up"></i>
@@ -43,48 +43,48 @@
                             @endif
                           </label>
                         </div>
-                        <button class="btn btn-pill btn-success btn-air-success btn-xs">
-                          Загрузить
+                        <button class="btn btn-pill btn-success btn-air-success btn-xs" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block> @else {{ __('Upliner') }} @endif
                         </button>
                       </form>
                     </div>
                   </div>
                   <div class="media-body">
-                    <p>{{ __('Investor') }}</p>
+                    <p>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Investor' contenteditable="true">{{ __('Investor') }}</editor_block> @else {{ __('Investor') }} @endif</p>
                     <h5 class="mb-1">{{ $user->name ?? '' }}</h5>
                   </div>
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Email</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Email' contenteditable="true">{{ __('Email') }}</editor_block> @else {{ __('Email') }} @endif</label>
                 <p><strong>{{ $user->email ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Телефон</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif</label>
                 <p><strong>{{ $user->phone ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Skype</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Skype' contenteditable="true">{{ __('Skype') }}</editor_block> @else {{ __('Skype') }} @endif</label>
                 <p><strong>{{ $user->skype ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Telegram</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telegram' contenteditable="true">{{ __('Telegram') }}</editor_block> @else {{ __('Telegram') }} @endif</label>
                 <p><strong>{{ $user->telegram ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Пол</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Gender' contenteditable="true">{{ __('Gender') }}</editor_block> @else {{ __('Gender') }} @endif</label>
                 <p><strong>{{ $user->sex ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Страна</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif</label>
                 <p><strong>{{ $user->country ?? 'Не указана' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Город</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='City' contenteditable="true">{{ __('City') }}</editor_block> @else {{ __('City') }} @endif</label>
                 <p><strong>{{ $user->city ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
-                <label class="form-label">Реферальная ссылка</label>
+                <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral link' contenteditable="true">{{ __('Referral link') }}</editor_block> @else {{ __('Referral link') }} @endif</label>
                 <p><strong>{{ route('ref_link', $user->my_id) }}</strong></p>
               </div>
             
@@ -96,7 +96,7 @@
             @csrf
             {{ method_field('PUT') }}
             <div class="card-header">
-              <h4 class="card-title mb-0">Редактирование профиля</h4>
+              <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Editing a profile' contenteditable="true">{{ __('Editing a profile') }}</editor_block> @else {{ __('Editing a profile') }} @endif</h4>
               <div class="card-options">
                 <a class="card-options-collapse" href="#" data-bs-toggle="card-collapse">
                   <i class="fe fe-chevron-up"></i></a>
@@ -111,35 +111,35 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Логин</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Login' contenteditable="true">{{ __('Login') }}</editor_block> @else {{ __('Login') }} @endif</label>
                     <input class="form-control" type="text" name="login"
                         value="{{ $user->login ?? '' }}" placeholder="Username">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Email</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Email' contenteditable="true">{{ __('Email') }}</editor_block> @else {{ __('Email') }} @endif</label>
                     <input class="form-control" type="text" name="email"
                         value="{{ $user->email ?? '' }}" placeholder="your-email@domain.com">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Имя</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Name' contenteditable="true">{{ __('Name') }}</editor_block> @else {{ __('Name') }} @endif</label>
                     <input class="form-control" type="text" name="name"
                         value="{{ $user->name ?? '' }}" placeholder="">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Телефон</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif</label>
                     <input class="form-control" type="text" name="phone"
                         value="{{ $user->phone ?? '' }}">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Пол</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Gender' contenteditable="true">{{ __('Gender') }}</editor_block> @else {{ __('Gender') }} @endif</label>
                     <select class="form-control" name="sex" type="text">
                       <option value="">Не выбран</option>
                       <option value="мужской"
@@ -153,35 +153,35 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Skype</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Skype' contenteditable="true">{{ __('Skype') }}</editor_block> @else {{ __('Skype') }} @endif</label>
                     <input class="form-control" type="text" name="skype"
                         value="{{ $user->skype ?? '' }}">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Telegram</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telegram' contenteditable="true">{{ __('Telegram') }}</editor_block> @else {{ __('Telegram') }} @endif</label>
                     <input class="form-control" type="text" name="telegram"
                         value="{{ $user->telegram ?? '' }}">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Индекс</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Index' contenteditable="true">{{ __('Index') }}</editor_block> @else {{ __('Index') }} @endif</label>
                     <input class="form-control" type="text" name="index"
                         value="{{ $user->index ?? '' }}">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Страна</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif</label>
                     <input class="form-control" type="text" name="country_manual"
                         value="{{ $user->country_manual ?? '' }}">
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
-                    <label class="form-label">Город</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='City' contenteditable="true">{{ __('City') }}</editor_block> @else {{ __('City') }} @endif</label>
                     <input class="form-control" type="text" name="city_manual"
                         value="{{ $user->city_manual ?? '' }}">
                   </div>
@@ -189,7 +189,7 @@
               </div>
             </div>
             <div class="card-footer text-end">
-              <button class="btn btn-primary" type="submit">Сохранить</button>
+              <button class="btn btn-primary" type="submit">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
             </div>
           </form>
         </div>
@@ -199,7 +199,7 @@
           <div class="col-sm-12 col-xl-12 ">
             <div class="card">
               <div class="card-header">
-                <h5>Реквизиты платёжных систем</h5>
+                <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system details' contenteditable="true">{{ __('Payment system details') }}</editor_block> @else {{ __('Payment system details') }} @endif</h5>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -235,7 +235,7 @@
                                   </div>
                                 </div>
                                 <div class="col align-self-end">
-                                  <button class="btn btn-success">Сохранить</button>
+                                  <button class="btn btn-success">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
                                 </div>
                               </div>
                             </form>
@@ -272,13 +272,13 @@
                 <div class="col-sm-6">
                   <div class="card">
                     <div class="card-header">
-                      <h5>Фото паспорта</h5>
+                      <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Passport photo' contenteditable="true">{{ __('Passport photo') }}</editor_block> @else {{ __('Passport photo') }} @endif</h5>
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-center">
                         <div class="btn btn-outline-primary ms-2" id="uploadPassportImage">
                           <i data-feather="upload"></i>
-                          Upload
+                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upload' contenteditable="true">{{ __('Upload') }}</editor_block> @else {{ __('Upload') }} @endif
                         </div>
                       </div>
                       <input type="file" class="hidden" name="passportImage" id="passportImage" accept="image/jpeg','image/gif','image/png','image/bmp','image/svg+xml">
@@ -289,13 +289,13 @@
                 <div class="col-sm-6">
                   <div class="card">
                     <div class="card-header">
-                      <h5>Селфи</h5>
+                      <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Selfie' contenteditable="true">{{ __('Selfie') }}</editor_block> @else {{ __('Selfie') }} @endif</h5>
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-center">
                         <div class="btn btn-outline-primary ms-2" id="uploadSelfie">
                           <i data-feather="upload"></i>
-                          Upload
+                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upload' contenteditable="true">{{ __('Upload') }}</editor_block> @else {{ __('Upload') }} @endif
                         </div>
                       </div>
                       <input type="file" class="hidden" name="selfie" id="selfie" accept="image/jpeg','image/gif','image/png','image/bmp','image/svg+xml">
@@ -305,16 +305,17 @@
                 </div>
                 <div class="col-sm-12 col-md-12">
                   <div class="">
-                    <label class="form-label">Полное Имя</label>
+                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Full name' contenteditable="true">{{ __('Full name') }}</editor_block> @else {{ __('Full name') }} @endif</label>
                     <input class="form-control" type="text" name="full_name" value="{{ !is_null($user->lastVerificationRequest()) ? $user->lastVerificationRequest()->full_name : '' }}">
                   </div>
                 </div>
               </div>
               <div class="card-footer text-end">
                 @if($user->verifiedDocuments()->where('accepted', false)->count())
-                  Заявка находится на рассмотрении
+                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Application pending' contenteditable="true">{{ __('Application pending') }}</editor_block> @else {{ __('Application pending') }} @endif
                 @else
-                  <button class="btn btn-primary" type="submit">Сохранить</button>
+                  <button class="btn btn-primary" type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+                  >@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
                 @endif
               </div>
             </form>
@@ -326,7 +327,7 @@
           <!-- Cod Box Copy begin -->
           <div class="card">
             <div class="card-header card-no-border">
-              <h5>История входов</h5>
+              <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Login history' contenteditable="true">{{ __('Login history') }}</editor_block> @else {{ __('Login history') }} @endif</h5>
             </div>
             <div class="card-body new-update pt-0">
               <div class="activity-timeline">

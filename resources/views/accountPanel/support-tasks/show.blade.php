@@ -39,7 +39,7 @@
                                                 @endif
                                             @empty
                                                 <div class="d-flex justify-content-center align-items-center" style="height: 100%">
-                                                    Дождитесь ответа администратора
+                                                  @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name="Wait for the administrator's response" contenteditable="true">{{ __("Wait for the administrator's response") }}</editor_block> @else {{ __("Wait for the administrator's response") }} @endif
                                                 </div>
                                             @endforelse
                                         </ul>
@@ -53,8 +53,8 @@
                                                     <div class="col-xl-12 d-flex">
                                                         <div class="input-group text-box">
                                                             <input class="form-control input-txt-bx" type="text" name="message" value="{{ old('message') }}" placeholder="Type a message......">
-                                                            <button class="input-group-text btn btn-primary">
-                                                                SEND
+                                                            <button class="input-group-text btn btn-primary" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                                                              @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='SEND' contenteditable="true">{{ __('SEND') }}</editor_block> @else {{ __('SEND') }} @endif
                                                             </button>
                                                         </div>
                                                     </div>
