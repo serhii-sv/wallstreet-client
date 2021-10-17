@@ -9,10 +9,26 @@
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
-              <h5>Детали пополнения</h5>
+              <h5>@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif</h5>
             </div>
             <div class="card-body">
-              Текст про ручное пополнение
+              <p>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Replenishment text 1' contenteditable="true">{{ __('Replenishment text 1') }}</editor_block> @else {{ __('Replenishment text 1') }} @endif
+              </p>
+              <h6>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Replenishment head 1' contenteditable="true">{{ __('Replenishment head 1') }}</editor_block> @else {{ __('Replenishment head 1') }} @endif
+              </h6>
+              <p>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Replenishment text 2' contenteditable="true">{{ __('Replenishment text 2') }}</editor_block> @else {{ __('Replenishment text 2') }} @endif
+              </p>
+              <p>
+                @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Replenishment text 3' contenteditable="true">{{ __('Replenishment text 3') }}</editor_block> @else {{ __('Replenishment text 3') }} @endif
+              </p>
             </div>
           </div>
         </div>

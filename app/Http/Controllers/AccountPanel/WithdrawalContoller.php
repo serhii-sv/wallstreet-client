@@ -39,6 +39,7 @@ class WithdrawalContoller extends Controller
         if ($payment_system == null) {
             return redirect()->back()->with('error', 'Платёжная система не доступна!');
         }
+        
         $wallet_detail = UserWalletDetail::where('payment_system_id', $payment_system->id)->where('wallet_id', $wallet->id)->first();
         if ($wallet_detail == null) {
             return redirect()->back()->with('error', 'Введите реквизиты для этой платёжной системы в настройках!');

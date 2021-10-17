@@ -23,18 +23,25 @@ class ReplenishmentController extends Controller
             'currency' => 'required|uuid',
             'payment_system' => 'required|uuid',
         ]);
-        $currency = Currency::where('id',$request->get('currency'))->first();
-        $payment_system = PaymentSystem::where('id',$request->get('payment_system'))->first();
+        $currency = Currency::where('id', $request->get('currency'))->first();
+        $payment_system = PaymentSystem::where('id', $request->get('payment_system'))->first();
         if ($currency === null) {
             return redirect()->back()->with('error', 'Валюта не найдена!');
         }
         if ($payment_system === null) {
             return redirect()->back()->with('error', 'Платёжная система не найдена!');
         }
-        if ($currency->code === "RUB"){
-            return view('accountPanel.replenishment.manual');
-        }else{
-            return view('accountPanel.replenishment.auto');
+        if ($payment_system->code == 'perfectmoney') {
+            echo 'Perfect money api';
+        } else if ($payment_system->code == 'coinpayments') {
+            echo 'coinpayments api';
+        } else {
+            return redirect()->route('accountPanel.replenishment.manual');
         }
+    }
+    
+    public function manual() {
+        
+        return view('accountPanel.replenishment.manual');
     }
 }

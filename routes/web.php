@@ -83,6 +83,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
             Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
             Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
+            Route::get('/replenishment/manual', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
             
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');

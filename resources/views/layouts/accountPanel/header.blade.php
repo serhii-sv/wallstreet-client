@@ -188,11 +188,7 @@
                 <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Account' contenteditable="true">{{ __('Account') }}</editor_block> @else {{ __('Account') }} @endif</span>
               </a>
             </li>
-            <li>
-              <a href="{{ route('accountPanel.support-tasks.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="file-text"></i>
-                <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Taskboard' contenteditable="true">{{ __('Taskboard') }}</editor_block> @else {{ __('Taskboard') }} @endif</span>
-              </a>
-            </li>
+      
             <li>
               <a href="{{ route('accountPanel.settings.security') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="settings"></i>
                 <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Settings' contenteditable="true">{{ __('Settings') }}</editor_block> @else {{ __('Settings') }} @endif</span>
