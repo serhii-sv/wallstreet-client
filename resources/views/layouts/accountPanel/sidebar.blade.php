@@ -38,12 +38,25 @@
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.replenishment') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i data-feather="dollar-sign"></i>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block> @else {{ __('Replenishment') }} @endif</span>
+            </a>
+          </li>
+          <li class="sidebar-list">
+            {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.deposits.create') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="briefcase"></i>
               <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Create deposit' contenteditable="true">{{ __('Create deposit') }}</editor_block> @else {{ __('Create deposit') }} @endif</span>
             </a>
           </li>
-  
+          <li class="sidebar-list">
+            {{--<label class="badge badge-success">2</label>--}}
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i data-feather="dollar-sign"></i>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Withdraw' contenteditable="true">{{ __('Withdraw') }}</editor_block> @else {{ __('Withdraw') }} @endif</span>
+            </a>
+          </li>
           <li class="sidebar-list">
             <a class="sidebar-link sidebar-title" href="#" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="list"></i>
@@ -64,19 +77,11 @@
               </li>
             </ul>
           </li>
-          
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.replenishment') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              <i data-feather="dollar-sign"></i>
-              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Replenishment' contenteditable="true">{{ __('Replenishment') }}</editor_block> @else {{ __('Replenishment') }} @endif</span>
-            </a>
-          </li>
-          <li class="sidebar-list">
-            {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              <i data-feather="dollar-sign"></i>
-              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Withdraw' contenteditable="true">{{ __('Withdraw') }}</editor_block> @else {{ __('Withdraw') }} @endif</span>
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i data-feather="users"></i>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
             </a>
           </li>
           <li class="sidebar-list">
@@ -86,13 +91,16 @@
               <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif</span>
             </a>
           </li>
+          
+          
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              <i data-feather="users"></i>
-              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
+            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.ico') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+              <i data-feather="trending-down"></i>
+              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='ICO' contenteditable="true">{{ __('ICO') }}</editor_block> @else {{ __('ICO') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>
             </a>
           </li>
+          
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -108,9 +116,23 @@
             <ul class="sidebar-submenu">
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="" href="{{ route('accountPanel.profile') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a class="" href="{{ route('accountPanel.settings.profile') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="user"></i>
                   <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Profile' contenteditable="true">{{ __('Profile') }}</editor_block> @else {{ __('Profile') }} @endif</span>
+                </a>
+              </li>
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.settings.wallets') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallets' contenteditable="true">{{ __('Wallets') }}</editor_block> @else {{ __('Wallets') }} @endif</span>
+                </a>
+              </li>
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.settings.verify') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Verify' contenteditable="true">{{ __('Verify') }}</editor_block> @else {{ __('Verify') }} @endif</span>
                 </a>
               </li>
               <li class="">

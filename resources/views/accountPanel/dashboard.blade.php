@@ -127,10 +127,10 @@
                         <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
                         <i class="icon-bg" data-feather="credit-card"></i>
                         <div class="mt-3">
-                          <a href=""  @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-success">@if(canEditLang() && checkRequestOnEdit())
+                          <a href="" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-success">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Replenish' contenteditable="true">{{ __('Replenish') }}</editor_block>
                             @else {{ __('Replenish') }}@endif</a>
-                          <a href="{{ route('accountPanel.withdrawal') }}"  @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-danger">@if(canEditLang() && checkRequestOnEdit())
+                          <a href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-danger">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='To withdraw' contenteditable="true">{{ __('To withdraw') }}</editor_block>
                             @else {{ __('To withdraw') }}@endif</a>
                         </div>
@@ -261,7 +261,7 @@
               <div class="col-12">
                 <ul class="nav nav-dark" id="pills-darktab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active"  @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif id="pills-darkhome-tab" data-bs-toggle="pill" href="#pills-darkhome" role="tab" aria-controls="pills-darkhome" aria-selected="true" data-bs-original-title="" title="">
+                    <a class="nav-link active" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif id="pills-darkhome-tab" data-bs-toggle="pill" href="#pills-darkhome" role="tab" aria-controls="pills-darkhome" aria-selected="true" data-bs-original-title="" title="">
                       <i class="icofont icofont-ui-note"></i>
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Feed' contenteditable="true">{{ __('Feed') }}</editor_block>
@@ -269,7 +269,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif id="pills-darkprofile-tab" data-bs-toggle="pill" href="#pills-darkprofile" role="tab" aria-controls="pills-darkprofile" aria-selected="false" data-bs-original-title="" title="">
+                    <a class="nav-link" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif id="pills-darkprofile-tab" data-bs-toggle="pill" href="#pills-darkprofile" role="tab" aria-controls="pills-darkprofile" aria-selected="false" data-bs-original-title="" title="">
                       <i class="icofont icofont-upload-alt"></i>
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Upload' contenteditable="true">{{ __('Upload') }}</editor_block>
@@ -311,7 +311,8 @@
                           <span class="input-group-text"><i class="icofont icofont-link"></i></span>
                           <input class="form-control" name="video" value="{{ old('video') ?? '' }}" type="text" placeholder="Ссылка на видео" aria-label="">
                         </div>
-                        <button class="btn btn-primary m-r-15" type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Send' contenteditable="true">{{ __('Send') }}</editor_block>
+                        <button class="btn btn-primary m-r-15" type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Send' contenteditable="true">{{ __('Send') }}</editor_block>
                           @else {{ __('Send') }}@endif</button>
                       </form>
                     </div>
@@ -328,31 +329,41 @@
       <div class="col-lg-6 risk-col ">
         <div class="card total-users">
           <div class="card-header card-no-border pb-3 pt-3">
-            <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Transfer' contenteditable="true">{{ __('Transfer') }}</editor_block> @else {{ __('Transfer') }} @endif</h5>
+            <h5>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Transfer' contenteditable="true">{{ __('Transfer') }}</editor_block> @else {{ __('Transfer') }} @endif
+            </h5>
           </div>
           <div class="card-body pt-0">
             <form action="{{ route('accountPanel.dashboard.send.money') }}" method="post" class="send-money-to-user-form">
               @csrf
               <div class="apex-chart-container goal-status text-center">
                 <div class="rate-card">
-                  <h6 class="mb-2 mt-2 f-w-400">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else {{ __('User') }} @endif</h6>
+                  <h6 class="mb-2 mt-2 f-w-400">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else {{ __('User') }} @endif
+                  </h6>
                   <div class="input-group mb-3">
                     <input class="form-control" type="text" name="user" value="{{ old('user') ?? '' }}">
                   </div>
-                  <h6 class="mb-2 mt-2 f-w-400">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif</h6>
+                  <h6 class="mb-2 mt-2 f-w-400">@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif
+                  </h6>
                   <div class="input-group mb-3">
                     <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                   </div>
                   <div class="input-group mb-3">
                     <select class="form-select form-control-inverse-fill " name="wallet_id">
-                      <option value="" disabled selected hidden>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose a wallet' contenteditable="true">{{ __('Choose a wallet') }}</editor_block> @else {{ __('Choose a wallet') }} @endif</option>
+                      <option value="" disabled selected hidden>@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Choose a wallet' contenteditable="true">{{ __('Choose a wallet') }}</editor_block> @else {{ __('Choose a wallet') }} @endif
+                      </option>
                       @forelse($wallets as $wallet)
                         <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
                       @empty
                       @endforelse
                     </select>
                   </div>
-                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Do transfer' contenteditable="true">{{ __('Do transfer') }}</editor_block> @else {{ __('Do transfer') }} @endif</button>
+                  <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Do transfer' contenteditable="true">{{ __('Do transfer') }}</editor_block> @else {{ __('Do transfer') }} @endif
+                  </button>
                 </div>
               </div>
             </form>
@@ -363,17 +374,55 @@
       <div class="col-lg-6 risk-col ">
         <div class="card height-equal" style="min-height: 331px;">
           <div class="card-header">
-            <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif</h5>
+            <h5>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif
+            </h5>
           </div>
           <div class="card-body">
             <h4><i data-feather="link"></i> {{ route('ref_link', auth()->user()->my_id) }}</h4>
           </div>
           <div class="card-footer">
-            <button class="btn btn-primary btn-lg" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @else onclick="copyToClipboard()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Copy' contenteditable="true">{{ __('Copy') }}</editor_block> @else {{ __('Copy') }} @endif</button>
+            <button class="btn btn-primary btn-lg" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @else onclick="copyToClipboard()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Copy' contenteditable="true">{{ __('Copy') }}</editor_block> @else {{ __('Copy') }} @endif
+            </button>
           </div>
         </div>
       </div>
-      @if($banners !== null)
+      <div class="offer-box" style="padding-top: 40px; padding-bottom: 40px;">
+        <div class="row">
+          <div class="col offer-slider" style="">
+            <div class="carousel-item active">
+              <div class="selling-slide row">
+                <div class="col-xl-4 col-md-6">
+                  <div class="d-flex">
+                    <div class="left-content">
+                      <p>Much More Selling product</p>
+                      <h4 class="f-w-600">Best Selling Product</h4>
+                      <span class="badge badge-white rounded-pill">78% offer</span>
+                      <span class="badge badge-dotted rounded-pill ms-2">Coupon Code : 12345</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                  <div class="center-img">
+                    <img class="img-fluid" src="{{ asset('images/dashboard-2/offer-shoes-3.png') }}" alt="..."></div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                  <div class="d-flex">
+                    <div class="right-content">
+                      <p>Money back Guarrantee</p>
+                      <h4 class="f-w-600">Women Straight Kurta</h4>
+                      <span class="badge badge-white rounded-pill">$100.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {{--@if($banners !== null)
         <div class="row mb-4">
           <div class="col">
             <div class="offer-slider">
@@ -404,7 +453,7 @@
             </div>
           </div>
         </div>
-      @endif
+      @endif--}}
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -415,17 +464,24 @@
                     <thead>
                       <tr>
                         <th class="f-22">
-                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Best eller' contenteditable="true">{{ __('Best seller') }}</editor_block> @else {{ __('Best seller') }} @endif
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Best eller' contenteditable="true">{{ __('Best seller') }}</editor_block> @else {{ __('Best seller') }} @endif
                         </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block> @else {{ __('Date') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Product' contenteditable="true">{{ __('Product') }}</editor_block> @else {{ __('Product') }} @endif
-                          </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif
-                          </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block> @else {{ __('Total') }} @endif
-                          </th>
-                        <th class="text-end">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block> @else {{ __('Status') }} @endif
-                          </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block> @else {{ __('Date') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Product' contenteditable="true">{{ __('Product') }}</editor_block> @else {{ __('Product') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Total' contenteditable="true">{{ __('Total') }}</editor_block> @else {{ __('Total') }} @endif
+                        </th>
+                        <th class="text-end">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block> @else {{ __('Status') }} @endif
+                        </th>
                       </tr>
                     </thead>
                     <tbody>

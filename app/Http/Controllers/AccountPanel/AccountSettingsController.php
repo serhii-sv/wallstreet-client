@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserAuthLog;
+use App\Models\Wallet;
 use App\Services\SettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,5 +90,26 @@ class AccountSettingsController extends Controller
         /*$settingsService = SettingsService::init();
 
         $settingsService->registerSettings();*/
+    }
+    
+    public function editProfile() {
+        $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
+        return view('accountPanel.settings.profile', [
+            'user' => Auth::user(),
+            'auth_log' => $auth_log,
+        ]);
+    }
+    public function editWallets() {
+        $wallets = Wallet::with('currency')->where('user_id', auth()->user()->id)->with('currency')->get();
+    
+        return view('accountPanel.settings.wallets', [
+            'user' => Auth::user(),
+            'wallets' => $wallets,
+        ]);
+    }
+    public function verifyAccount() {
+          return view('accountPanel.settings.verify', [
+            'user' => Auth::user(),
+        ]);
     }
 }

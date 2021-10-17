@@ -19,6 +19,7 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
+use App\Http\Controllers\IsoController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
@@ -91,12 +92,19 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
             Route::post('/profile/wallet-details/update', [ProfileController::class, 'updateWalletDetails'])->name('profile.wallet.details.update');
             Route::get('/settings/security', [AccountSettingsController::class, 'securitySettings'])->name('settings.security');
+            
+            Route::get('/settings/profile', [AccountSettingsController::class, 'editProfile'])->name('settings.profile');
+            Route::get('/settings/wallets', [AccountSettingsController::class, 'editWallets'])->name('settings.wallets');
+            Route::get('/settings/verify', [AccountSettingsController::class, 'verifyAccount'])->name('settings.verify');
 
             Route::get('/transactions/{type?}', [TransactionsController::class, 'index'])->name('transactions');
             Route::resource('/deposits', DepositsController::class);
             Route::post('/deposits/set-reinvest', [DepositsController::class, 'setReinvestPercent' ])->name('deposits.set.reinvest');
             Route::post('/deposits/add-balance', [DepositsController::class, 'addBalance' ])->name('deposits.add.balance');
             Route::post('/deposits/upgrade', [DepositsController::class, 'upgrade' ])->name('deposits.upgrade');
+            
+            
+            Route::get('/ico', [IsoController::class, 'index' ])->name('ico');
 
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');

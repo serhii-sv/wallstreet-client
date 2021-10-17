@@ -20,11 +20,19 @@
                   </div>
                   <div class="f1-step active">
                     <div class="f1-step-icon"><i class="fa fa-user"></i></div>
-                    <p>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block> @else {{ __('Payment system') }} @endif</p>
+                    <p>
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
+                      @else {{ __('Payment system') }} @endif
+                    </p>
                   </div>
                   <div class="f1-step">
                     <div class="f1-step-icon"><i class="fa fa-key"></i></div>
-                    <p>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency' contenteditable="true">{{ __('Currency') }}</editor_block> @else {{ __('Currency') }} @endif</p>
+                    <p>
+                      @if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Currency' contenteditable="true">{{ __('Currency') }}</editor_block>
+                      @else {{ __('Currency') }} @endif
+                    </p>
                   </div>
                 </div>
                 <fieldset style="display: block;">

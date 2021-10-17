@@ -1,5 +1,5 @@
 @if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert" style="font-size: 20px;">
         @lang(session()->get('success'))
     </div>
 @endif
