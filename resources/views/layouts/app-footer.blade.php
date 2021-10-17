@@ -52,9 +52,27 @@
   <div class="container">
     <div class="footer-top">
       <div class="logo">
-        <a href="">
-          <img src="{{ asset('theme/images/logo/footer-logo.png') }}" alt="logo">
-        </a>
+   {{--     <a href="">
+--}}{{--          <img src="{{ asset('theme/images/logo/footer-logo.png') }}" alt="logo">--}}{{--
+          <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="80" alt="logo">
+        </a>--}}
+          <ul class="social-icons">
+              <li>
+                  <a href="#0">
+                      <i class="fab fa-facebook-f"></i>
+                  </a>
+              </li>
+              <li>
+                  <a href="#0" class="active">
+                      <i class="fab fa-twitter"></i>
+                  </a>
+              </li>
+              <li>
+                  <a href="#0">
+                      <i class="fab fa-instagram"></i>
+                  </a>
+              </li>
+          </ul>
       </div>
       <ul class="links">
         <li>
@@ -95,7 +113,7 @@
         </li>
       </ul>
     </div>
-    <div class="footer-bottom">
+    {{--<div class="footer-bottom">
       <div class="footer-bottom-area">
         <div class="left">
           <p>&copy; 2020
@@ -134,6 +152,6 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div>--}}
   </div>
 </footer>

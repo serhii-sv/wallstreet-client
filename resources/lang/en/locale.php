@@ -133,6 +133,7 @@ return [
     "Child 1"=> "Child 1",
     "Child 2"=> "Child 2",
     "Page Collapse"=> "Page Collapse",
-    "Access Control"=>"Access Control"
+    "Access Control"=>"Access Control",
+    "support_email"=> "info@hyipland.com",
 ];
 ?>

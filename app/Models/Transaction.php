@@ -7,14 +7,69 @@
 namespace App\Models;
 
 use App\Traits\ConvertCurrency;
+use App\Traits\SumOperations;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Transaction
+ *
+ * @property string $id
+ * @property string $type_id
+ * @property string $user_id
+ * @property string $currency_id
+ * @property string|null $rate_id
+ * @property string|null $deposit_id
+ * @property string $wallet_id
+ * @property string|null $payment_system_id
+ * @property float $amount
+ * @property float $main_currency_amount
+ * @property string|null $source
+ * @property string|null $result
+ * @property string|null $batch_id
+ * @property float|null $commission
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $is_real
+ * @property int $approved
+ * @property int $int_id
+ * @property-read \App\Models\Currency $currency
+ * @property-read \App\Models\Deposit|null $deposit
+ * @property-read \App\Models\PaymentSystem|null $paymentSystem
+ * @property-read \App\Models\Rate|null $rate
+ * @property-read \App\Models\TransactionType $type
+ * @property-read \App\Models\User $user
+ * @property-read \App\Models\Wallet $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereApproved($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereBatchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCommission($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDepositId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereIntId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereIsReal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereMainCurrencyAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePaymentSystemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereRateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereResult($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereWalletId($value)
+ * @mixin \Eloquent
+ */
 class Transaction extends Model
 {
     use ConvertCurrency;
     use Uuids;
+    use SumOperations;
     public $keyType      = 'string';
     /** @var bool $incrementing */
     public $incrementing = false;
@@ -37,6 +92,7 @@ class Transaction extends Model
         'approved',
         'commission',
         'created_at',
+        'external',
     ];
 
     public const TRANSACTION_APPROVED = 1;
@@ -108,14 +164,20 @@ class Transaction extends Model
     {
         return $value;
     }
-
+    
     /**
-     * @param $wallet
-     * @param $amount
+     * @param      $wallet
+     * @param      $amount
+     * @param null $payment_system_id
+     *
      * @return mixed
      */
-    public static function enter($wallet, $amount)
+    public static function enter($wallet, $amount, $payment_system_id = null)
     {
+        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $wallet->user->id)->where('payment_system_id', $payment_system_id)->first();
+        if ( $wallet_detail === null ){
+            return null;
+        }
         $type = TransactionType::getByName('enter');
         $transaction = self::create([
             'type_id' => $type->id,
@@ -123,19 +185,22 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'payment_system_id' => $payment_system_id,
             'amount' => $amount,
+            'external' => $wallet_detail->external,
         ]);
         return $transaction->save() ? $transaction : null;
     }
-
+    
     /**
      * @param Wallet $wallet
-     * @param float $amount
+     * @param float  $amount
+     * @param        $payment_system_id
+     *
      * @return Transaction|null
      * @throws \Exception
      */
-    public static function withdraw(Wallet $wallet, float $amount)
+    public static function withdraw(Wallet $wallet, float $amount, $payment_system_id)
     {
         $amount         = (float) abs($amount);
         /** @var TransactionType $type */
@@ -145,12 +210,17 @@ class Transaction extends Model
         /** @var Currency $currency */
         $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem  = $wallet->paymentSystem()->first();
+        $paymentSystem  = $payment_system_id;
 
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
         }
-
+        
+        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $paymentSystem->id)->first();
+        if ( $wallet_detail === null ){
+            throw new \Exception(__('No requisites'));
+        }
+        
         $commission           = $type->commission;
         $amountWithCommission = $amount / ((100 - $commission) * 0.01);
 
@@ -173,6 +243,7 @@ class Transaction extends Model
             'payment_system_id' => $paymentSystem->id,
             'amount'            => $amountWithCommission,
             'approved'          => false,
+            'external'          => $wallet_detail->external,
         ]);
 
         $wallet->update([
@@ -198,7 +269,7 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+          //  'payment_system_id' => $wallet->paymentSystem->id,
             'amount' => $amount,
             'approved' => true,
         ]);
@@ -220,21 +291,22 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            // 'payment_system_id' => $payment_system_id,
             'amount' => $amount,
             'source' => $referral->id,
             'approved' => true,
         ]);
         return $transaction->save() ? $transaction : null;
     }
-
+    
     /**
-     * @param $wallet
-     * @param $amount
+     * @param      $wallet
+     * @param      $amount
      * @param null $referral
+     *
      * @return null
      */
-    public static function dividend($wallet, $amount, $referral = null)
+    public static function dividend($wallet, $amount, $deposit, $referral = null)
     {
         $type = TransactionType::getByName('dividend');
         $transaction = self::create([
@@ -243,7 +315,8 @@ class Transaction extends Model
             'user_id' => $wallet->user->id,
             'currency_id' => $wallet->currency->id,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'deposit_id' => $deposit->id,
+           // 'payment_system_id' => $payment_system_id,
             'amount' => $amount,
             'source' => null !== $referral
                 ? $referral->id
@@ -255,14 +328,33 @@ class Transaction extends Model
         $referralId   = null !== $referral ? $referral->id : '';
 
         return $transaction->save() ? $transaction : null;
-
     }
-
+    
+    public static function reinvest($wallet, $amount, $deposit, $referral = null) {
+        $type = TransactionType::getByName('reinvest');
+        $transaction = self::create([
+            'type_id' => $type->id,
+            'commission' => 0,
+            'user_id' => $wallet->user->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            'deposit_id' => $deposit->id,
+            'amount' => $amount,
+            'source' => null !== $referral
+                ? $referral->id
+                : null,
+            'approved' => true,
+        ]);
+        return $transaction->save() ? $transaction : null;
+    }
+    
     /**
-     * @param $deposit
+     * @param      $deposit
+     * @param null $payment_system_id
+     *
      * @return null
      */
-    public static function createDeposit($deposit)
+    public static function createDeposit($deposit, $payment_system_id = null)
     {
         $type = TransactionType::getByName('create_dep');
         $transaction = self::create([
@@ -273,7 +365,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
+            'payment_system_id' => null,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -295,7 +387,7 @@ class Transaction extends Model
             'rate_id' => $deposit->rate->id,
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
-            'payment_system_id' => $deposit->paymentSystem->id,
+            'payment_system_id' => null,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
@@ -317,11 +409,13 @@ class Transaction extends Model
             'rate_id' => null,
             'deposit_id' => null,
             'wallet_id' => $wallet->id,
-            'payment_system_id' => $wallet->paymentSystem->id,
+            'payment_system_id' => null,
             'amount' => $amount,
         ]);
         return $transaction->save() ? $transaction : null;
     }
+    
+   
 
     /**
      * @param string $type
@@ -387,19 +481,5 @@ class Transaction extends Model
      * @param $sum
      * @return string
      */
-    public static function sidebarIndicatorsFormatting($sum)
-    {
-        $postfix = '';
-        if ($sum >= 1000) {
-            $sum = $sum / 1000;
-            $postfix = 'K';
-        }
 
-        if ($sum >= 1000000) {
-            $sum = $sum / 1000000;
-            $postfix = 'KK';
-        }
-
-        return number_format(floor($sum), 0, '.', ',') . $postfix;
-    }
 }

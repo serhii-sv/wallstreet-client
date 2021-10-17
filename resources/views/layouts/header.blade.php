@@ -1,7 +1,7 @@
 <header class="header">
   <a href="https://t.me/luminex_asia" class="btn_tlg">TELEGRAM SUPPORT</a>
     <div class="main-line container">
-        <a class="main-line__logo" href="{{ route('customer.main') }}"><img src="{{ asset('theme/images/logo/logo.png') }}" alt=""></a>
+        <a class="main-line__logo" href="{{ route('customer.main') }}"><img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="60" alt=""></a>
         <p class="main-line__slogan">Energy of Cryptocurrency</p>
         <!-- <div class="main-line__call">
             <a class="main-line__phone" href="tel:+121232233456">+12 123 223-34-56 </a>

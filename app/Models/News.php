@@ -35,6 +35,7 @@ class News extends Model
         'subject',
         'content',
         'created_at',
+        'views',
     ];
 
     /**
@@ -43,5 +44,32 @@ class News extends Model
     public function language()
     {
         return $this->belongsTo(Language::class, 'id');
+    }
+    
+    public function getTitle($lang) {
+        $title_list = json_decode($this->title, true);
+        if (array_key_exists($lang, $title_list)){
+            return $title_list[$lang];
+        }else{
+            return array_shift($title_list);
+        }
+    }
+    
+    public function getShortContent($lang) {
+        $title_list = json_decode($this->short_content, true);
+        if (array_key_exists($lang, $title_list)){
+            return $title_list[$lang];
+        }else{
+            return array_shift($title_list);
+        }
+    }
+    
+    public function getContent($lang) {
+        $title_list = json_decode($this->content, true);
+        if (array_key_exists($lang, $title_list)){
+            return $title_list[$lang];
+        }else{
+            return array_shift($title_list);
+        }
     }
 }

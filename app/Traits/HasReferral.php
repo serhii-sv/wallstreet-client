@@ -246,4 +246,25 @@ trait HasReferral
 
         $this->partners()->sync($parent_array);
     }
+    
+    
+    public function getAllReferralsIds($referrals, $flag = 1)
+    {
+        $result = [];
+        
+        foreach ($referrals as $referral) {
+            if (!isset($referral->id)) {
+                $referral = $referral['self'];
+            }
+            $result[] = $referral->id;
+            $this->getAllReferralsIds($referral['referrals'], $flag + 1);
+        }
+        
+        return $result;
+    }
+    
+    public function partner()
+    {
+        return $this->partners()->first();
+    }
 }

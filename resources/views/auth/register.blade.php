@@ -11,7 +11,7 @@
                     <i class="fas fa-angle-left"></i><span>Back</span>
                 </a>
                 <a href="#0" class="logo">
-                    <img src="{{ asset('theme/images/logo/footer-logo.png') }}" alt="logo">
+                    <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="logo">
                 </a>
             </div>
             <div class="account-wrapper">
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label for="partner_id">Partner ID </label>
                             <input id="partner_id" type="text" class="form-control @error('partner_id') is-invalid @enderror" name="partner_id"
-                                   value="{{ old('partner_id') }}" autofocus>
+                                   value="{{ $_COOKIE["partner_id"] ??  old('partner_id')  }}" autofocus>
 
                             @error('partner_id')
                             <span class="invalid-feedback" role="alert">

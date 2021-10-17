@@ -1,3 +1,3 @@
 <div class="loader">
-    <img src="{{ asset('theme/images/logo/logo.png') }}" alt="" role="presentation"/>
+    <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="" role="presentation"/>
 </div>

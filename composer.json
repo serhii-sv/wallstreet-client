@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "^1.7",
+        "cboden/ratchet": "^0.4.3",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -25,7 +26,9 @@
         "laravel/ui": "^3.3",
         "league/flysystem-aws-s3-v3": "~1.0",
         "pragmarx/google2fa-laravel": "^1.4",
+        "pusher/pusher-php-server": "^7.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
+        "react/event-loop": "^1.2",
         "spatie/laravel-permission": "^4.2",
         "webpatser/laravel-uuid": "^3.0"
     },

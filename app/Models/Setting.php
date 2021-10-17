@@ -30,15 +30,13 @@ class Setting extends Model
      */
     public static function getValue(string $key)
     {
-        return cache()->rememberForever('model_setting_' . $key, function () use ($key) {
-            $row = self::where('s_key', $key)->first();
+        $row = self::where('s_key', $key)->first();
 
-            if (null === $row) {
-                return null;
-            }
+        if (null === $row) {
+            return null;
+        }
 
-            return $row->s_value;
-        });
+        return $row->s_value;
     }
 
     /**

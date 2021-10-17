@@ -5,12 +5,12 @@
 
     <div class="account-section bg_img" data-background="{{ asset('theme/images/about/account-bg.jpg') }}">
         <div class="container">
-            <div class="account-title text-center">
+            <div class="account-title text-center mb-3">
                 <a href="#" onclick="window.history.back()" class="back-home">
                     <i class="fas fa-angle-left"></i><span>Back</span>
                 </a>
                 <a href="#0" class="logo">
-                    <img src="{{ asset('theme/images/logo/footer-logo.png') }}" alt="logo">
+                    <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="100" alt="logo">
                 </a>
             </div>
             <div class="account-wrapper">
