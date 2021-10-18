@@ -404,8 +404,8 @@
                   </div>
                 </div>
                 <div class="col-xl-4 col-md-12">
-                  <div class="center-img">
-                    <img class="img-fluid" src="{{ asset('images/dashboard-2/offer-shoes-3.png') }}" alt="..."></div>
+                  <div class="center-img text-center">
+                    <img class="img-fluid" src="{{ asset('images/dashboard-2/sprint bank card-02.png') }}" style="max-width: 450px" alt="..."></div>
                 </div>
                 <div class="col-xl-4 col-md-6">
                   <div class="d-flex">

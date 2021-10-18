@@ -10,7 +10,7 @@
           <!-- user profile first-style start-->
           <div class="col-sm-12">
             <div class="card hovercard text-center">
-              <div class="cardheader" style="background: url('{{ asset('accountPanel/images/other-images/profile-style-img3.png') }}') no-repeat; background-size: cover;max-height: 300px;"></div>
+              <div class="cardheader" style="background: url('{{ asset('accountPanel/images/other-images/sprint bank banner_-01.jpg') }}') no-repeat; background-size: cover;max-height: 300px;"></div>
               <div class="user-image">
                 <div class="avatar">
                   @if(!$upliner)

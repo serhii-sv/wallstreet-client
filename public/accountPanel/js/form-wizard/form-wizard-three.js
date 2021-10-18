@@ -31,7 +31,8 @@ function bar_progress(progress_line_object, direction) {
     $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
     	$(this).removeClass('input-error');
     });
-    $('.f1 .btn-next').on('click', function() {
+    $('.f1 .btn-next').on('click', function(e) {
+      e.preventDefault();
     	var parent_fieldset = $(this).parents('fieldset');
     	var next_step = true;
         var current_active_step = $(this).parents('.f1').find('.f1-step.active');
@@ -45,6 +46,7 @@ function bar_progress(progress_line_object, direction) {
     			$(this).removeClass('input-error');
     		}
     	});
+    	
     	if( next_step ) {
     		parent_fieldset.fadeOut(400, function() {
     			current_active_step.removeClass('active').addClass('activated').next().addClass('active');

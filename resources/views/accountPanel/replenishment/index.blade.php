@@ -15,7 +15,7 @@
               @include('partials.inform')
             </div>
             <div class="card-body">
-              <form class="f1" method="post" action="{{ route('accountPanel.replenishment.new.request') }}">
+              <form class="f1" method="post" action="{{ route('accountPanel.replenishment') }}">
                 @csrf
                 <div class="f1-steps">
                   <div class="f1-progress">
@@ -44,7 +44,7 @@
                     @forelse($payment_systems as $item)
                       
                       <label class="d-flex flex-column align-items-center justify-content-center">
-                        <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}">
+                        <input class="payment-system-radio" type="radio" name="payment_system" required value="{{ $item->id }}" @if($item->code == 'perfectmoney' || $item->code == 'coinpayments') data-amount="true" @else data-amoint="false" @endif>
                         <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                           <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
                           <span>{{ $item->name }}</span>
@@ -72,10 +72,10 @@
                   </div>
                 </fieldset>
                 <fieldset style="display: none;">
-                  <div class="mb-3 d-flex flex-wrap">
+                  <div class="mb-3 d-flex flex-wrap currencies-wrapper">
                     @forelse($currencies as $item)
-                      <label class="d-flex flex-column align-items-center justify-content-center">
-                        <input class="payment-system-radio" type="radio" name="currency" value="{{ $item->id }}">
+                      <label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
+                        <input class="payment-system-radio" type="radio" name="currency" value="{{ $item->id }}" required>
                         <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                           <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
                           <span>{{ $item->name }}</span>
@@ -83,6 +83,10 @@
                       </label>
                     @empty
                     @endforelse
+                  </div>
+                  <div class="text-center mb-3">
+                    <label class="">Amount</label>
+                    <input class="form-control input-air-primary text-center" type="text" name="amount">
                   </div>
                   
                   <div class="f1-buttons">
@@ -107,10 +111,11 @@
 @endsection
 @push('styles')
   <style>
-      .item-list-wrapper{
+      .item-list-wrapper {
           display: flex;
           flex-wrap: wrap;
       }
+
       .payment-system-radio {
           position: absolute;
           left: -9999px;
@@ -156,7 +161,31 @@
   <script src="{{ asset('accountPanel/js/form-wizard/form-wizard-three.js') }}"></script>
   <script>
     $(document).ready(function () {
-      
+      $(".payment-system-radio").on('change', function (el) {
+        $(".currencies-wrapper").find('.currency-wrapper-item').remove();
+        var $url = "{{ route('ajax.paysystem.currencies') }}";
+        var $payment_system = $(this).val();
+        $('.currencies-wrapper').html('<div class="loader-box" style="height: 24px;margin: auto">' +
+            '<div class="loader-15"></div>' +
+            '</div>');;
+        $.ajax({
+          type: 'post',
+          url: $url,
+          data: 'payment_system_id=' + $payment_system,
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            $(".currencies-wrapper").html(data['html']);
+            if (data['status'] == 'good'){
+            //
+            }
+          }
+        });
+        
+      });
     });
   </script>
 @endpush

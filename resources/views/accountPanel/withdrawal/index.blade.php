@@ -7,7 +7,7 @@
       
       @if(!empty($wallets))
         <div class="row">
-          <div class="col-12">
+          {{--<div class="col-12">
             <div class="card">
               <div class="card-header">
                 <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Withdrawal request' contenteditable="true">{{ __('Withdrawal request') }}</editor_block> @else {{ __('Withdrawal request') }} @endif</h5>
@@ -72,9 +72,9 @@
                 </form>
               </div>
             </div>
-          </div>
+          </div>--}}
           
-         {{-- <div class="col-sm-12">
+          <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
                 <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='List of wallets' contenteditable="true">{{ __('List of wallets') }}</editor_block> @else {{ __('List of wallets') }} @endif</h5>
@@ -125,7 +125,7 @@
                 @endforelse
               </div>
             </div>
-          </div>--}}
+          </div>
         
         </div>
       @endif

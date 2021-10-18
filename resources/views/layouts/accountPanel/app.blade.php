@@ -86,7 +86,7 @@
   </head>
   <body class="{{--{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}--}}">
     
-    <div class="loader-wrapper">
+    {{--<div class="loader-wrapper">
       <div class="loader-index">
         <span></span>
       </div>
@@ -97,7 +97,7 @@
           <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
         </filter>
       </svg>
-    </div>
+    </div>--}}
     <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- tap on tap ends-->

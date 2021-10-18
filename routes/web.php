@@ -20,13 +20,23 @@ use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
 use App\Http\Controllers\IsoController;
+use App\Http\Controllers\Payment\CoinpaymentsController;
+use App\Http\Controllers\Payment\PerfectMoneyController;
+use App\Http\Controllers\TopupController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
+    
+    Route::post('/perfectmoney/status', 'Payment\PerfectMoneyController@status')->name('perfectmoney.status');
+    Route::post('/coinpayments/status', 'Payment\CoinpaymentsController@status')->name('coinpayments.status');
+    Route::get('/test', function (){
+       return view('accountPanel.ps.coinpayments');
+    });
     Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
+    Route::post('/ajax/get-paysystem-currencies', [ReplenishmentController::class, 'getPaySystemCurrencies'])->name('ajax.paysystem.currencies');
 
     Route::get('/', [\App\Http\Controllers\CustomerPagesController::class, 'homepage'])->name('customer.main');
     Route::get('/aboutus', [\App\Http\Controllers\CustomerPagesController::class, 'aboutUs'])->name('customer.aboutus');
@@ -82,8 +92,18 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
     
             Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
+            Route::post('/replenishment', [ReplenishmentController::class, 'handle'])->name('replenishment');
             Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
             Route::get('/replenishment/manual', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
+    
+            Route::get('/topup', [TopupController::class, 'index'])->name('topup');
+            Route::post('/topup', [TopupController::class, 'handle'])->name('topup');
+    
+            Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
+            Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
+    
+            Route::any('/topup/payment_message', 'Profile\TopupController@paymentMessage')->name('topup.payment_message');
+            
             
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
@@ -103,6 +123,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/deposits/set-reinvest', [DepositsController::class, 'setReinvestPercent' ])->name('deposits.set.reinvest');
             Route::post('/deposits/add-balance', [DepositsController::class, 'addBalance' ])->name('deposits.add.balance');
             Route::post('/deposits/upgrade', [DepositsController::class, 'upgrade' ])->name('deposits.upgrade');
+            
             
             
             Route::get('/ico', [IsoController::class, 'index' ])->name('ico');
