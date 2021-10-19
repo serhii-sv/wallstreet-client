@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.app-preloader')
+    {{--@include('layouts.app-preloader')--}}
 
     <div class="account-section bg_img" data-background="{{ asset('theme/images/about/account-bg.jpg') }}">
         <div class="container">
