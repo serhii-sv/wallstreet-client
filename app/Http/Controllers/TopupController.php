@@ -79,6 +79,6 @@ class TopupController extends Controller
             session()->flash('error', __('Can not update your balance'));
         }
 
-        return view('accountPanel.replenishment.topup');
+        return view('accountPanel.replenishment.index');
     }
 }
