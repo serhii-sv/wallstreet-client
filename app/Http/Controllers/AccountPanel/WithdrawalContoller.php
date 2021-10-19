@@ -25,7 +25,7 @@ class WithdrawalContoller extends Controller
             'currencies' => $currencies,
         ]);
     }
-    public function addWithdrawal(Request $request) {
+    /*public function addWithdrawal(Request $request) {
         $request->validate([
             'amount' => 'required',
             'wallet_id' => 'required|uuid',
@@ -79,8 +79,9 @@ class WithdrawalContoller extends Controller
             return redirect()->back()->with('error', 'Не удалось создать транзакцию!');
         }
         return back()->with('error', 'Недостаточно средств на счёте для выполнения данной операции!');
-    }
-    /*public function addWithdrawal(Request $request) {
+    }*/
+    
+    public function addWithdrawal(Request $request) {
         $request->validate([
             'amount' => 'required',
             'wallet_id' => 'required|uuid',
@@ -133,5 +134,5 @@ class WithdrawalContoller extends Controller
             return redirect()->back()->with('error', 'Не удалось создать транзакцию!');
         }
         return back()->with('error', 'Недостаточно средств на счёте для выполнения данной операции!');
-    }*/
+    }
 }
