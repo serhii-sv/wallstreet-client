@@ -18,7 +18,7 @@
   
   <div class="main--body">
   
-  @include('layouts.app-preloader')
+ {{-- @include('layouts.app-preloader')--}}
   
   <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')

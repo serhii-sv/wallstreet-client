@@ -13,7 +13,7 @@
   </head>
   <body class="body__index">
     @include('layouts.admin_edit_lang')
-    @include('partials.loader')
+   {{-- @include('partials.loader')--}}
     @include('layouts.logout')
     <div class="wrapper">
       <div class="page-content">

@@ -13,7 +13,7 @@
   <div class="main--body">
     
     <!--========== Preloader ==========-->
-  @include('layouts.app-preloader')
+  {{--@include('layouts.app-preloader')--}}
   <!--========== Preloader ==========-->
     
     <!--=======Header-Section Starts Here=======-->

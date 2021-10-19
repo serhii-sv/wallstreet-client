@@ -3,7 +3,7 @@
 @section('content')
   <div class="main--body">
     <!--========== Preloader ==========-->
-  @include('layouts.app-preloader')
+{{--  @include('layouts.app-preloader')--}}
   <!--========== Preloader ==========-->
 
 
