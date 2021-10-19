@@ -15,13 +15,13 @@
                 </a>
             </div>
             <div class="account-wrapper">
-                {{--<div class="account-header">
+                <div class="account-header">
                     <h4 class="title">Let's get started</h4>
-                    <a href="#0" class="sign-in-with"><img src="{{ asset('theme/images/icon/google.png') }}" alt="icon"><span>Sign Up with Google</span></a>
+                    <a href="{{ $google_auth_url }}" class="sign-in-with"><img src="{{ asset('theme/images/icon/google.png') }}" alt="icon"><span>Sign Up with Google</span></a>
                 </div>
                 <div class="or">
                     <span>OR</span>
-                </div>--}}
+                </div>
                 <div class="account-body">
                     <span class="d-block mb-20">Sign up with your work email</span>
                     <form method="POST" action="{{ route('register') }}" class="account-form">

@@ -48,6 +48,24 @@ class RegisterController extends Controller
     public function __construct() {
         $this->middleware('guest');
     }
+    
+    
+    public function showRegistrationForm(Request $request)
+    {
+        $params = array(
+            'client_id'     => env('GOOGLE_OAUTH_CLIENT_ID'),
+            'redirect_uri'  => env('APP_URL') ? env('APP_URL') . '/login' : 'http://localhost/login',
+            'response_type' => 'code',
+            'scope'         => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            'state'         => 'google_auth'
+        );
+        $google_auth_url = 'https://accounts.google.com/o/oauth2/auth?' . urldecode(http_build_query($params));
+        
+        return view('auth.register', [
+            'google_auth_url' => $google_auth_url,
+        ]);
+    }
+    
     /**
      * Get a validator for an incoming registration request.
      *

@@ -59,7 +59,7 @@
                 </div>
                 <div class="account-header pb-0">
                     <span class="d-block mb-30 mt-2">Sign up with your work email</span>
-                    <a href="#0" class="sign-in-with"><img src="{{ asset('theme/images/icon/google.png') }}" alt="icon"><span>Sign Up with Google</span></a>
+                    <a href="{{ $google_auth_url }}" class="sign-in-with"><img src="{{ asset('theme/images/icon/google.png') }}" alt="icon"><span>Sign Up with Google</span></a>
                     <span class="d-block mt-15">Don't have an account? <a href="{{ route('register') }}">Sign Up Here</a></span>
                 </div>
             </div>

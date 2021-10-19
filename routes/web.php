@@ -19,6 +19,7 @@ use App\Http\Controllers\AccountPanel\WithdrawalContoller;
 use App\Http\Controllers\Ajax\NotificationsController;
 use App\Http\Controllers\Ajax\UserThemeSettingController;
 use App\Http\Controllers\AccountPanel\ChatController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IsoController;
 use App\Http\Controllers\Payment\CoinpaymentsController;
 use App\Http\Controllers\Payment\PerfectMoneyController;
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
 
     Auth::routes();
+    Route::get('/auth/google', [LoginController::class, 'loginWithGoogle'])->name('login.google');
 
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
