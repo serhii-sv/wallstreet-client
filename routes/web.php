@@ -32,9 +32,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
     Route::post('/perfectmoney/status', [PerfectMoneyController::class,'status'])->name('perfectmoney.status');
     Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
-    Route::get('/test', function (){
-       return view('accountPanel.ps.coinpayments');
-    });
+
     Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
     Route::post('/ajax/get-paysystem-currencies', [ReplenishmentController::class, 'getPaySystemCurrencies'])->name('ajax.paysystem.currencies');
 
