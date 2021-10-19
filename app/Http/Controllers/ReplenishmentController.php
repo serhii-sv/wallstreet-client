@@ -124,4 +124,17 @@ class ReplenishmentController extends Controller
             'html' => 'Try choose any payment system',
         ]);
     }
+    
+    public function paymentMessage(Request $request)
+    {
+        if ($request->has('result') && $request->result == 'ok') {
+            session()->flash('success', __('Balance successfully updated'));
+        } elseif ($request->has('result') && $request->result == 'error') {
+            session()->flash('error', __('Can not update your balance'));
+        }
+        $payment_systems = PaymentSystem::all();
+        return view('accountPanel.replenishment.index',[
+            'payment_systems' => $payment_systems,
+        ]);
+    }
 }

@@ -22,7 +22,6 @@ use App\Http\Controllers\AccountPanel\ChatController;
 use App\Http\Controllers\IsoController;
 use App\Http\Controllers\Payment\CoinpaymentsController;
 use App\Http\Controllers\Payment\PerfectMoneyController;
-use App\Http\Controllers\TopupController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +96,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
     
-            Route::any('/topup/payment_message', [TopupController::class, 'paymentMessage'])->name('topup.payment_message');
+            Route::any('/topup/payment_message', [ReplenishmentController::class, 'paymentMessage'])->name('topup.payment_message');
             
             
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
