@@ -396,10 +396,14 @@
                 <div class="col-xl-4 col-md-6">
                   <div class="d-flex">
                     <div class="left-content">
-                      <p>Much More Selling product</p>
-                      <h4 class="f-w-600">Best Selling Product</h4>
-                      <span class="badge badge-white rounded-pill">78% offer</span>
-                      <span class="badge badge-dotted rounded-pill ms-2">Coupon Code : 12345</span>
+                      <p>@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Much More Selling product' contenteditable="true">{{ __('Much More Selling product') }}</editor_block> @else {{ __('Much More Selling product') }} @endif</p>
+                      <h4 class="f-w-600">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Best Selling Product' contenteditable="true">{{ __('Best Selling Product') }}</editor_block> @else {{ __('Best Selling Product') }} @endif</h4>
+                      <span class="badge badge-white rounded-pill">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='78% offer' contenteditable="true">{{ __('78% offer') }}</editor_block> @else {{ __('78% offer') }} @endif</span>
+                      <span class="badge badge-dotted rounded-pill ms-2">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Coupon Code : 12345' contenteditable="true">{{ __('Coupon Code : 12345') }}</editor_block> @else {{ __('Coupon Code : 12345') }} @endif</span>
                     </div>
                   </div>
                 </div>
@@ -410,9 +414,10 @@
                 <div class="col-xl-4 col-md-6">
                   <div class="d-flex">
                     <div class="right-content">
-                      <p>Money back Guarrantee</p>
-                      <h4 class="f-w-600">Women Straight Kurta</h4>
-                      <span class="badge badge-white rounded-pill">$100.00</span>
+                      <p>@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Money back Guarrantee' contenteditable="true">{{ __('Money back Guarrantee') }}</editor_block> @else {{ __('Money back Guarrantee') }} @endif</p>
+                      <h4 class="f-w-600">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Women Straight Kurta' contenteditable="true">{{ __('Women Straight Kurta') }}</editor_block> @else {{ __('Women Straight Kurta') }} @endif</h4>
+                      <span class="badge badge-white rounded-pill">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='$100.00' contenteditable="true">{{ __('$100.00') }}</editor_block> @else {{ __('$100.00') }} @endif</span>
                     </div>
                   </div>
                 </div>
