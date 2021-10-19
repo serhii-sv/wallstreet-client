@@ -73,7 +73,7 @@ class PerfectMoneyController extends Controller
         } elseif ($currency->code == 'EUR') {
             $payeeAccount = config('money.pm_payee_account_eur');
         } else {
-            return redirect()->route('accountPanel.topup')->with('error', __('Wrong currency'));
+            return redirect()->route('accountPanel.replenishment')->with('error', __('Wrong currency'));
         }
 
         $payeeName   = config('money.pm_payee_name');

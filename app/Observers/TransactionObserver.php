@@ -35,6 +35,7 @@ class TransactionObserver
                 $item->save();
             }
         }
+       // if ($transaction->type_id == TransactionType::getByName('enter')->id && $transaction->approved == true){
         if ($transaction->type_id == TransactionType::getByName('enter')->id && $transaction->approved == true){
             $replenishments_amount = UserSidebarProperties::where('sb_prop','replenishments_amount')->get();
             foreach ($replenishments_amount as $item) {
