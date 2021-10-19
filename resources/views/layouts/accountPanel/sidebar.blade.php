@@ -79,10 +79,40 @@
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+          {{--  <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.referrals') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
               <i data-feather="users"></i>
               <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
+            </a>--}}
+  
+            <a class="sidebar-link sidebar-title" href="#">
+              <i data-feather="users"></i>
+              <span class="lan-6" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
             </a>
+            <ul class="sidebar-submenu">
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.referrals.progress') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Progress' contenteditable="true">{{ __('Progress') }}</editor_block> @else {{ __('Progress') }} @endif</span>
+                </a>
+              </li>
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.referrals.banners') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Banners' contenteditable="true">{{ __('Banners') }}</editor_block> @else {{ __('Banners') }} @endif</span>
+                </a>
+              </li>
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.referrals.reftree') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block> @else {{ __('Referral tree') }} @endif</span>
+                </a>
+              </li>
+            </ul>
+            
+            
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}

@@ -80,7 +80,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/dashboard/send-money', [DashboardController::class, 'sendMoney'])->name('dashboard.send.money');
             Route::post('/dashboard/store-user-video', [DashboardController::class, 'storeUserVideo'])->name('dashboard.store.user.video');
 
-            Route::get('/referrals', [ReferralsController::class, 'index'])->name('referrals');
+            Route::get('/referrals/progress', [ReferralsController::class, 'index'])->name('referrals.progress');
+            Route::get('/referrals/banners', [ReferralsController::class, 'banners'])->name('referrals.banners');
+            Route::get('/referrals/reftree', [ReferralsController::class, 'reftree'])->name('referrals.reftree');
 
             Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
