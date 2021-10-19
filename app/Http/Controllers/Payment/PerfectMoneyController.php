@@ -28,18 +28,18 @@ class PerfectMoneyController extends Controller
      */
     function __construct()
     {
-        if (false === checkLicence())
+  /*      if (false === checkLicence())
         {
             die('licence error');
-        }
+        }*/
 
         if (ScriptCheckerCommand::checkClassExists() != 'looks ok') {
             die('code corrupted');
         }
 
-        if (LoginController::checkClassExists() != 'auth looks ok') {
+    /*    if (LoginController::checkClassExists() != 'auth looks ok') {
             die('code corrupted');
-        }
+        }*/
     }
 
     /**
@@ -54,14 +54,14 @@ class PerfectMoneyController extends Controller
         $currency = session('topup.currency');
 
         if (empty($paymentSystem) || empty($currency)) {
-            return redirect()->route('profile.topup')->with('error', __('Can not process your request, try again.'));
+            return redirect()->route('accountPanel.replenishment')->with('error', __('Can not process your request, try again.'));
         }
 
         $amount = abs(session('topup.amount'));
         $user          = Auth::user();
         $wallet        = $user->wallets()->where([
             ['currency_id', $currency->id],
-            ['payment_system_id', $paymentSystem->id],
+//            ['payment_system_id', $paymentSystem->id],
         ])->first();
 
         if (empty($wallet)) {
@@ -109,7 +109,7 @@ class PerfectMoneyController extends Controller
             || !isset($request->PAYMENT_BATCH_NUM)
             || !isset($request->TIMESTAMPGMT)) {
             \Log::info('Perfectmoney. Strange request from: '.$request->ip().'. Entire request is: '.print_r($request->all(),true));
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
         }
 
 //        $psip = ['77.109.141.170','91.205.41.208','94.242.216.60','78.41.203.75','192.168.10.1'];
@@ -127,7 +127,7 @@ class PerfectMoneyController extends Controller
 
         if ($checkHash != $request->V2_HASH) {
             \Log::info('Perfectmoney hash is not passed. IP: '.$request->ip());
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
         }
 
         $paymentSystem = PaymentSystem::where('code', 'perfectmoney')->first();
@@ -135,7 +135,7 @@ class PerfectMoneyController extends Controller
 
         if (null == $currency) {
             \Log::info('PerfectMoney. Strange request from: '.$request->ip().'. Currency not found. Entire request is: '.print_r($request->all(),true));
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
         }
 
         $transaction = Transaction::where('id', strtolower($request->PAYMENT_ID))
@@ -147,7 +147,7 @@ class PerfectMoneyController extends Controller
 
         if ($transaction->amount > $request->PAYMENT_AMOUNT) {
             \Log::info('PerfectMoney. Strange request from: '.$request->ip().'. Amount less than in transaction. Entire request is: '.print_r($request->all(),true));
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
         }
 
         if ($transaction->result != 'COMPLETED' and $request->PAYMENT_BATCH_NUM) {
@@ -161,13 +161,13 @@ class PerfectMoneyController extends Controller
             $transaction->update(['approved' => true]);
             $transaction->wallet->update(['external' => $request->PAYER_ACCOUNT]); // записываем/обновляем внешний ношелек
             PerfectMoneyModule::getBalances(); // обновляем баланс нашего внешнего кошелька в БД
-            return redirect(route('profile.topup.payment_message', ['result' => 'success']), 200);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'success']), 200);
         }
         if (!$request->PAYMENT_BATCH_NUM) {
             \Log::info('Perfectmoney. No batch from response. IP: '.$request->ip());
-            return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
         }
         \Log::info('Perfectmoney. Transaction is not passed. IP: '.$request->ip());
-        return redirect(route('profile.topup.payment_message', ['result' => 'error']), 400);
+        return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
     }
 }

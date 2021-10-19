@@ -25,16 +25,16 @@
                     <div class="f1-step-icon"><i class="fa fa-user"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
-                      @else {{ __('Payment system') }} @endif
+                        <editor_block data-name='Method of replenishment' contenteditable="true">{{ __('Method of replenishment') }}</editor_block>
+                      @else {{ __('Method of replenishment') }} @endif
                     </p>
                   </div>
                   <div class="f1-step">
                     <div class="f1-step-icon"><i class="fa fa-key"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Currency' contenteditable="true">{{ __('Currency') }}</editor_block>
-                      @else {{ __('Currency') }} @endif
+                        <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                      @else {{ __('Amount') }} @endif
                     </p>
                   </div>
                 </div>
@@ -43,14 +43,27 @@
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
                       
-                      <label class="d-flex flex-column align-items-center justify-content-center">
-                        <input class="payment-system-radio" type="radio" name="payment_system" required value="{{ $item->id }}" @if($item->code == 'perfectmoney' || $item->code == 'coinpayments') data-amount="true" @else data-amoint="false" @endif>
-                        <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                          <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
-                          <span>{{ $item->name }}</span>
-                        </div>
-                      </label>
-                    
+                      @if($item->code == 'coinpayments')
+                        @foreach($item->currencies()->get() as $currency)
+                          <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" >
+                            <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-manual="false">
+                            <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
+                              <img src="{{ asset('accountPanel/images/logos/' .  $currency->image ) }}" alt="{{ $currency->image_alt }}" title="{{ $currency->image_title }}">
+                              <span>{{ $currency->name }}</span>
+                            </div>
+                            <input class="payment-system-radio" type="radio" name="currency" value="{{ $currency->id }}">
+                          </label>
+                        @endforeach
+                      @else
+                        <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" >
+                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
+                          <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
+                            <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
+                            <span>{{ $item->name }}</span>
+                          </div>
+                        </label>
+                      @endif
+                      
                     @empty
                     @endforelse
                   </div>
@@ -72,18 +85,18 @@
                   </div>
                 </fieldset>
                 <fieldset style="display: none;">
-                  <div class="mb-3 d-flex flex-wrap currencies-wrapper">
-                    @forelse($currencies as $item)
-                      <label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
-                        <input class="payment-system-radio" type="radio" name="currency" value="{{ $item->id }}" required>
-                        <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                          <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
-                          <span>{{ $item->name }}</span>
-                        </div>
-                      </label>
-                    @empty
-                    @endforelse
-                  </div>
+                  {{--   <div class="mb-3 d-flex flex-wrap currencies-wrapper">
+                       @forelse($currencies as $item)
+                         <label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
+                           <input class="payment-system-radio" type="radio" name="currency" value="{{ $item->id }}" required>
+                           <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
+                             <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
+                             <span>{{ $item->name }}</span>
+                           </div>
+                         </label>
+                       @empty
+                       @endforelse
+                     </div>--}}
                   <div class="text-center mb-3">
                     <label class="">Amount</label>
                     <input class="form-control input-air-primary text-center" type="text" name="amount">
@@ -99,6 +112,7 @@
                   </div>
                 </fieldset>
               </form>
+              
             </div>
           </div>
         </div>
@@ -161,29 +175,21 @@
   <script src="{{ asset('accountPanel/js/form-wizard/form-wizard-three.js') }}"></script>
   <script>
     $(document).ready(function () {
-      $(".payment-system-radio").on('change', function (el) {
-        $(".currencies-wrapper").find('.currency-wrapper-item').remove();
-        var $url = "{{ route('ajax.paysystem.currencies') }}";
-        var $payment_system = $(this).val();
-        $('.currencies-wrapper').html('<div class="loader-box" style="height: 24px;margin: auto">' +
-            '<div class="loader-15"></div>' +
-            '</div>');;
-        $.ajax({
-          type: 'post',
-          url: $url,
-          data: 'payment_system_id=' + $payment_system,
-          headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-          },
-          success: function (data) {
-            data = $.parseJSON(data);
-            console.log(data);
-            $(".currencies-wrapper").html(data['html']);
-            if (data['status'] == 'good'){
-            //
-            }
-          }
+      $(".replenishment-method-item").on('click', function () {
+        $("input[name='currency']").each(function (i,el) {
+          $(el).prop('checked', false).removeAttr('checked');
         });
+        $(this).find("input[name='currency']").prop('checked', true).attr('checked', 'checked');
+      });
+      $(".btn-next").on('click', function (e) {
+      
+        var manual = $("input[name='payment_system']:checked").attr('data-manual');
+        if (manual == 'true'){
+          $(".item-list-wrapper").empty().html('<div class="loader-box" style="height: 24px; margin: 50px auto 30px">' +
+              '<div class="loader-3"></div>' +
+              '</div>');
+          location.href = "{{ route('accountPanel.replenishment.manual') }}";
+        }
         
       });
     });

@@ -12,27 +12,34 @@ class ReplenishmentController extends Controller
     //
     public function index() {
         $payment_systems = PaymentSystem::all();
-        $currencies = Currency::all();
+        //  $currencies = Currency::all();
         return view('accountPanel.replenishment.index', [
             'payment_systems' => $payment_systems,
-            'currencies' => $currencies,
         ]);
     }
     
     public function handle(RequestTopup $request) {
-        $extractCurrency = explode(':', $request->currency);
+        $paymentSystemId = $request->get('payment_system');
+        $currencyId = $request->get('currency');
+        //$extractCurrency = explode(':', $request->currency);
         
-        if (count($extractCurrency) != 1) {
+        /*if (count($extractCurrency) != 1) {
             return back()->with('error', __('Unable to read data from request'))->withInput();
-        }
+        }*/
         
-        $paymentSystem = PaymentSystem::where('id', $extractCurrency[0])->first();
+        //$paymentSystem = PaymentSystem::where('id', $extractCurrency[0])->first();
+        $paymentSystem = PaymentSystem::where('id', $paymentSystemId)->first();
         
         if (empty($paymentSystem)) {
             return back()->with('error', __('Undefined payment system'))->withInput();
         }
-        
-        $currency = $paymentSystem->currencies()->where('id', $extractCurrency[1])->first();
+        if ($currencyId) {
+            $currency = Currency::where('id', $currencyId)->first();
+        } else{
+            if ($paymentSystem->code == 'perfectmoney') {
+                $currency = Currency::where('code', 'USD')->first();
+            }
+        }
         
         if (empty($currency)) {
             return back()->with('error', __('Undefined currency'))->withInput();
@@ -53,9 +60,10 @@ class ReplenishmentController extends Controller
     
     public function newRequest(Request $request) {
         $request->validate([
-            'currency' => 'required|uuid',
+            'currency' => 'uuid',
             'payment_system' => 'required|uuid',
         ]);
+        dd($request->all());
         $currency = Currency::where('id', $request->get('currency'))->first();
         $payment_system = PaymentSystem::where('id', $request->get('payment_system'))->first();
         if ($currency === null) {
@@ -84,7 +92,7 @@ class ReplenishmentController extends Controller
             $payment_system = PaymentSystem::find($payment_system_id);
             if ($payment_system !== null) {
                 $currencies = $payment_system->currencies()->get();
-                if ($currencies === null){
+                if ($currencies === null) {
                     return json_encode([
                         'status' => 'bad',
                         'html' => 'Try choose any payment system',
@@ -94,8 +102,8 @@ class ReplenishmentController extends Controller
                     $html[] = '<label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
                         <input class="payment-system-radio" type="radio" name="currency" value="{{ $item->id }}" required>
                         <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                          <img src="' . asset("accountPanel/images/logos/" . $currency->image) . '" alt="' . $currency->image_alt . '" title="'. $currency->image_title .'">
-                          <span>'. $currency->name .'</span>
+                          <img src="' . asset("accountPanel/images/logos/" . $currency->image) . '" alt="' . $currency->image_alt . '" title="' . $currency->image_title . '">
+                          <span>' . $currency->name . '</span>
                         </div>
                       </label>';;
                 }

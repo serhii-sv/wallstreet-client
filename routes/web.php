@@ -30,8 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
-    Route::post('/perfectmoney/status', 'Payment\PerfectMoneyController@status')->name('perfectmoney.status');
-    Route::post('/coinpayments/status', 'Payment\CoinpaymentsController@status')->name('coinpayments.status');
+    Route::post('/perfectmoney/status', [PerfectMoneyController::class,'status'])->name('perfectmoney.status');
+    Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
     Route::get('/test', function (){
        return view('accountPanel.ps.coinpayments');
     });
@@ -93,16 +93,13 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
             Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
             Route::post('/replenishment', [ReplenishmentController::class, 'handle'])->name('replenishment');
-            Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
+            //Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
             Route::get('/replenishment/manual', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
-    
-            Route::get('/topup', [TopupController::class, 'index'])->name('topup');
-            Route::post('/topup', [TopupController::class, 'handle'])->name('topup');
-    
+            
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
     
-            Route::any('/topup/payment_message', 'Profile\TopupController@paymentMessage')->name('topup.payment_message');
+            Route::any('/topup/payment_message', [TopupController::class, 'paymentMessage'])->name('topup.payment_message');
             
             
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');

@@ -37,7 +37,7 @@ class RequestTopup extends FormRequest
     {
         return [
             'payment_system' => 'required|uuid',
-            'currency' => 'required|uuid',
+            'currency' => 'uuid',
             'amount'   => 'required|regex:/^\d*(\.\d{1,8})?$/|min:0.00000001',
         ];
     }

@@ -33,14 +33,14 @@ class CoinpaymentsController extends Controller
         $currency = session('topup.currency');
 
         if (empty($paymentSystem) || empty($currency)) {
-            return redirect()->route('profile.topup')->with('error', __('Can not process your request, try again.'));
+            return redirect()->route('accountPanel.replenishment')->with('error', __('Can not process your request, try again.'));
         }
 
         $amount = abs(session('topup.amount'));
         $user          = Auth::user();
         $wallet        = $user->wallets()->where([
             ['currency_id', $currency->id],
-            ['payment_system_id', $paymentSystem->id],
+//            ['payment_system_id', $paymentSystem->id],
         ])->first();
 
         if (empty($wallet)) {
@@ -52,7 +52,7 @@ class CoinpaymentsController extends Controller
         try {
             $topupTransaction = CoinpaymentsModule::createTopupTransaction($transaction);
         } catch (\Exception $e) {
-            return redirect()->route('profile.topup')->with('error', $e->getMessage());
+            return redirect()->route('accountPanel.replenishment')->with('error', $e->getMessage());
         }
 
         return view('accountPanel.ps.coinpayments', [
