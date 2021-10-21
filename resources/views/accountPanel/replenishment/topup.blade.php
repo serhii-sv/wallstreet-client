@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Balance'))
+@section('title', strtoupper(__('Balance')))
 @section('content')
 <section class="lk-section">
     <div class="form-lk">
