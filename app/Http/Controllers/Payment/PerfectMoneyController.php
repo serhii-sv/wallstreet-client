@@ -47,6 +47,8 @@ class PerfectMoneyController extends Controller
      */
     public function topUp()
     {
+        \Log::debug('PerfectMoney topup: '.print_r(request()->all(),true));
+
         /** @var PaymentSystem $paymentSystem */
         $paymentSystem = session('topup.payment_system');
 
@@ -102,14 +104,16 @@ class PerfectMoneyController extends Controller
      */
     public function status(Request $request)
     {
+        \Log::debug('PerfectMoney status: '.print_r($request->all(),true));
+
         if (!isset($request->PAYMENT_ID)
             || !isset($request->PAYEE_ACCOUNT)
             || !isset($request->PAYMENT_AMOUNT)
             || !isset($request->PAYMENT_UNITS)
             || !isset($request->PAYMENT_BATCH_NUM)
             || !isset($request->TIMESTAMPGMT)) {
-            \Log::info('Perfectmoney. Strange request from: '.$request->ip().'. Entire request is: '.print_r($request->all(),true));
-            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']), 400);
+            \Log::critical('Perfectmoney. Strange request from: '.$request->ip().'. Entire request is: '.print_r($request->all(),true));
+            return redirect(route('accountPanel.topup.payment_message', ['result' => 'error']));
         }
 
 //        $psip = ['77.109.141.170','91.205.41.208','94.242.216.60','78.41.203.75','192.168.10.1'];
