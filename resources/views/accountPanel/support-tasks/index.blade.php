@@ -7,7 +7,7 @@
 @section('style')
 @endsection
 
-@section('title', __('Support tasks'))
+@section('title', strtoupper(__('Support tasks')))
 
 @section('content')
     <div class="container-fluid">

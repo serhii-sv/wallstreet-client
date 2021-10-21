@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', 'Настройки безопасности')
+@section('title', strtoupper('Настройки безопасности'))
 @section('content')
   <div class="container-fluid">
     <div class="edit-profile">
@@ -82,7 +82,7 @@
     $(document).ready(() => {
       $("#password_save").click((e) => {
         e.preventDefault();
-        
+
         $.ajax({
           url: "{{route('accountPanel.settings.setPassword')}}",
           type: 'post',
@@ -106,7 +106,7 @@
                   exit: 'animated fadeOutUp'
                 }
               });
-              
+
               $('#password_field').val('');
               $('#password_old_field').val('');
             } else {
@@ -125,20 +125,20 @@
           },
         })
       });
-      
+
       $("#ffa_save").click((e) => {
         e.preventDefault();
-        
+
         $.ajax({
           url: "{{route('accountPanel.settings.set2FA')}}",
           type: 'post',
           data: 'ffa_field=' + $('#ffa_field').is(':checked'),
           success: (response) => {
             console.log(response);
-            
+
             if (response.result === 'redirect')
               window.location.replace(response.to);
-            
+
             $.notify('<i class="fa fa-bell-o"></i><strong>Данные обновлены</strong> 2FA был изменен', {
               type: 'theme',
               allow_dismiss: true,

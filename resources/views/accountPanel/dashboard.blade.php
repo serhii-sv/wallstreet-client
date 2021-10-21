@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Dashboard'))
+@section('title', strtoupper(__('Dashboard')))
 @push('styles')
   <style>
       .dashboard-video-list {
@@ -13,7 +13,7 @@
   </style>
 @endpush
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 xl-100 dashboard-sec box-col-12">
@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row second-chart-list third-news-update">
       <div class="col-12">
         @if(!empty($wallets))
@@ -144,7 +144,7 @@
           </div>
         @endif
       </div>
-      
+
       <div class="col-xl-12 xl-100 box-col-12">
         <div class="row">
           <div class="col-xl-12">
@@ -231,7 +231,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-6 appointment">
         <div class="card">
           <div class="card-header">
@@ -248,7 +248,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-6">
         <div class="card">
           <div class="card-header pb-3">
@@ -307,7 +307,7 @@
                       <form method="post" action="{{ route('accountPanel.dashboard.store.user.video') }}">
                         @csrf
                         <div class="input-group mb-4">
-                          
+
                           <span class="input-group-text"><i class="icofont icofont-link"></i></span>
                           <input class="form-control" name="video" value="{{ old('video') ?? '' }}" type="text" placeholder="Ссылка на видео" aria-label="">
                         </div>
@@ -316,16 +316,16 @@
                           @else {{ __('Send') }}@endif</button>
                       </form>
                     </div>
-                  
+
                   </div>
-                
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-6 risk-col ">
         <div class="card total-users">
           <div class="card-header card-no-border pb-3 pt-3">
@@ -370,7 +370,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-6 risk-col ">
         <div class="card height-equal" style="min-height: 331px;">
           <div class="card-header">
@@ -426,7 +426,7 @@
           </div>
         </div>
       </div>
-      
+
       {{--@if($banners !== null)
         <div class="row mb-4">
           <div class="col">
@@ -599,15 +599,15 @@
 @endsection
 
 @push('scripts')
-  
+
   <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
   <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
   <script>
     $(document).ready(function () {
       $(".form-control-inverse-fill").select2();
     });
-    
-    
+
+
     $(".send-money-to-user-btn").on('click', function (e) {
       e.preventDefault();
       swal({
@@ -721,7 +721,7 @@
           },
         },
       };
-      
+
       var chart = new ApexCharts(document.querySelector("#chart-currently"), options);
       chart.render();
     });
@@ -791,13 +791,13 @@
                 fill: {
                   colors: ['#fcf8ff', '#f7eeff']
                 },
-                
+
               }
             },
-            
+
           },
           colors: [CubaAdminConfig.primary],
-          
+
           markers: {
             size: 6,
             colors: ['#fff'],
@@ -830,14 +830,14 @@
             }
           }
         }
-        
+
         var chart1 = new ApexCharts(
             document.querySelector("#marketchart"),
             options1
         );
-        
+
         chart1.render();
-        
+
       });
     </script>
   @endif

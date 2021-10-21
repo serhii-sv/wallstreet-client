@@ -1,11 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Create deposit'))
+@section('title', strtoupper(__('Create deposit')))
 
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
-      
+
       @if(!empty($rates))
         <div class="row">
           <div class="card height-equal">
@@ -25,7 +25,7 @@
               <div class="mb-3">
                 @include('partials.inform')
               </div>
-              
+
               <div class="tab-content" id="pills-darktabContent">
                 @forelse($deposit_groups as $group)
                   <div class="tab-pane fade @if($loop->first) active show @endif" id="pills-{{ $group->id }}" role="tabpanel" aria-labelledby="pills-{{ $group->id }}-tab">
@@ -220,10 +220,10 @@
               </div>
             </div>
           </div>
-          
+
         </div>
       @endif
-    
+
     </div>
   </div>
 @endsection
@@ -237,7 +237,7 @@
   <script>
     $(document).ready(function () {
       $(".form-control-inverse-fill").select2();
-      
+
       $(".create-deposit-btn").on('click', function (e) {
         e.preventDefault();
         swal({
@@ -257,8 +257,8 @@
           }
         });
       });
-      
-      
+
+
     });
   </script>
   <script>
@@ -303,12 +303,12 @@
           },
           success: function success(data) {
             var $data = $.parseJSON(data);
-       
+
             $(".rate-min-max-block[data-rate='" + $rate_id + "']").html($data['rate_min_max']);
-     
+
           }
         });
-        
+
       });
     });
   </script>

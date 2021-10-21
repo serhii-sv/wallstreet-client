@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Все депозиты'))
+@section('title', strtoupper(__('Все депозиты')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       <div class="card">
@@ -129,12 +129,12 @@
           </div>
         </div>
       </div>
-      
-      
+
+
       <div>
         {{ $deposits->appends(request()->except('page'))->links() }}
       </div>
-    
+
     </div>
   </div>
 @endsection
@@ -145,6 +145,6 @@
   <script src="{{ asset('accountPanel/js/range-slider/ion.rangeSlider.min.js') }}"></script>
   <script src="{{ asset('accountPanel/js/range-slider/rangeslider-script.js') }}"></script>
   <script>
-  
+
   </script>
 @endpush

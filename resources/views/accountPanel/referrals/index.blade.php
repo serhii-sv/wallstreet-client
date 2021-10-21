@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Все рефералы'))
+@section('title', strtoupper(__('Все рефералы')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       @include('partials.inform')
@@ -69,7 +69,7 @@
                   <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Share your referral link on social media' contenteditable="true">{{ __('Share your referral link on social media') }}</editor_block> @else {{ __('Share your referral link on social media') }} @endif</h5>
                   <script src="https://yastatic.net/share2/share.js"></script>
                   <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
-                
+
                 </div>
                 <div class="follow">
                   <div class="row">
@@ -88,8 +88,8 @@
           </div>
         </div>
       </div>
-      
-      
+
+
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -156,6 +156,6 @@
 @endsection
 @push('scripts')
   <script>
-  
+
   </script>
 @endpush
