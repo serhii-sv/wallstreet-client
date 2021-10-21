@@ -32,7 +32,9 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
     Route::get('/banner/{id}', [ReferralsController::class, 'getBanner'])->name('get.banner');
 
-    Route::post('/perfectmoney/status', [PerfectMoneyController::class,'status'])->name('perfectmoney.status');
+    Route::post('/perfectmoney/status', function() {
+        return 'ko';
+    })->name('perfectmoney.status');
     Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 
     Route::post('/ajax/change-lang', [\App\Http\Controllers\Ajax\TranslationController::class, 'changeLang'])->name('ajax.change.lang');
@@ -105,10 +107,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
 
-            // [ReplenishmentController::class, 'paymentMessage']
-            Route::any('/topup/payment_message', function() {
-                return 'ok';
-            })->name('topup.payment_message');
+            Route::any('/topup/payment_message', [ReplenishmentController::class, 'paymentMessage'])->name('topup.payment_message');
 
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
