@@ -82,6 +82,8 @@ class PerfectMoneyController extends Controller
         $transaction = Transaction::enter($wallet, $amount, $paymentSystem->id);
         $comment     = config('money.pm_memo');
 
+        die('okokok');
+
         return view('accountPanel.ps.perfectmoney', [
             'currency' => $currency->code,
             'amount' => $amount,
