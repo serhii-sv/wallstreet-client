@@ -11,16 +11,20 @@ use App\Models\Banner;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\News;
+use App\Models\PaymentSystem;
 use App\Models\Rate;
 use App\Models\RateGroup;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class CustomerPagesController extends Controller
 {
     public function aboutUs() {
+        $paymentSystems = PaymentSystem::with('currencies')->get();
+        
         //$texts = Storage::disk('lang')->exists($lang . '.json') ? json_decode(Storage::disk('lang')->get($lang . '.json'), true) : [];
-        return view('customer.aboutus');
+        return view('customer.aboutus', ['paymentSystems' => $paymentSystems]);
     }
     
     public function agreement() {

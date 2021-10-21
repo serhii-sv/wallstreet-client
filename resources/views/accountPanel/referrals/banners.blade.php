@@ -13,7 +13,8 @@
             @forelse($banners as $banner)
               <div class="mb-3">
               @if($banner->image)
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($banner->image) }}" width="{{ $banner->getWidth() ?? 0 }}" height="{{ $banner->getHeight() ?? 0 }}">
+                @dump( route('get.banner', $banner->id))
+                <img src="{{ route('get.banner', $banner->id) }}" width="{{ $banner->getWidth() ?? 0 }}" height="{{ $banner->getHeight() ?? 0 }}">
               @endif
               </div>
             @empty

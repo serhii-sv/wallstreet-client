@@ -105,7 +105,7 @@
               </li>
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="" href="{{ route('accountPanel.referrals.reftree') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a class="" href="{{ route('accountPanel.referrals.tree') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="user"></i>
                   <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral tree' contenteditable="true">{{ __('Referral tree') }}</editor_block> @else {{ __('Referral tree') }} @endif</span>
                 </a>

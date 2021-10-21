@@ -98,8 +98,8 @@
                        @endforelse
                      </div>--}}
                   <div class="text-center mb-3">
-                    <label class="">Amount</label>
-                    <input class="form-control input-air-primary text-center" type="text" name="amount">
+                    <label class="" style="font-size: 20px;">Amount</label>
+                    <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin: auto">
                   </div>
                   
                   <div class="f1-buttons">

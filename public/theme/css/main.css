@@ -8319,3 +8319,11 @@ body *::-webkit-scrollbar-track {
     border-radius: 25px 25px 0 0;
     max-width: 100%;
 }
+
+.about-us-payment-system-wrapper{
+    margin: 0 -10px;
+}
+.about-us-payment-systems{
+    margin: 0 10px;
+    width: calc((100% / 6) - 24px);
+}

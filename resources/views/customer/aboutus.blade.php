@@ -26,7 +26,7 @@
     
     <div class="main--body section-bg">
       <!--========== Preloader ==========-->
-    @include('layouts.app-preloader')
+ {{--   @include('layouts.app-preloader')--}}
     <!--========== Preloader ==========-->
       
       

@@ -100,7 +100,6 @@ class ProfileController extends Controller
             DB::transaction(function () use ($newName, $file, $folder_id) {
                 if (!is_null($folder_id)) {
                     $folder = CloudFileFolder::findOrFail($folder_id);
-                    
                     $upload = Storage::disk('do_spaces')->putFileAs($folder->folder_name, $file, $newName);
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
