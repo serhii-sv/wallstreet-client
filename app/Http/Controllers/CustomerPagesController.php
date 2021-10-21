@@ -22,23 +22,23 @@ class CustomerPagesController extends Controller
 {
     public function aboutUs() {
         $paymentSystems = PaymentSystem::with('currencies')->get();
-        
+
         //$texts = Storage::disk('lang')->exists($lang . '.json') ? json_decode(Storage::disk('lang')->get($lang . '.json'), true) : [];
         return view('customer.aboutus', ['paymentSystems' => $paymentSystems]);
     }
-    
+
     public function agreement() {
         return view('customer.agreement');
     }
-    
+
     public function contacts() {
         return view('customer.contact');
     }
-    
+
     public function documents() {
         return view('customer.documents');
     }
-    
+
     public function faq() {
         $lang_code = session()->get('lang');
         if ($lang_code !== null) {
@@ -55,33 +55,33 @@ class CustomerPagesController extends Controller
             'faqs' => $faqs,
         ]);
     }
-    
+
     public function investors() {
         return view('customer.investors');
     }
-    
+
     public function homepage() {
         $rate_groups = RateGroup::all();
-        $rates = Rate::all();
+        $rates = Rate::orderBy('min')->all();
         return view('customer.main', [
             'rate_groups' => $rate_groups,
             'rates' => $rates,
-          
+
         ]);
     }
-    
+
     public function partners() {
         return view('customer.partners');
     }
-    
+
     public function payout() {
         return view('customer.payout');
     }
-    
+
     public function reviews() {
         return view('customer.reviews');
     }
-    
+
     public function news($id = null) {
         if ($id) {
             $news = News::where('id', $id)->firstOrFail();
