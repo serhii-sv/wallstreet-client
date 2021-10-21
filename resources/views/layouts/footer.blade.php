@@ -6,7 +6,7 @@
       </div>
     </section>
     <div class="main-line container">
-      <a class="main-line__logo" href="index.html"><img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="80" alt=""></a>
+      <a class="main-line__logo" href="{{ route('customer.main') }}"><img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="80" alt=""></a>
       <p class="main-line__slogan">Energy of Cryptocurrency
       </p>
       <!-- <div class="main-line__call"><a class="main-line__phone" href="tel:+121232233456">+12 123 223-34-56 </a>

@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
+    Route::get('/banner/{id}', [ReferralsController::class, 'getBanner'])->name('get.banner');
+    
     Route::post('/perfectmoney/status', [PerfectMoneyController::class,'status'])->name('perfectmoney.status');
     Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 
@@ -82,7 +84,10 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/referrals/progress', [ReferralsController::class, 'index'])->name('referrals.progress');
             Route::get('/referrals/banners', [ReferralsController::class, 'banners'])->name('referrals.banners');
-            Route::get('/referrals/reftree', [ReferralsController::class, 'reftree'])->name('referrals.reftree');
+            Route::get('/referrals/reftree/{id?}', [ReferralsController::class, 'reftree'])->name('referrals.reftree');
+            Route::get('/referrals/tree', [ReferralsController::class, 'treePage'])->name('referrals.tree');
+            
+            
 
             Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
