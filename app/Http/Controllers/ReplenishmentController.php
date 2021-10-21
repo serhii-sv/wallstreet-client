@@ -127,7 +127,6 @@ class ReplenishmentController extends Controller
 
     public function paymentMessage(Request $request)
     {
-        die('ok');
         if ($request->has('result') && $request->result == 'ok') {
             session()->flash('success', __('Balance successfully updated'));
         } elseif ($request->has('result') && $request->result == 'error') {

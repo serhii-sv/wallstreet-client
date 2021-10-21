@@ -107,7 +107,6 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::any('/topup/payment_message', [ReplenishmentController::class, 'paymentMessage'])->name('topup.payment_message');
 
-
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
             Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
