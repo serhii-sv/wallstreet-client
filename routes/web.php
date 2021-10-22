@@ -31,8 +31,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->name('perfectmoney.status');
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 
-Route::any('/topup/payment_message', [ReplenishmentController::class, 'paymentMessage'])->name('topup.payment_message');
-
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
     Route::get('/banner/{id}', [ReferralsController::class, 'getBanner'])->name('get.banner');
@@ -74,6 +72,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
         Route::post('/ajax/notification/status/read', [NotificationsController::class, 'setReadStatus'])->name('ajax.notification.status.read');
         Route::post('/ajax/get/rate-min-max', [DepositsController::class, 'getRateMinMax'])->name('ajax.get.rate.min.max');
 
+        Route::any('/payment_message/{status}', [\App\Http\Controllers\PaymentMessageController::class, 'message'])->name('payment_message');
 
         Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
 
