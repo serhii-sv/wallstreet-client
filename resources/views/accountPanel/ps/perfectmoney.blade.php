@@ -8,10 +8,10 @@
   <input type="hidden" name="PAYMENT_UNITS" value="{{ $currency }}">
   <input type="hidden" name="STATUS_URL" value="{{ $statusUrl }}">
   <input type="hidden" name="PAYMENT_URL"
-      value="{{ route('topup.payment_message', ['result' => 'ok']) }}">
+      value="https://sprintbank.us/ok">
   <input type="hidden" name="PAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="NOPAYMENT_URL"
-      value="{{ route('topup.payment_message', ['result' => 'error']) }}">
+      value="https://sprintbank.us/err">
   <input type="hidden" name="NOPAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="SUGGESTED_MEMO" value="{{ $comment }}">
 
