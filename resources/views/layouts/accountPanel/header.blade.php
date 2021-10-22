@@ -197,14 +197,14 @@
             
             @if(canEditLang() && checkRequestOnEdit())
               <li>
-                <a href="{{ url()->current() }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a href="{{ url()->current() }}">
                   <i data-feather="edit-3"></i>
                   <span>{{ __('Default mode') }}</span>
                 </a>
               </li>
             @elseif(canEditLang())
               <li>
-                <a href="{{ url()->current() . '?edit=true' }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a href="{{ url()->current() . '?edit=true' }}" >
                   <i data-feather="edit-3"></i>
                   <span>{{ __('Edit text') }}</span>
                 </a>
