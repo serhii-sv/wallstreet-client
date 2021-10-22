@@ -4,12 +4,10 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\WebSocketController;
 use Illuminate\Console\Command;
-use Ratchet\App;
 use Ratchet\Http\HttpServer;
-use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
-use React\Socket\SecureServer;
-use React\Socket\Server;
+use React\EventLoop\Loop;
+use React\Socket\SocketServer;
 
 class ChatServer extends Command
 {
@@ -19,14 +17,14 @@ class ChatServer extends Command
      * @var string
      */
     protected $signature = 'websocket:chat';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Websockets for chat';
-    
+
     /**
      * Create a new command instance.
      *
@@ -35,16 +33,16 @@ class ChatServer extends Command
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
      * @return int
      */
     public function handle() {
-        $loop = \React\EventLoop\Factory::create();
-        $webSock = new \React\Socket\Server($loop);
-        $webSock->listen(6001, '0.0.0.0');
+        $loop = Loop::get();
+        $webSock = new SocketServer('0.0.0.0:6001', [], $loop);
+//        $webSock->listen(6001, '0.0.0.0');
 //        $server = IoServer::factory(
         $server = new \Ratchet\Server\IoServer(
             new HttpServer(
