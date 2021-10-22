@@ -14,6 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/perfectmoney/status',
         '/coinpayments/status',
-        '/topup/payment_message',
+        '/payment_message',
     ];
 }
