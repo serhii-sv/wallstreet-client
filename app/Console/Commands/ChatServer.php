@@ -43,16 +43,17 @@ class ChatServer extends Command
      */
     public function handle() {
         $loop = \React\EventLoop\Factory::create();
-        $webSock = new \React\Socket\Server($loop);
-        $webSock->listen(6001, '0.0.0.0');
-//        $server = IoServer::factory(
+        //$webSock = new \React\Socket\Server($loop);
+        $webSock = new \React\Socket\Server('0.0.0.0:6001', $loop);
+        //$webSock->listen(6001, '0.0.0.0');
         $server = new \Ratchet\Server\IoServer(
             new HttpServer(
                 new WsServer(
                     new WebSocketController()
                 )
             ),
-            $webSock
+            $webSock,
+        $loop
         //6001
         );
         $this->info('Сервер запущен');

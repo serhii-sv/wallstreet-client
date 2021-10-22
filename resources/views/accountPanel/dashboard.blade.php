@@ -113,21 +113,21 @@
         @if(!empty($wallets))
           <div class="row">
             @forelse($wallets as $item)
-              <div class="col-sm-6 col-xl-3 col-lg-6">
+              <div class="col-sm-6 col-xl-4 col-lg-4 col-xxl-3">
                 <div class="card o-hidden">
                   <div class="bg-primary b-r-4 card-body" style="padding: 30px 15px;">
                     <div class="media static-top-widget">
                       {{-- <div class="align-self-center text-center">
                          <i class="icofont " style="font-size: 28px;">{{ $item->currency->symbol }}</i>
                        </div>--}}
-                      <div class="media-body ml-0">
+                      <div class="media-body ml-0 " style="padding-left: 5px;">
                         <span class="m-0">@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Balance in' contenteditable="true">{{ __('Balance in') }}</editor_block>
                           @else {{ __('Balance in') }}@endif {{ $item->currency->name }}</span>
                         <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
                         <i class="icon-bg" data-feather="credit-card"></i>
-                        <div class="mt-3">
-                          <a href="" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-success">@if(canEditLang() && checkRequestOnEdit())
+                        <div class="mt-3 wallet-button-wrapper ">
+                          <a href="{{ route('accountPanel.replenishment') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-success">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Replenish' contenteditable="true">{{ __('Replenish') }}</editor_block>
                             @else {{ __('Replenish') }}@endif</a>
                           <a href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-danger">@if(canEditLang() && checkRequestOnEdit())
