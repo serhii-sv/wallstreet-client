@@ -23,5 +23,4 @@
 </form>
 
 <script>
-  document.forms.payment.submit()
 </script>

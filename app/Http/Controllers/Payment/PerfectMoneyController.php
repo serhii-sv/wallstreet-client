@@ -24,25 +24,6 @@ use Illuminate\Support\Facades\Auth;
 class PerfectMoneyController extends Controller
 {
     /**
-     * PerfectMoneyController constructor.
-     */
-    function __construct()
-    {
-  /*      if (false === checkLicence())
-        {
-            die('licence error');
-        }*/
-
-        if (ScriptCheckerCommand::checkClassExists() != 'looks ok') {
-            die('code corrupted');
-        }
-
-    /*    if (LoginController::checkClassExists() != 'auth looks ok') {
-            die('code corrupted');
-        }*/
-    }
-
-    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function topUp()

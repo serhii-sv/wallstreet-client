@@ -52,8 +52,6 @@ class ReplenishmentController extends Controller
             return back()->with('error', __('Minimum balance recharge is ') . $psMinimumTopup . $currency->symbol)->withInput();
         }
 
-        die(print_r($paymentSystem,true).'/'.print_r($currency,true).'/'.print_r($request->all(),true));
-
         session()->flash('topup.payment_system', $paymentSystem);
         session()->flash('topup.currency', $currency);
         session()->flash('topup.amount', $request->amount);
