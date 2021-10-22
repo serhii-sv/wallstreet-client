@@ -8,10 +8,10 @@
   <input type="hidden" name="PAYMENT_UNITS" value="{{ $currency }}">
   <input type="hidden" name="STATUS_URL" value="{{ $statusUrl }}">
   <input type="hidden" name="PAYMENT_URL"
-      value="{{ route('accountPanel.topup.payment_message', ['result' => 'ok']) }}">
+      value="{{ route('topup.payment_message', ['result' => 'ok']) }}">
   <input type="hidden" name="PAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="NOPAYMENT_URL"
-      value="{{ route('accountPanel.topup.payment_message', ['result' => 'error']) }}">
+      value="{{ route('topup.payment_message', ['result' => 'error']) }}">
   <input type="hidden" name="NOPAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="SUGGESTED_MEMO" value="{{ $comment }}">
 

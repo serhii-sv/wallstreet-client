@@ -81,7 +81,7 @@ class PerfectMoneyController extends Controller
         $payeeName   = config('money.pm_payee_name');
         $transaction = Transaction::enter($wallet, $amount, $paymentSystem->id);
         $comment     = config('money.pm_memo');
-        
+
         return view('accountPanel.ps.perfectmoney', [
             'currency' => $currency->code,
             'amount' => $amount,
@@ -165,7 +165,7 @@ class PerfectMoneyController extends Controller
             $transaction->update(['approved' => true]);
             $transaction->wallet->update(['external' => $request->PAYER_ACCOUNT]); // записываем/обновляем внешний ношелек
             PerfectMoneyModule::getBalances(); // обновляем баланс нашего внешнего кошелька в БД
-            return redirect(route('accountPanel.topup.payment_message', ['result' => 'success']), 200);
+            return response('ok');
         }
         if (!$request->PAYMENT_BATCH_NUM) {
             \Log::info('Perfectmoney. No batch from response. IP: '.$request->ip());
