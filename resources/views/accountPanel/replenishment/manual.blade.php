@@ -1,10 +1,10 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Replenishment'))
+@section('title', strtoupper(__('Replenishment')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
-      
+
       <div class="row">
         <div class="col-sm-12">
           <div class="card">
@@ -32,10 +32,10 @@
             </div>
           </div>
         </div>
-      
+
       </div>
-    
-    
+
+
     </div>
   </div>
 @endsection
@@ -43,7 +43,7 @@
   <script src="{{ asset('accountPanel/js/form-wizard/form-wizard-three.js') }}"></script>
   <script>
     $(document).ready(function () {
-    
+
     });
   </script>
 @endpush

@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Edit profile'))
+@section('title', strtoupper(__('Edit profile')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="edit-profile">
       <div class="row">
@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="card-body pt-3">
-              
+
               <div class="row mb-2">
                 <div class="profile-title">
                   <div class="media">
@@ -87,7 +87,7 @@
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral link' contenteditable="true">{{ __('Referral link') }}</editor_block> @else {{ __('Referral link') }} @endif</label>
                 <p><strong>{{ route('ref_link', $user->my_id) }}</strong></p>
               </div>
-            
+
             </div>
           </div>
         </div>
@@ -226,7 +226,7 @@
                               <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                               <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
                               <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
-                        
+
                               <div class="row">
                                 <div class="col">
                                   <div class="">
@@ -242,10 +242,10 @@
                           @empty
                           @endforelse
                         </div>
-                      
+
                       @empty
                       @endforelse
-                      
+
                       {{--<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
                       </div>
@@ -391,15 +391,15 @@
           $('.avatar-image').attr('src', $('.avatar-image').attr('data-old'));
         }
       }
-      
+
       $(".profile-avatar-input").change(function () {
         readURL(this);
       });
-      
+
       $('#uploadPassportImage').click(function () {
         document.getElementById('passportImage').click()
       })
-      
+
       $('#selfie').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
@@ -410,11 +410,11 @@
           reader.readAsDataURL(input.files[0]);
         }
       })
-      
+
       $('#uploadSelfie').click(function () {
         document.getElementById('selfie').click()
       })
-      
+
       $('#passportImage').change(function () {
         let input = this;
         if (input.files && input.files[0]) {

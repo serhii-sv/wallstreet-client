@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Все операции'))
+@section('title', strtoupper(__('Все операции')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       <div class="col-xl-4 email-wrap bookmark-wrap">
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col col-xl-8 box-col-6">
         <div class="card">
           <div class="card-header">
@@ -108,16 +108,16 @@
           </div>
         </div>
       </div>
-      
+
       <div>
         {{ $transactions->appends(request()->except('page'))->links() }}
       </div>
-    
+
     </div>
   </div>
 @endsection
 @push('scripts')
   <script>
-  
+
   </script>
 @endpush

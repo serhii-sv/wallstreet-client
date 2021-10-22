@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Task "' . $supportTask->title . '"'))
+@section('title', strtoupper(__('Task "' . $supportTask->title . '"')))
 
 @section('content')
     <div class="container-fluid">

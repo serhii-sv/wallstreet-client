@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('календарь'))
+@section('title', strtoupper(__('календарь')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       <div class="card">
@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
 @endsection
@@ -195,7 +195,7 @@
         @endforeach
       @endforeach
       @endif
-      
+
       @foreach($withdraws as $day => $items)
       @foreach($items as $item)
       if (calendar.id == 2) {
@@ -217,7 +217,7 @@
       }
       @endforeach
       @endforeach
-          
+
           calendarList.innerHTML
           = html.join('\n');
       html.push('<div class="lnb-calendars-item"><label>' +
@@ -228,6 +228,6 @@
       );
     });
     calendarList.innerHTML = html.join('\n');
-  
+
   </script>
 @endpush

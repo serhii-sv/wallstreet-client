@@ -1,10 +1,10 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Withdrawal'))
+@section('title', strtoupper(__('Withdrawal')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
-      
+
       @if(!empty($wallets))
         <div class="row">
           {{--<div class="col-12">
@@ -63,7 +63,7 @@
                         @empty
                         @endforelse
                     </div>
-                    
+
                     <div class="f1-buttons">
                       <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title="" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif</button>
                       <button class="btn btn-primary btn-submit" type="submit" data-bs-original-title="" title="" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Submit' contenteditable="true">{{ __('Submit') }}</editor_block> @else {{ __('Submit') }} @endif</button>
@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>--}}
-          
+
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
@@ -126,10 +126,10 @@
               </div>
             </div>
           </div>
-        
+
         </div>
       @endif
-    
+
     </div>
   </div>
 @endsection

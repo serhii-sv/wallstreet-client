@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Create Task'))
+@section('title', strtoupper(__('Create Task')))
 @section('content')
 
     <div class="container-fluid">

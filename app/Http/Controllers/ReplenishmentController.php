@@ -17,19 +17,19 @@ class ReplenishmentController extends Controller
             'payment_systems' => $payment_systems,
         ]);
     }
-    
+
     public function handle(RequestTopup $request) {
         $paymentSystemId = $request->get('payment_system');
         $currencyId = $request->get('currency');
         //$extractCurrency = explode(':', $request->currency);
-        
+
         /*if (count($extractCurrency) != 1) {
             return back()->with('error', __('Unable to read data from request'))->withInput();
         }*/
-        
+
         //$paymentSystem = PaymentSystem::where('id', $extractCurrency[0])->first();
         $paymentSystem = PaymentSystem::where('id', $paymentSystemId)->first();
-        
+
         if (empty($paymentSystem)) {
             return back()->with('error', __('Undefined payment system'))->withInput();
         }
@@ -40,24 +40,24 @@ class ReplenishmentController extends Controller
                 $currency = Currency::where('code', 'USD')->first();
             }
         }
-        
+
         if (empty($currency)) {
             return back()->with('error', __('Undefined currency'))->withInput();
         }
-        
+
         $psMinimumTopupArray = @json_decode($paymentSystem->minimum_topup, true);
         $psMinimumTopup = isset($psMinimumTopupArray[$currency->code]) ? $psMinimumTopupArray[$currency->code] : 0;
-        
+
         if ($request->amount < $psMinimumTopup) {
             return back()->with('error', __('Minimum balance recharge is ') . $psMinimumTopup . $currency->symbol)->withInput();
         }
-        
+
         session()->flash('topup.payment_system', $paymentSystem);
         session()->flash('topup.currency', $currency);
         session()->flash('topup.amount', $request->amount);
         return redirect()->route('accountPanel.topup.' . $paymentSystem->code);
     }
-    
+
     public function newRequest(Request $request) {
         $request->validate([
             'currency' => 'uuid',
@@ -80,12 +80,12 @@ class ReplenishmentController extends Controller
             return redirect()->route('accountPanel.replenishment.manual');
         }
     }
-    
+
     public function manual() {
-        
+
         return view('accountPanel.replenishment.manual');
     }
-    
+
     public function getPaySystemCurrencies(Request $request) {
         if ($request->ajax()) {
             $payment_system_id = $request->get('payment_system_id');
@@ -107,7 +107,7 @@ class ReplenishmentController extends Controller
                         </div>
                       </label>';;
                 }
-                
+
                 return json_encode([
                     'status' => 'good',
                     'html' => $html,
@@ -122,19 +122,6 @@ class ReplenishmentController extends Controller
         return json_encode([
             'status' => 'bad',
             'html' => 'Try choose any payment system',
-        ]);
-    }
-    
-    public function paymentMessage(Request $request)
-    {
-        if ($request->has('result') && $request->result == 'ok') {
-            session()->flash('success', __('Balance successfully updated'));
-        } elseif ($request->has('result') && $request->result == 'error') {
-            session()->flash('error', __('Can not update your balance'));
-        }
-        $payment_systems = PaymentSystem::all();
-        return view('accountPanel.replenishment.index',[
-            'payment_systems' => $payment_systems,
         ]);
     }
 }

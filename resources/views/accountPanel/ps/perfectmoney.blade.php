@@ -1,6 +1,6 @@
 <form id="payment" method="POST" action="https://perfectmoney.is/api/step1.asp"
     style="display:none;">
-  @csrf
+
   <input type="hidden" name="PAYEE_ACCOUNT" value="{{ $payeeAccount }}">
   <input type="hidden" name="PAYEE_NAME" value="{{ $payeeName }}">
   <input type="hidden" name="PAYMENT_ID" value="{{ strtoupper($paymentId) }}">
@@ -8,13 +8,13 @@
   <input type="hidden" name="PAYMENT_UNITS" value="{{ $currency }}">
   <input type="hidden" name="STATUS_URL" value="{{ $statusUrl }}">
   <input type="hidden" name="PAYMENT_URL"
-      value="{{ route('accountPanel.topup.payment_message', ['result' => 'ok']) }}">
+      value="{{ route('payment_message', ['status' => 'ok']) }}">
   <input type="hidden" name="PAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="NOPAYMENT_URL"
-      value="{{ route('accountPanel.topup.payment_message', ['result' => 'error']) }}">
+      value="{{ route('payment_message', ['status' => 'error']) }}">
   <input type="hidden" name="NOPAYMENT_URL_METHOD" value="POST">
   <input type="hidden" name="SUGGESTED_MEMO" value="{{ $comment }}">
-  
+
   <!-- Merchant custom fields -->
   <input type="hidden" name="userid" value="{{ $user->id }}">
   <input type="hidden" name="walletid" value="{{ $wallet->id }}">

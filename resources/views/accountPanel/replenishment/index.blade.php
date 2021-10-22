@@ -1,10 +1,10 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Replenishment'))
+@section('title', strtoupper(__('Replenishment')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
-      
+
       <div class="row">
         <div class="col-sm-12">
           <div class="card">
@@ -39,10 +39,10 @@
                   </div>
                 </div>
                 <fieldset style="display: block;">
-                  
+
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
-                      
+
                       @if($item->code == 'coinpayments')
                         @foreach($item->currencies()->get() as $currency)
                           <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" >
@@ -63,11 +63,11 @@
                           </div>
                         </label>
                       @endif
-                      
+
                     @empty
                     @endforelse
                   </div>
-                  
+
                   {{--<div class="mb-3">
                     <label class="form-label" for="exampleFormControlSelect9">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block> @else {{ __('Payment system') }} @endif</label>
                     <select class="form-select digits" name="payment_system" id="exampleFormControlSelect9">
@@ -101,7 +101,7 @@
                     <label class="" style="font-size: 20px;">Amount</label>
                     <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin: auto">
                   </div>
-                  
+
                   <div class="f1-buttons">
                     <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title="">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
@@ -112,14 +112,14 @@
                   </div>
                 </fieldset>
               </form>
-              
+
             </div>
           </div>
         </div>
-      
+
       </div>
-    
-    
+
+
     </div>
   </div>
 @endsection
@@ -182,7 +182,7 @@
         $(this).find("input[name='currency']").prop('checked', true).attr('checked', 'checked');
       });
       $(".btn-next").on('click', function (e) {
-      
+
         var manual = $("input[name='payment_system']:checked").attr('data-manual');
         if (manual == 'true'){
           $(".item-list-wrapper").empty().html('<div class="loader-box" style="height: 24px; margin: 50px auto 30px">' +
@@ -190,7 +190,7 @@
               '</div>');
           location.href = "{{ route('accountPanel.replenishment.manual') }}";
         }
-        
+
       });
     });
   </script>

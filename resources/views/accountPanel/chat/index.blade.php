@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Чат'))
+@section('title', strtoupper(__('Чат')))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row">
       <div class="col call-chat-sidebar col-sm-12">
@@ -34,7 +34,7 @@
                           <div class="about">
                             <div class="name">{{ auth()->user()->partner()->first()->login }}</div>
                             <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Partner' contenteditable="true">{{ __('Partner') }}</editor_block> @else {{ __('Partner') }} @endif</div>
-                          
+
                           </div>
                           <span class="unread badge round-badge-primary">{{auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' .  auth()->user()->partner()->first()->getPartnerChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
                         </a>
@@ -56,7 +56,7 @@
                       @endforeach
                     @endif
                   </ul>
-                
+
                 </div>
               </div>
               <!-- Chat left side Ends-->
@@ -84,13 +84,13 @@
                           <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Last Seen' contenteditable="true">{{ __('Last Seen') }}</editor_block> @else {{ __('Last Seen') }} @endif {{ $companion->getLastActivityAttribute()['last_seen'] }}</div>
                         </div>
                         <ul class="list-inline float-start float-sm-end chat-menu-icons">
-                        
+
                         </ul>
                       </div>
                   @endif
                   <!-- chat-header end-->
                     <div class="chat-history chat-msg-box custom-scrollbar">
-                      
+
                       <ul class="chat-msg-list">
                         @if(!empty($chat_messages))
                           @foreach($chat_messages as $message)
@@ -117,10 +117,10 @@
                             @endif
                           @endforeach
                         @endif
-                      
-                      
+
+
                       </ul>
-                    
+
                     </div>
                     <!-- end chat-history-->
                     <div class="chat-message clearfix">
@@ -139,7 +139,7 @@
                   <!-- Chat right side ends-->
                 </div>
               </div>
-            
+
             </div>
           </div>
         </div>
@@ -156,20 +156,20 @@
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
           "July", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
-        
+
         function scrollChat() {
           var container = $('.chat-history'),
               scrollTo = $('.chat-msg-list');
           container.scrollTop(scrollTo.prop('scrollHeight'));
         }
-        
+
         scrollChat();
         Pusher.logToConsole = true;
-        
+
         window.Echo.private('chat.{{ $chat->id }}').listen('PrivateChat', (data) => {
           var $data = data;
           var $message_id = $data.message_id;
-          
+
           if (!($data.user == "{{ auth()->user()->id }}")) {
             var $options = {
               method: "post",
@@ -181,7 +181,7 @@
             }
             window.axios($options);
           }
-          
+
           if ($data.chat_id == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
             $(".chat-msg-list").append('<li>' +
                 '<div class="message my-message mb-0">' +
@@ -205,7 +205,7 @@
           }
           scrollChat();
         });
-        
+
         $(".send-message-btn").on('click', function (e) {
           var $message = $("#message-to-send").val();
           if ($message.length > 0) {
@@ -242,12 +242,12 @@
             $(this).val('');
           }
         });
-        
+
         function addZeroBefore(n) {
           return (n < 10 ? '0' : '') + n;
         }
       });
-    
+
     </script>
   @endif
   {{--@if($chat)
@@ -256,19 +256,19 @@
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
           "July", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
-        
+
         function scrollChat() {
           var container = $('.chat-history'),
               scrollTo = $('.chat-msg-list');
           container.scrollTop(scrollTo.prop('scrollHeight'));
         }
-        
+
         scrollChat();
-        
+
         function addZeroBefore(n) {
           return (n < 10 ? '0' : '') + n;
         }
-        
+
         $("#message-to-send").keyup(function (event) {
           if (event.keyCode == 13) {
             var $message = $(this).val();
@@ -279,12 +279,12 @@
           }
         });
         var conn = new WebSocket((window.location.protocol === "http:" ? "ws" : "wss") + "://" + window.location.host + ":6001");
-        
+
         conn.onmessage = function ($data) {
           $data = $.parseJSON($data.data);
-          
+
           if ($data.chat == "{{ $chat->id }}" && $data.user == "{{ auth()->user()->id }}") {
-            
+
             $(".chat-msg-list").append('<li>' +
                 '<div class="message my-message mb-0">' +
                 '  <img class="rounded-circle float-start chat-user-img img-30" src="{{ $myAvatar ?? asset('accountPanel/images/user/16.png') }}" alt="">' +
@@ -305,7 +305,7 @@
                 ' </div>' +
                 '</li>');
           }
-          
+
           scrollChat();
         };
         conn.onopen = function ($data) {
@@ -326,11 +326,11 @@
           }
           console.log('Код: ' + event.code + ' причина: ' + event.reason);
         };
-        
+
         function send($message) {
           var data = $message;
           var now = new Date;
-          
+
           var time = now.getUTCDate() + '.' + monthNames[now.getUTCMonth()] + ' ' + addZeroBefore(now.getUTCHours()) + ':' + addZeroBefore(now.getUTCMinutes()) + ':' + addZeroBefore(now.getUTCSeconds());
           conn.send(JSON.stringify({
             status: "message",
@@ -349,7 +349,7 @@
               '</li>');
           scrollChat();
         }
-        
+
         $(".send-message-btn").on('click', function (e) {
           var $message = $("#message-to-send").val();
           if ($message.length > 0) {

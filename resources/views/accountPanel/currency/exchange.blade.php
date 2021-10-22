@@ -1,8 +1,8 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Обмен валют'))
+@section('title', strtoupper(__('Обмен валют')))
 @section('title.show', 'd-none')
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update justify-content-center">
       <div class="card">
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-xl-10 risk-col xl-100 box-col-12">
         <div class="card total-users">
           <div class="card-header card-no-border">
@@ -66,7 +66,7 @@
                           </select>
                         </div>
                       </div>
-                      
+
                       <div class="col-lg">
                         <div class="mb-2">
                           <div class="col-form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif</div>
@@ -84,7 +84,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <ul class="col-xl-12">
                   <li>
                     <div class="form-group row">
@@ -107,11 +107,11 @@
                 </ul>
               </form>
             </div>
-          
+
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
 @endsection
@@ -123,7 +123,7 @@
   <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
   <script src="{{ asset('accountPanel/js/chart/apex-chart/chart-custom.js') }}"></script>
   @if($exchange_rate_log)
-    
+
     <script>
       $(document).ready(function () {
         // browser-candlestick chart
@@ -201,7 +201,7 @@
             }
           }
         }
-        
+
         var chartcandlestickchart = new ApexCharts(
             document.querySelector("#chart-widget13"),
             optionscandlestickchart
@@ -257,7 +257,7 @@
         $(".currency-symbol").text($prefix);
         $deleted = $(".exchange-second-wallet option[data-id='" + $id + "']");
         $(".exchange-second-wallet option[data-id='" + $id + "']").remove();
-        
+
       })
     });
   </script>
