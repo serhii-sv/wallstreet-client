@@ -28,9 +28,7 @@ use App\Http\Controllers\SetPartnerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/perfectmoney/status', function() {
-    return 'ko';
-})->name('perfectmoney.status');
+Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->name('perfectmoney.status');
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 
 Route::any('/topup/payment_message', [ReplenishmentController::class, 'paymentMessage'])->name('topup.payment_message');
