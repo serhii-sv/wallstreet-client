@@ -50,7 +50,7 @@
                                      </div>
                                    </div>--}}
                                   <h5>
-                                    <span class="span badge rounded-pill pill-badge-primary">
+                                    <span class="span badge rounded-pill pill-badge-primary" style="white-space: normal;">
                                       @if($item->overall)
                                         @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Refund of the deposit at the end' contenteditable="true">{{ __('Refund of the deposit at the end') }}</editor_block> @else {{ __('Refund of the deposit at the end') }} @endif: {{ $item->overall }}%
                                       @else
