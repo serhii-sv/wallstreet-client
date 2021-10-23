@@ -149,7 +149,7 @@ class CoinpaymentsController extends Controller
             return response('ok');
         }
 
-        \Log::emergency('Coinpayments transaction is not passed. IP: '.$request->ip().'. '.print_r($request->all()));
+        \Log::emergency('Coinpayments transaction is not passed. IP: '.$request->ip().'. '.print_r($request->all(),true));
         return response('ok');
     }
 }
