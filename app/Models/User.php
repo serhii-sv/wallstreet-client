@@ -522,4 +522,48 @@ class User extends Authenticatable
     public function lastVerificationRequest() {
         return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
     }
+
+    public function getReferralChatId() {
+        $user_partner = auth()->user()->id;
+        $user_referral = $this->id;
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+            'user_partner' => $user_partner,
+            'user_referral' => $user_referral,
+        ]);
+        return $chat->id;
+    }
+
+    public function getReferralChat() {
+        $user_partner = auth()->user()->id;
+        $user_referral = $this->id;
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+            'user_partner' => $user_partner,
+            'user_referral' => $user_referral,
+        ]);
+        return $chat;
+    }
+
+    public function getPartnerChatId() {
+        $user_partner = $this->id;
+        $user_referral = auth()->user()->id;
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+            'user_partner' => $user_partner,
+            'user_referral' => $user_referral,
+        ]);
+        return $chat->id;
+    }
+
+    public function getPartnerChat() {
+        $user_partner = $this->id;
+        $user_referral = auth()->user()->id;
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+            'user_partner' => $user_partner,
+            'user_referral' => $user_referral,
+        ]);
+        return $chat;
+    }
+
+    public function getAllChats() {
+        return Chat::where('user_partner', $this->id)->orWhere('user_referral', $this->id)->get();
+    }
 }
