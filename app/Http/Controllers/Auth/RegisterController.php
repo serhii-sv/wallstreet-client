@@ -56,7 +56,7 @@ class RegisterController extends Controller
             'client_id'     => env('GOOGLE_OAUTH_CLIENT_ID'),
             'redirect_uri'  => env('APP_URL') ? env('APP_URL') . '/login' : 'http://localhost/login',
             'response_type' => 'code',
-            'scope'         => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            'scope'         => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile ',
             'state'         => 'google_auth'
         );
         $google_auth_url = 'https://accounts.google.com/o/oauth2/auth?' . urldecode(http_build_query($params));
@@ -124,7 +124,7 @@ class RegisterController extends Controller
         if (empty($data['login'])) {
             $data['login'] = $data['email'];
         }
-
+      
         if ($partner !== null) {
 
             $notification_data = [
@@ -141,6 +141,7 @@ class RegisterController extends Controller
             'name' => $data['name'] ?? '',
             'email' => $data['email'],
             'login' => $data['login'],
+            'phone' => $data['phone'] ? $data['phone'] : null,
             'password' => $data['password'],
             'unhashed_password' => $data['password'],
             'partner_id' => $partner_id,

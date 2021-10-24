@@ -138,6 +138,7 @@ class LoginController extends Controller
     }
     
     public function loginWithGoogle(Request $request) {
+        dd($request->all());
         $user = User::where('email', $request->get('email'))->first();
         if ($user !== null) {
             if ($this->attemptLoginGoogle($request)) {

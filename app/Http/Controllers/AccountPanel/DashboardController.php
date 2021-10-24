@@ -19,16 +19,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+
 class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct() {
-        
         $this->middleware('auth');
+        
     }
     
     /**
@@ -84,7 +80,7 @@ class DashboardController extends Controller
         return view('accountPanel.dashboard', [
             'transactions' => Transaction::with('type', 'currency', 'paymentSystem')->orderByDesc('created_at')->limit(5)->get(),
             'wallets' => $wallets,
-           /* 'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),*/
+            /* 'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),*/
             'period_graph' => $period_graph,
             'withdraws_week' => $withdraws_week,
             'accruals_week' => $accruals_week,
