@@ -28,7 +28,7 @@ class DepositsController extends Controller
     public function create() {
         $user = auth()->user();
         $deposit_groups = RateGroup::all();
-        $deposits = Deposit::where('user_id', $user->id)->where('active', 'true')->orderByDesc('created_at')->with('rate', 'currency', 'wallet')->paginate(12);
+        $deposits = Deposit::where('user_id', $user->id)->where('active', true)->orderByDesc('created_at')->with('rate', 'currency', 'wallet')->paginate(12);
         $rates = Rate::where('active', true)->orderBy('min', 'asc')->get();
 
         return view('accountPanel.deposits.create', [
