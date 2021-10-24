@@ -91,7 +91,7 @@ class Deposit extends Model
 {
     use Uuids;
     use SumOperations;
-    
+
     /** @var bool $incrementing */
     public $incrementing = false;
     /**
@@ -119,70 +119,70 @@ class Deposit extends Model
         'datetime_closing',
         'created_at',
     ];
-    
+
     /**
      * @return int|mixed
      */
     public function total_assessed() {
         return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('amount');
     }
-    
+
     /**
      * @return int|mixed
      */
     public function total_assessed_main_currency() {
         return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('main_currency_amount');
     }
-    
+
     /**
      * @return int|mixed
      */
     public function total_created_sum() {
         return $this->transactions()->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)->sum('amount');
     }
-    
+
     /**
      * @return int|mixed
      */
     public function total_created_sum_main_currency() {
         return $this->transactions()->where('type_id', TransactionType::where('name', 'create_dep')->firstOrFail()->id)->sum('main_currency_amount');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transactions() {
         return $this->hasMany(Transaction::class, 'deposit_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currency() {
         return $this->belongsTo(Currency::class, 'currency_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function rate() {
         return $this->belongsTo(Rate::class, 'rate_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function wallet() {
         return $this->belongsTo(Wallet::class, 'wallet_id');
     }
-    
+
     /**
      * @return mixed
      */
@@ -190,7 +190,7 @@ class Deposit extends Model
      public function paymentSystem() {
          return $this->wallet ? $this->wallet->first()->paymentSystem() : null;
      }*/
-    
+
     /**
      * @param $value
      *
@@ -200,7 +200,7 @@ class Deposit extends Model
     public function getBalanceAttribute($value) {
         return $value;
     }
-    
+
     /**
      * @param $value
      *
@@ -210,7 +210,7 @@ class Deposit extends Model
     public function getInvestedAttribute($value) {
         return $value;
     }
-    
+
     /**
      * @param                      $field
      * @param \App\Models\Currency $currency
@@ -222,7 +222,7 @@ class Deposit extends Model
     public static function addDeposit($field, Currency $currency, bool $force = false) {
         /** @var User $user */
         $user = isset($field['user']) ? $field['user'] : Auth::user();
-        
+
         /** @var Rate $rate */
         $rate = Rate::findOrFail($field['rate_id']);
         /** @var Wallet $wallet */
@@ -231,27 +231,27 @@ class Deposit extends Model
             ->firstOrFail();
         $amount = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
-        
+
         if ($currency->id != $wallet->currency_id) {
             throw new \Exception('Wrong currency ID');
         }
-        
+
         if (false === $force) {
             if ($amount < $rate->min || $amount > $rate->max) {
                 throw new \Exception('Wrong deposit amount. Less or greater than in tariff plan.');
             }
-            
+
             if (abs($amount) > abs($wallet->balance)) {
                 throw new \Exception('Not enough money at your balance.');
             }
         }
-        
-        
+
+
         /**
          * LUMINEX SPECIAL
          */
         $highPercent = 1.28;
-        
+
         if ($amount >= 1000 && $currency->code == 'USD') {
             $rate->daily = $highPercent;
         } else if ($amount >= 0.02989986 && $currency->code == 'BTC') {
@@ -276,7 +276,7 @@ class Deposit extends Model
             $rate->daily = $highPercent;
         }
         // -------------------------------------------
-        
+
         $deposit = new Deposit;
         $deposit->rate_id = $rate->id;
         $deposit->currency_id = $currency->id;
@@ -293,15 +293,15 @@ class Deposit extends Model
         $deposit->condition = 'create';
         $deposit->datetime_closing = now()->addDays($rate->duration);
         $deposit->created_at = isset($field['created_at']) ? $field['created_at'] : now();
-        
+
         $transaction = $deposit->save() ? Transaction::createDeposit($deposit) : null;
-        
+
         if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
             $wallet->accrueToPartner($amount, 'refill');
-            
+
             $transaction->update(['approved' => true]);
             $deposit->update(['active' => true]);
-            
+
             // send notification to user
             $data = [
                 'deposit' => $deposit,
@@ -311,18 +311,18 @@ class Deposit extends Model
         };
         throw new \Exception("Transaction start or wallet error! " . print_r($field, true));
     }
-    
+
     /**
      * @return bool
      */
     public function createSequence() {
         /** @var Rate $rate */
         $rate = $this->rate()->first();
-        
+
         if (!is_int($this->duration) || $this->duration < 1) {
             return false;
         }
-        
+
         for ($i = 1; $i <= $rate->duration; $i++) {
             $depositQueue = new DepositQueue();
             $depositQueue->deposit_id = $this->id;
@@ -330,7 +330,7 @@ class Deposit extends Model
             $depositQueue->setAvailableAt(now()->addDays($i));
             $depositQueue->save();
         };
-        
+
         if ($this->autoclose) {
             $depositQueue = new DepositQueue();
             $depositQueue->deposit_id = $this->id;
@@ -338,10 +338,10 @@ class Deposit extends Model
             $depositQueue->setAvailableAt(now()->addDays($rate->duration)->addSeconds('30'));
             $depositQueue->save();
         };
-        
+
         return true;
     }
-    
+
     /**
      * @return bool
      * @throws \Throwable
@@ -350,30 +350,33 @@ class Deposit extends Model
         if ($this->condition == 'blocked') {
             throw new \Exception('Accrue failed because deposit blocked');
         }
-        
+
         // проверяем статус депозита и оплату
         if ($this->condition == 'create' && $this->investTransaction()->approved) {
             $this->update(['condition' => 'onwork']);
         }
-        
+
         $countTransactions = Transaction::where('deposit_id', $this->id)->where('approved', true)->count() - 1; // минус 1 это открытие
-        
+
         if ($this->duration < $countTransactions || $this->condition != 'onwork') {
             throw new \Exception("error status deposit!");
         }
-        
+
         /** @var Wallet $wallet */
         $wallet = $this->wallet()->first();
-        
+
         /** @var User $user */
         $user = $this->user()->first();
-        
-        
+
+
         $reinvest = $this->reinvest ?? 0;
         $amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
         $amountToWallet = $this->balance * $this->daily * 0.01 - $amountReinvest;
-        $dividend = Transaction::dividend($wallet, $amountToWallet, $this);
-        
+
+        if ($amountToWallet > 0) {
+            $dividend = Transaction::dividend($wallet, $amountToWallet, $this);
+        }
+
         if ($dividend) {
             $amount = abs($dividend->amount);
             if ($amount > 0) {
@@ -396,11 +399,11 @@ class Deposit extends Model
                 ];
                 Notification::sendNotification($notification_data, 'new_reinvest');
             }
-            
+
         }
         $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
         $this->addBalance($amountReinvest);
-        
+
         $dividend->update(['approved' => true]);
         // send notification to user
         /*$data = [
@@ -410,7 +413,7 @@ class Deposit extends Model
         //        $user->sendNotification('deposit_accrued', $data);
         return true;
     }
-    
+
     /**
      * @return bool
      * @throws \Exception
@@ -419,18 +422,18 @@ class Deposit extends Model
         if ($this->condition != 'onwork' || !$this->active) {
             throw new \Exception("failed close");
         }
-        
+
         /** @var Wallet $wallet */
         $wallet = $this->wallet()->first();
-        
+
         /** @var User $user */
         $user = $this->user()->first();
-        
-        
+
+
         if ($this->overall) {
             $amountOverall = $this->invested * $this->overall * 0.01;
             $transactionOverall = Transaction::dividend($wallet, $amountOverall, $this);
-            
+
             if ($transactionOverall->update([
                 'approved' => $wallet->addAmountWithoutAccrueToPartner($amountOverall),
             ])) {
@@ -439,18 +442,18 @@ class Deposit extends Model
                 throw new \Exception("failed overall!");
             }
         }
-        
+
         $amount = $this->balance;
         $closeTransaction = Transaction::closeDeposit($this, $amount);
-        
+
         if (!$wallet->addAmountWithoutAccrueToPartner($amount)) {
             throw new \Exception("deposit not close!");
         }
-        
+
         $closeTransaction->update(['approved' => true]);
         $this->update(['condition' => 'closed']);
         $this->update(['active' => false]);
-        
+
         // send notification to user
         $data = [
             'deposit' => $this,
@@ -458,7 +461,7 @@ class Deposit extends Model
         //        $user->sendNotification('deposit_closed', $data);
         return true;
     }
-    
+
     /**
      * @param float $amount
      *
@@ -467,20 +470,20 @@ class Deposit extends Model
     public function addBalance($amount = 0.00) {
         return $this->update(['balance' => $this->balance + $amount]);
     }
-    
+
     /**
      * @return mixed
      */
     public function investTransaction() {
         $typeId = TransactionType::getByName('create_dep')->id;
-        
+
         return Transaction::where([
             'wallet_id' => $this->wallet_id,
             'type_id' => $typeId,
             'deposit_id' => $this->id,
         ])->orderBy('created_at')->first();
     }
-    
+
     /**
      * @return bool
      */
@@ -488,14 +491,14 @@ class Deposit extends Model
         if ($this->active != true || $this->condition == 'blocked' || $this->condition == 'closed') {
             return false;
         }
-        
+
         $this->condition = 'blocked';
         $this->active = false;
-        
+
         $this->save();
         return true;
     }
-    
+
     /**
      * @return bool
      */
@@ -503,14 +506,14 @@ class Deposit extends Model
         if ($this->active != false || $this->condition != 'blocked') {
             return false;
         }
-        
+
         $this->active = true;
         $this->condition = 'onwork';
-        
+
         $this->save();
         return true;
     }
-    
+
     /**
      * @return array
      * @throws \Exception
@@ -518,37 +521,37 @@ class Deposit extends Model
     public static function closedBalances()
     : array {
         $deposits = Currency::join('deposits', 'currencies.id', '=', 'deposits.currency_id')->where('deposits.condition', 'closed')->select('currencies.code', 'deposits.balance')->get();
-        
+
         $balances = Currency::balances();
-        
+
         foreach ($deposits as $item) {
             $balances[$item->code] = key_exists($item->code, $balances) ? $balances[$item->code] + $item->balance : $item->balance;
         }
         return $balances;
     }
-    
-    
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function depositQueue() {
         return $this->hasMany(DepositQueue::class);
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activeCharges() {
         return $this->depositQueue()->where('done', false)->where('type', DepositQueue::TYPE_ACCRUE)->orderBy('available_at');
     }
-    
+
     /**
      * @return mixed
      */
     public function nextPayment() {
         return $this->activeCharges()->first();
     }
-    
+
     /**
      * @return float|int
      */
