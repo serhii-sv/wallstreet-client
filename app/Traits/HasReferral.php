@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\Permission;
 use App\Models\Referral;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 trait HasReferral
 {
@@ -285,6 +286,8 @@ trait HasReferral
         foreach ($partners as $partner) {
             $i++;
             $parent_array[$partner->id] = ['line'=>$i];
+
+            DB::table('user_parents')->where('user_id', $partner->id)->delete();
         }
 
         $this->partners()->sync($parent_array);
