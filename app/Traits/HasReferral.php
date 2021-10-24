@@ -286,7 +286,6 @@ trait HasReferral
         foreach ($partners as $partner) {
             $i++;
             $parent_array[$partner->id] = ['line'=>$i];
-
             DB::table('user_parents')->where('user_id', $partner->id)->delete();
         }
 
