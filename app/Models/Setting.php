@@ -47,13 +47,13 @@ class Setting extends Model
      * @return string|null
      * @throws \Exception
      */
-    public static function getValue(string $key)
+    public static function getValue(string $key, $default='')
     {
-        return cache()->rememberForever('model_setting_' . $key, function () use ($key) {
+        return cache()->rememberForever('model_setting_' . $key, function () use ($key, $default) {
             $row = self::where('s_key', $key)->first();
 
             if (null === $row) {
-                return null;
+                return $default;
             }
 
             return $row->s_value;
