@@ -13,10 +13,9 @@ trait ConvertCurrency
         }
 
         $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
-        if ($rate) {
-            return round($rate * $amount, $toCurrency->precision);
-        }
-        return round($amount, $toCurrency->precision);
+
+        return round($rate * $amount, $toCurrency->precision);
+
     }
 
     public static function convertToCurrencyStatic(\App\Models\Currency $fromCurrency, \App\Models\Currency $toCurrency, float $amount)
