@@ -167,4 +167,13 @@ class Banner extends Model
         }
         return null;
     }
+
+    public function getWidth() {
+        $size = explode('×',$this->size);
+        return $size[0];
+    }
+    public function getHeight() {
+        $size = explode('×',$this->size);
+        return $size[1];
+    }
 }

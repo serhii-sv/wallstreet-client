@@ -248,11 +248,11 @@ class User extends Authenticatable
     public function deposits() {
         return $this->hasMany(Deposit::class, 'user_id');
     }
-    
+
     public function invested() {
         return $this->hasMany(Deposit::class, 'user_id')->sum('invested');
     }
-    
+
     public function deposit_reward() {
         $invested = $this->invested();
         $deposit_bonus = DepositBonus::where('personal_turnover', '<', $invested)->orderByDesc('personal_turnover')->first();
@@ -260,7 +260,7 @@ class User extends Authenticatable
             return $deposit_bonus->reward;
         return 0;
     }
-    
+
     public function deposits_accruals() {
         $invested = $this->deposits()->sum('invested');
         $balance = $this->deposits()->sum('balance');
@@ -499,5 +499,27 @@ class User extends Authenticatable
         $encryption_key = "peNsmB8md1cOigPUSdAY1ui6q3vHiWo3ANQeBhQHUysOrZCdLsZav1YxWS2I";
 
         return openssl_encrypt($simple_string, $ciphering, $encryption_key, $options, $encryption_iv);
+    }
+
+    /**
+     * @return false|string
+     */
+    public static function impersonateTokenDecode($token) {
+        $ciphering = "AES-128-CTR";
+        $options = 0;
+        $decryption_iv = 'htxmjY4QdGveQ8ta';
+        $decryption_key = "peNsmB8md1cOigPUSdAY1ui6q3vHiWo3ANQeBhQHUysOrZCdLsZav1YxWS2I";
+
+        $decrypted_token = openssl_decrypt($token, $ciphering, $decryption_key, $options, $decryption_iv);
+
+        $user_data = explode(' ', $decrypted_token);
+        return User::where('id', $user_data[0] ?? null)->where('login', $user_data[1] ?? 0)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     */
+    public function lastVerificationRequest() {
+        return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
     }
 }

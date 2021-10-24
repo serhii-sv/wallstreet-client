@@ -32,17 +32,17 @@ class Chat extends Model
     use HasFactory;
     use Uuids;
     public $keyType = 'string';
-    
+
     protected $guarded = ['_token'];
-    
+
     public function user_partner() {
         return $this->belongsTo(User::class, 'user_partner', 'id');
     }
     public function user_referral() {
         return $this->belongsTo(User::class, 'user_referral', 'id');
     }
-  
-    
+
+
     public function checkUser($user) {
         if ($this->user_partner == $user || $this->user_referral == $user){
             return true;
@@ -55,11 +55,16 @@ class Chat extends Model
         }
         return false;
     }
-    
+
     public function getUnreadMessagesCount($user_id) {
         return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('is_read', false)->count();
     }
     public function getUnreadMessages($user_id) {
         return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->get();
+    }
+
+    public function getCompanion() {
+        $companionId = $this->user_partner == Auth::user()->id ? $this->user_referral : $this->user_partner;
+        return User::where('id',$companionId)->first();
     }
 }
