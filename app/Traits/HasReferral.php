@@ -5,6 +5,7 @@ namespace App\Traits;
 
 
 use App\Models\Deposit;
+use App\Models\Permission;
 use App\Models\Referral;
 use App\Models\User;
 
@@ -197,7 +198,7 @@ trait HasReferral
             'referrals' => []
         ];
 
-        if ($flag > 100) {
+        if ($flag > 1000) {
             return $result;
         }
 
@@ -211,20 +212,62 @@ trait HasReferral
     }
 
     /**
-     * @param $referrals
-     * @return bool
+     * @param int $flag
+     * @return array
      */
-    public function referralsRedistribution($referrals)
+    public function getAllReferralsIds($referrals, $flag = 1)
     {
+        $result = [];
+
+        foreach ($referrals as $referral) {
+            if (!isset($referral->id)) {
+                $referral = $referral['self'];
+            }
+            $result[] = $referral->id;
+            $this->getAllReferralsIds($referral['referrals'], $flag + 1);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $referrals
+     * @param int $flag
+     * @return bool|false[]
+     */
+    public function referralsRedistribution($referrals, $flag = 1)
+    {
+        if ($flag > 1000) {
+            return [
+                'success' => false,
+                'message' => 'Возника ошибка'
+            ];
+        }
         $ids = [];
         $this->referrals()->detach();
         foreach ($referrals as $referral) {
-            $ids[] = $referral->id;
-            $user = User::find($referral->id);
-            $user->referralsRedistribution($referral->children ?? []);
+            $ids[] = $referral['id'];
+            $user = User::find($referral['id']);
+            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
-        $this->referrals()->sync($ids);
-        return true;
+
+//        $this->referrals()->sync($ids);
+
+        foreach ($ids as $id) {
+            $findRef = User::find($id);
+
+            if ($findRef->my_id == $this->partner_id) {
+                continue;
+            }
+
+            $findRef->partner_id = $this->my_id;
+            $findRef->save();
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Сохранено'
+        ];
     }
 
     /**
@@ -246,25 +289,13 @@ trait HasReferral
 
         $this->partners()->sync($parent_array);
     }
-    
-    
-    public function getAllReferralsIds($referrals, $flag = 1)
-    {
-        $result = [];
-        
-        foreach ($referrals as $referral) {
-            if (!isset($referral->id)) {
-                $referral = $referral['self'];
-            }
-            $result[] = $referral->id;
-            $this->getAllReferralsIds($referral['referrals'], $flag + 1);
-        }
-        
-        return $result;
-    }
-    
+
+    /**
+     * @return mixed|null
+     */
     public function partner()
     {
         return $this->partners()->first();
     }
+
 }
