@@ -49,12 +49,12 @@ class UserObserver
     public function created(User $user)
     {
         Wallet::registerWallets($user);
-        
+
         if (null !== $user->partner) {
             $user->generatePartnerTree($user->partner);
         }
         $sidebar_user_count = UserSidebarProperties::where('sb_prop','count_users')->get();
-    
+
         foreach ($sidebar_user_count as $item){
             $item->sb_val = $item->sb_val + 1;
             $item->save();
