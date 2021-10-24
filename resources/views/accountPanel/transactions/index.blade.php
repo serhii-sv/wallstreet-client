@@ -53,7 +53,7 @@
                       @forelse($transactions as $operation)
                         <tr>
                           <th scope="row">{{ $operation->int_id  }}</th>
-                          <td>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='{{ 'locale.' . $transaction_type->name }}' contenteditable="true">{{ __('locale.' . $transaction_type->name) }}</editor_block> @else {{ __('locale.' . $transaction_type->name) }} @endif</td>
+                          <td>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='{{ 'locale.' . $operation->type->name }}' contenteditable="true">{{ __('locale.' . $operation->type->name) }}</editor_block> @else {{ __('locale.' . $operation->type->name) }} @endif</td>
                           <td>
                             <span class="">{{$operation->currency->symbol}} {{ number_format($operation->amount, $operation->currency->precision, '.', ',') ?? 0 }}</span>
                             <br>
