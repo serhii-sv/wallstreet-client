@@ -558,4 +558,17 @@ class Deposit extends Model
     public function needToCharge() {
         return $this->daily * $this->activeCharges()->count();
     }
+    public function canUpdate() {
+        if (!$this->rate->upgradable){
+            return false;
+        }
+        $to_currency = $this->currency;
+        $from_currency = Currency::where('code', 'USD')->first();
+        $rate_max = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $this->rate->max);
+        if ($rate_max > 0 && $this->balance > $rate_max)
+        {
+            return true;
+        }
+        return false;
+    }
 }

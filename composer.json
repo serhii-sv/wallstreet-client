@@ -29,6 +29,7 @@
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "react/event-loop": "^1.2",
         "spatie/laravel-permission": "^4.2",
+        "twilio/sdk": "^6.30",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

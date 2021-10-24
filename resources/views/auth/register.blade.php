@@ -60,6 +60,17 @@
                             </span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="login">Your Phone </label>
+                            <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Your phone"
+                                   name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
+
+                            @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
                         <div class="form-group">
                             <label for="password">Password </label>
