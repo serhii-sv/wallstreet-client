@@ -12,15 +12,19 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class MailSent
- * @package App\Models
  *
+ * @package App\Models
  * @property string id
- * @property User user
  * @property string email
  * @property string text
  * @property string subject
  * @property Carbon created_at
  * @property Carbon update_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|MailSent newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MailSent newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|MailSent query()
+ * @mixin \Eloquent
  */
 class MailSent extends Model
 {

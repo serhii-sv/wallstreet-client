@@ -10,13 +10,28 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Language
- * @package App\Models
+ * App\Models\Language
  *
- * @property string id
- * @property string name
- * @property string code
- * @property string original_name
+ * @property string $id
+ * @property string $name
+ * @property string $code
+ * @property string|null $original_name
+ * @property bool $default
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Reviews[] $reviews
+ * @property-read int|null $reviews_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Language newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Language newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Language query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereOriginalName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Language whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Language extends Model
 {
@@ -39,14 +54,7 @@ class Language extends Model
     {
         return $this->hasMany(TplDefaultLang::class, 'lang_id');
     }*/
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tplTranslate()
-    {
-        return $this->hasMany(TplTranslation::class, 'lang_id');
-    }
+    
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

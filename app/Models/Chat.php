@@ -7,6 +7,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Models\Chat
+ *
+ * @property string $id
+ * @property string|null $socket_id
+ * @property \App\Models\User $user_partner
+ * @property \App\Models\User $user_referral
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereSocketId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUserPartner($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUserReferral($value)
+ * @mixin \Eloquent
+ */
 class Chat extends Model
 {
     use HasFactory;
@@ -21,11 +41,7 @@ class Chat extends Model
     public function user_referral() {
         return $this->belongsTo(User::class, 'user_referral', 'id');
     }
-    
-    public function getCompanion() {
-        $companionId = $this->user_partner == Auth::user()->id ? $this->user_referral : $this->user_partner;
-        return User::where('id',$companionId)->first();
-    }
+  
     
     public function checkUser($user) {
         if ($this->user_partner == $user || $this->user_referral == $user){
@@ -41,7 +57,7 @@ class Chat extends Model
     }
     
     public function getUnreadMessagesCount($user_id) {
-        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->count();
+        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('is_read', false)->count();
     }
     public function getUnreadMessages($user_id) {
         return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->get();

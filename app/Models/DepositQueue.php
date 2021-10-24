@@ -12,15 +12,34 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class DepositQueue
- * @package App\Models
  *
- * @property string id
- * @property string deposit_id
- * @property integer type
- * @property integer available_at
- * @property integer done
- * @property Carbon created_at
- * @property Carbon updated_at
+ * @package App\Models
+ * string id
+ * string deposit_id
+ * integer type
+ * integer available_at
+ * integer done
+ * Carbon created_at
+ * Carbon updated_at
+ * @property-read \App\Models\Deposit $deposit
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereAvailableAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereDepositId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DepositQueue whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @property string $id
+ * @property string $deposit_id
+ * @property int $type
+ * @property string $available_at
+ * @property bool $done
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  */
 class DepositQueue extends Model
 {

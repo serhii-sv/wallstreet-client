@@ -1,8 +1,4 @@
 <?php
-/*
- * This engine owned and produced by HyipLab studio.
- * Visit our website: https://hyiplab.net/
- */
 
 namespace App\Models;
 
@@ -10,66 +6,60 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class News
- * @package App\Models
+ * App\Models\News
  *
- * @property string subject
- * @property string content
- * @property Language language_id
+ * @property string $id
+ * @property array $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property array|null $short_content
+ * @property string|null $image
+ * @property array|null $title
+ * @method static \Illuminate\Database\Eloquent\Builder|News newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News query()
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereShortContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class News extends Model
 {
     use Uuids;
-    public $keyType      = 'string';
-    
+
+    /**
+     * @var string
+     */
+    public $keyType = 'string';
+
+    /**
+     * @var bool
+     */
     public $incrementing = false;
 
     /** @var string $table */
     protected $table = 'news';
 
-    /** @var array $timestamps */
-    public $timestamps = ['created_at', 'updated_at'];
-
     /** @var array $fillable */
     protected $fillable = [
-        'subject',
         'content',
-        'created_at',
+        'title',
+        'short_content',
+        'image',
         'views',
+        'likes'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @var string[]
      */
-    public function language()
-    {
-        return $this->belongsTo(Language::class, 'id');
-    }
-    
-    public function getTitle($lang) {
-        $title_list = json_decode($this->title, true);
-        if (array_key_exists($lang, $title_list)){
-            return $title_list[$lang];
-        }else{
-            return array_shift($title_list);
-        }
-    }
-    
-    public function getShortContent($lang) {
-        $title_list = json_decode($this->short_content, true);
-        if (array_key_exists($lang, $title_list)){
-            return $title_list[$lang];
-        }else{
-            return array_shift($title_list);
-        }
-    }
-    
-    public function getContent($lang) {
-        $title_list = json_decode($this->content, true);
-        if (array_key_exists($lang, $title_list)){
-            return $title_list[$lang];
-        }else{
-            return array_shift($title_list);
-        }
-    }
+    protected $casts = [
+        'content' => 'array',
+        'title' => 'array',
+        'short_content' => 'array',
+    ];
 }

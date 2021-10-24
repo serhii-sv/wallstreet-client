@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\SumOperations;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,33 +16,88 @@ use Illuminate\Support\Facades\Auth;
  * Class Deposit
  *
  * @package App\Models
- *
- * @property string id
- * @property string currency_id валюта
- * @property string wallet_id кошелек с которого создается депозит, на него же возвращается при закрытии
- * @property string user_id
- * @property string rate_id ИД тарифного плана
- * @property float  daily процент ежедневных начислений
- * @property float  overall процент на начальную сумму при закрытии
- * @property int    duration продолжительность действия депозита (в днях) равно кол-ву ежедневных начислений
- * @property float  payout выплата начальной суммы в процентах
- * @property float  invested начальная сумма депозита
- * @property float  balance текущий баланс (с учетом начислений)
- * @property int    reinvest ставка реинвестирования
- * @property int    autoclose закрываем депозит по графику
- * @property int    active статус
- * @property string condition последнее действие
- * @property Carbon datetime_closing
- * @property Carbon created_at
- * @property Carbon updated_at
+ * string id
+ * string currency_id валюта
+ * string wallet_id кошелек с которого создается депозит, на него же возвращается при закрытии
+ * string user_id
+ * string rate_id ИД тарифного плана
+ * float  daily процент ежедневных начислений
+ * float  overall процент на начальную сумму при закрытии
+ * int    duration продолжительность действия депозита (в днях) равно кол-ву ежедневных начислений
+ * float  payout выплата начальной суммы в процентах
+ * float  invested начальная сумма депозита
+ * float  balance текущий баланс (с учетом начислений)
+ * int    reinvest ставка реинвестирования
+ * int    autoclose закрываем депозит по графику
+ * int    active статус
+ * string condition последнее действие
+ * Carbon datetime_closing
+ * Carbon created_at
+ * Carbon updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DepositQueue[] $activeCharges
+ * @property-read int|null                                                            $active_charges_count
+ * @property-read \App\Models\Currency                                                $currency
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DepositQueue[] $depositQueue
+ * @property-read int|null                                                            $deposit_queue_count
+ * @property-read \App\Models\Rate                                                    $rate
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[]  $transactions
+ * @property-read int|null                                                            $transactions_count
+ * @property-read \App\Models\User                                                    $user
+ * @property-read \App\Models\Wallet                                                  $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereAutoclose($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCondition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDaily($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDatetimeClosing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereIntId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereInvested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereOverall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit wherePayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereRateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereReinvest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deposit whereWalletId($value)
+ * @mixin \Eloquent
+ * @property string                                                                   $id
+ * @property string                                                                   $currency_id
+ * @property string                                                                   $rate_id
+ * @property string                                                                   $user_id
+ * @property string                                                                   $wallet_id
+ * @property float|null                                                               $daily
+ * @property float|null                                                               $overall
+ * @property int|null                                                                 $duration
+ * @property float|null                                                               $payout
+ * @property float                                                                    $invested
+ * @property float                                                                    $balance
+ * @property bool                                                                     $autoclose
+ * @property bool                                                                     $active
+ * @property string                                                                   $condition
+ * @property string                                                                   $datetime_closing
+ * @property \Illuminate\Support\Carbon|null                                          $created_at
+ * @property \Illuminate\Support\Carbon|null                                          $updated_at
+ * @property int                                                                      $reinvest
+ * @property int                                                                      $int_id
  */
 class Deposit extends Model
 {
     use Uuids;
+    use SumOperations;
     
     /** @var bool $incrementing */
     public $incrementing = false;
-    public $keyType      = 'string';
+    /**
+     * @var string
+     */
+    public $keyType = 'string';
     /**
      * @var array $fillable
      */
@@ -68,14 +124,14 @@ class Deposit extends Model
      * @return int|mixed
      */
     public function total_assessed() {
-        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('amount') + $this->transactions()->where('type_id', TransactionType::where('name', 'close_dep')->firstOrFail()->id)->sum('amount');
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('amount');
     }
     
     /**
      * @return int|mixed
      */
     public function total_assessed_main_currency() {
-        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('main_currency_amount') + $this->transactions()->where('type_id', TransactionType::where('name', 'close_dep')->firstOrFail()->id)->sum('main_currency_amount');
+        return $this->transactions()->where('type_id', TransactionType::where('name', 'dividend')->firstOrFail()->id)->sum('main_currency_amount');
     }
     
     /**
@@ -130,17 +186,11 @@ class Deposit extends Model
     /**
      * @return mixed
      */
-    public function paymentSystem() {
-        return $this->wallet->first()->paymentSystem();
-    }
+    /*
+     public function paymentSystem() {
+         return $this->wallet ? $this->wallet->first()->paymentSystem() : null;
+     }*/
     
-    public function getDepositQueues() {
-        return $this->hasMany(DepositQueue::class, 'deposit_id', 'id');
-    }
-    
-    public function depositQueue() {
-        return $this->hasMany(DepositQueue::class);
-    }
     /**
      * @param $value
      *
@@ -161,15 +211,24 @@ class Deposit extends Model
         return $value;
     }
     
+    /**
+     * @param                      $field
+     * @param \App\Models\Currency $currency
+     * @param bool                 $force
+     *
+     * @return Deposit|null
+     * @throws \Throwable
+     */
     public static function addDeposit($field, Currency $currency, bool $force = false) {
         /** @var User $user */
         $user = isset($field['user']) ? $field['user'] : Auth::user();
         
         /** @var Rate $rate */
         $rate = Rate::findOrFail($field['rate_id']);
-        
         /** @var Wallet $wallet */
-        $wallet = Wallet::where('user_id', $user->id)->where('currency_id', $currency->id)->firstOrFail();
+        $wallet = Wallet::where('user_id', $user->id)
+            ->where('currency_id', $currency->id)
+            ->firstOrFail();
         $amount = abs($field['amount']);
         $reinvest = array_key_exists('reinvest', $field) ? abs($field['reinvest']) : 0;
         
@@ -283,13 +342,11 @@ class Deposit extends Model
         return true;
     }
     
-    
     /**
      * @return bool
      * @throws \Throwable
      */
-    
-    public function accrue() {
+    public function accrue($deposit_queue = null) {
         if ($this->condition == 'blocked') {
             throw new \Exception('Accrue failed because deposit blocked');
         }
@@ -311,32 +368,45 @@ class Deposit extends Model
         /** @var User $user */
         $user = $this->user()->first();
         
+        
         $reinvest = $this->reinvest ?? 0;
         $amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
         $amountToWallet = $this->balance * $this->daily * 0.01 - $amountReinvest;
         $dividend = Transaction::dividend($wallet, $amountToWallet, $this);
         
-        
         if ($dividend) {
             $amount = abs($dividend->amount);
-            $notification_data = [
-                'notification_name' => 'Начисления по депозиту',
-                'user' => $user,
-                'deposit' => $this,
-                'amount' => $amount . $wallet->currency->symbol,
-                'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
-            ];
-            Notification::sendNotification($notification_data, 'new_charge');
-            $wallet->addAmountWithAccrueToPartner($amount, 'deposit');
+            if ($amount > 0) {
+                $notification_data = [
+                    'notification_name' => 'Начисления по депозиту',
+                    'user' => $user,
+                    'deposit' => $this,
+                    'amount' => $amount . $wallet->currency->symbol,
+                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+                ];
+                Notification::sendNotification($notification_data, 'new_charge');
+            }
+            if ($amountReinvest > 0) {
+                $notification_data = [
+                    'notification_name' => 'Реинвестирование по депозиту',
+                    'user' => $user,
+                    'deposit' => $this,
+                    'amount' => $amountReinvest . $wallet->currency->symbol,
+                    'days' => 'за ' . $dividend->created_at->format('d.m.Y H:i:s'),
+                ];
+                Notification::sendNotification($notification_data, 'new_reinvest');
+            }
             
-            $dividend->update(['approved' => true]);
         }
+        $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
         $this->addBalance($amountReinvest);
+        
+        $dividend->update(['approved' => true]);
         // send notification to user
-        $data = [
+        /*$data = [
             'dividend' => $dividend,
             'deposit' => $this,
-        ];
+        ];*/
         //        $user->sendNotification('deposit_accrued', $data);
         return true;
     }
@@ -345,7 +415,7 @@ class Deposit extends Model
      * @return bool
      * @throws \Exception
      */
-    public function close() {
+    public function close($var) {
         if ($this->condition != 'onwork' || !$this->active) {
             throw new \Exception("failed close");
         }
@@ -355,6 +425,7 @@ class Deposit extends Model
         
         /** @var User $user */
         $user = $this->user()->first();
+        
         
         if ($this->overall) {
             $amountOverall = $this->invested * $this->overall * 0.01;
@@ -456,17 +527,32 @@ class Deposit extends Model
         return $balances;
     }
     
-    public function canUpdate() {
-        if (!$this->rate->upgradable){
-            return false;
-        }
-        $to_currency = $this->currency;
-        $from_currency = Currency::where('code', 'USD')->first();
-        $rate_max = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $this->rate->max);
-        if ($rate_max > 0 && $this->balance > $rate_max)
-        {
-            return true;
-        }
-        return false;
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function depositQueue() {
+        return $this->hasMany(DepositQueue::class);
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activeCharges() {
+        return $this->depositQueue()->where('done', false)->where('type', DepositQueue::TYPE_ACCRUE)->orderBy('available_at');
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function nextPayment() {
+        return $this->activeCharges()->first();
+    }
+    
+    /**
+     * @return float|int
+     */
+    public function needToCharge() {
+        return $this->daily * $this->activeCharges()->count();
     }
 }
