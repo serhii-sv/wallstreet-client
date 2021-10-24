@@ -65,8 +65,6 @@ class SetLang
         $timezone = App\Models\Setting::getValue('timezone', 'Europe/Dublin');
         date_default_timezone_set($timezone);
 
-        die($locale);
-
         return $next($request);
     }
 }
