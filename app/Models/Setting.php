@@ -28,12 +28,12 @@ class Setting extends Model
      * @return string|null
      * @throws \Exception
      */
-    public static function getValue(string $key)
+    public static function getValue(string $key, $default='')
     {
         $row = self::where('s_key', $key)->first();
 
         if (null === $row) {
-            return null;
+            return $default;
         }
 
         return $row->s_value;
