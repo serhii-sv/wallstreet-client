@@ -23,6 +23,7 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\UserSidebarProperties;
 use App\Models\Wallet;
 use App\Observers\CloudFileObserver;
 use App\Observers\CurrencyObserver;
@@ -38,6 +39,7 @@ use App\Observers\SettingObserver;
 use App\Observers\TransactionObserver;
 use App\Observers\TransactionTypeObserver;
 use App\Observers\UserObserver;
+use App\Observers\UserSidebarPropertyObserver;
 use App\Observers\WalletObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
@@ -53,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot() {
-        
+
         if (!session()->has('lang')) {
             $lang = Language::where('default', true)->first();
             if (!empty($lang))
@@ -64,20 +66,21 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();
-            
+
             if (null === $user) {
                 return false;
             }
-            
+
             return $user->hasRole([
                 'root',
             ]);
         });
-        
+
         /*
          * Base observers
          */
         Currency::observe(CurrencyObserver::class);
+        CloudFile::observe(CloudFileObserver::class);
         Deposit::observe(DepositObserver::class);
         Faq::observe(FaqObserver::class);
         Language::observe(LanguageObserver::class);
@@ -90,9 +93,12 @@ class AppServiceProvider extends ServiceProvider
         Transaction::observe(TransactionObserver::class);
         TransactionType::observe(TransactionTypeObserver::class);
         User::observe(UserObserver::class);
+        \App\User::observe(UserObserver::class);
         Wallet::observe(WalletObserver::class);
+        UserSidebarProperties::observe(UserSidebarPropertyObserver::class);
+        //Task::observe(TaskObserver::class);
     }
-    
+
     /**
      * Register any application services.
      *

@@ -31,9 +31,9 @@ class CurrencyObserver
             $transaction->delete();
         }
 
-        foreach ($currency->rates()->get() as $rate) {
-            $rate->delete();
-        }
+//        foreach ($currency->rates()->get() as $rate) {
+//            $rate->delete();
+//        }
 
         foreach ($currency->wallets()->get() as $wallet) {
             $wallet->delete();

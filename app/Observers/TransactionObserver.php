@@ -35,8 +35,7 @@ class TransactionObserver
                 $item->save();
             }
         }
-       // if ($transaction->type_id == TransactionType::getByName('enter')->id && $transaction->approved == true){
-        if ($transaction->type_id == TransactionType::getByName('enter')->id ){
+        if ($transaction->type_id == TransactionType::getByName('enter')->id && $transaction->approved == true){
             $replenishments_amount = UserSidebarProperties::where('sb_prop','replenishments_amount')->get();
             foreach ($replenishments_amount as $item) {
                 $item->sb_val = abs(intval($item->sb_val + $transaction->main_currency_amount));
@@ -93,6 +92,8 @@ class TransactionObserver
             } else {
                 $transaction->main_currency_amount = $transaction->convertToCurrency($currency, $mainCurrency, $amount);
             }
+        }else{
+            $transaction->main_currency_amount = $amount;
         }
     }
 }
