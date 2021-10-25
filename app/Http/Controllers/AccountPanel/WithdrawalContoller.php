@@ -100,7 +100,7 @@ class WithdrawalContoller extends Controller
             return redirect()->back()->with('error', 'Валюта не найдена');
         }
 
-        $payment_system = PaymentSystem::whereHas('currencies', function($q, $currency){
+        $payment_system = PaymentSystem::whereHas('currencies', function($q) use($currency) {
             $q->where('code', $currency->code);
         })->first();
 
