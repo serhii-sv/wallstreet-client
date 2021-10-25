@@ -42,7 +42,7 @@
                                 <div class="col">
                                   <div class="">
                                     <label class="form-label" for="{{ $payment->id }}">{{ $payment->name }}</label>
-                                    <input class="form-control input-air-primary" id="{{ $payment->id }}" type="text" name="external" value="{{ $wallet->detail(auth()->user()->id, $payment->id)->first()->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                    <input class="form-control input-air-primary" id="{{ $payment->id }}" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                   </div>
                                 </div>
                                 <div class="col align-self-end">
