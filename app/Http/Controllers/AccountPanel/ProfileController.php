@@ -8,7 +8,6 @@ use App\Models\CloudFileFolder;
 use App\Models\PaymentSystem;
 use App\Models\User;
 use App\Models\UserAuthLog;
-use App\Models\UserWalletDetail;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,10 +58,10 @@ class ProfileController extends Controller
         if ($wallet === null){
             return redirect()->back()->with('error', 'Попробуй заново!');
         }
+    
+        $wallet->external = $request->get('external');
+        $wallet->save();
         
-        $wallet_details = new UserWalletDetail($request->all());
-       
-        $wallet_details->save();
         return redirect()->back()->with('success', 'Данные успешно сохранены!');
     }
     

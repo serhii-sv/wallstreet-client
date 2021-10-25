@@ -1,10 +1,10 @@
 @extends('layouts.accountPanel.app')
 @section('title', strtoupper(__('Withdrawal')))
 @section('content')
-
+  
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
-
+      
       @if(!empty($wallets))
         <div class="row">
           {{--<div class="col-12">
@@ -73,11 +73,13 @@
               </div>
             </div>
           </div>--}}
-
+          
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='List of wallets' contenteditable="true">{{ __('List of wallets') }}</editor_block> @else {{ __('List of wallets') }} @endif</h5>
+                <h5>@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='List of wallets' contenteditable="true">{{ __('List of wallets') }}</editor_block> @else {{ __('List of wallets') }} @endif
+                </h5>
               </div>
               <div class="card-body row pricing-content">
                 <div class="mb-3">
@@ -92,32 +94,31 @@
                         <div class="card-body">
                           <h3>{{ $item->currency->name }}</h3>
                           <h1>{{ $item->balance ?? 0 }}{{ $item->currency->symbol }}</h1>
-                          <h6 class="mb-2">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose a payment system' contenteditable="true">{{ __('Choose a payment system') }}</editor_block> @else {{ __('Choose a payment system') }} @endif</h6>
+                          <h6 class="mb-2">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Choose a payment system' contenteditable="true">{{ __('Choose a payment system') }}</editor_block> @else {{ __('Choose a payment system') }} @endif
+                          </h6>
                           <select class="js-example-basic-single col-sm-12" name="wallet_detail">
-                            @php($i = 0)
-                            @forelse($item->currency->paymentSystems()->get() as $payment_system)
-                              @if($item->detail(auth()->user()->id, $payment_system->id)->first() !== null)
-                                @php($i++)
-                                <option value="{{ $item->detail(auth()->user()->id, $payment_system->id)->first()->id }}">{{ $payment_system->name }}</option>
-                              @else
-                              @endif
-                              @if($loop->last && $i == 0)
-                                  <option value="" disabled>Введите реквизиты для вывода</option>
-                                @endif
-                            @empty
-                              <option value="" disabled>Нет платёжной системы</option>
-                            @endforelse
+                            @if($item->external !== null)
+                              <option value="{{ $item->external }}">{{ $payment_system->name }}</option>
+                            @else
+                              <option value="" disabled>Введите реквизиты для вывода</option>
+                            @endif
                           </select>
-                          <h6 class="mb-2 mt-2">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif</h6>
+                          <h6 class="mb-2 mt-2">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif
+                          </h6>
                           <div class="input-group">
                             <span class="input-group-text">{{ $item->currency->symbol ?? '' }}</span>
                             <input class="form-control" type="text" name="amount">
                           </div>
                           <div>
-                            @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Commission 1 $ ' contenteditable="true">{{ __('Commission 1 $ ') }}</editor_block> @else {{ __('Commission 1 $ ') }} @endif
+                            @if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Commission 1 $ ' contenteditable="true">{{ __('Commission 1 $ ') }}</editor_block> @else {{ __('Commission 1 $ ') }} @endif
                           </div>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='To withdraw' contenteditable="true">{{ __('To withdraw') }}</editor_block> @else {{ __('To withdraw') }} @endif</button>
+                        <button class="btn btn-lg btn-primary btn-block" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='To withdraw' contenteditable="true">{{ __('To withdraw') }}</editor_block> @else {{ __('To withdraw') }} @endif
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -126,19 +127,20 @@
               </div>
             </div>
           </div>
-
+        
         </div>
       @endif
-
+    
     </div>
   </div>
 @endsection
 @push('styles')
   <style>
-      .item-list-wrapper{
+      .item-list-wrapper {
           display: flex;
           flex-wrap: wrap;
       }
+
       .payment-system-radio {
           position: absolute;
           left: -9999px;

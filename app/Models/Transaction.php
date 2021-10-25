@@ -166,11 +166,8 @@ class Transaction extends Model
      *
      * @return mixed
      */
-    public static function enter($wallet, $amount, $payment_system_id = null) {
-        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $wallet->user->id)->where('payment_system_id', $payment_system_id)->first();
-        if ($wallet_detail === null) {
-            return null;
-        }
+    public static function enter($wallet, $amount, $payment_system_id = null)
+    {
         $type = TransactionType::getByName('enter');
         $transaction = self::create([
             'type_id' => $type->id,
@@ -180,7 +177,6 @@ class Transaction extends Model
             'wallet_id' => $wallet->id,
             'payment_system_id' => $payment_system_id,
             'amount' => $amount,
-            'external' => $wallet_detail->external,
         ]);
         return $transaction->save() ? $transaction : null;
     }
@@ -193,54 +189,53 @@ class Transaction extends Model
      * @return Transaction|null
      * @throws \Exception
      */
-    public static function withdraw(Wallet $wallet, float $amount, $payment_system_id) {
-        $amount = (float)abs($amount);
+    public static function withdraw(Wallet $wallet, float $amount, $payment_system_id)
+    {
+        $amount         = (float) abs($amount);
         /** @var TransactionType $type */
-        $type = TransactionType::getByName('withdraw');
+        $type           = TransactionType::getByName('withdraw');
         /** @var User $user */
-        $user = $wallet->user()->first();
+        $user           = $wallet->user()->first();
         /** @var Currency $currency */
-        $currency = $wallet->currency()->first();
+        $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
-        $paymentSystem = $payment_system_id;
-
+        $paymentSystem  = $payment_system_id;
+        
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
         }
-
-        $wallet_detail = UserWalletDetail::where('wallet_id', $wallet->id)->where('user_id', $user->id)->where('payment_system_id', $paymentSystem->id)->first();
-        if ($wallet_detail === null) {
-            throw new \Exception(__('No requisites'));
-        }
-
-        $commission = $type->commission;
+        
+        $commission           = $type->commission;
         $amountWithCommission = $amount / ((100 - $commission) * 0.01);
-
+        
         $psMinimumWithdrawArray = @json_decode($paymentSystem->minimum_withdraw, true);
-        $psMinimumWithdraw = isset($psMinimumWithdrawArray[$currency->code]) ? $psMinimumWithdrawArray[$currency->code] : 0;
-
-        if ($amount + $commission < $psMinimumWithdraw) {
-            throw new \Exception(__('Minimum withdraw amount is ') . $psMinimumWithdraw . $currency->symbol);
+        $psMinimumWithdraw      = isset($psMinimumWithdrawArray[$currency->code])
+            ? $psMinimumWithdrawArray[$currency->code]
+            : 0;
+        
+        if ($amount+$commission < $psMinimumWithdraw) {
+            throw new \Exception(__('Minimum withdraw amount is ').$psMinimumWithdraw.$currency->symbol);
         }
-
+        
         /** @var Transaction $transaction */
         $transaction = self::create([
-            'type_id' => $type->id,
-            'commission' => $type->commission,
-            'user_id' => $user->id,
-            'currency_id' => $currency->id,
-            'wallet_id' => $wallet->id,
+            'type_id'           => $type->id,
+            'commission'        => $type->commission,
+            'user_id'           => $user->id,
+            'currency_id'       => $currency->id,
+            'wallet_id'         => $wallet->id,
             'payment_system_id' => $paymentSystem->id,
-            'amount' => $amountWithCommission,
-            'approved' => false,
-            'external' => $wallet_detail->external,
+            'amount'            => $amountWithCommission,
+            'approved'          => false,
         ]);
-
+        
         $wallet->update([
-            'balance' => $wallet->balance - $amountWithCommission,
+            'balance' => $wallet->balance - $amountWithCommission
         ]);
-
-        return $transaction->save() ? $transaction : null;
+        
+        return $transaction->save()
+            ? $transaction
+            : null;
     }
 
     /**

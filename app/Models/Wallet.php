@@ -99,9 +99,6 @@ class Wallet extends Model
         return $this->hasMany(Deposit::class, 'wallet_id');
     }
 
-    public function details() {
-        return $this->belongsTo(UserWalletDetail::class, 'wallet_id');
-    }
     /**
      * @param $value
      * @return float
