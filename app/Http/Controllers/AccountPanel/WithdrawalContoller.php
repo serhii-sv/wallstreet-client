@@ -16,13 +16,11 @@ use Illuminate\Support\Facades\Auth;
 class WithdrawalContoller extends Controller
 {
     //
-    
+
     public function index() {
         $currencies = Currency::all();
         return view('accountPanel.withdrawal.index', [
             'wallets' => Wallet::where('user_id', auth()->user()->id)->with('currency')->where('currency_id', '!=', Currency::where('code', 'SPRINT')->first()->id)->get(),
-            'payment_systems' => PaymentSystem::all(),
-            'currencies' => $currencies,
         ]);
     }
     /*public function addWithdrawal(Request $request) {
@@ -39,7 +37,7 @@ class WithdrawalContoller extends Controller
         if ($payment_system == null) {
             return redirect()->back()->with('error', 'Платёжная система не доступна!');
         }
-        
+
         $wallet_detail = UserWalletDetail::where('payment_system_id', $payment_system->id)->where('wallet_id', $wallet->id)->first();
         if ($wallet_detail == null) {
             return redirect()->back()->with('error', 'Введите реквизиты для этой платёжной системы в настройках!');
@@ -48,7 +46,7 @@ class WithdrawalContoller extends Controller
         if (!($amount > 0)) {
             return redirect()->back()->with('error', 'Сумма должна быть больше 0!');
         }
-        
+
         $type = TransactionType::getByName('withdraw');
         $commission = $type->commission;
         $commission_usd = $type->commission_usd;
@@ -56,11 +54,11 @@ class WithdrawalContoller extends Controller
         $toCurrency = Currency::where('code', 'USD')->first();
         $amount_in_usd = Wallet::convertToCurrencyStatic($wallet->currency, $toCurrency, $amountWithCommission);
         $amountWithCommission = Wallet::convertToCurrencyStatic($toCurrency, $wallet->currency, $amount_in_usd + $commission_usd);
-        
+
         if ($amountWithCommission > $wallet->balance) {
             return redirect()->back()->with('error', 'Amount is more than you can withdraw!');
         }
-        
+
         if ($wallet->balance >= $amount) {
             $transaction = Transaction::withdraw($wallet, $amount, $payment_system);
             if (null !== $transaction) {
@@ -80,12 +78,11 @@ class WithdrawalContoller extends Controller
         }
         return back()->with('error', 'Недостаточно средств на счёте для выполнения данной операции!');
     }*/
-    
+
     public function addWithdrawal(Request $request) {
         $request->validate([
-            'amount' => 'required',
+            'amount' => 'required|numeric|min:0',
             'wallet_id' => 'required|uuid',
-            'wallet_detail' => 'required|uuid',
         ]);
         $wallet = Wallet::where('id', $request->get('wallet_id'))->where('user_id', auth()->user()->id)->first();
         if (empty($wallet)) {
@@ -95,11 +92,18 @@ class WithdrawalContoller extends Controller
         if (!($amount > 0)) {
             return redirect()->back()->with('error', 'Сумма должна быть больше 0!');
         }
-        $payment_system = PaymentSystem::find($wallet_detail->payment_system_id);
-        if ($payment_system == null) {
-            return redirect()->back()->with('error', 'Платёжная система не доступна!');
+
+        /** @var Currency $currency */
+        $currency = $wallet->currency;
+
+        if (null == $currency) {
+            return redirect()->back()->with('error', 'Валюта не найдена');
         }
-        
+
+        $payment_system = PaymentSystem::whereHas('currency', function($q, $currency){
+            $q->where('code', $currency->code);
+        })->first();
+
         $type = TransactionType::getByName('withdraw');
         $commission = $type->commission;
         $commission_usd = $type->commission_usd;
@@ -107,11 +111,11 @@ class WithdrawalContoller extends Controller
         $toCurrency = Currency::where('code', 'USD')->first();
         $amount_in_usd = Wallet::convertToCurrencyStatic($wallet->currency, $toCurrency, $amountWithCommission);
         $amountWithCommission = Wallet::convertToCurrencyStatic($toCurrency, $wallet->currency, $amount_in_usd + $commission_usd);
-        
+
         if ($amountWithCommission > $wallet->balance) {
             return redirect()->back()->with('error', 'Amount is more than you can withdraw!');
         }
-        
+
         if ($wallet->balance >= $amount) {
             $transaction = Transaction::withdraw($wallet, $amount, $payment_system);
             if (null !== $transaction) {
