@@ -8,7 +8,6 @@ use App\Models\Notification;
 use App\Models\PaymentSystem;
 use App\Models\Transaction;
 use App\Models\TransactionType;
-use App\Models\UserWalletDetail;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,10 +89,6 @@ class WithdrawalContoller extends Controller
         $wallet = Wallet::where('id', $request->get('wallet_id'))->where('user_id', auth()->user()->id)->first();
         if (empty($wallet)) {
             return redirect()->back()->with('error', 'Кошелька не существует!');
-        }
-        $wallet_detail = UserWalletDetail::where('id', $request->get('wallet_detail'))->where('wallet_id', $wallet->id)->first();
-        if ($wallet_detail == null) {
-            return redirect()->back()->with('error', 'Данный способ вам не доступен!');
         }
         $amount = (float)abs($request->get('amount'));
         if (!($amount > 0)) {
