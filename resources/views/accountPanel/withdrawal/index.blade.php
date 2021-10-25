@@ -49,7 +49,7 @@
                                       $walletName = 'EUR VISA/MASTERCARD';
                                   }
                                 ?>
-                              <option value="{{ $item->id }}">{{ $walletName }} {{ $item->external }}</option>
+                              <option value="{{ $item->id }}">{{ $walletName }} {{ strtoupper($item->external) }}</option>
                             @else
                               <option value="" disabled>Введите реквизиты для вывода в настройках</option>
                             @endif
