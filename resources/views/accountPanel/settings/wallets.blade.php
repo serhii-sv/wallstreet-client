@@ -30,6 +30,8 @@
                                 $walletName = 'RUB VISA/MASTERCARD';
                             } elseif ($currency->code == 'KZT') {
                                 $walletName = 'KZT VISA/MASTERCARD';
+                            } elseif ($currency->code == 'EUR') {
+                                $walletName = 'EUR VISA/MASTERCARD';
                             }
                           ?>
                         <a class="nav-link @if($loop->first) active @endif" id="v-pills-{{ $wallet->id }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $wallet->id }}" role="tab" aria-controls="v-pills-{{ $wallet->id }}">{{ $walletName }}</a>
