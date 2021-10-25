@@ -1,7 +1,7 @@
 @extends('layouts.accountPanel.app')
 @section('title', __('User wallets'))
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="edit-profile">
       @if(!empty($wallets))
@@ -17,7 +17,22 @@
                   <div class="col-sm-3 tabs-responsive-side">
                     <div class="nav flex-column nav-pills border-tab nav-left" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                       @forelse($wallets as $wallet)
-                        <a class="nav-link @if($loop->first) active @endif" id="v-pills-{{ $wallet->id }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $wallet->id }}" role="tab" aria-controls="v-pills-{{ $wallet->id }}">{{ $wallet->currency->name }}</a>
+                          <?php
+                            /** @var \App\Models\Currency $currency */
+                            $currency = $wallet->currency;
+                            $walletName = $currency->name;
+
+                            if ($currency->code == 'USD') {
+                                $walletName = 'PerfectMoney';
+                            } elseif ($currency->code == 'UAH') {
+                                $walletName = 'UAH VISA/MASTERCARD';
+                            } elseif ($currency->code == 'RUB') {
+                                $walletName = 'RUB VISA/MASTERCARD';
+                            } elseif ($currency->code == 'KZT') {
+                                $walletName = 'KZT VISA/MASTERCARD';
+                            }
+                          ?>
+                        <a class="nav-link @if($loop->first) active @endif" id="v-pills-{{ $wallet->id }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $wallet->id }}" role="tab" aria-controls="v-pills-{{ $wallet->id }}">{{ $walletName }}</a>
                       @empty
                       @endforelse
                       {{--  <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home">Home</a>
@@ -30,13 +45,13 @@
                     <div class="tab-content" id="v-pills-tabContent">
                       @forelse($wallets as $wallet)
                         <div class="tab-pane fade @if($loop->first) active show @endif" id="v-pills-{{ $wallet->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $wallet->id }}-tab">
-                        
+
                             <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
                               @csrf
                               <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                               <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
                               <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
-                              
+
                               <div class="row">
                                 <div class="col">
                                   <div class="">
@@ -50,10 +65,10 @@
                               </div>
                             </form>
                         </div>
-                      
+
                       @empty
                       @endforelse
-                      
+
                       {{--<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
                       </div>
@@ -71,7 +86,7 @@
           </div>
         </div>
       @endif
-     
+
     </div>
   </div>
   <style>
@@ -108,15 +123,15 @@
           $('.avatar-image').attr('src', $('.avatar-image').attr('data-old'));
         }
       }
-      
+
       $(".profile-avatar-input").change(function () {
         readURL(this);
       });
-      
+
       $('#uploadPassportImage').click(function () {
         document.getElementById('passportImage').click()
       })
-      
+
       $('#selfie').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
@@ -127,11 +142,11 @@
           reader.readAsDataURL(input.files[0]);
         }
       })
-      
+
       $('#uploadSelfie').click(function () {
         document.getElementById('selfie').click()
       })
-      
+
       $('#passportImage').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
