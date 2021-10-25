@@ -34,7 +34,6 @@ class ProfileController extends Controller
     
     public function updateWalletDetails(Request $request) {
         $request->validate([
-            'payment_system_id' => 'required|uuid',
             'user_id' => 'required|uuid',
             'wallet_id' => 'required|uuid',
             'currency_id' => 'required|uuid',
@@ -43,23 +42,19 @@ class ProfileController extends Controller
         
         $external = $request->get('external');
         $user_id = $request->get('user_id');
-        $payment_system_id = $request->get('payment_system_id');
         $wallet_id = $request->get('wallet_id');
         $currency_id = $request->get('currency_id');
         
         if ($user_id !== auth()->user()->id){
             return redirect()->back()->with('error', 'Жулик!');
         }
-        $payment_system = PaymentSystem::find($payment_system_id);
-        if ($payment_system === null){
-            return redirect()->back()->with('error', 'Платёжная система не доступна!');
-        }
+       
         $wallet = Wallet::where('id', $wallet_id)->where('user_id', $user_id)->where('currency_id', $currency_id)->first();
         if ($wallet === null){
             return redirect()->back()->with('error', 'Попробуй заново!');
         }
     
-        $wallet->external = $request->get('external');
+        $wallet->external = $external;
         $wallet->save();
         
         return redirect()->back()->with('success', 'Данные успешно сохранены!');
