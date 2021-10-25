@@ -30,10 +30,9 @@
                     <div class="tab-content" id="v-pills-tabContent">
                       @forelse($wallets as $wallet)
                         <div class="tab-pane fade @if($loop->first) active show @endif" id="v-pills-{{ $wallet->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $wallet->id }}-tab">
-                          @forelse($wallet->currency->paymentSystems()->get() as $payment)
+                        
                             <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
                               @csrf
-                              <input type="hidden" name="payment_system_id" value="{{ $payment->id }}">
                               <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                               <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
                               <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
@@ -41,8 +40,8 @@
                               <div class="row">
                                 <div class="col">
                                   <div class="">
-                                    <label class="form-label" for="{{ $payment->id }}">{{ $payment->name }}</label>
-                                    <input class="form-control input-air-primary" id="{{ $payment->id }}" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                    <label>Amount</label>
+                                    <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                   </div>
                                 </div>
                                 <div class="col align-self-end">
@@ -50,8 +49,6 @@
                                 </div>
                               </div>
                             </form>
-                          @empty
-                          @endforelse
                         </div>
                       
                       @empty
