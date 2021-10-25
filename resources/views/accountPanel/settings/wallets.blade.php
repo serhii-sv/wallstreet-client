@@ -55,7 +55,7 @@
                               <div class="row">
                                 <div class="col">
                                   <div class="">
-                                    <label>Amount</label>
+                                    <label>Address</label>
                                     <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                   </div>
                                 </div>
