@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Edit profile'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Edit profile page' contenteditable="true">{{ __('Edit profile page') }}</editor_block>
+  @else
+    {{ __('Edit profile page') }}
+  @endif
+@endsection
 @section('content')
   
   <div class="container-fluid">

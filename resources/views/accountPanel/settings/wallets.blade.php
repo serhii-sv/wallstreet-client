@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('User wallets'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='User wallets page' contenteditable="true">{{ __('User wallets page') }}</editor_block>
+  @else
+    {{ __('User wallets page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">

@@ -1,8 +1,14 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Обмен валют')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Currency exchange page' contenteditable="true">{{ __('Currency exchange page') }}</editor_block>
+  @else
+    {{ __('Currency exchange page') }}
+  @endif
+@endsection
 @section('title.show', 'd-none')
 @section('content')
-
+  
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update justify-content-center">
       <div class="card">
@@ -11,7 +17,9 @@
             <div class="donut-chart-widget">
               <div class="card">
                 <div class="card-header">
-                  <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Sprint Token rate' contenteditable="true">{{ __('Sprint Token rate') }}</editor_block> @else {{ __('Sprint Token rate') }} @endif</h5>
+                  <h5>@if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='Sprint Token rate' contenteditable="true">{{ __('Sprint Token rate') }}</editor_block> @else {{ __('Sprint Token rate') }} @endif
+                  </h5>
                   <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                       <li><i class="fa fa-spin fa-cog"></i></li>
@@ -31,12 +39,16 @@
           </div>
         </div>
       </div>
-
+      
       <div class="col-xl-10 risk-col xl-100 box-col-12">
         <div class="card total-users">
           <div class="card-header card-no-border">
-            <h5 class="text-center">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif</h5>
-            <h6 class="font-primary text-center mb-0 mt-3">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Commission 1 $' contenteditable="true">{{ __('Commission 1 $') }}</editor_block> @else {{ __('Commission 1 $') }} @endif</h6>
+            <h5 class="text-center">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif
+            </h5>
+            <h6 class="font-primary text-center mb-0 mt-3">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Commission 1 $' contenteditable="true">{{ __('Commission 1 $') }}</editor_block> @else {{ __('Commission 1 $') }} @endif
+            </h6>
             <div class="text-center mt-4">
               @include('partials.inform')
             </div>
@@ -48,49 +60,62 @@
                 <div class="rate-card col-xl-12">
                   <div class="goal-end-point">
                     <div class="row">
-                      <div class="col-lg-6">
-                        <div class="mb-2">
-                          <div class="col-form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose the first wallet' contenteditable="true">{{ __('Choose the first wallet') }}</editor_block> @else {{ __('Choose the first wallet') }} @endif</div>
-                          <select class="exchange-first-wallet js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="wallet_from">
-                            <option value="" hidden selected disabled>Выбрать</option>
-                            @forelse($wallets as $wallet)
-                              <option value="{{ $wallet->id }}"
-                                  data-id="{{ $wallet->id }}"
-                                  data-prefix="{{ $wallet->currency->symbol }}"
-                                  data-step="{{ $wallet->currency->precision }}"
-                                  data-max="{{ $wallet->balance }}">
-                                {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}</option>
-                            @empty
-                              <option value="" disabled>Кошельки отсутствуют</option>
-                            @endforelse
-                          </select>
+                      <div class="col-lg-6 pr-lg-5">
+                        <div class="mb-2 d-flex align-items-center flex-column">
+                          <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Choose the first wallet' contenteditable="true">{{ __('Choose the first wallet') }}</editor_block> @else {{ __('Choose the first wallet') }} @endif
+                          </div>
+                          @forelse($wallets as $wallet)
+                            <input class="currency-exchange-radio" type="radio" id="wal1{{ $wallet->id }}" name="wallet_from" value="{{ $wallet->id }}">
+                            <label class="currency-exchange" for="wal1{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
+                              {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
+                            </label>
+                          @empty
+                            <div>Кошельки отсутствуют</div>
+                          @endforelse
+                          {{-- <select class="exchange-first-wallet js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="wallet_from" >
+                             <option value="" hidden selected disabled>Выбрать</option>
+                             @forelse($wallets as $wallet)
+                               <option value="{{ $wallet->id }}"
+                                   data-id="{{ $wallet->id }}"
+                                   data-prefix="{{ $wallet->currency->symbol }}"
+                                   data-step="{{ $wallet->currency->precision }}"
+                                   data-max="{{ $wallet->balance }}">
+                                 {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}</option>
+                             @empty
+                               <option value="" disabled>Кошельки отсутствуют</option>
+                             @endforelse
+                           </select>--}}
                         </div>
                       </div>
-
-                      <div class="col-lg">
-                        <div class="mb-2">
-                          <div class="col-form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif</div>
-                          <select class="exchange-second-wallet js-example-basic-single col-sm-12 select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="wallet_to">
-                            <option value="" hidden selected disabled>Выбрать</option>
-                            @forelse($wallets as $wallet)
-                              <option value="{{ $wallet->id }}" data-id="{{ $wallet->id }}">{{ $wallet->currency->name ?? '' }} -
-                                <strong>{{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}</option>
-                            @empty
-                              <option value="" disabled>Кошельки отсутствуют</option>
-                            @endforelse
-                          </select>
+                      
+                      <div class="col-lg pl-lg-5">
+                        <div class="mb-2 d-flex flex-column align-items-center">
+                          <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif
+                          </div>
+                          @forelse($wallets as $wallet)
+                            <input class="currency-exchange-radio" type="radio" id="wal2{{ $wallet->id }}" name="wallet_to" value="{{ $wallet->id }}">
+                            <label class="currency-exchange exchange-second-wallet" for="wal2{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
+                              {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
+                            </label>
+                          @empty
+                            <div>Кошельки отсутствуют</div>
+                          @endforelse
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
+                
                 <ul class="col-xl-12">
                   <li>
                     <div class="form-group row">
-                     {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
+                      {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
                       <div class="col">
-                        <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='How much do you want to exchange?' contenteditable="true">{{ __('How much do you want to exchange?') }}</editor_block> @else {{ __('How much do you want to exchange?') }} @endif</label>
+                        <label class="form-label">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='How much do you want to exchange?' contenteditable="true">{{ __('How much do you want to exchange?') }}</editor_block> @else {{ __('How much do you want to exchange?') }} @endif
+                        </label>
                         <div class="input-group mb-3">
                           <span class="input-group-text currency-symbol">?</span>
                           <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}" placeholder="0.1">
@@ -102,28 +127,55 @@
                     </div>
                   </li>
                   <li>
-                    <button class="btn-download btn btn-gradient f-w-500">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Exchange' contenteditable="true">{{ __('Exchange') }}</editor_block> @else {{ __('Exchange') }} @endif</button>
+                    <button class="btn-download btn btn-gradient f-w-500">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Exchange' contenteditable="true">{{ __('Exchange') }}</editor_block> @else {{ __('Exchange') }} @endif
+                    </button>
                   </li>
                 </ul>
               </form>
             </div>
-
+          
           </div>
         </div>
       </div>
-
+    
     </div>
   </div>
 @endsection
-{{--@push('styles')
-  <link rel="stylesheet" href="{{ asset('accountPanel/css/vendors/range-slider.css') }}">
-@endpush--}}
+@push('styles')
+  <style>
+      .currency-exchange-label {
+          margin-bottom: 15px;
+          font-size: 20px;
+      }
+
+      .currency-exchange {
+          width: 350px;
+          max-width: 100%;
+          display: block;
+          cursor: pointer;
+          padding: 10px 15px;
+          margin-bottom: 5px;
+          border: 1px solid #ececec;
+      }
+      .currency-exchange-radio{
+          position: absolute;
+          opacity: 0;
+          width: 1px;
+          height: 1px;
+          left: -9999px;
+      }
+      .currency-exchange-radio:checked + .currency-exchange {
+          background: #ececec;
+      }
+  </style>
+@endpush
 @push('scripts')
   <script src="{{ asset('accountPanel/js/chart/apex-chart/apex-chart.js') }}"></script>
   <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
   <script src="{{ asset('accountPanel/js/chart/apex-chart/chart-custom.js') }}"></script>
   @if($exchange_rate_log)
-
+    
     <script>
       $(document).ready(function () {
         // browser-candlestick chart
@@ -147,7 +199,7 @@
             opacity: 0.9,
             colors: ['#7366ff'],
           },
-          tooltip:{
+          tooltip: {
             enabled: true,
             x: {
               show: true,
@@ -201,7 +253,7 @@
             }
           }
         }
-
+        
         var chartcandlestickchart = new ApexCharts(
             document.querySelector("#chart-widget13"),
             optionscandlestickchart
@@ -210,55 +262,55 @@
       });
     </script>
   @endif
-{{--  <script src="{{ asset('accountPanel/js/range-slider/ion.rangeSlider.min.js') }}"></script>
-  <script>
-    var range_slider_custom = {
-      init: function () {
-        $("#u-range-02").ionRangeSlider({
-          min: 0,
-          step: 0.00001,
-          max: 0,
-          prefix: '0',
-          prettify_separator: '',
-          from: 0
-        })
-      }
-    };
-    (function ($) {
-      "use strict";
-      range_slider_custom.init();
-    })(jQuery);
-  </script>--}}
-
+  {{--  <script src="{{ asset('accountPanel/js/range-slider/ion.rangeSlider.min.js') }}"></script>
+    <script>
+      var range_slider_custom = {
+        init: function () {
+          $("#u-range-02").ionRangeSlider({
+            min: 0,
+            step: 0.00001,
+            max: 0,
+            prefix: '0',
+            prettify_separator: '',
+            from: 0
+          })
+        }
+      };
+      (function ($) {
+        "use strict";
+        range_slider_custom.init();
+      })(jQuery);
+    </script>--}}
+  
   <script>
     $(document).ready(function () {
       var $deleted = '';
-      $("body").on('change', '.exchange-first-wallet', function (e) {
+      /*$("body").on('change', '.exchange-first-wallet', function (e) {
         var $id = $(this).val();
         if ($deleted) {
           $(".exchange-second-wallet").append($deleted);
         }
-      /*  var $step;
-        var $prefix = $(this).find('option:selected').attr('data-prefix');
-        var $precision = parseInt($(this).find('option:selected').attr('data-step'));
-        if ($precision > 2){
-          $step = 0.00001
-        }else{
-          $step = 1
-        }
-        var $max = $(this).find('option:selected').attr('data-max');
-        $("#u-range-02").data("ionRangeSlider").update({
-          prefix: $prefix + " ",
-          step: $step,
-          max: $max
-        });
-        */
+        /!*  var $step;
+          var $prefix = $(this).find('option:selected').attr('data-prefix');
+          var $precision = parseInt($(this).find('option:selected').attr('data-step'));
+          if ($precision > 2){
+            $step = 0.00001
+          }else{
+            $step = 1
+          }
+          var $max = $(this).find('option:selected').attr('data-max');
+          $("#u-range-02").data("ionRangeSlider").update({
+            prefix: $prefix + " ",
+            step: $step,
+            max: $max
+          });
+          *!/
         var $prefix = $(this).find('option:selected').attr('data-prefix');
         $(".currency-symbol").text($prefix);
         $deleted = $(".exchange-second-wallet option[data-id='" + $id + "']");
         $(".exchange-second-wallet option[data-id='" + $id + "']").remove();
-
-      })
+        
+      })*/
     });
   </script>
 @endpush

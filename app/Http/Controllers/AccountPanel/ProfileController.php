@@ -150,7 +150,6 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'passportImage' => 'required|mimes:jpeg,gif,png,bmp',
             'selfie' => 'required|mimes:jpeg,gif,png,bmp',
-            'full_name' => 'required|string|max:255',
         ], [
             'passportImage.required' => 'Фото паспорта обязятельно',
             'passportImage.mimes' => 'Неверный формат файла для фото паспорта',
@@ -185,7 +184,6 @@ class ProfileController extends Controller
                 $user->verifiedDocuments()->create([
                     'passport_image' => $passportFile,
                     'selfie_image' => $selfie,
-                    'full_name' => $request->full_name,
                 ]);
             });
         } catch (\Exception $exception) {

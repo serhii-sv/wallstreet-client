@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('theme/css/main.css') }}">
       <link rel="stylesheet" href="{{ asset('accountPanel/css/vendors/feather-icon.css') }}">
       <link rel="stylesheet" href="{{ asset('accountPanel/css/font-awesome.css') }}">
-    
+  
     @yield('styles')
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>

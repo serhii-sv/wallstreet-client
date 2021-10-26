@@ -81,9 +81,10 @@ class ReplenishmentController extends Controller
         }
     }
 
-    public function manual() {
-
-        return view('accountPanel.replenishment.manual');
+    public function manual($id = null) {
+        return view('accountPanel.replenishment.manual', [
+            'paymentSystem' => PaymentSystem::whereId($id)->first(),
+        ]);
     }
 
     public function getPaySystemCurrencies(Request $request) {

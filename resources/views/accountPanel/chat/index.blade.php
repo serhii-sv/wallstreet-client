@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Чат')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Chat page' contenteditable="true">{{ __('Chat page') }}</editor_block>
+  @else
+    {{ __('Chat page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">

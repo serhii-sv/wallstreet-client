@@ -15,14 +15,15 @@ use Illuminate\Support\Facades\Auth;
 class DepositsController extends Controller
 {
     public function index() {
-        $user_id = auth()->user()->id;
+        return redirect()->route('accountPanel.deposits.create');
+        /*$user_id = auth()->user()->id;
         $deposits = Deposit::where('user_id', $user_id)->with('rate', 'currency', 'wallet')->orderByDesc('created_at')->paginate(12);
         $deposit_groups = RateGroup::all();
         return view('accountPanel.deposits.index', [
             'deposits' => $deposits,
             'deposit_groups' => $deposit_groups,
             'deposits_count' => Deposit::where('user_id', $user_id)->count(),
-        ]);
+        ]);*/
     }
 
     public function create() {

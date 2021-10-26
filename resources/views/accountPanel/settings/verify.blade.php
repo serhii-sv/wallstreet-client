@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Documents verify'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Documents verify page' contenteditable="true">{{ __('Documents verify page') }}</editor_block>
+  @else
+    {{ __('Documents verify page') }}
+  @endif
+@endsection
 @section('content')
   
   <div class="container-fluid">
@@ -43,12 +49,6 @@
                       <input type="file" class="hidden" name="selfie" id="selfie" accept="image/jpeg','image/gif','image/png','image/bmp','image/svg+xml">
                       <img class="preview mt-3 {{ is_null($user->lastVerificationRequest()) ? 'hidden' : '' }}" id="selfiePreview" src="{{ !is_null($user->lastVerificationRequest()) ? Storage::disk('do_spaces')->url($user->lastVerificationRequest()->selfie_image) : '' }}">
                     </div>
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                  <div class="">
-                    <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Full name' contenteditable="true">{{ __('Full name') }}</editor_block> @else {{ __('Full name') }} @endif</label>
-                    <input class="form-control" type="text" name="full_name" value="{{ !is_null($user->lastVerificationRequest()) ? $user->lastVerificationRequest()->full_name : '' }}">
                   </div>
                 </div>
               </div>

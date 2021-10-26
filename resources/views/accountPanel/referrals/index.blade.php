@@ -1,7 +1,13 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Все рефералы')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Referral progress page' contenteditable="true">{{ __('Referral progress page') }}</editor_block>
+  @else
+    {{ __('Referral progress page') }}
+  @endif
+@endsection
 @section('content')
-
+  
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       @include('partials.inform')
@@ -24,15 +30,11 @@
                 <div class="row">
                   <div class="col-sm-6 col-lg-4 order-sm-1 order-xl-0">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-link"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif</h6>
-                          <span>{{ route('ref_link', $user->my_id) }}</span>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="ttl-info text-start">
-                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral link transitions' contenteditable="true">{{ __('Referral link transitions') }}</editor_block> @else {{ __('Referral link transitions') }} @endif</h6>
+                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Referral link transitions' contenteditable="true">{{ __('Referral link transitions') }}</editor_block> @else {{ __('Referral link transitions') }} @endif
+                          </h6>
                           <span>{{ $referral_link_clicks ?? 0 }}</span>
                         </div>
                       </div>
@@ -43,21 +45,30 @@
                       <div class="title">
                         <a target="_blank" href="" data-bs-original-title="" title="">@if(!$upliner) {{ $user->name }} @else {{ $upliner->name }} @endif </a>
                       </div>
-                      <div class="desc">@if(!$upliner) @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Your login' contenteditable="true">{{ __('Your login') }}</editor_block> @else {{ __('Your login') }} @endif: {{ $user->login }} @else {{ $upliner->login }} @endif </div>
-                      <div class="desc">@if($upliner) @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Your upliner' contenteditable="true">{{ __('Your upliner') }}</editor_block> @else {{ __('Your upliner') }} @endif @endif </div>
+                      <div class="desc">@if(!$upliner) @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Your login' contenteditable="true">{{ __('Your login') }}</editor_block> @else {{ __('Your login') }} @endif: {{ $user->login }} @else {{ $upliner->login }} @endif
+                      </div>
+                      <div class="desc">@if($upliner) @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Your upliner' contenteditable="true">{{ __('Your upliner') }}</editor_block> @else {{ __('Your upliner') }} @endif @endif
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name="Partners' investment amount" contenteditable="true">{{ __("Partners' investment amount") }}</editor_block> @else {{ __("Partners' investment amount") }} @endif</h6>
+                          <h6><i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name="Partners' investment amount" contenteditable="true">{{ __("Partners' investment amount") }}</editor_block> @else {{ __("Partners' investment amount") }} @endif
+                          </h6>
                           <span>{{ number_format($total_referral_invested, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Profit amount' contenteditable="true">{{ __('Profit amount') }}</editor_block> @else {{ __('Profit amount') }} @endif</h6>
+                          <h6>
+                            <i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Profit amount' contenteditable="true">{{ __('Profit amount') }}</editor_block> @else {{ __('Profit amount') }} @endif
+                          </h6>
                           <span>{{ number_format($total_referral_revenue, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
@@ -65,31 +76,51 @@
                   </div>
                 </div>
                 <hr>
-                <div class="social-media">
-                  <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Share your referral link on social media' contenteditable="true">{{ __('Share your referral link on social media') }}</editor_block> @else {{ __('Share your referral link on social media') }} @endif</h5>
-                  <script src="https://yastatic.net/share2/share.js"></script>
-                  <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
-
-                </div>
-                <div class="follow">
-                  <div class="row">
-                    <div class="col-6 text-md-end">
-                      <div class="follow-num counter">{{ $referral_link_registered }}</div>
-                      <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</span>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="social-media">
+                      <h5>@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='Share your referral link on social media' contenteditable="true">{{ __('Share your referral link on social media') }}</editor_block> @else {{ __('Share your referral link on social media') }} @endif
+                      </h5>
+                      <script src="https://yastatic.net/share2/share.js"></script>
+                      <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
+                    
                     </div>
-                    <div class="col-6 text-md-start border-right">
-                      <div class="follow-num counter">{{ $all_referrals->count() }}</div>
-                      <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</span>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="follow">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="ttl-info text-start">
+                            <h6><i class="fa fa-link"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif
+                            </h6>
+                            <span>{{ route('ref_link', $user->my_id) }}</span>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 text-md-end">
+                          <div class="follow-num counter">{{ $referral_link_registered }}</div>
+                          <span>@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</span>
+                        </div>
+                        <div class="col-lg-4 text-md-start border-right">
+                          <div class="follow-num counter">{{ $all_referrals->count() }}</div>
+                          <span>@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+              
+              
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
+      
+      
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -100,14 +131,27 @@
                     <thead>
                       <tr>
                         <th class="f-22">
-                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else {{ __('User') }} @endif
+                          @if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else {{ __('User') }} @endif
                         </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Date/Time of registration ' contenteditable="true">{{ __('Date/Time of registration ') }}</editor_block> @else {{ __('Date/Time of registration ') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upliner login' contenteditable="true">{{ __('Upliner login') }}</editor_block> @else {{ __('Upliner login') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Invested' contenteditable="true">{{ __('Invested') }}</editor_block> @else {{ __('Invested') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Accruals' contenteditable="true">{{ __('Accruals') }}</editor_block> @else {{ __('Accruals') }} @endif</th>
-                        <th>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block> @else {{ __('Reward') }} @endif</th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Date/Time of registration' contenteditable="true">{{ __('Date/Time of registration') }}</editor_block> @else {{ __('Date/Time of registration') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Upliner login' contenteditable="true">{{ __('Upliner login') }}</editor_block> @else {{ __('Upliner login') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Invested' contenteditable="true">{{ __('Invested') }}</editor_block> @else {{ __('Invested') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Accruals' contenteditable="true">{{ __('Accruals') }}</editor_block> @else {{ __('Accruals') }} @endif
+                        </th>
+                        <th>@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block> @else {{ __('Reward') }} @endif
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -156,6 +200,6 @@
 @endsection
 @push('scripts')
   <script>
-
+  
   </script>
 @endpush

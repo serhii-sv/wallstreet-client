@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\ReferralLinkStat;
 use App\Models\User;
 use App\Models\UserAuthLog;
@@ -134,6 +135,7 @@ class LoginController extends Controller
         
         return view('auth.login', [
             'google_auth_url' => $google_auth_url,
+            'languages' => Language::all(),
         ]);
     }
     

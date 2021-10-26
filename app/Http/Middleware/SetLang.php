@@ -35,7 +35,7 @@ class SetLang
             $defaultLang = 'en';
         }
 
-        if (isset($_COOKIE['language']) && !session()->has('language')) {
+        if (isset($_COOKIE['lang']) && !session()->has('lang')) {
             $_COOKIE['lang']    = preg_replace('/[^A-Za-z]/', '', trim($_COOKIE['lang']));
             $checkExists        = file_exists(resource_path('lang/'.$_COOKIE['lang'].'.json'));
 
@@ -48,9 +48,9 @@ class SetLang
             }
         }
 
-        $locale = session('language', $defaultLang);
+        $locale = session('lang', $defaultLang);
 
-        if (!isset($_COOKIE['language']) || $_COOKIE['language'] != $locale) {
+        if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $locale) {
             setcookie('lang', $locale, Carbon::now()->addDays(365)->timestamp, '/');
         }
 

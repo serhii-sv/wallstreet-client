@@ -101,12 +101,12 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
             Route::post('/replenishment', [ReplenishmentController::class, 'handle'])->name('replenishment');
             //Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
-            Route::get('/replenishment/manual', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
+            Route::get('/replenishment/manual/{id?}', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
 
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
 
-            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+            //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
             Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
             Route::post('/profile/upload-documents', [ProfileController::class, 'uploadDocuments'])->name('profile.upload-documents');

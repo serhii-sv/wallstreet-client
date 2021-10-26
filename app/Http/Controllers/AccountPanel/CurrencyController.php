@@ -38,6 +38,9 @@ class CurrencyController extends Controller
             'wallet_from' => 'required',
             'wallet_to' => 'required',
         ]);
+        if ($request->get('wallet_from') == $request->get('wallet_to')){
+            return redirect()->back()->with('error', 'Кошельки должны отличаться!');
+        }
         $amount = abs($request->get('amount'));
         $commission = 1;
         $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->first();

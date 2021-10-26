@@ -1,13 +1,11 @@
 @extends('layouts.accountPanel.app')
-
-@section('css')
-
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Ico page' contenteditable="true">{{ __('Ico page') }}</editor_block>
+  @else
+    {{ __('Ico page') }}
+  @endif
 @endsection
-
-@section('style')
-@endsection
-
-@section('title', __('Ico'))
 
 @section('content')
   <div class="container-fluid" style="margin-top: 200px;">

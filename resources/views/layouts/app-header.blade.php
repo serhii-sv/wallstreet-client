@@ -118,7 +118,7 @@
                     }
 
                     .language:hover .language__list {
-                        width: 100px;
+                
                         visibility: visible;
                         opacity: 1;
                         -webkit-transform: none;
@@ -127,6 +127,7 @@
                     }
 
                     .language__list {
+                        width: 120px;
                         list-style: none;
                         position: absolute;
                         background: #fff;
@@ -147,10 +148,14 @@
                         -webkit-transition: all .3s ease;
                         transition: all .3s ease
                     }
-
+                    .language__item{
+              
+                    }
                     .language__item, .language__item a {
                         width: 100%;
                         margin-left: 0 !important;
+                        padding-top: 0 !important;
+                        padding-bottom: 0 !important;
                     }
 
                     .language__item:last-child {
@@ -163,9 +168,10 @@
                         color: #000;
                         text-transform: uppercase;
                         font-weight: 700;
-                        padding: 3px;
+                        padding: 10px;
                         cursor: pointer;
-                        background: 0 0
+                        background: 0 0;
+                        height: auto;
                     }
 
                     .language__button:hover {
