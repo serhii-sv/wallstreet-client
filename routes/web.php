@@ -58,10 +58,15 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
     // Technical
     Route::get('/lang/{locale}', [\App\Http\Controllers\LanguageController::class, 'index'])->name('set.lang');
-
+    
     Auth::routes();
     Route::get('/auth/google', [LoginController::class, 'loginWithGoogle'])->name('login.google');
-
+    
+    Route::get('/login/verify-code', [ProfileController::class, 'verifyLoginCode'])->name('login.verify.code');
+    Route::get('/login/enter/verify-code', [ProfileController::class, 'enterVerifyLoginCode'])->name('login.enter.verify.code');
+    Route::get('/login/send/verify-code', [ProfileController::class, 'loginSendVerifyCode'])->name('login.send.verify.code');
+    Route::post('/login/verify-code', [ProfileController::class, 'verifyCode'])->name('login.verify.code');
+    
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
     Route::get('/ref/{partner_id}', [SetPartnerController::class, 'index'])->name('ref_link');
@@ -74,7 +79,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
         Route::any('/payment_message/{status}', [\App\Http\Controllers\PaymentMessageController::class, 'message'])->name('payment_message');
 
-        Route::group(['middleware' => ['2fa'],  'as' => 'accountPanel.'], function (){
+        Route::group(['middleware' => ['2fa', 'checkAuthCode'],  'as' => 'accountPanel.'], function (){
 
             Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('log')->middleware('permission.check');
 
@@ -101,12 +106,12 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/replenishment', [ReplenishmentController::class, 'index'])->name('replenishment');
             Route::post('/replenishment', [ReplenishmentController::class, 'handle'])->name('replenishment');
             //Route::post('/replenishment/new-request', [ReplenishmentController::class, 'newRequest'])->name('replenishment.new.request');
-            Route::get('/replenishment/manual', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
+            Route::get('/replenishment/manual/{id?}', [ReplenishmentController::class, 'manual'])->name('replenishment.manual');
 
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
 
-            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+            //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
             Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.update.photo');
             Route::post('/profile/upload-documents', [ProfileController::class, 'uploadDocuments'])->name('profile.upload-documents');
@@ -118,7 +123,16 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::get('/settings/profile', [AccountSettingsController::class, 'editProfile'])->name('settings.profile');
             Route::get('/settings/wallets', [AccountSettingsController::class, 'editWallets'])->name('settings.wallets');
             Route::get('/settings/verify', [AccountSettingsController::class, 'verifyAccount'])->name('settings.verify');
-
+            
+            Route::get('/settings/verify-phone', [AccountSettingsController::class, 'showVerifyPhone'])->name('settings.verify.phone');
+            Route::post('/settings/update-phone', [AccountSettingsController::class, 'updatePhone'])->name('settings.update.phone');
+            Route::post('/settings/auth-with-phone', [AccountSettingsController::class, 'updateAuthWithPhone'])->name('settings.auth.with.phone');
+            Route::get('/settings/enter-verify-code', [AccountSettingsController::class, 'showEnterVerifyCode'])->name('settings.enter.verify.code');
+            Route::get('/settings/send-verify-code', [AccountSettingsController::class, 'sendVerifyCode'])->name('settings.send.verify.code');
+            Route::post('/settings/verify-phone', [AccountSettingsController::class, 'verifyPhone'])->name('settings.verify.phone');
+    
+            Route::get('verify-voice-text-xml/{code}', [AccountSettingsController::class, 'showVerifyVoiceTextXml'])->name('verify.voice.text.xml');
+            
             Route::get('/transactions/{type?}', [TransactionsController::class, 'index'])->name('transactions');
             Route::resource('/deposits', DepositsController::class);
             Route::post('/deposits/set-reinvest', [DepositsController::class, 'setReinvestPercent' ])->name('deposits.set.reinvest');

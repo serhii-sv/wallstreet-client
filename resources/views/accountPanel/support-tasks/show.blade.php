@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Task "' . $supportTask->title . '"')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Task page' contenteditable="true">{{ __('Task page') }}</editor_block>
+  @else
+    {{ __('Task page') }} {{ $supportTask->title }}
+  @endif
+@endsection
 
 @section('content')
     <div class="container-fluid">

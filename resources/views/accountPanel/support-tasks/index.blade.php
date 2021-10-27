@@ -1,13 +1,11 @@
 @extends('layouts.accountPanel.app')
-
-@section('css')
-
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Support tasks page' contenteditable="true">{{ __('Support tasks page') }}</editor_block>
+  @else
+    {{ __('Support tasks page') }}
+  @endif
 @endsection
-
-@section('style')
-@endsection
-
-@section('title', strtoupper(__('Support tasks')))
 
 @section('content')
     <div class="container-fluid">

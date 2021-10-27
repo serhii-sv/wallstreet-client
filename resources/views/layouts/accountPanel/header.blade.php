@@ -184,7 +184,7 @@
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li>
-              <a href="{{ route('accountPanel.profile') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="user"></i>
+              <a href="{{ route('accountPanel.settings.profile') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="user"></i>
                 <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Account' contenteditable="true">{{ __('Account') }}</editor_block> @else {{ __('Account') }} @endif</span>
               </a>
             </li>

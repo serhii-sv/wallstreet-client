@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Balance')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Balance page' contenteditable="true">{{ __('Balance page') }}</editor_block>
+  @else
+    {{ __('Balance page') }}
+  @endif
+@endsection
 @section('content')
 <section class="lk-section">
     <div class="form-lk">

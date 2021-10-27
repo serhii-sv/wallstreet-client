@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Все операции')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Transaction page' contenteditable="true">{{ __('Transaction page') }}</editor_block>
+  @else
+    {{ __('Transaction page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">

@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Replenishment')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Replenishment page' contenteditable="true">{{ __('Replenishment page') }}</editor_block>
+  @else
+    {{ __('Replenishment page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">
@@ -45,7 +51,7 @@
 
                       @if($item->code == 'coinpayments')
                         @foreach($item->currencies()->get() as $currency)
-                          <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" >
+                          <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
                             <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-manual="false">
                             <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                               <img src="{{ asset('accountPanel/images/logos/' .  $currency->image ) }}" alt="{{ $currency->image_alt }}" title="{{ $currency->image_title }}">
@@ -55,7 +61,7 @@
                           </label>
                         @endforeach
                       @else
-                        <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" >
+                        <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
                           <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
                           <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                             <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
@@ -79,7 +85,7 @@
                     </select>
                   </div>--}}
                   <div class="f1-buttons">
-                    <button class="btn btn-primary btn-next" type="button" data-bs-original-title="" title="">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-next" id="next" type="button" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Next' contenteditable="true">{{ __('Next') }}</editor_block> @else {{ __('Next') }} @endif
                     </button>
                   </div>
@@ -98,15 +104,16 @@
                        @endforelse
                      </div>--}}
                   <div class="text-center mb-3">
-                    <label class="" style="font-size: 20px;">Amount</label>
+                    <label class="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
+                        <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block> @else {{ __('Amount') }} @endif</label>
                     <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin: auto">
                   </div>
 
                   <div class="f1-buttons">
-                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title="">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
                     </button>
-                    <button class="btn btn-primary btn-submit" type="submit" data-bs-original-title="" title="">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-submit" id="next" type="submit" data-bs-original-title="" title="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='vnesti' contenteditable="true">{{ __('vnesti') }}</editor_block> @else {{ __('vnesti') }} @endif
                     </button>
                   </div>
@@ -180,15 +187,22 @@
           $(el).prop('checked', false).removeAttr('checked');
         });
         $(this).find("input[name='currency']").prop('checked', true).attr('checked', 'checked');
+        
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $(".f1-buttons").offset().top
+        },0);
       });
       $(".btn-next").on('click', function (e) {
 
         var manual = $("input[name='payment_system']:checked").attr('data-manual');
         if (manual == 'true'){
+          var $id = $("input[name='payment_system']:checked").val();
           $(".item-list-wrapper").empty().html('<div class="loader-box" style="height: 24px; margin: 50px auto 30px">' +
               '<div class="loader-3"></div>' +
               '</div>');
-          location.href = "{{ route('accountPanel.replenishment.manual') }}";
+          $(".f1-buttons").hide();
+          var $url = "{{ route('accountPanel.replenishment.manual') }}/" + $id ;
+          location.href = $url;
         }
 
       });

@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('User wallets'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='User wallets page' contenteditable="true">{{ __('User wallets page') }}</editor_block>
+  @else
+    {{ __('User wallets page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">
@@ -17,11 +23,10 @@
                   <div class="col-sm-3 tabs-responsive-side">
                     <div class="nav flex-column nav-pills border-tab nav-left" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                       @forelse($wallets as $wallet)
-                          <?php
+                            <?php
                             /** @var \App\Models\Currency $currency */
                             $currency = $wallet->currency;
                             $walletName = $currency->name;
-
                             if ($currency->code == 'USD') {
                                 $walletName = 'PerfectMoney';
                             } elseif ($currency->code == 'UAH') {
@@ -33,7 +38,7 @@
                             } elseif ($currency->code == 'EUR') {
                                 $walletName = 'EUR VISA/MASTERCARD';
                             }
-                          ?>
+                            ?>
                         <a class="nav-link @if($loop->first) active @endif" id="v-pills-{{ $wallet->id }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $wallet->id }}" role="tab" aria-controls="v-pills-{{ $wallet->id }}">{{ $walletName }}</a>
                       @empty
                       @endforelse
@@ -47,25 +52,25 @@
                     <div class="tab-content" id="v-pills-tabContent">
                       @forelse($wallets as $wallet)
                         <div class="tab-pane fade @if($loop->first) active show @endif" id="v-pills-{{ $wallet->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $wallet->id }}-tab">
-
-                            <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
-                              @csrf
-                              <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                              <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
-                              <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
-
-                              <div class="row">
-                                <div class="col">
-                                  <div class="">
-                                    <label>Address</label>
-                                    <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
-                                  </div>
-                                </div>
-                                <div class="col align-self-end">
-                                  <button class="btn btn-success">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
+                          
+                          <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
+                            <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
+                            
+                            <div class="row">
+                              <div class="col">
+                                <div class="">
+                                  <label>Address</label>
+                                  <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                 </div>
                               </div>
-                            </form>
+                              <div class="col align-self-end">
+                                <button class="btn btn-success">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
+                              </div>
+                            </div>
+                          </form>
                         </div>
 
                       @empty
@@ -88,22 +93,18 @@
           </div>
         </div>
       @endif
-
     </div>
   </div>
   <style>
       .media {
           align-items: flex-start !important;
       }
-
       .user-image {
           position: relative;
       }
-
       .hidden {
           display: none;
       }
-
       .preview {
           width: 100%;
           height: auto;
@@ -125,15 +126,12 @@
           $('.avatar-image').attr('src', $('.avatar-image').attr('data-old'));
         }
       }
-
       $(".profile-avatar-input").change(function () {
         readURL(this);
       });
-
       $('#uploadPassportImage').click(function () {
         document.getElementById('passportImage').click()
       })
-
       $('#selfie').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
@@ -144,11 +142,9 @@
           reader.readAsDataURL(input.files[0]);
         }
       })
-
       $('#uploadSelfie').click(function () {
         document.getElementById('selfie').click()
       })
-
       $('#passportImage').change(function () {
         let input = this;
         if (input.files && input.files[0]) {

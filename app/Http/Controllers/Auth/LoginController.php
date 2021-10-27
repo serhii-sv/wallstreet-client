@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceStat;
+use App\Models\Language;
 use App\Models\ReferralLinkStat;
 use App\Models\User;
 use App\Models\UserAuthLog;
+use App\Models\UserDevice;
 use App\Models\UserMultiAccounts;
 use App\Providers\RouteServiceProvider;
+use hisorange\BrowserDetect\Parser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
@@ -37,6 +41,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
     public    $ip;
+    
     /**
      * Create a new controller instance.
      *
@@ -109,7 +114,7 @@ class LoginController extends Controller
                         'partner_id' => $partner_id,
                         'api_token' => Str::random(60),
                     ]);
-    
+                    
                     $partner = User::where('my_id', $user->partner_id)->first();
                     if ($partner !== null) {
                         $stats = ReferralLinkStat::where('partner_id', $partner->id)->where('user_id', null)->where('ip', $this->ip)->first();
@@ -134,11 +139,11 @@ class LoginController extends Controller
         
         return view('auth.login', [
             'google_auth_url' => $google_auth_url,
+            'languages' => Language::all(),
         ]);
     }
     
     public function loginWithGoogle(Request $request) {
-        dd($request->all());
         $user = User::where('email', $request->get('email'))->first();
         if ($user !== null) {
             if ($this->attemptLoginGoogle($request)) {
@@ -146,7 +151,6 @@ class LoginController extends Controller
             }
             $this->incrementLoginAttempts($request);
         }
-        
     }
     
     protected function attemptLoginGoogle(Request $request) {
@@ -157,8 +161,10 @@ class LoginController extends Controller
         return $request->only($this->username(), 'password');
     }
     
+    
     public function login(Request $request) {
         $this->validateLogin($request);
+        
         
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -170,6 +176,7 @@ class LoginController extends Controller
         }
         
         if ($this->attemptLogin($request)) {
+            
             return $this->sendLoginResponse($request);
         }
         
@@ -184,6 +191,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user) {
         //
         $this->createUserAuthLog($request, $user);
+        $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
     }
     
@@ -214,6 +222,47 @@ class LoginController extends Controller
                  : '',*/
         ], [/*       'recaptchav3' => 'Captcha error! Try again',*/
         ]);
+    }
+    
+    public function createUserAuthDevice(Request $request, $user) {
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $device_stats = DeviceStat::where('browser', $browser)->first();
+        if ($device_stats === null) {
+            $device_stats = new DeviceStat([
+                'browser' => $browser,
+                'count' => 0,
+            ]);
+        }
+        $device_stats->update(['count' => $device_stats->count + 1]);
+        
+        $user_device = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+        if ($user_device !== null) {
+            if ($user_device->ip !== $request->ip()) {
+                $user_device->ip = $request->ip();
+                $user_device->sms_verified = false;
+                $user_device->save();
+            }
+        } else {
+            $user_device = new UserDevice();
+            $user_device->user_id = $user->id;
+            $user_device->ip = $request->ip();
+            $user_device->browser = $browser;
+            $user_device->browser_version = $browser_version;
+            $user_device->device_platform = $device_platform;
+            $user_device->sms_verified = false;
+            if (Parser::isMobile()) {
+                $user_device->is_mobile = true;
+            } else if (Parser::isTablet()) {
+                $user_device->is_tablet = true;
+            } else if (Parser::isDesktop()) {
+                $user_device->is_desktop = true;
+            } else if (Parser::is_bot()) {
+                $user_device->is_bot = true;
+            }
+            $user_device->save();
+        }
     }
     
     public function checkForMultiAccounts(Request $request, $user) {

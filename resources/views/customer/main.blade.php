@@ -645,12 +645,12 @@
             </div>
           </div>
         </div>
-        
+      
       </div>
     </section>
     <!--=======Offer-Section Ends Here=======-->
     <div class="offer-wrapper owl-carousel owl-video-wrapper">
-    
+      
       <div class="offer-item">
         <iframe width="500" height="315" src="https://www.youtube.com/embed/SJms7JEKt8A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
@@ -660,7 +660,7 @@
       <div class="offer-item">
         <iframe width="500" height="315" src="https://www.youtube.com/embed/eFhyyWUhezE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-  
+    
     </div>
     
     <!--=======Proit-Section Starts Here=======-->
@@ -953,13 +953,13 @@
                   <i class="flaticon-wallet"></i>
                 </div>
                 <div class="content">
-                                <span class="d-block">
-                                    @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='{{ $rate_group->name }}' contenteditable="true">{{ __($rate_group->name) }}</editor_block>
-                                  @else
-                                    {{ __($rate_group->name) }}
-                                  @endif
-                                </span>
+                  <span class="d-block">
+                      @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='{{ $rate_group->name }}' contenteditable="true">{{ __($rate_group->name) }}</editor_block>
+                    @else
+                      {{ __($rate_group->name) }}
+                    @endif
+                  </span>
                 </div>
               </li>
             @empty
@@ -1557,14 +1557,14 @@
         autoplay: true,
         autoplayTimeout: 4000,
         autoplayHoverPause: true,
-        responsive:{
-          0:{
-            items:1,
+        responsive: {
+          0: {
+            items: 1,
           },
-          500:{
-            items:1,
+          500: {
+            items: 1,
           },
-          992:{
+          992: {
             items: 3,
           }
         }

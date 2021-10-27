@@ -167,6 +167,13 @@
               </li>
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
+                <a class="" href="{{ route('accountPanel.settings.verify.phone') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <i data-feather="user"></i>
+                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Verify Phone' contenteditable="true">{{ __('Verify Phone') }}</editor_block> @else {{ __('Verify Phone') }} @endif</span>
+                </a>
+              </li>
+              <li class="">
+                {{--<label class="badge badge-success">2</label>--}}
                 <a class="" href="{{ route('accountPanel.support-tasks.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="info"></i>
                   <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Support tasks' contenteditable="true">{{ __('Support tasks') }}</editor_block> @else {{ __('Support tasks') }} @endif</span>

@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Все баннеры'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='All banners page' contenteditable="true">{{ __('All banners page') }}</editor_block>
+  @else
+    {{ __('All banners page') }}
+  @endif
+@endsection
 @section('content')
   
   <div class="container-fluid">
@@ -13,7 +19,7 @@
             @forelse($banners as $banner)
               <div class="mb-3">
               @if($banner->image)
-                <img src="{{ route('get.banner', $banner->id) }}" width="{{ $banner->getWidth() ?? 0 }}" height="{{ $banner->getHeight() ?? 0 }}">
+                <img style="max-width: 100%" src="{{ route('get.banner', $banner->id) }}" @if($banner->getWidth()) width="{{ $banner->getWidth() }}" @endif @if( $banner->getHeight()) height="{{  $banner->getHeight() }}" @endif >
               @endif
               </div>
             @empty

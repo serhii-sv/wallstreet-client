@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\Notification;
 use App\Models\ReferralLinkStat;
 use App\Providers\RouteServiceProvider;
@@ -63,6 +64,7 @@ class RegisterController extends Controller
         
         return view('auth.register', [
             'google_auth_url' => $google_auth_url,
+            'languages' => Language::all(),
         ]);
     }
     

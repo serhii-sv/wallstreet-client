@@ -392,11 +392,12 @@ class Wallet extends Model
         } else {
             return null;
         }
+     
         $toCurrency = Currency::where('code', 'USD')->first();
 
-        $balance = $this->convertToCurrency($this->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
+        $balance = $this->convertToCurrency($wallet_from->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
         $balance = $this->convertToCurrency($toCurrency, $wallet_to->currency()->first(), $balance);
-
+        
         if ($transaction_in = Transaction::exchangeInCurrency($wallet_to, $balance)) {
             $wallet_to->update(['balance' => $wallet_to->balance + $balance]);
             $currency_exchange = new CurrencyExchange();

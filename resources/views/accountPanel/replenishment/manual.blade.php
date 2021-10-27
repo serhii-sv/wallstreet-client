@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Replenishment')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Replenishment details page' contenteditable="true">{{ __('Replenishment details page') }}</editor_block>
+  @else
+    {{ __('Replenishment details page') }}
+  @endif
+@endsection
 @section('content')
 
   <div class="container-fluid">
@@ -10,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h5>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif</h5>
+                  <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif {{ $paymentSystem !== null ? $paymentSystem->name : '' }}</h5>
             </div>
             <div class="card-body">
               <p>

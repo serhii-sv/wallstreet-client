@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', __('Все рефералы'))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='All referrals page' contenteditable="true">{{ __('All referrals page') }}</editor_block>
+  @else
+    {{ __('All referrals page') }}
+  @endif
+@endsection
 @section('content')
   
   <div class="container-fluid">

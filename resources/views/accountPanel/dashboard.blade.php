@@ -1,5 +1,11 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Dashboard')))
+@section('title')
+  @if(canEditLang() && checkRequestOnEdit())
+    <editor_block data-name='Dashboard page' contenteditable="true">{{ __('Dashboard page') }}</editor_block>
+  @else
+    {{ __('Dashboard page') }}
+  @endif
+@endsection
 @push('styles')
   <style>
       .dashboard-video-list {
@@ -173,7 +179,7 @@
                             <th>@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block>
                               @else {{ __('Status') }}@endif</th>
-                            <th class="text-end">@if(canEditLang() && checkRequestOnEdit())
+                            <th class="">@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>
                               @else {{ __('Date of operation') }}@endif</th>
                           </tr>
@@ -352,8 +358,8 @@
                   </div>
                   <div class="input-group mb-3">
                     <select class="form-select form-control-inverse-fill " name="wallet_id">
-                      <option value="" disabled selected hidden>@if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='Choose a wallet' contenteditable="true">{{ __('Choose a wallet') }}</editor_block> @else {{ __('Choose a wallet') }} @endif
+                      <option value="" disabled selected hidden>
+                        Выберите баланс аккаунта
                       </option>
                       @forelse($wallets as $wallet)
                         <option value="{{ $wallet->id }}" @if(old('wallet_id') == $wallet->id) selected="selected" @endif>{{ $wallet->currency->name }} - {{ $wallet->balance }}{{ $wallet->currency->symbol }}</option>
@@ -470,7 +476,7 @@
                       <tr>
                         <th class="f-22">
                           @if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Best eller' contenteditable="true">{{ __('Best seller') }}</editor_block> @else {{ __('Best seller') }} @endif
+                            <editor_block data-name='Best seller' contenteditable="true">{{ __('Best seller') }}</editor_block> @else {{ __('Best seller') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Date' contenteditable="true">{{ __('Date') }}</editor_block> @else {{ __('Date') }} @endif
