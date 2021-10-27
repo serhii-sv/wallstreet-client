@@ -3644,8 +3644,8 @@ div[class*="ball"] img {
 }
 
 .offer-item::after, .offer-item::before {
-    width: 30px;
-    height: 30px;
+    /*width: 30px;*/
+    /*height: 30px;*/
     background-color: #ffffff;
 }
 

@@ -76,7 +76,7 @@
     
     </style>
     
-    <div class="left-header col-9 horizontal-wrapper ps-0">
+    <div class="left-header col-9 horizontal-wrapper ps-0 " style="text-align: right">
       {{--     <div class="currency-rates">
                <div class="wrapper">
                    @forelse($currency_rates as $key => $rates)
@@ -85,6 +85,7 @@
                    @endforelse
                </div>
            </div>--}}
+      <strong style="font-size: 18px;">1 Sprint Token (SRT) = 1$</strong>
     </div>
     
     <div class="nav-right col-3 pull-right right-header p-0">

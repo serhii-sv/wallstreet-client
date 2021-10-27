@@ -63,7 +63,6 @@ class ReplenishmentController extends Controller
             'currency' => 'uuid',
             'payment_system' => 'required|uuid',
         ]);
-        dd($request->all());
         $currency = Currency::where('id', $request->get('currency'))->first();
         $payment_system = PaymentSystem::where('id', $request->get('payment_system'))->first();
         if ($currency === null) {

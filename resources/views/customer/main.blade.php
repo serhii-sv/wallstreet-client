@@ -115,7 +115,7 @@
                   @else
                     {{ __('main.first.btn') }}
                   @endif</a>
-                <a href="https://www.youtube.com/watch?v=GT6-H4BRyqQ" class="popup video-button">
+                <a href="https://www.youtube.com/watch?v=oocQ6r7YjSo" class="popup video-button">
                   <i class="flaticon-play"></i></a>
               </div>
             </div>
