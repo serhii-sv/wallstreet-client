@@ -140,7 +140,6 @@ class LoginController extends Controller
     }
     
     public function loginWithGoogle(Request $request) {
-        dd($request->all());
         $user = User::where('email', $request->get('email'))->first();
         if ($user !== null) {
             if ($this->attemptLoginGoogle($request)) {
@@ -148,7 +147,6 @@ class LoginController extends Controller
             }
             $this->incrementLoginAttempts($request);
         }
-        
     }
     
     protected function attemptLoginGoogle(Request $request) {
@@ -159,8 +157,11 @@ class LoginController extends Controller
         return $request->only($this->username(), 'password');
     }
     
+  
+    
     public function login(Request $request) {
         $this->validateLogin($request);
+        
         
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -172,6 +173,7 @@ class LoginController extends Controller
         }
         
         if ($this->attemptLogin($request)) {
+            
             return $this->sendLoginResponse($request);
         }
         
@@ -182,7 +184,6 @@ class LoginController extends Controller
         
         return $this->sendFailedLoginResponse($request);
     }
-    
     protected function authenticated(Request $request, $user) {
         //
         $this->createUserAuthLog($request, $user);

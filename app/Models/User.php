@@ -216,6 +216,8 @@ class User extends Authenticatable
         'city_manual',
         'telegram',
         'index',
+        'phone_verified',
+        'auth_with_phone',
     ];
 
     /**

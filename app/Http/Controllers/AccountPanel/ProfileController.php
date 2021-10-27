@@ -5,15 +5,20 @@ namespace App\Http\Controllers\AccountPanel;
 use App\Http\Controllers\Controller;
 use App\Models\CloudFile;
 use App\Models\CloudFileFolder;
+use App\Models\Language;
 use App\Models\PaymentSystem;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserAuthLog;
+use App\Models\UserPhoneMessages;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Twilio\Rest\Client;
 
 class ProfileController extends Controller
 {
@@ -45,15 +50,15 @@ class ProfileController extends Controller
         $wallet_id = $request->get('wallet_id');
         $currency_id = $request->get('currency_id');
         
-        if ($user_id !== auth()->user()->id){
+        if ($user_id !== auth()->user()->id) {
             return redirect()->back()->with('error', 'Жулик!');
         }
-       
+        
         $wallet = Wallet::where('id', $wallet_id)->where('user_id', $user_id)->where('currency_id', $currency_id)->first();
-        if ($wallet === null){
+        if ($wallet === null) {
             return redirect()->back()->with('error', 'Попробуй заново!');
         }
-    
+        
         $wallet->external = $external;
         $wallet->save();
         
@@ -71,9 +76,16 @@ class ProfileController extends Controller
             'email' => 'required|min:3|unique:users,email,' . Auth::user()->id,
             'name' => 'required|min:2',
         ]);
+        $phone = $request->get('phone');
         $user = Auth::user();
-        $user->update($request->except('_method'));
-        return redirect()->route('accountPanel.profile')->with('success', 'Данные успешно изменены!');
+        if ($phone == $user->phone && $user->phone_verified == true) {
+            $phone_verified = true;
+        } else {
+            $phone_verified = false;
+        }
+        $user->update($request->except('_method', 'phone_verified'));
+        $user->update(['phone_verified' => $phone_verified]);
+        return redirect()->route('accountPanel.settings.profile')->with('success', 'Данные успешно изменены!');
     }
     
     /**
@@ -121,7 +133,7 @@ class ProfileController extends Controller
             die($exception->getMessage());
         }
         
-        return redirect()->route('accountPanel.profile', !is_null($folder_id) ? ['folder' => $folder_id] : [])->with('success', 'Файл успешно загружен');
+        return redirect()->route('accountPanel.settings.profile', !is_null($folder_id) ? ['folder' => $folder_id] : [])->with('success', 'Файл успешно загружен');
     }
     
     /**
@@ -192,4 +204,6 @@ class ProfileController extends Controller
         
         return back()->with('short_success', 'Заявка на подтверждение личности создана');
     }
+    
+   
 }
