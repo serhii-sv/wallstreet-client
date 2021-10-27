@@ -132,17 +132,12 @@
         <div class="account-body">
           <h4 class="title mb-20">Авторизация с помощью телефона</h4>
           @include('partials.inform')
-          <form method="POST" action="" class="account-form">
+          <form method="POST" action="{{ route('login.verify.code') }}" class="account-form">
             @csrf
-            @error('g-recaptcha-response')
-            <small class="red-text ml-7">
-              {{ $message }}
-            </small>
-            @enderror
             <input type="hidden" name="g-recaptcha-response" id="recaptcha">
             <div class="form-group">
               <label for="sign-up">Введите код из смс сообщения</label>
-              <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+              <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="code" value="{{ old('email') }}" required autocomplete="email" autofocus>
               
               @error('email')
               <span class="invalid-feedback" role="alert">
@@ -153,11 +148,11 @@
             @if($last_sms)
               <span>Отправить код повторно можно будет через {{ 300 - Carbon\Carbon::parse($last_sms->created_at)->diffInSeconds(Carbon\Carbon::now()) }} секунд</span>
             @else
-              <a href="">Отправить код повторно</a>
+              <a href="{{ route('login.send.verify.code') }}">Отправить код повторно</a>
             @endif
             
             <div class="form-group text-center">
-              <button type="submit" class="mt-2 mb-2">Войти</button>
+              <button type="submit" class="mt-2 mb-2">Продолжить</button>
             </div>
           </form>
         </div>

@@ -26,39 +26,43 @@
                 </div>
                 <button class="btn btn-primary">Сохранить</button>
               </form>
-              <div class="mt-4">
+              @if($verification_enable == 'on')
+                <div class="mt-4">
+                  @if($user->phone_verified)
+                    <div class="d-flex align-items-center mb-3">
+                      Статус:
+                      <i data-feather="check" class="" style="margin: 0 5px; color: #1eb000"></i>
+                      Верифицирован
+                    </div>
+                  @else
+                    <div class="d-flex align-items-center mb-3">
+                      Статус:
+                      <i data-feather="x" style="margin: 0 5px;color: #c40033"></i>
+                      Не верифицирован
+                    </div>
+                    <a href="{{ route('accountPanel.settings.send.verify.code') }}" class="btn btn-success @if(!$user->phone) disabled @endif">Верифицировать</a>
+                    <div class="text-danger mt-2">@if(!$user->phone) Нужно указать телефон! @endif</div>
+                  @endif
+                </div>
                 @if($user->phone_verified)
-                  <div class="d-flex align-items-center mb-3">
-                    Статус:
-                    <i data-feather="check" class="" style="margin: 0 5px; color: #1eb000"></i>
-                    Верифицирован
+                  <div class="mt-4">
+                    <form action="{{ route('accountPanel.settings.auth.with.phone') }}" method="post">
+                      @csrf
+                      <div class="mb-3">Вход</div>
+                      <div class="form-check radio radio-primary">
+                        <input class="form-check-input" id="radio1" type="radio" name="auth_with_phone" value="0" @if($user->auth_with_phone == false) checked @endif>
+                        <label class="form-check-label" for="radio1">Без кода на телефон</label>
+                      </div>
+                      <div class="form-check radio radio-primary">
+                        <input class="form-check-input" id="radio2" type="radio" name="auth_with_phone" value="1" @if($user->auth_with_phone == true) checked @endif>
+                        <label class="form-check-label" for="radio2">С кодом на телефон</label>
+                      </div>
+                      <button class="btn btn-success">Сохранить</button>
+                    </form>
                   </div>
-                @else
-                  <div class="d-flex align-items-center mb-3">
-                    Статус:
-                    <i data-feather="x" style="margin: 0 5px;color: #c40033"></i>
-                    Не верифицирован
-                  </div>
-                  <a href="{{ route('accountPanel.settings.send.verify.code') }}" class="btn btn-success @if(!$user->phone) disabled @endif">Верифицировать</a>
-                  <div class="text-danger mt-2">@if(!$user->phone) Нужно указать телефон! @endif</div>
                 @endif
-              </div>
-              @if($user->phone_verified)
-              <div class="mt-4">
-                <form action="{{ route('accountPanel.settings.auth.with.phone') }}" method="post">
-                  @csrf
-                  <div class="mb-3">Вход</div>
-                  <div class="form-check radio radio-primary">
-                    <input class="form-check-input" id="radio1" type="radio" name="auth_with_phone" value="0" @if($user->auth_with_phone == false) checked @endif>
-                    <label class="form-check-label" for="radio1">Без кода на телефон</label>
-                  </div>
-                  <div class="form-check radio radio-primary">
-                    <input class="form-check-input" id="radio2" type="radio" name="auth_with_phone" value="1" @if($user->auth_with_phone == true) checked @endif>
-                    <label class="form-check-label" for="radio2">С кодом на телефон</label>
-                  </div>
-                  <button class="btn btn-success">Сохранить</button>
-                </form>
-              </div>
+              @else
+                <div class="mt-3">Верификация отключена</div>
               @endif
             </div>
           </div>

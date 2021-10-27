@@ -10,8 +10,10 @@ use App\Models\PaymentSystem;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserAuthLog;
+use App\Models\UserDevice;
 use App\Models\UserPhoneMessages;
 use App\Models\Wallet;
+use hisorange\BrowserDetect\Parser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -205,5 +207,146 @@ class ProfileController extends Controller
         return back()->with('short_success', 'Заявка на подтверждение личности создана');
     }
     
-   
+    public function loginSendVerifyCode(Request $request) {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }else{
+            return redirect()->route('accountPanel.dashboard');
+        }
+        if (!(Auth::user()->phone)){
+            return redirect()->route('accountPanel.dashboard');
+        }
+        if (!(Auth::user()->phone_verified)) {
+            return redirect()->route('accountPanel.dashboard');
+        }
+    
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+    
+        if ($user_device !== null){
+            if ($user_device->sms_verified){
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }
+        
+        $dispatch_method = Setting::where('s_key', 'verification_type')->first();
+        $account_sid = env("TWILIO_ACCOUNT_SID");
+        $auth_token = env("TWILIO_AUTH_TOKEN");
+        $twilio_number = env("TWILIO_PHONE_NUMBER");
+        $code = $this->generatePIN(4);
+        $client = new Client($account_sid, $auth_token);
+    
+        if ($dispatch_method->s_value == 'voice') {
+        
+            $client->calls->create($this->phone_format(Auth::user()->phone), // to
+                $twilio_number, // from
+                // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
+                ["url" => 'https://demo.twilio.com/docs/voice.xml']);
+            $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
+            if ($statusCode == '201') {
+                $sms = new UserPhoneMessages();
+                $sms->user_id = Auth::user()->id;
+                $sms->code = $code;
+                $sms->type = 'auth';
+                $sms->dispatch_method = $dispatch_method->s_value;
+                $sms->save();
+            }
+        } else {
+            $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
+            if ($last_sms === null) {
+            
+                $text = Setting::where('s_key', 'verification_text')->first();
+                $client->messages->create(// Where to send a text message (your cell phone?)
+                    $this->phone_format(Auth::user()->phone), [
+                    'from' => $twilio_number,
+                    'body' => $text->s_value . ' ' . $code,
+                ]);
+                $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
+                if ($statusCode == '201') {
+                    $sms = new UserPhoneMessages();
+                    $sms->user_id = Auth::user()->id;
+                    $sms->code = $code;
+                    $sms->type = 'auth';
+                    $sms->dispatch_method = $dispatch_method->s_value;
+                    $sms->save();
+                }
+            }
+        }
+        return redirect()->route('login.enter.verify.code');
+    }
+    
+    public function enterVerifyLoginCode() {
+        $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
+    
+        return view('auth.verify-code', [
+            'last_sms' => $last_sms,
+        ]);
+    }
+    
+    public function verifyCode(Request $request) {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }else{
+            return redirect()->route('accountPanel.dashboard');
+        }
+        if (!(Auth::user()->phone)){
+            return redirect()->route('accountPanel.dashboard');
+        }
+        if (!(Auth::user()->phone_verified)) {
+            return redirect()->route('accountPanel.dashboard');
+        }
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+    
+        if ($user_device !== null){
+            if ($user_device->sms_verified){
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }else{
+            $user_device = new UserDevice();
+            $user_device->user_id = Auth::id();
+            $user_device->ip = $request->ip();
+            $user_device->browser = $browser;
+            $user_device->browser_version = $browser_version;
+            $user_device->device_platform = $device_platform;
+            $user_device->sms_verified = false;
+            if (Parser::isMobile()) {
+                $user_device->is_mobile = true;
+            } else if (Parser::isTablet()) {
+                $user_device->is_tablet = true;
+            } else if (Parser::isDesktop()) {
+                $user_device->is_desktop = true;
+            } else if (Parser::is_bot()) {
+                $user_device->is_bot = true;
+            }
+            $user_device->save();
+        }
+        
+        $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
+        if ($last_sms === null) {
+            return redirect()->route('login.enter.verify.code')->with('error', 'Код не верный!');
+        } else {
+            if ($last_sms->code == $request->get('code')) {
+                $last_sms->update([
+                    'used' => true,
+                ]);
+                $user_device->sms_verified = true;
+                $user_device->save();
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }
+        return redirect()->route('login.enter.verify.code')->with('error', 'Код не верный!');
+    }
 }

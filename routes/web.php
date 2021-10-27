@@ -61,10 +61,12 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
     
     Auth::routes();
     Route::get('/auth/google', [LoginController::class, 'loginWithGoogle'])->name('login.google');
-/*    Route::get('/login/verify-code', [ProfileController::class, 'verifyLoginCode'])->name('login.verify.code');
+    
+    Route::get('/login/verify-code', [ProfileController::class, 'verifyLoginCode'])->name('login.verify.code');
     Route::get('/login/enter/verify-code', [ProfileController::class, 'enterVerifyLoginCode'])->name('login.enter.verify.code');
-    Route::get('/login/send/verify-code', [ProfileController::class, 'loginSendVerifyCode'])->name('login.send.verify.code');*/
-
+    Route::get('/login/send/verify-code', [ProfileController::class, 'loginSendVerifyCode'])->name('login.send.verify.code');
+    Route::post('/login/verify-code', [ProfileController::class, 'verifyCode'])->name('login.verify.code');
+    
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
     Route::get('/ref/{partner_id}', [SetPartnerController::class, 'index'])->name('ref_link');

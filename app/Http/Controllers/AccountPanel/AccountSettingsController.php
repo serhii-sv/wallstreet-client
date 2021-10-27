@@ -122,8 +122,15 @@ class AccountSettingsController extends Controller
     }
     
     public function showVerifyPhone() {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            $verification_enable = $verification_enable->s_value;
+        }else{
+            $verification_enable = 'off';
+        }
         return view('accountPanel.settings.verify-phone', [
             'user' => Auth::user(),
+            'verification_enable' => $verification_enable
         ]);
     }
     
@@ -146,9 +153,22 @@ class AccountSettingsController extends Controller
     }
     
     public function showEnterVerifyCode() {
-        if (Auth::user()->phone == null) {
-            return redirect()->route('accountPanel.settings.verify.phone');
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+            }
+        }else{
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
+        if (!(Auth::user()->phone)){
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон не указан');
+        }
+        if (Auth::user()->phone_verified) {
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон Уже верифицирован');
+        }
+        
         $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
         
         return view('accountPanel.settings.enter-verify-code', [
@@ -157,6 +177,22 @@ class AccountSettingsController extends Controller
     }
     
     public function sendVerifyCode() {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+            }
+        }else{
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+        }
+        if (!(Auth::user()->phone)){
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон не указан');
+        }
+        if (Auth::user()->phone_verified) {
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон Уже верифицирован');
+        }
+        
         $dispatch_method = Setting::where('s_key', 'verification_type')->first();
         $account_sid = env("TWILIO_ACCOUNT_SID");
         $auth_token = env("TWILIO_AUTH_TOKEN");
@@ -164,9 +200,7 @@ class AccountSettingsController extends Controller
         $code = $this->generatePIN(4);
         $client = new Client($account_sid, $auth_token);
         
-        if (Auth::user()->phone){
-        
-        }
+       
         
         if ($dispatch_method->s_value == 'voice') {
            
@@ -208,6 +242,15 @@ class AccountSettingsController extends Controller
     }
     
     public function verifyPhone(Request $request) {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+            }
+        }else{
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+        }
         if (Auth::user()->phone == null) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон не указан');
         }
@@ -237,6 +280,16 @@ class AccountSettingsController extends Controller
     }
     
     public function updateAuthWithPhone(Request $request) {
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+            }
+        }else{
+            return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
+        }
+        
         if (!Auth::user()->phone_verified) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Номер не верифицирован!');
         }
