@@ -123,10 +123,10 @@
       <div class="account-title text-center">
         <a href="#" onclick="window.history.back()" class="back-home">
           <i class="fas fa-angle-left"></i>
-          <span>Back</span>
+          <span>Назад</span>
         </a>
         <a href="#0" class="logo">
-          <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="logo">
+          <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" alt="logo" width="290">
         </a>
         <div class="language" style="margin-top: 10px">
           <p class="language__name">
@@ -160,7 +160,7 @@
             @csrf
             <div class="form-group">
               <label for="sign-up">Ваш Email</label>
-              <input type="text" placeholder="Enter Your Email " id="sign-up" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}">
+              <input type="text" placeholder="Ваш email" id="sign-up" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}">
               
               @error('email')
               <span class="invalid-feedback" role="alert">
@@ -171,7 +171,7 @@
             
             <div class="form-group">
               <label for="sign-up">Ваше имя</label>
-              <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Your name"
+              <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Ваше имя"
                   name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
               
               @error('name')
@@ -183,7 +183,7 @@
             
             <div class="form-group">
               <label for="login">Ваш логин</label>
-              <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" placeholder="Your Login"
+              <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" placeholder="Логин"
                   name="login" value="{{ old('login') }}" required autocomplete="name" autofocus>
               
               @error('login')
@@ -194,7 +194,7 @@
             </div>
             <div class="form-group">
               <label for="login">Ваш телефон</label>
-              <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Your phone"
+              <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"
                   name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
               
               @error('phone')
@@ -217,7 +217,7 @@
             </div>
             
             <div class="form-group">
-              <label for="password-confirm">{{ __('Confirm Password') }}</label>
+              <label for="password-confirm">Подтвердите пароль</label>
               <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="********"
                   required autocomplete="new-password">
             
