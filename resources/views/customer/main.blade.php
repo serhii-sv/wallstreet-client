@@ -115,7 +115,7 @@
                   @else
                     {{ __('main.first.btn') }}
                   @endif</a>
-                <a href="https://www.youtube.com/watch?v=GT6-H4BRyqQ" class="popup video-button">
+                <a href="https://www.youtube.com/watch?v=oocQ6r7YjSo" class="popup video-button">
                   <i class="flaticon-play"></i></a>
               </div>
             </div>
@@ -964,62 +964,7 @@
               </li>
             @empty
             @endforelse
-            {{--    <li class="active">
-                    <div class="thumb">
-                        <i class="flaticon-wallet"></i>
-                    </div>
-                    <div class="content">
-                        <span class="d-block">
-                            @if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
-                            @else
-                                {{ __('last') }}
-                            @endif</span>
-                        <span class="d-block">
-                            @if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='deposits' contenteditable="true">{{ __('deposits') }}</editor_block>
-                            @else
-                                {{ __('deposits') }}
-                            @endif</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="thumb">
-                        <i class="flaticon-atm"></i>
-                    </div>
-                    <div class="content">
-                        <span class="d-block">
-                            @if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
-                            @else
-                                {{ __('last') }}
-                            @endif</span>
-                        <span class="d-block">
-                            @if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='withdrawals' contenteditable="true">{{ __('withdrawals') }}</editor_block>
-                            @else
-                                {{ __('withdrawals') }}
-                            @endif</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="thumb">
-                        <i class="flaticon-team"></i>
-                    </div>
-                    <div class="content">
-                        <span class="d-block">@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='last' contenteditable="true">{{ __('last') }}</editor_block>
-                        @else
-                            {{ __('last') }}
-                        @endif</span>
-                        <span class="d-block">
-                            @if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='investors' contenteditable="true">{{ __('investors') }}</editor_block>
-                            @else
-                                {{ __('investors') }}
-                            @endif</span>
-                    </div>
-                </li>--}}
+           
           </ul>
           <div class="tab-area">
             @forelse($rate_groups as $rate_group)
@@ -1057,7 +1002,7 @@
                             @endif
                           </div>
                           <div class="transaction-thumb">
-                            <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">
+                         {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
                           </div>
                           <div class="transaction-footer">
                                                   <span class="amount">
@@ -1492,7 +1437,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('theme/images/client/binance-logo-og.png') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/binance-logo-og.jpg') }}" alt="client">
                     </a>
                   </div>
                 </div>

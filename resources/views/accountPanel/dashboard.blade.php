@@ -367,6 +367,10 @@
                       @endforelse
                     </select>
                   </div>
+                  <div class="form-check checkbox mb-3">
+                    <input class="form-check-input" id="checkbox3" type="checkbox">
+                    <label class="form-check-label" for="checkbox3">Застраховать перевод</label>
+                  </div>
                   <button class="btn btn-lg btn-primary btn-block send-money-to-user-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Do transfer' contenteditable="true">{{ __('Do transfer') }}</editor_block> @else {{ __('Do transfer') }} @endif
                   </button>

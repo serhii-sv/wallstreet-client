@@ -284,16 +284,9 @@
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
                       @else
-                        {{ __('Praesent sagittis nibh vehicula diam tesque') }}
+                        {{ __('Praesent sagittis nibh vehicula diam tesque 1') }}
                       @endif
                     </p>
-                    <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                      @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Learn More' contenteditable="true">{{ __('Learn More') }}</editor_block>
-                      @else
-                        {{ __('Learn More') }}
-                      @endif
-                      <i class="flaticon-right-arrow"></i></a>
                   </div>
                 </div>
                 <div class="mission-item">
@@ -310,14 +303,9 @@
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
                       @else
-                        {{ __('Praesent sagittis nibh vehicula diam tesque') }}
+                        {{ __('Praesent sagittis nibh vehicula diam tesque 2') }}
                       @endif
                     </p>
-                    <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Learn More' contenteditable="true">{{ __('Learn More') }}</editor_block>
-                      @else
-                        {{ __('Learn More') }}
-                      @endif <i class="flaticon-right-arrow"></i></a>
                   </div>
                 </div>
                 <div class="mission-item">
@@ -334,14 +322,9 @@
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
                       @else
-                        {{ __('Praesent sagittis nibh vehicula diam tesque') }}
+                        {{ __('Praesent sagittis nibh vehicula diam tesque 3') }}
                       @endif
                     </p>
-                    <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Learn More' contenteditable="true">{{ __('Learn More') }}</editor_block>
-                      @else
-                        {{ __('Learn More') }}
-                      @endif <i class="flaticon-right-arrow"></i></a>
                   </div>
                 </div>
                 <div class="mission-item">
@@ -358,14 +341,9 @@
                       @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
                       @else
-                        {{ __('Praesent sagittis nibh vehicula diam tesque') }}
+                        {{ __('Praesent sagittis nibh vehicula diam tesque 4') }}
                       @endif
                     </p>
-                    <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Learn More' contenteditable="true">{{ __('Learn More') }}</editor_block>
-                      @else
-                        {{ __('Learn More') }}
-                      @endif <i class="flaticon-right-arrow"></i></a>
                   </div>
                 </div>
               </div>

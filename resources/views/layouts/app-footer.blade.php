@@ -19,8 +19,10 @@
                   @endif
                 @endforeach
               @endif
-              @if($paymentSystem->image)
-                <img class="about-us-payment-systems" src="{{ asset('accountPanel/images/logos') .'/'. $paymentSystem->image }}" alt="">
+              @if(!($paymentSystem->code == 'perfectmoney'))
+                @if($paymentSystem->image)
+                  <img class="about-us-payment-systems" src="{{ asset('accountPanel/images/logos') .'/'. $paymentSystem->image }}" alt="">
+                @endif
               @endif
             @endforeach
           </div>
@@ -37,15 +39,12 @@
                 {{ __('To Get Exclusive Benefits') }}
               @endif
             </h3>
-            <form class="newslater-form">
-              <input type="text" placeholder="Enter Your Email Here" required>
-              <button type="submit" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='subscribe' contenteditable="true">{{ __('subscribe') }}</editor_block>
-                @else
-                  {{ __('subscribe') }}
-                @endif
-              </button>
-            </form>
+            <a class="link-login" href="{{ route('login') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='subscribe' contenteditable="true">{{ __('subscribe') }}</editor_block>
+              @else
+                {{ __('subscribe') }}
+              @endif
+            </a>
           </div>
           <div class="newslater-thumb">
             <img src="{{ asset('theme/images/footer/footer.png') }}" alt="footer">

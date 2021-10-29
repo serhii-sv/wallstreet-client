@@ -9,7 +9,25 @@
 <div class="col-md-6" style="margin-top:100px;">
     <!-- START PANEL -->
     <div class="panel panel-default">
-        <div class="panel-heading ui-draggable-handle">
+      <div class="panel-heading ui-draggable-handle">
+        <h3 class="panel-title">{{ 'Пополнение баланса через '.$currency->name }}</h3>
+      </div>
+      <div class="panel-body">
+        <strong>Вы должны отправить: <input type="text" style="background:rgb(200,200,200); border:1px solid rgb(150,150,150);" value="{{ $transaction->amount }}" readonly> {{ $currency->code }}</strong>
+        <hr>
+        <strong>На {{ $currency->code }} адрес <input type="text" style="background:rgb(200,200,200); border:1px solid rgb(150,150,150); width:100%;" value="{{ $receiveAddress }}" readonly></strong>
+        <br><br>
+        {{ $confirmsNeeded }} подтверждений необходимо для завершения операции.<br>
+        {{ intval($timeout/60) }} - лимит времени для операции.
+        <hr>
+        <div style="text-align: center;">
+          <a rel='nofollow' href='{{ $paymentSystem->code.':'.$receiveAddress.'?amount='.$transaction->amount }}' border='0'><img src='https://chart.googleapis.com/chart?cht=qr&chl={{ urlencode($paymentSystem->code.':'.$receiveAddress.'?amount='.$transaction->amount) }}&chs=180x180&choe=UTF-8&chld=L|2' alt=''></a>
+        </div>
+        <hr>
+        Детали операции <a href="{{ $buyerStatusUrl }}" target="_blank">{{ $buyerStatusUrl }}</a>
+        <br><br>
+        <span>Все операции обрабатываются автоматически. Это может занять до нескольких часов.</span>
+{{--        <div class="panel-heading ui-draggable-handle">
             <h3 class="panel-title">{{ __('Recharge balance with').' '.$currency->name }}</h3>
         </div>
         <div class="panel-body">
@@ -26,7 +44,7 @@
             <hr>
             {{ __('Your status URL is:') }} <a href="{{ $buyerStatusUrl }}" target="_blank">{{ $buyerStatusUrl }}</a>
             <br><br>
-            <span>{{ __('All operations processing automatically. It can take up to couple of hours.') }}</span>
+            <span>{{ __('All operations processing automatically. It can take up to couple of hours.') }}</span>--}}
         </div>
     </div>
 </div>

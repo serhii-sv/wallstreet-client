@@ -25,6 +25,9 @@ use App\Http\Controllers\Payment\CoinpaymentsController;
 use App\Http\Controllers\Payment\PerfectMoneyController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
+use App\Models\PaymentSystem;
+use App\Models\Transaction;
+use App\Models\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

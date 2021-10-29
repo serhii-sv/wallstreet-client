@@ -40,8 +40,8 @@
 }
 @media (min-width: 991px) {
     .owl-carousel .owl-stage-outer{
-        padding-top: 50px;
-        padding-bottom: 50px;
+        padding-top: 80px;
+        padding-bottom: 80px;
     }
 }
 .owl-carousel .owl-item,
@@ -81,15 +81,15 @@
 }
 @media (min-width: 991px) {
     .owl-carousel .owl-item.center {
-        -webkit-transform: scale(1.2);
-        -moz-transform: scale(1.2);
-        -ms-transform: scale(1.2);
-        -o-transform: scale(1.2);
-        transform: scale(1.2);
+        -webkit-transform: scale(1.3);
+        -moz-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        -o-transform: scale(1.3);
+        transform: scale(1.3);
     }
 }
 .offer-wrapper{
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
 }
 
