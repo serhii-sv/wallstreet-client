@@ -46,8 +46,6 @@ class SetLang
             ? session('language')
             : $defaultLang;
 
-        die($locale.'/'.session('language'));
-
         App::setLocale($locale);
         Carbon::setLocale($locale);
 

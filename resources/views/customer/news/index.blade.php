@@ -11,16 +11,16 @@
 @endsection
 @section('content')
   <div class="main--body">
-    
+
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-    
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Proit-Section Starts Here=======-->
     <section class="profit-section padding-top mb-5" id="profit">
       <div class="container">
@@ -71,10 +71,10 @@
                   </div>
                   <div class="short-content">
                     <div class="title">
-                      {!! $last_news->getTitle(session()->get('lang'))  !!}
+                      {!! $last_news->getTitle(session()->get('language'))  !!}
                     </div>
                     <div class="desc">
-                      {!!  Str::limit($last_news->getShortContent(session()->get('lang')), 100, '..' )  !!}
+                      {!!  Str::limit($last_news->getShortContent(session()->get('language')), 100, '..' )  !!}
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                       <div class="likes d-flex align-items-center">
@@ -90,9 +90,9 @@
                 </a>
               @endif
             </div>
-          
+
           </div>
-          
+
           <div class="news-list w-100 d-flex flex-wrap mb-4">
             @if($news)
               @forelse($news as $item)
@@ -104,10 +104,10 @@
                   </div>
                   <div class="short-content">
                     <div class="title">
-                      {!! $item->getTitle(session()->get('lang'))  !!}
+                      {!! $item->getTitle(session()->get('language'))  !!}
                     </div>
                     <div class="desc">
-                      {!!  Str::limit($item->getShortContent(session()->get('lang')), 100, '..' )  !!}
+                      {!!  Str::limit($item->getShortContent(session()->get('language')), 100, '..' )  !!}
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                       <div class="likes d-flex align-items-center">
@@ -133,8 +133,8 @@
   </div>
   </section>
   <!--=======Proit-Section Ends Here=======-->
-  
-  
+
+
   <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->

@@ -130,7 +130,7 @@
         </a>
         <div class="language" style="margin-top: 10px">
           <p class="language__name">
-            <span>{{ session()->get('lang') }}</span>
+            <span>{{ session()->get('language') }}</span>
           </p>
           <ul class="language__list">
             @foreach($languages as $lang)
@@ -161,31 +161,31 @@
             <div class="form-group">
               <label for="sign-up">Ваш Email</label>
               <input type="text" placeholder="Ваш email" id="sign-up" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}">
-              
+
               @error('email')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
               @enderror
             </div>
-            
+
             <div class="form-group">
               <label for="sign-up">Ваше имя</label>
               <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Ваше имя"
                   name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-              
+
               @error('name')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
               @enderror
             </div>
-            
+
             <div class="form-group">
               <label for="login">Ваш логин</label>
               <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" placeholder="Логин"
                   name="login" value="{{ old('login') }}" required autocomplete="name" autofocus>
-              
+
               @error('login')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -196,45 +196,45 @@
               <label for="login">Ваш телефон</label>
               <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"
                   name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
-              
+
               @error('phone')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
               @enderror
             </div>
-            
+
             <div class="form-group">
               <label for="password">Пароль </label>
               <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="********"
                   name="password" required autocomplete="new-password">
-              
+
               @error('password')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
               @enderror
             </div>
-            
+
             <div class="form-group">
               <label for="password-confirm">Подтвердите пароль</label>
               <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="********"
                   required autocomplete="new-password">
-            
+
             </div>
-            
+
             <div class="form-group">
               <label for="partner_id">Id партнёра </label>
               <input id="partner_id" type="text" class="form-control @error('partner_id') is-invalid @enderror" name="partner_id"
                   value="{{ $_COOKIE["partner_id"] ??  old('partner_id')  }}" autofocus>
-              
+
               @error('partner_id')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
               @enderror
             </div>
-            
+
             <div class="form-group text-center">
               <button type="submit">{{ __('Register') }}</button>
               <span class="d-block mt-15">Уже есть аккаунт?? <a href="{{ route('login') }}">Авторизоваться</a></span>
