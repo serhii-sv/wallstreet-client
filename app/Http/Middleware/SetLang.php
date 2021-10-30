@@ -33,9 +33,11 @@ class SetLang
         if (!file_exists($path)) {
             session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
             $defaultLang = 'en';
+            die('set def');
         }
 
         if (isset($_COOKIE['lang']) && !session()->has('lang')) {
+            die('isset: '.$_COOKIE['lang']);
             $_COOKIE['lang']    = preg_replace('/[^A-Za-z]/', '', trim($_COOKIE['lang']));
             $checkExists        = file_exists(resource_path('lang/'.$_COOKIE['lang'].'.json'));
 
