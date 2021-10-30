@@ -50,6 +50,7 @@ class SetLang
             }
         }
 
+        die($defaultLang.'-');
         $locale = session('lang', $defaultLang);
 
         if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $locale) {
