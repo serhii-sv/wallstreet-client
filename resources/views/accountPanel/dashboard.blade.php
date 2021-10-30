@@ -611,7 +611,7 @@
 @push('scripts')
 
   <script src="{{ asset('accountPanel/js/dashboard/default.js') }}"></script>
-  <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
+
   <script>
     $(document).ready(function () {
       $(".form-control-inverse-fill").select2();

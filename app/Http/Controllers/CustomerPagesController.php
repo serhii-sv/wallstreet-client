@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\DepositBonus;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\News;
@@ -71,7 +72,9 @@ class CustomerPagesController extends Controller
     }
 
     public function partners() {
-        return view('customer.partners');
+        return view('customer.partners',[
+            'deposit_turnovers' => DepositBonus::orderBy('personal_turnover', 'asc')->get(),
+        ]);
     }
 
     public function payout() {
@@ -91,8 +94,14 @@ class CustomerPagesController extends Controller
                 'news' => $news,
             ]);
         } else {
+            
+            $last_news = News::orderByDesc('created_at')->first();
+            if ($last_news !== null){
+                $news = News::orderByDesc('created_at')->whereNotIn('id', [$last_news->id])->paginate(9);
+            }
             return view('customer.news.index', [
-                'news' => News::orderByDesc('created_at')->paginate(9),
+                'news' => $news,
+                'last_news' => $last_news,
             ]);
         }
     }
