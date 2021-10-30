@@ -41,7 +41,7 @@ class SetLang
             ]);
         }
 
-        if (!$_COOKIE['lang']) {
+        if (!isset($_COOKIE['lang'])) {
             setcookie('lang', $defaultLang, Carbon::now()->addDays(365)->timestamp, '/');
         }
 
