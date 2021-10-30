@@ -28,18 +28,21 @@ class SetLang
          */
         $defaultLang = 'ru';
 
+        $path = resource_path('lang/' . $defaultLang . '.json');
+
+        if (!file_exists($path)) {
+            session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
+            $defaultLang = 'en';
+        }
+
         if (!session()->has('lang')) {
             session([
                 'lang' => $defaultLang,
             ]);
         }
 
-        $path = resource_path('lang/' . $defaultLang . '.json');
-
-        if (!file_exists($path)) {
-            session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
-            $defaultLang = 'en';
-            die('set def');
+        if (!$_COOKIE['lang']) {
+            setcookie('lang', $defaultLang, Carbon::now()->addDays(365)->timestamp, '/');
         }
 
         if (isset($_COOKIE['lang']) && !session()->has('lang')) {
@@ -56,10 +59,6 @@ class SetLang
         }
 
         $locale = session('lang', $defaultLang);
-
-        if (!isset($_COOKIE['lang']) || $_COOKIE['lang'] != $locale) {
-            setcookie('lang', $locale, Carbon::now()->addDays(365)->timestamp, '/');
-        }
 
         App::setLocale($locale);
         Carbon::setLocale($locale);
