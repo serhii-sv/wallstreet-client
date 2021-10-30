@@ -99,7 +99,7 @@ class CustomerPagesController extends Controller
             if ($last_news !== null){
                 $news = News::orderByDesc('created_at')->whereNotIn('id', [$last_news->id])->paginate(9);
             }else{
-                $news = false;
+                $news = News::orderByDesc('created_at')->paginate(9);
             }
             return view('customer.news.index', [
                 'news' => $news,
