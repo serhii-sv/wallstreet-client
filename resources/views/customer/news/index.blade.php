@@ -52,7 +52,8 @@
                     margin: 15px;
                     width: calc((100% / 3) * 2 - 15px);
                 }
-                .news-video-block iframe{
+
+                .news-video-block iframe {
                     width: 100%;
                     min-height: 300px;
                 }
@@ -93,34 +94,36 @@
           </div>
           
           <div class="news-list w-100 d-flex flex-wrap mb-4">
-            @forelse($news as $item)
-              <a href="{{ route('customer.news', $item->id) }}" class="news-block">
-                <div class="image ">
-                  @if($item->image)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}" alt="">
-                  @endif
-                </div>
-                <div class="short-content">
-                  <div class="title">
-                    {!! $item->getTitle(session()->get('lang'))  !!}
+            @if($news)
+              @forelse($news as $item)
+                <a href="{{ route('customer.news', $item->id) }}" class="news-block">
+                  <div class="image ">
+                    @if($item->image)
+                      <img src="{{ \Illuminate\Support\Facades\Storage::disk('do_spaces')->url($item->image) }}" alt="">
+                    @endif
                   </div>
-                  <div class="desc">
-                    {!!  Str::limit($item->getShortContent(session()->get('lang')), 100, '..' )  !!}
-                  </div>
-                  <div class="d-flex justify-content-between mt-3">
-                    <div class="likes d-flex align-items-center">
-                      <i data-feather="thumbs-up" class="mr-2"></i>
-                      {{ $item->likes ?? 0}}
+                  <div class="short-content">
+                    <div class="title">
+                      {!! $item->getTitle(session()->get('lang'))  !!}
                     </div>
-                    <div class="views d-flex align-items-center">
-                      <i data-feather="eye" class="mr-2"></i>
-                      {{ $item->views ?? 0}}
+                    <div class="desc">
+                      {!!  Str::limit($item->getShortContent(session()->get('lang')), 100, '..' )  !!}
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                      <div class="likes d-flex align-items-center">
+                        <i data-feather="thumbs-up" class="mr-2"></i>
+                        {{ $item->likes ?? 0}}
+                      </div>
+                      <div class="views d-flex align-items-center">
+                        <i data-feather="eye" class="mr-2"></i>
+                        {{ $item->views ?? 0}}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            @empty
-            @endforelse
+                </a>
+              @empty
+              @endforelse
+            @endif
           </div>
           <div class="d-flex justify-content-center">
             {{ $news->links() }}
