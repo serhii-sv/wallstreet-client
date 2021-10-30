@@ -77,7 +77,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/bootstrap.css') }}">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/style.css') }}">
-   
+    
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
     <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
@@ -85,20 +85,20 @@
   
   </head>
   <body class="{{--{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}--}}">
-    
-    {{--<div class="loader-wrapper">
-      <div class="loader-index">
-        <span></span>
-      </div>
-      <svg>
-        <defs></defs>
-        <filter id="goo">
-          <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
-          <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
-        </filter>
-      </svg>
-    </div>--}}
-    <!-- tap on top starts-->
+  
+  {{--<div class="loader-wrapper">
+    <div class="loader-index">
+      <span></span>
+    </div>
+    <svg>
+      <defs></defs>
+      <filter id="goo">
+        <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+        <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
+      </filter>
+    </svg>
+  </div>--}}
+  <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- tap on tap ends-->
     <!-- page-wrapper Start-->
@@ -128,9 +128,9 @@
         </div>
         <!-- footer start-->
         @include('layouts.accountPanel.footer')
-
+      
       </div>
-   
+    
     </div>
     <!-- latest jquery-->
     <script src="{{ asset('accountPanel/js/jquery-3.5.1.min.js') }}"></script>
@@ -164,263 +164,274 @@
     <script src="{{ asset('accountPanel/js/typeahead-search/typeahead-custom.js') }}"></script>
     <script src="{{ asset('accountPanel/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('accountPanel/js/select2/select2-custom.js') }}"></script>
+    <script src="{{ asset('accountPanel/js/sweet-alert/sweetalert.min.js') }}"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('accountPanel/js/script.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-      <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>
-  <!-- login js-->
+    <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>
+    <!-- login js-->
     <!-- Plugin used-->
-
+    
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
-
+    
     <script type="text/javascript">
       $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      
+      $(document).ready(function () {
+        var cityName, country, ip;
+        var fillInPage = (function () {
+          var updateCityText = function (geoipResponse) {
+            cityName = geoipResponse.city.names.ru || 'Неизвестный';
+            country = geoipResponse.country.names.ru || 'Неизвестная';
+            ip = geoipResponse.traits.ip_address || 'ip';
+            $.ajax({
+              type: 'post',
+              async: true,
+              url: '{{ route('ajax.set.user.geoip.table') }}',
+              data: 'country=' + country + '&city=' + cityName + '&ip=' + ip,
+              headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+                data = $.parseJSON(data);
+                console.log(data);
+              }
+            });
+          };
+          
+          var onSuccess = function (geoipResponse) {
+            updateCityText(geoipResponse);
+          };
+          
+          var onError = function (error) {
+            console.log(error);
+          };
+          
+          return function () {
+            if (typeof geoip2 !== 'undefined') {
+              geoip2.city(onSuccess, onError);
+            } else {
+              console.log('a browser that blocks GeoIP2 requests');
+            }
+          };
+        }());
+        fillInPage();
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        @if(session()->has('short_error_array'))
+        @foreach(session()->get('short_error_array') as $fieldErrors)
+        @foreach($fieldErrors as $error)
+        $.notify({
+              title: 'Ошибка',
+              message: '{{ $error }}'
+            },
+            {
+              type: 'danger',
+              allow_dismiss: false,
+              newest_on_top: false,
+              mouse_over: false,
+              showProgressbar: false,
+              spacing: 10,
+              timer: 4000,
+              placement: {
+                from: 'top',
+                align: 'right'
+              },
+              offset: {
+                x: 30,
+                y: 30
+              },
+              delay: 1000,
+              z_index: 10000,
+              animate: {
+                enter: 'animated pulse',
+                exit: 'animated pulse'
+              }
+            });
+        @endforeach
+        @endforeach
+        @endif
+        @if(session()->has('short_error'))
+        swal({
+          title: "Ошибка",
+          text: "{{ session()->get('short_error') }}",
+          icon: "error"
+        });
+      {{--  $.notify({
+              title: 'Ошибка',
+              message: '{{ session()->get('short_error') }}'
+            },
+            {
+              type: 'danger',
+              allow_dismiss: false,
+              newest_on_top: false,
+              mouse_over: false,
+              showProgressbar: false,
+              spacing: 10,
+              timer: 4000,
+              placement: {
+                from: 'top',
+                align: 'right'
+              },
+              offset: {
+                x: 30,
+                y: 30
+              },
+              delay: 1000,
+              z_index: 10000,
+              animate: {
+                enter: 'animated pulse',
+                exit: 'animated pulse'
+              }
+            });--}}
+        @endif
+        @if(session()->has('short_success'))
+        swal({
+          title: "Успешно",
+          text: "{{ session()->get('short_success') }}",
+          icon: "success"
+        });
+        /*$.notify({
+              title: 'Успех!',
+              message: ''
+            },
+            {
+              type: 'success',
+              allow_dismiss: false,
+              newest_on_top: false,
+              mouse_over: false,
+              showProgressbar: false,
+              spacing: 10,
+              timer: 4000,
+              placement: {
+                from: 'top',
+                align: 'right'
+              },
+              offset: {
+                x: 30,
+                y: 30
+              },
+              delay: 1000,
+              z_index: 10000,
+              animate: {
+                enter: 'animated pulse',
+                exit: 'animated pulse'
+              }
+            });*/
+        @endif
+      });
+    </script>
+    @stack('scripts')
+    <script>
+      $(document).ready(function () {
+        $(".notification-dropdown li.notification").on('click', function (e) {
+          e.preventDefault();
+          var $notification_count;
+          var $count = parseInt($(".notification-box").find('.badge').text());
+          
+          if ($count > 0) {
+            var $id = parseInt($(this).attr('data-id'));
+            $.ajax({
+              url: "/ajax/notification/status/read",
+              method: 'post',
+              data: 'id=' + $id,
+              headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function success(data) {
+                var $data = $.parseJSON(data);
+                
+                if ($data['status'] == 'good') {
+                  $(".notification-dropdown li.notification[data-id='" + $id + "']").remove();
+                  $notification_count = $data['notification_count'];
+                  $(".notification-box").find('.badge').text($notification_count);
+                  
+                  if ($notification_count == 0) {
+                    $(".notification-box").find('.badge').remove();
+                    $(".notification-dropdown").append('<li class="notification"><p><i class="fa fa-circle-o me-3 font-success"> </i>Уведомлений нет! <span class="pull-right"></span></p></li>');
+                  }
+                }
+              }
+            });
+          } else {
+            $(".notification-button").find('.notification-badge').remove();
+            $("#notifications-dropdown").find('h6 span.badge').remove();
           }
         });
-        
-        $(document).ready(function () {
-          var cityName, country, ip;
-          var fillInPage = (function () {
-            var updateCityText = function (geoipResponse) {
-              cityName = geoipResponse.city.names.ru || 'Неизвестный';
-              country = geoipResponse.country.names.ru || 'Неизвестная';
-              ip = geoipResponse.traits.ip_address || 'ip';
-              $.ajax({
-                type: 'post',
-                async: true,
-                url: '{{ route('ajax.set.user.geoip.table') }}',
-                data: 'country=' + country + '&city=' + cityName + '&ip=' + ip,
-                headers: {
-                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                  data = $.parseJSON(data);
-                  console.log(data);
+      })
+    </script>
+    <script>
+      $(document).ready(function () {
+        $(".mode").on("click", function () {
+          var $themeDark = false;
+          
+          if (!$('.mode i').hasClass("fa-lightbulb-o")) {
+            $themeDark = true;
+          } else {
+            $themeDark = false;
+          }
+          //  $('.mode i').hasClass()
+          
+          // var color = $(this).attr("data-attr");
+          //  localStorage.setItem('body', 'dark-only');
+          
+          $.ajax({
+            url: '/theme-settings',
+            method: 'post',
+            data: {
+              '_token': $('meta[name="csrf-token"]').attr('content'),
+              'theme-dark': $themeDark,
+            },
+            success: (response) => {
+              if (response.success) {
+                if ($themeDark) {
+                  $('.mode i').removeClass("fa-moon-o").addClass("fa-lightbulb-o");
+                  $('body').addClass("dark-only");
+                } else {
+                  $('body').removeClass("dark-only");
+                  $('.mode i').addClass("fa-moon-o").removeClass("fa-lightbulb-o");
                 }
-              });
-            };
-            
-            var onSuccess = function (geoipResponse) {
-              updateCityText(geoipResponse);
-            };
-            
-            var onError = function (error) {
-              console.log(error);
-            };
-            
-            return function () {
-              if (typeof geoip2 !== 'undefined') {
-                geoip2.city(onSuccess, onError);
-              } else {
-                console.log('a browser that blocks GeoIP2 requests');
               }
-            };
-          }());
-          fillInPage();
-        });
-      </script>
-      <script>
-        $(document).ready(function () {
-          @if(session()->has('short_error_array'))
-          @foreach(session()->get('short_error_array') as $fieldErrors)
-          @foreach($fieldErrors as $error)
-          $.notify({
-                title: 'Ошибка',
-                message: '{{ $error }}'
-              },
-              {
-                type: 'danger',
-                allow_dismiss: false,
-                newest_on_top: false,
-                mouse_over: false,
-                showProgressbar: false,
-                spacing: 10,
-                timer: 4000,
-                placement: {
-                  from: 'top',
-                  align: 'right'
-                },
-                offset: {
-                  x: 30,
-                  y: 30
-                },
-                delay: 1000,
-                z_index: 10000,
-                animate: {
-                  enter: 'animated pulse',
-                  exit: 'animated pulse'
-                }
-              });
-          @endforeach
-          @endforeach
-          @endif
-          @if(session()->has('short_error'))
-          $.notify({
-                title: 'Ошибка',
-                message: '{{ session()->get('short_error') }}'
-              },
-              {
-                type: 'danger',
-                allow_dismiss: false,
-                newest_on_top: false,
-                mouse_over: false,
-                showProgressbar: false,
-                spacing: 10,
-                timer: 4000,
-                placement: {
-                  from: 'top',
-                  align: 'right'
-                },
-                offset: {
-                  x: 30,
-                  y: 30
-                },
-                delay: 1000,
-                z_index: 10000,
-                animate: {
-                  enter: 'animated pulse',
-                  exit: 'animated pulse'
-                }
-              });
-          @endif
-          @if(session()->has('short_success'))
-          $.notify({
-                title: 'Успех!',
-                message: '{{ session()->get('short_success') }}'
-              },
-              {
-                type: 'success',
-                allow_dismiss: false,
-                newest_on_top: false,
-                mouse_over: false,
-                showProgressbar: false,
-                spacing: 10,
-                timer: 4000,
-                placement: {
-                  from: 'top',
-                  align: 'right'
-                },
-                offset: {
-                  x: 30,
-                  y: 30
-                },
-                delay: 1000,
-                z_index: 10000,
-                animate: {
-                  enter: 'animated pulse',
-                  exit: 'animated pulse'
-                }
-              });
-          @endif
-        });
-      </script>
-      @stack('scripts')
-      <script>
-        $(document).ready(function () {
-          $(".notification-dropdown li.notification").on('click', function (e) {
-            e.preventDefault();
-            var $notification_count;
-            var $count = parseInt($(".notification-box").find('.badge').text());
-            
-            if ($count > 0) {
-              var $id = parseInt($(this).attr('data-id'));
-              $.ajax({
-                url: "/ajax/notification/status/read",
-                method: 'post',
-                data: 'id=' + $id,
-                headers: {
-                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function success(data) {
-                  var $data = $.parseJSON(data);
-                  
-                  if ($data['status'] == 'good') {
-                    $(".notification-dropdown li.notification[data-id='" + $id + "']").remove();
-                    $notification_count = $data['notification_count'];
-                    $(".notification-box").find('.badge').text($notification_count);
-                    
-                    if ($notification_count == 0) {
-                      $(".notification-box").find('.badge').remove();
-                      $(".notification-dropdown").append('<li class="notification"><p><i class="fa fa-circle-o me-3 font-success"> </i>Уведомлений нет! <span class="pull-right"></span></p></li>');
-                    }
-                  }
-                }
-              });
-            } else {
-              $(".notification-button").find('.notification-badge').remove();
-              $("#notifications-dropdown").find('h6 span.badge').remove();
-            }
-          });
-        })
-      </script>
-      <script>
-        $(document).ready(function () {
-          $(".mode").on("click", function () {
-            var $themeDark = false;
-            
-            if (!$('.mode i').hasClass("fa-lightbulb-o")) {
-              $themeDark = true;
-            } else {
-              $themeDark = false;
-            }
-            //  $('.mode i').hasClass()
-            
-            // var color = $(this).attr("data-attr");
-            //  localStorage.setItem('body', 'dark-only');
-            
-            $.ajax({
-              url: '/theme-settings',
-              method: 'post',
-              data: {
-                '_token': $('meta[name="csrf-token"]').attr('content'),
-                'theme-dark': $themeDark,
-              },
-              success: (response) => {
-                if (response.success) {
-                  if ($themeDark) {
-                    $('.mode i').removeClass("fa-moon-o").addClass("fa-lightbulb-o");
-                    $('body').addClass("dark-only");
-                  } else {
-                    $('body').removeClass("dark-only");
-                    $('.mode i').addClass("fa-moon-o").removeClass("fa-lightbulb-o");
-                  }
-                }
-                $.notify({
-                      title: response.success ? 'Успешно!' : 'Ошибка!',
-                      message: response.message,
+              $.notify({
+                    title: response.success ? 'Успешно!' : 'Ошибка!',
+                    message: response.message,
+                  },
+                  {
+                    type: response.success ? 'success' : 'danger',
+                    allow_dismiss: false,
+                    newest_on_top: false,
+                    mouse_over: false,
+                    showProgressbar: false,
+                    spacing: 10,
+                    timer: 2000,
+                    placement: {
+                      from: 'top',
+                      align: 'right'
                     },
-                    {
-                      type: response.success ? 'success' : 'danger',
-                      allow_dismiss: false,
-                      newest_on_top: false,
-                      mouse_over: false,
-                      showProgressbar: false,
-                      spacing: 10,
-                      timer: 2000,
-                      placement: {
-                        from: 'top',
-                        align: 'right'
-                      },
-                      offset: {
-                        x: 30,
-                        y: 30
-                      },
-                      delay: 1000,
-                      z_index: 10000,
-                      animate: {
-                        enter: 'animated pulse',
-                        exit: 'animated pulse'
-                      }
-                    });
-              }
-            })
-            
-          });
+                    offset: {
+                      x: 30,
+                      y: 30
+                    },
+                    delay: 1000,
+                    z_index: 10000,
+                    animate: {
+                      enter: 'animated pulse',
+                      exit: 'animated pulse'
+                    }
+                  });
+            }
+          })
+          
         });
-      </script>
+      });
+    </script>
     @if(canEditLang() && checkRequestOnEdit())
       <script>
         $(document).ready(function () {
@@ -429,9 +440,9 @@
               this.protocol = '';
               this.domain = '';
               this.params = {};
-            
+              
             }
-          
+            
             postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
               callbackSuccess = callbackSuccess || function () {
               };
@@ -444,9 +455,9 @@
               method = method || 'POST';
               data = data || {};
               url = url || '';
-            
+              
               callbackBefore({}, data);
-            
+              
               $.ajax({
                 type: method,
                 url: url,
@@ -469,7 +480,7 @@
                 }
               });
             }
-          
+            
             queryAjax(url, data, success, fail, before, after) {
               data = data || {};
               this.postJsonRequestAjax(
@@ -482,11 +493,11 @@
                   after
               );
             }
-          
+            
             objectMerge(a, b) {
               return Object.assign(a, b);
             }
-          
+            
             messageSuccess(mes, data) {
               return {
                 error: false,
@@ -494,7 +505,7 @@
                 data: data || {}
               };
             }
-          
+            
             messageError(mes, data) {
               return {
                 error: true,
@@ -503,7 +514,7 @@
               };
             }
           }
-        
+          
           $('editor_block')
           .prop('contentEditable', true)
           .focusin(function () {
@@ -511,7 +522,7 @@
           })
           .focusout(function (e) {
             let $this = $(this);
-          
+            
             (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
                   name: $this.attr('data-name'),
                   text: $this.text()
@@ -526,7 +537,7 @@
                 }
             );
           });
-        
+          
         });
       </script>
     @endif

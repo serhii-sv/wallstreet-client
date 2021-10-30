@@ -12,6 +12,7 @@ use App\Http\Controllers\AccountPanel\ImpersonateController;
 use App\Http\Controllers\AccountPanel\CurrencyController;
 use App\Http\Controllers\AccountPanel\DepositsController;
 use App\Http\Controllers\AccountPanel\DashboardController;
+use App\Http\Controllers\AccountPanel\LanguageController;
 use App\Http\Controllers\AccountPanel\ProfileController;
 use App\Http\Controllers\AccountPanel\ReferralsController;
 use App\Http\Controllers\AccountPanel\TransactionsController;
@@ -141,10 +142,10 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
             Route::post('/deposits/set-reinvest', [DepositsController::class, 'setReinvestPercent' ])->name('deposits.set.reinvest');
             Route::post('/deposits/add-balance', [DepositsController::class, 'addBalance' ])->name('deposits.add.balance');
             Route::post('/deposits/upgrade', [DepositsController::class, 'upgrade' ])->name('deposits.upgrade');
-
-
-
+            
             Route::get('/ico', [IsoController::class, 'index' ])->name('ico');
+            
+            Route::get('/languages', [LanguageController::class, 'index' ])->name('languages.index');
 
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
