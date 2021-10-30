@@ -28,17 +28,15 @@ class SetLang
          */
         $defaultLang = 'ru';
 
-        $path = resource_path('lang/' . $defaultLang . '.json');
+//        $path = resource_path('lang/' . $defaultLang . '.json');
 
-        if (!file_exists($path)) {
-            session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
-            $defaultLang = 'en';
-        }
+//        if (!file_exists($path)) {
+//            session()->flash('error','Translation error. lang/'.$defaultLang.'.json is not exists.');
+//            $defaultLang = 'en';
+//        }
 
         if (!session()->has('lang')) {
-            session([
-                'lang' => $defaultLang,
-            ]);
+            session()->put('lang', $defaultLang);
         }
 
         if (!isset($_COOKIE['lang'])) {
