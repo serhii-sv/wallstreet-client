@@ -30,9 +30,8 @@ class ImpersonateController extends Controller
         }
 
         Auth::login($admin);
-
         Auth::user()->impersonate($user);
-        return redirect(route('accountPanel.profile'));
+        return redirect(route('accountPanel.dashboard'));
     }
 
     /**
