@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ReferralsController extends Controller
 {
-    
+
     public function index() {
         $user = Auth::user();
         $upliner = auth()->user()->partner()->first();
         if ($upliner === null) {
             $upliner = false;
         }
-        
+
         //$referrals = Auth::user()->referrals()->distinct('id')->orderBy('pivot.line')->get();
         $referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->paginate(12);
         $all_referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->get();
@@ -44,8 +44,8 @@ class ReferralsController extends Controller
             }
         }
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
-        $referral_link_registered = ReferralLinkStat::where('partner_id', $user->id)->where('user_id', '!=', null)->count();
-        
+        $referral_link_registered = $user->referrals()->wherePivot('line', 1)->count();
+
         return view('accountPanel.referrals.index', [
             'referrals' => $referrals,
             'all_referrals' => $all_referrals,
@@ -60,21 +60,21 @@ class ReferralsController extends Controller
             'referral_link_clicks' => $referral_link_clicks,
         ]);
     }
-    
+
     public function banners() {
         $banners = Banner::orderBy('created_at', 'desc')->get();
         return view('accountPanel.referrals.banners', [
             'banners' => $banners,
         ]);
     }
-    
+
     public function treePage() {
         $user = Auth::user();
         return view('accountPanel.referrals.reftree', [
             'user' => $user,
         ]);
     }
-    
+
     public function reftree($id = null) {
         if (null == $id) {
             throw new \Exception('reftree id is null');
@@ -83,10 +83,10 @@ class ReferralsController extends Controller
         if (empty($user)) {
             return [];
         }
-        
+
         return $children['children'][] = $this->getChildrens($user, 7);
     }
-    
+
     private function getChildrens(User $user, $limit = 3) {
         if ($limit === 0) {
             return [];
@@ -94,30 +94,30 @@ class ReferralsController extends Controller
         if (empty($user)) {
             return [];
         }
-        
+
         $referrals = [];
         $referrals['name'] = $user->login;
         if (!$user->hasReferrals()) {
             return $referrals;
         }
-        
+
         foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
             $referral = $this->getChildrens($r, $limit - 1);
             $referrals['children'][] = $referral;
         }
         return $referrals;
     }
-    
+
     public function getBanner($id) {
         $banner_id = Banner::findOrFail($id)->image;
-        
+
         $file = CloudFile::findOrFail($banner_id);
-        
+
         $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
-    
+
         return response($fileFromStorage, 200, [
             'Content-type' => $file->mime,
         ]);
-        
+
     }
 }
