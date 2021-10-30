@@ -28,25 +28,25 @@ class SetLang
          */
         $defaultLang = 'ru';
 
-        if (!session()->has('lang')) {
-            session()->put('lang', $defaultLang);
+        if (!session()->has('language')) {
+            session()->put('language', $defaultLang);
         }
 
-        if (!isset($_COOKIE['lang'])) {
-            setcookie('lang', $defaultLang, Carbon::now()->addDays(365)->timestamp, '/');
+        if (!isset($_COOKIE['language'])) {
+            setcookie('language', $defaultLang, Carbon::now()->addDays(365)->timestamp, '/');
         }
 
-        if (isset($_COOKIE['lang']) && !session()->has('lang')) {
+        if (isset($_COOKIE['language']) && !session()->has('language')) {
             session([
-                'lang' => $_COOKIE['lang']
+                'language' => $_COOKIE['language']
             ]);
         }
 
-        $locale = session()->has('lang')
-            ? session('lang')
+        $locale = session()->has('language')
+            ? session('language')
             : $defaultLang;
 
-        die($locale.'/'.session('lang'));
+        die($locale.'/'.session('language'));
 
         App::setLocale($locale);
         Carbon::setLocale($locale);
