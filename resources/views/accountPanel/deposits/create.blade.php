@@ -54,10 +54,10 @@
                                       {{ $item->name }}
                                     @endif</h3>
                                   <h5>@if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Acc daily earnings {{ $item->id }}' contenteditable="true">{{ __('Acc daily earnings '.$item->id) }}</editor_block> @else {{ __('Acc daily earnings '.$item->id) }} @endif: {{ $item->daily }}
+                                      <editor_block data-name='Acc daily earnings {{ $item->id }}' contenteditable="true">{{ __('Acc daily earnings '.$item->id) }}</editor_block> @else {{ __('Acc daily earnings '.$item->id) }} @endif: {{ $item->daily }}%
                                   </h5>
                                   <h6>@if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Acc duration{{ $item->id }}' contenteditable="true">{{ __('Acc duration '.$item->id) }}</editor_block> @else {{ __('Acc duration '.$item->id) }} @endif: {{ $item->duration }}
+                                      <editor_block data-name='Acc duration{{ $item->id }}' contenteditable="true">{{ __('Acc duration '.$item->id) }}</editor_block> @else {{ __('Acc duration '.$item->id) }} @endif: {{ $item->duration }} дней
                                   </h6>
                                   <h6>@if(canEditLang() && checkRequestOnEdit())
                                       <editor_block data-name='Acc reinvest {{ $item->id }}' contenteditable="true">{{ __('Acc reinvest '.$item->id) }}</editor_block> @else {{ __('Reinvesting '.$item->id) }} @endif: {{ $item->reinvest ? 'есть' : 'нет' }}
