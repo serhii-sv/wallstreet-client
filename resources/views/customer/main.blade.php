@@ -977,20 +977,21 @@
                           <div class="transaction-header">
                             <h5 class="title">{{ $rate->name }}</h5>
                             <span class="title">
-                                                            @if(canEditLang() && checkRequestOnEdit())
-                                @if($rate->overall)
-                                  <editor_block data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
+                                @if(canEditLang() && checkRequestOnEdit())
+                                    <div>
+                                <editor_block data-name='Daily earnings {{ $rate->id }}' contenteditable="true">{{ __('Daily earnings '.$rate->id) }}</editor_block>
+                                </div>
                                 @else
-                                  <editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{{ __('return deposit: false '.$rate->id) }}</editor_block>
+                                    <span class="date">{{ __('Daily earnings '.$rate->id) }} {{ $rate->daily }}%</span>
                                 @endif
 
-                              @else
-                                @if($rate->overall)
-                                  <span class="date">{{ __('return deposit: true '.$rate->id) }}</span>
-                                @else
-                                  <span class="date">{{ __('return deposit: false '.$rate->id) }}</span>
-                                @endif
-                              @endif
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <div>
+                                <editor_block data-name='Duration {{ $rate->id }}' contenteditable="true">{{ __('Duration '.$rate->id) }}</editor_block>
+                                </div>
+                                    @else
+                                        <span class="date">{{ __('Duration '.$rate->id) }}</span>
+                                    @endif
 
                                                         </span>
                             @if(canEditLang() && checkRequestOnEdit())
@@ -998,8 +999,23 @@
                                 <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
                               </div>
                             @else
-                              <span class="date">{{ __('Daily rate '.$rate->id) }} {{ $rate->daily }}%</span>
+                              <span class="date">{{ __('Daily rate '.$rate->id) }}</span>
                             @endif
+
+                              @if(canEditLang() && checkRequestOnEdit())
+                                  @if($rate->overall)
+                                      <editor_block data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
+                                  @else
+                                      <editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{{ __('return deposit: false '.$rate->id) }}</editor_block>
+                                  @endif
+
+                              @else
+                                  @if($rate->overall)
+                                      <span class="date">{{ __('return deposit: true '.$rate->id) }}</span>
+                                  @else
+                                      <span class="date">{{ __('return deposit: false '.$rate->id) }}</span>
+                                  @endif
+                              @endif
                           </div>
                           <div class="transaction-thumb">
                          {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
