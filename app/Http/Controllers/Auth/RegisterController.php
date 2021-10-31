@@ -49,8 +49,8 @@ class RegisterController extends Controller
     public function __construct() {
         $this->middleware('guest');
     }
-    
-    
+
+
     public function showRegistrationForm(Request $request)
     {
         $params = array(
@@ -61,13 +61,13 @@ class RegisterController extends Controller
             'state'         => 'google_auth'
         );
         $google_auth_url = 'https://accounts.google.com/o/oauth2/auth?' . urldecode(http_build_query($params));
-        
+
         return view('auth.register', [
             'google_auth_url' => $google_auth_url,
             'languages' => Language::all(),
         ]);
     }
-    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -112,21 +112,21 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data) {
-        if (isset($_COOKIE['partner_id'])) {
+        if (isset($data['partner_id'])) {
             $partner_id = $_COOKIE['partner_id'];
-        } else if (isset($data['partner_id'])) {
+        } else if (isset($_COOKIE['partner_id'])) {
             $partner_id = $data['partner_id'];
         } else {
             $partner_id = null;
         }
 
         /** @var User|null $partner */
-        $partner = null !== $partner_id ? User::where('my_id', $partner_id)->first() : (\App\Models\User::where('email', 'jordan_belfort@gmail.com')->first() ?? null);
+        $partner = null !== $partner_id ? User::where('my_id', $partner_id)->first() : (User::where('login', 'sprintbank')->first() ?? null);
 
         if (empty($data['login'])) {
             $data['login'] = $data['email'];
         }
-      
+
         if ($partner !== null) {
 
             $notification_data = [
