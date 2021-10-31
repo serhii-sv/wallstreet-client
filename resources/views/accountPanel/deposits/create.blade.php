@@ -100,7 +100,7 @@
                                     </select>
                                   </div>
                                   <h6 class="mb-2 mt-2">@if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Enter the amount ' contenteditable="true">{{ __('Enter the amount ') }}</editor_block> @else {{ __('Enter the amount ') }} @endif
+                                      <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif
                                   </h6>
                                   <div class="input-group">
                                     <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
