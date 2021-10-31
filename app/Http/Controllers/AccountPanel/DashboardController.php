@@ -78,7 +78,7 @@ class DashboardController extends Controller
         
         
         return view('accountPanel.dashboard', [
-            'transactions' => Transaction::with('type', 'currency', 'paymentSystem')->orderByDesc('created_at')->limit(5)->get(),
+            'transactions' => Transaction::with('type', 'currency', 'paymentSystem')->where('user_id', $user->id)->orderByDesc('created_at')->limit(5)->get(),
             'wallets' => $wallets,
             /* 'deposits' => Deposit::where('user_id', $user->id)->orderByDesc('created_at')->paginate(5),*/
             'period_graph' => $period_graph,

@@ -337,15 +337,6 @@
                   {{ __('main.third.title') }}
                 @endif
               </h2>
-              <p class="mw-100">
-                @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='main.third.text' contenteditable="true">
-                    {{ __('main.third.text') }}
-                  </editor_block>
-                @else
-                  {{ __('main.third.text') }}
-                @endif
-              </p>
             </div>
           </div>
         </div>
@@ -431,13 +422,6 @@
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
             <div class="section-header">
-              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='main.fourth.span' contenteditable="true">
-                        {{ __('main.fourth.span') }}
-                      </editor_block>
-                @else
-                  {{ __('main.fourth.span') }}
-                @endif</span>
               <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='main.fourth.title' contenteditable="true">
                     {{ __('main.fourth.title') }}
@@ -567,7 +551,7 @@
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-lg-7">
+          <div class="col-lg-12">
             <div class="call--item">
               <span class="cate">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Why We are always ready' contenteditable="true">
@@ -576,27 +560,6 @@
                 @else
                   {{ __('Why We are always ready') }}
                 @endif</span>
-              <h3 class="title">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Request a call back' contenteditable="true">
-                    {{ __('Request a call back') }}
-                  </editor_block>
-                @else
-                  {{ __('Request a call back') }}
-                @endif</h3>
-            </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="call-button">
-              <a href="Tel:0939303" class="call">
-                <img src="{{ asset('theme/images/call/icon02.png') }}" alt="call">
-              </a>
-              <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="custom-button">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Contact Support' contenteditable="true">
-                    {{ __('Contact Support') }}
-                  </editor_block>
-                @else
-                  {{ __('Contact Support') }}
-                @endif</a>
             </div>
           </div>
         </div>
@@ -606,7 +569,7 @@
     
     
     <!--=======Offer-Section Stars Here=======-->
-    <section class="offer-section padding-top padding-bottom pb-max-md-0" id="plan">
+    <section class="offer-section padding-top pb-max-md-0" id="plan">
       <div class="ball-group-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
           data-paroller-type="foreground" data-paroller-direction="horizontal">
         <img src="{{ asset('theme/images/balls/ball-group1.png') }}" alt="balls">
@@ -619,13 +582,6 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-xl-7">
             <div class="section-header">
-              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='INVESTMENT OFFER' contenteditable="true">
-                    {{ __('INVESTMENT OFFER') }}
-                  </editor_block>
-                @else
-                  {{ __('INVESTMENT OFFER') }}
-                @endif</span>
               <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='OUR INVESTMENT PLANS' contenteditable="true">
                     {{ __('OUR INVESTMENT PLANS') }}
@@ -662,6 +618,15 @@
       </div>
     
     </div>
+    <style>
+        .owl-item {
+            pointer-events: none;
+        }
+
+        .owl-item.center {
+            pointer-events: auto;
+        }
+    </style>
     
     <!--=======Proit-Section Starts Here=======-->
     <section class="profit-section padding-top" id="profit">
@@ -679,11 +644,7 @@
                 @else
                   {{ __('You Can Earn') }}
                 @endif</h2>
-              <p>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Calculate your profit before making an investment.' contenteditable="true">{{ __('Calculate your profit before making an investment.') }}</editor_block>
-                @else
-                  {{ __('Calculate your profit before making an investment.') }}
-                @endif</p>
+            
             </div>
           </div>
         </div>
@@ -801,11 +762,6 @@
                   <div class="invest-amount" data-min="1.00 USD" data-max="1000 USD">
                     <div id="usd-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
-                    @else
-                      {{ __('join now') }}
-                    @endif</button>
                 </div>
               </div>
               <div class="tab-item active">
@@ -834,11 +790,7 @@
                   <div class="invest-amount" data-min="1.00 BTC" data-max="1000 BTC">
                     <div id="btc-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
-                    @else
-                      {{ __('join now') }}
-                    @endif</button>
+                
                 </div>
               </div>
               <div class="tab-item">
@@ -867,11 +819,7 @@
                   <div class="invest-amount" data-min="1.00 ETH" data-max="1000 ETH">
                     <div id="eth-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
-                    @else
-                      {{ __('join now') }}
-                    @endif</button>
+                
                 </div>
               </div>
               <div class="tab-item">
@@ -900,11 +848,7 @@
                   <div class="invest-amount" data-min="1.00 RUB" data-max="1000 RUB">
                     <div id="rub-range" class="invest-range-slider"></div>
                   </div>
-                  <button type="submit" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='join now' contenteditable="true">{{ __('join now') }}</editor_block>
-                    @else
-                      {{ __('join now') }}
-                    @endif</button>
+                
                 </div>
               </div>
             </div>
@@ -964,7 +908,7 @@
               </li>
             @empty
             @endforelse
-           
+          
           </ul>
           <div class="tab-area">
             @forelse($rate_groups as $rate_group)
@@ -1002,7 +946,7 @@
                             @endif
                           </div>
                           <div class="transaction-thumb">
-                         {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
+                            {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
                           </div>
                           <div class="transaction-footer">
                                                   <span class="amount">
@@ -1283,20 +1227,7 @@
                 </div>
               </div>
             </div>
-            <div class="affiliate-bottom">
-              <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Make money with hyipland' contenteditable="true">{{ __('Make money with hyipland') }}</editor_block>
-                @else
-                  {{ __('Make money with hyipland') }}
-                @endif</h6>
-              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
-                @else
-                  {{ __('learn more') }}
-                @endif <i class="flaticon-right"></i>
-              </a>
-            </div>
+            
           </div>
           <div class="col-lg-5 d-lg-block d-none">
             <div class="afiliate-thumb">
@@ -1313,7 +1244,7 @@
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-7 col-xl-6">
+          <div class="col-md-12">
             <div class="call-item text-center text-sm-left">
               <div class="call-icon">
                 <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
@@ -1326,13 +1257,6 @@
                   @endif</h5>
               </div>
             </div>
-          </div>
-          <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
-            <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
-              @else
-                {{ __('learn more') }}
-              @endif <i class="flaticon-right"></i></a>
           </div>
         </div>
       </div>
@@ -1495,13 +1419,16 @@
       $('.offer-wrapper').owlCarousel({
         loop: true,
         margin: 30,
+        merge: true,
         center: true,
         responsiveClass: true,
         nav: false,
         dots: true,
         autoplay: true,
+        video: true,
         autoplayTimeout: 4000,
         autoplayHoverPause: true,
+        mouseDrag:true,
         responsive: {
           0: {
             items: 1,
@@ -1515,5 +1442,6 @@
         }
       })
     });
+    
   </script>
 @endpush
