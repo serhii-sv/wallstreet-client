@@ -995,7 +995,7 @@
                                                         </span>
                             @if(canEditLang() && checkRequestOnEdit())
                               <div>
-                                <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }} {{ $rate->daily }}%</editor_block>
+                                <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
                               </div>
                             @else
                               <span class="date">{{ __('Daily rate '.$rate->id) }} {{ $rate->daily }}%</span>
