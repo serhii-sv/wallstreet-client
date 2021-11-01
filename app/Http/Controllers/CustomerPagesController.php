@@ -41,7 +41,7 @@ class CustomerPagesController extends Controller
     }
 
     public function faq() {
-        $lang_code = session()->get('lang');
+        $lang_code = session()->get('language');
         if ($lang_code !== null) {
             $lang = Language::where('code', $lang_code)->first();
         } else {
@@ -94,7 +94,7 @@ class CustomerPagesController extends Controller
                 'news' => $news,
             ]);
         } else {
-            
+
             $last_news = News::orderByDesc('created_at')->first();
             if ($last_news !== null){
                 $news = News::orderByDesc('created_at')->whereNotIn('id', [$last_news->id])->paginate(9);

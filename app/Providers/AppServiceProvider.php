@@ -55,14 +55,6 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot() {
-
-        if (!session()->has('lang')) {
-            $lang = Language::where('default', true)->first();
-            if (!empty($lang))
-                session()->put('lang', $lang->code);
-            else
-                session()->put('lang', 'en');
-        }
         Paginator::defaultView('vendor.pagination.default');
         Horizon::auth(function ($request) {
             $user = \Auth::user();
