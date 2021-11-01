@@ -69,11 +69,8 @@ class DashboardController extends Controller
                 ->first();
 
             if (null !== $depositTransaction) {
-                die(print_r($depositTransaction,true));
                 $total_revenue += $depositTransaction->main_currency_amount / 100 * $item->daily;
             }
-
-            die(print_r($total_revenue,true));
         }
         $banners = Banner::all();
 
