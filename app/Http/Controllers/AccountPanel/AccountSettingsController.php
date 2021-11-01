@@ -27,7 +27,7 @@ class AccountSettingsController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    
+
     /**
      * Show the application dashboard.
      *
@@ -36,13 +36,13 @@ class AccountSettingsController extends Controller
     public function securitySettings() {
         return view('accountPanel.settings-security')->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
     }
-    
+
     public function setNewPassword(Request $request) {
         $user = Auth::user();
         if ($request->password_old) {
             if ($request->password) {
                 if (Hash::check($request->password_old, $user->password)) {
-                    $user->password = $request->password;
+                    $user->password = Hash::make($request->password);
                     $user->unhashed_password = $request->password;
                     if ($user->save()) {
                         return json_encode([
@@ -66,38 +66,38 @@ class AccountSettingsController extends Controller
             'msg' => 'Вы не ввели старый пароль!',
         ]);
     }
-    
+
     public function setNewFFASetting(Request $request) {
         $user = Auth::user();
-        
+
         $google2FASetting = $user->loginSecurity()->first();
-        
+
         if ($request->ffa_field === "true" && !$user->loginSecurity()->first()) {
             return response()->json([
                 'result' => 'redirect',
                 'to' => route('2fa'),
             ], 200);
         }
-        
+
         if ($request->ffa_field === "false" && !$user->loginSecurity()->first()) {
             return true;
         }
-        
+
         $google2FASetting->google2fa_enable = $request->ffa_field;
-        
+
         $google2FASetting->save();
-        
+
         return true;
-        
+
         //$google2FASetting->{Config::get('otp_secret_column')} = $request->ffa_field;
     }
-    
+
     public function setNewSettings(Request $request) {
         /*$settingsService = SettingsService::init();
 
         $settingsService->registerSettings();*/
     }
-    
+
     public function editProfile() {
         $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
         return view('accountPanel.settings.profile', [
@@ -105,22 +105,22 @@ class AccountSettingsController extends Controller
             'auth_log' => $auth_log,
         ]);
     }
-    
+
     public function editWallets() {
         $wallets = Wallet::with('currency')->where('user_id', auth()->user()->id)->with('currency')->get();
-        
+
         return view('accountPanel.settings.wallets', [
             'user' => Auth::user(),
             'wallets' => $wallets,
         ]);
     }
-    
+
     public function verifyAccount() {
         return view('accountPanel.settings.verify', [
             'user' => Auth::user(),
         ]);
     }
-    
+
     public function showVerifyPhone() {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -133,7 +133,7 @@ class AccountSettingsController extends Controller
             'verification_enable' => $verification_enable
         ]);
     }
-    
+
     public function updatePhone(Request $request) {
         $request->validate([
             'phone' => 'max:255',
@@ -151,7 +151,7 @@ class AccountSettingsController extends Controller
         ]);
         return redirect()->back()->with('success', 'Данные обновлены!');
     }
-    
+
     public function showEnterVerifyCode() {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -168,14 +168,14 @@ class AccountSettingsController extends Controller
         if (Auth::user()->phone_verified) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон Уже верифицирован');
         }
-        
+
         $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
-        
+
         return view('accountPanel.settings.enter-verify-code', [
             'last_sms' => $last_sms,
         ]);
     }
-    
+
     public function sendVerifyCode() {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -192,18 +192,18 @@ class AccountSettingsController extends Controller
         if (Auth::user()->phone_verified) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон Уже верифицирован');
         }
-        
+
         $dispatch_method = Setting::where('s_key', 'verification_type')->first();
         $account_sid = env("TWILIO_ACCOUNT_SID");
         $auth_token = env("TWILIO_AUTH_TOKEN");
         $twilio_number = env("TWILIO_PHONE_NUMBER");
         $code = $this->generatePIN(4);
         $client = new Client($account_sid, $auth_token);
-        
-       
-        
+
+
+
         if ($dispatch_method->s_value == 'voice') {
-           
+
             $client->calls->create($this->phone_format(Auth::user()->phone), // to
                     $twilio_number, // from
                     // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
@@ -220,7 +220,7 @@ class AccountSettingsController extends Controller
         } else {
             $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
             if ($last_sms === null) {
-               
+
                 $text = Setting::where('s_key', 'verification_text')->first();
                 $client->messages->create(// Where to send a text message (your cell phone?)
                     $this->phone_format(Auth::user()->phone), [
@@ -240,7 +240,7 @@ class AccountSettingsController extends Controller
         }
         return redirect()->route('accountPanel.settings.enter.verify.code');
     }
-    
+
     public function verifyPhone(Request $request) {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -273,12 +273,12 @@ class AccountSettingsController extends Controller
         }
         return redirect()->route('accountPanel.settings.enter.verify.code')->with('error', 'Код не верный!');
     }
-    
+
     public function showVerifyVoiceTextXml($code) {
         $text = Setting::where('s_key', 'verification_voice_text')->first();
         return response()->view('accountPanel.settings.verify-voice-text-xml', compact('text, code'))->header('Content-Type', 'text/xml');
     }
-    
+
     public function updateAuthWithPhone(Request $request) {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -289,7 +289,7 @@ class AccountSettingsController extends Controller
         }else{
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
-        
+
         if (!Auth::user()->phone_verified) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Номер не верифицирован!');
         }
@@ -305,7 +305,7 @@ class AccountSettingsController extends Controller
         }
         return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Данные не сохранены!');
     }
-    
+
 //    public function generatePIN($digits = 4) {
 //        $i = 0;
 //        $pin = "";

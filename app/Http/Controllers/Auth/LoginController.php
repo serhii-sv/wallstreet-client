@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class LoginController extends Controller
@@ -31,9 +32,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
+
     use AuthenticatesUsers;
-    
+
     /**
      * Where to redirect users after login.
      *
@@ -41,7 +42,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
     public    $ip;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -50,7 +51,7 @@ class LoginController extends Controller
     public function __construct() {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function showLoginForm(Request $request) {
         if ($request->get('state') == 'google_auth' && !empty($request->get('code'))) {
             $params = [
@@ -60,7 +61,7 @@ class LoginController extends Controller
                 'grant_type' => 'authorization_code',
                 'code' => $request->get('code'),
             ];
-            
+
             $ch = curl_init('https://accounts.google.com/o/oauth2/token');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
@@ -69,9 +70,9 @@ class LoginController extends Controller
             curl_setopt($ch, CURLOPT_HEADER, false);
             $data = curl_exec($ch);
             curl_close($ch);
-  
+
             $data = json_decode($data, true);
-         
+
             if (!empty($data['access_token'])) {
                 // Токен получили, получаем данные пользователя.
                 $params = [
@@ -80,7 +81,7 @@ class LoginController extends Controller
                     'token_type' => 'Bearer',
                     'expires_in' => 3599,
                 ];
-                
+
                 $info = file_get_contents('https://www.googleapis.com/oauth2/v1/userinfo?' . urldecode(http_build_query($params)));
                 $info = json_decode($info, true);
                 $this->ip = $request->ip();
@@ -102,20 +103,20 @@ class LoginController extends Controller
                     } else {
                         $partner_id = null;
                     }
-                    
-                    
+
+
                     $password = Str::random(12);
-                    
+
                     $user = User::create([
                         'name' => $info['name'] ?? '',
                         'email' => $info['email'],
                         'login' => $info['email'],
-                        'password' => $password,
+                        'password' => Hash::make($password),
                         'unhashed_password' => $password,
                         'partner_id' => $partner_id,
                         'api_token' => Str::random(60),
                     ]);
-                    
+
                     $partner = User::where('my_id', $user->partner_id)->first();
                     if ($partner !== null) {
                         $stats = ReferralLinkStat::where('partner_id', $partner->id)->where('user_id', null)->where('ip', $this->ip)->first();
@@ -137,13 +138,13 @@ class LoginController extends Controller
             'state' => 'google_auth',
         ];
         $google_auth_url = 'https://accounts.google.com/o/oauth2/auth?' . urldecode(http_build_query($params));
-        
+
         return view('auth.login', [
             'google_auth_url' => $google_auth_url,
             'languages' => Language::all(),
         ]);
     }
-    
+
     public function loginWithGoogle(Request $request) {
         $user = User::where('email', $request->get('email'))->first();
         if ($user !== null) {
@@ -153,7 +154,7 @@ class LoginController extends Controller
             $this->incrementLoginAttempts($request);
         }
     }
-    
+
 //    protected function attemptLoginGoogle(Request $request) {
 //        return $this->guard()->attempt($this->credentialsGoogle($request), true);
 //    }
@@ -161,48 +162,48 @@ class LoginController extends Controller
 //    protected function credentialsGoogle(Request $request) {
 //        return $request->only($this->username(), 'password');
 //    }
-    
-    
+
+
     public function login(Request $request) {
         $this->validateLogin($request);
-        
-        
+
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
         if (method_exists($this, 'hasTooManyLoginAttempts') && $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-            
+
             return $this->sendLockoutResponse($request);
         }
-        
+
         if ($this->attemptLogin($request)) {
-            
+
             return $this->sendLoginResponse($request);
         }
-        
+
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
-        
+
         return $this->sendFailedLoginResponse($request);
     }
-    
+
     protected function authenticated(Request $request, $user) {
         //
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
     }
-    
+
     public function logout(Request $request) {
         session()->forget('google2fa');
-        
+
         Auth::logout();
         return redirect('/login');
     }
-    
+
     public function createUserAuthLog($request, $user) {
         $user_log = new UserAuthLog();
         $user_log->user_id = $user->id;
@@ -213,7 +214,7 @@ class LoginController extends Controller
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user_log->save();
     }
-    
+
     protected function validateLogin(Request $request) {
         $request->validate([
             $this->username() => 'required|string',
@@ -224,7 +225,7 @@ class LoginController extends Controller
         ], [/*       'recaptchav3' => 'Captcha error! Try again',*/
         ]);
     }
-    
+
     public function createUserAuthDevice(Request $request, $user) {
         $browser = Parser::browserFamily();
         $browser_version = Parser::browserVersion();
@@ -237,7 +238,7 @@ class LoginController extends Controller
             ]);
         }
         $device_stats->update(['count' => $device_stats->count + 1]);
-        
+
         $user_device = UserDevice::where('user_id', $user->id)->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
         if ($user_device !== null) {
             if ($user_device->ip !== $request->ip()) {
@@ -265,7 +266,7 @@ class LoginController extends Controller
             $user_device->save();
         }
     }
-    
+
     public function checkForMultiAccounts(Request $request, $user) {
         $current_ip = $request->ip();
         $main_user = User::where('ip', $current_ip)->where('id', '!=', $user->id)->first();
@@ -276,13 +277,13 @@ class LoginController extends Controller
             $this->createMultiAccountRecord($user, $main_user_log->user_id, $current_ip);
         }
     }
-    
+
     public function username() {
         $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'login';
         request()->merge([$field => request()->email]);
         return $field;
     }
-    
+
     public function createMultiAccountRecord($user, $main_user, $ip) {
         if (!(UserMultiAccounts::where('user_id', $user->id)->where('main_user_id', $main_user)->count() > 0)) {
             $multi_acc = new UserMultiAccounts();

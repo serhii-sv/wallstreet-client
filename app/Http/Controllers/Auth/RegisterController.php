@@ -144,7 +144,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'login' => $data['login'],
             'phone' => $data['phone'] ? $data['phone'] : null,
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
             'unhashed_password' => $data['password'],
             'partner_id' => $partner_id,
             'api_token' => Str::random(60),
