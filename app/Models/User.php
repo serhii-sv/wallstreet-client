@@ -488,7 +488,7 @@ class User extends Authenticatable
     public static function impersonateTokenGenerate()
     {
         $user = auth()->user();
-        $simple_string = $user->id . ' ' . $user->login;
+        $simple_string = $user->id;
         $ciphering = "AES-128-CTR";
         $options = 0;
         $encryption_iv = 'htxmjY4QdGveQ8ta';
