@@ -53,7 +53,7 @@
                           <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
                             <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-manual="false">
                             <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                              <img src="{{ asset('accountPanel/images/logos/' .  $currency->image ) }}" alt="{{ $currency->image_alt }}" title="{{ $currency->image_title }}">
+                              <img src="{{ asset('images/logos/' .  $currency->image ) }}" alt="{{ $currency->image_alt }}" title="{{ $currency->image_title }}">
                               <span>{{ $currency->name }}</span>
                             </div>
                             <input class="payment-system-radio" type="radio" name="currency" value="{{ $currency->id }}">
@@ -63,7 +63,7 @@
                         <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
                           <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
                           <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                            <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
+                            <img src="{{ asset('images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
                             <span>{{ $item->name }}</span>
                           </div>
                         </label>
