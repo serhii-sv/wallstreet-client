@@ -238,23 +238,33 @@ trait HasReferral
      */
     public function referralsRedistribution($referrals, $flag = 1)
     {
+        if (empty($referrals)) {
+            return;
+        }
+
         if ($flag > 1000) {
             return [
                 'success' => false,
                 'message' => 'Возника ошибка'
             ];
         }
+
         $ids = [];
         $this->referrals()->detach();
+
         foreach ($referrals as $referral) {
-            $ids[] = $referral['id'];
-            $user = User::find($referral['id']);
-            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
+            if (isset($referral['id'])) {
+                $ids[$referral['id']] = ['line' => 1];
+            }
+
+//            $user = User::find($referral['id']);
+//            $user->referralsRedistribution($referral['children'] ?? [], $flag++);
         }
 
-//        $this->referrals()->sync($ids);
+        $this->referrals()->sync($ids);
 
-        foreach ($ids as $id) {
+        foreach ($ids as $id => $fields) {
+            /** @var User $findRef */
             $findRef = User::find($id);
 
             if ($findRef->my_id == $this->partner_id) {
@@ -263,6 +273,9 @@ trait HasReferral
 
             $findRef->partner_id = $this->my_id;
             $findRef->save();
+            $findRef->refresh();
+
+//            $findRef->generatePartnerTree();
         }
 
         return [
@@ -274,8 +287,14 @@ trait HasReferral
     /**
      * @param User $parent
      */
-    public function generatePartnerTree(User $parent)
+    public function generatePartnerTree()
     {
+        $parent = $this->partner;
+
+        if (null === $parent) {
+            return;
+        }
+
         $parent_array = [];
 
         $partners = $parent->partners()->orderBy('pivot_line','asc')->get();
@@ -286,7 +305,6 @@ trait HasReferral
         foreach ($partners as $partner) {
             $i++;
             $parent_array[$partner->id] = ['line'=>$i];
-            DB::table('user_parents')->where('user_id', $partner->id)->delete();
         }
 
         $this->partners()->sync($parent_array);
@@ -300,4 +318,23 @@ trait HasReferral
         return $this->partners()->first();
     }
 
+    public function getChildrens($limit = 7) {
+        if ($limit === 0) {
+            return [];
+        }
+
+        $referrals = [];
+        $referrals['name'] = $this->login;
+
+        if (!$this->hasReferrals()) {
+            return $referrals;
+        }
+
+        foreach ($this->referrals()->wherePivot('line', 1)->get() as $r) {
+            $referral = $r->getChildrens($limit - 1);
+            $referrals['children'][] = $referral;
+        }
+
+        return $referrals;
+    }
 }

@@ -143,7 +143,7 @@ class CoinpaymentsController extends Controller
             $transaction->save();
             $commission = $transaction->amount * 0.01 * $transaction->commission;
 
-            $transaction->wallet->refill(($transaction->amount-$commission), $transaction->source);
+            $transaction->wallet->refill(($transaction->amount-$commission));
             $transaction->update(['approved' => true]);
             CoinpaymentsModule::getBalances(); // обновляем баланс нашего внешнего кошелька в БД
             return response('ok');

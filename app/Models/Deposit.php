@@ -373,11 +373,13 @@ class Deposit extends Model
         $amountReinvest = $this->balance * $this->daily * 0.01 * $reinvest * 0.01;
         $amountToWallet = $this->balance * $this->daily * 0.01 - $amountReinvest;
 
+        $dividend = null;
+
         if ($amountToWallet > 0) {
             $dividend = Transaction::dividend($wallet, $amountToWallet, $this);
         }
 
-        if ($dividend) {
+        if ($dividend && $amountToWallet > 0) {
             $amount = abs($dividend->amount);
             if ($amount > 0) {
                 $notification_data = [
@@ -404,7 +406,9 @@ class Deposit extends Model
         $wallet->addAmountWithAccrueToPartner($amountToWallet, 'deposit');
         $this->addBalance($amountReinvest);
 
-        $dividend->update(['approved' => true]);
+        if ($dividend) {
+            $dividend->update(['approved' => true]);
+        }
         // send notification to user
         /*$data = [
             'dividend' => $dividend,

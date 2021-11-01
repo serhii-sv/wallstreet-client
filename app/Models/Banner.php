@@ -59,7 +59,7 @@ class Banner extends Model
     const SMALL_RECTANGLE = 'Small Rectangle';
     const BUTTON = 'Button';
     const CUSTOM = 'Custom';
-    
+
     /**
      * Sizes list
      */
@@ -173,7 +173,7 @@ class Banner extends Model
         }
         return null;
     }
-    
+
     public function getWidth() {
         if(preg_match('/[\d]+x[\d]+/', $this->size)){
             $size = explode('×',$this->size);

@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\News
  *
- * @property string                          $id
- * @property array                           $content
+ * @property string $id
+ * @property array $content
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property array|null                      $short_content
- * @property string|null                     $image
- * @property array|null                      $title
+ * @property array|null $short_content
+ * @property string|null $image
+ * @property array|null $title
  * @method static \Illuminate\Database\Eloquent\Builder|News newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|News newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|News query()
@@ -30,20 +30,20 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use Uuids;
-    
+
     /**
      * @var string
      */
     public $keyType = 'string';
-    
+
     /**
      * @var bool
      */
     public $incrementing = false;
-    
+
     /** @var string $table */
     protected $table = 'news';
-    
+
     /** @var array $fillable */
     protected $fillable = [
         'content',
@@ -51,9 +51,9 @@ class News extends Model
         'short_content',
         'image',
         'views',
-        'likes',
+        'likes'
     ];
-    
+
     /**
      * @var string[]
      */
@@ -62,8 +62,8 @@ class News extends Model
         'title' => 'array',
         'short_content' => 'array',
     ];
-    
-    public function language() {
+    public function language()
+    {
         return $this->belongsTo(Language::class, 'id');
     }
     

@@ -193,11 +193,6 @@ class Wallet extends Model
     public function refill($amount)
     {
         $this->balance += $amount;
-
-//        if (!empty($external)) {
-//            $this->external = $external;
-//        }
-
         $this->save();
 
 //        $data = [
@@ -227,23 +222,17 @@ class Wallet extends Model
      */
     public function accrueToPartner($amount, $type)
     {
-        /** @var User $user */
-        $user           = $this->user;
-        $partnerLevels  = $user->getPartnerLevels();
+        $level = 0;
 
-        if (!$partnerLevels) {
-            return 0;
-        }
+        $user = $this->user;
 
-        \Log::error('Found levels: '.print_r($partnerLevels,true));
+        while($level <= 10) {
+            $level += 1;
 
-        foreach ($partnerLevels as $level) {
             if ($type == 'refill') {
                 $percent = Referral::getOnLoad($level);
             } elseif ($type == 'deposit') {
                 $percent = Referral::getOnProfit($level);
-            } elseif ($type == 'task') {
-                $percent = Referral::getOnTask($level);
             } else {
                 $percent = 0;
             }
@@ -251,16 +240,18 @@ class Wallet extends Model
             \Log::info('Level percent '.$percent );
 
             if ($percent <= 0) {
-                continue;
+                break;
             }
 
             $partnerAmount  = $amount * $percent / 100;
             /** @var User $partner */
-            $partner        = $user->getPartnerOnLevel($level);
+            $partner = User::where('my_id', $user->partner_id)->first();
 
             if (empty($partner)) {
-                continue;
+                break;
             }
+
+            $user = $partner;
 
             if ($partner->partner_level_1 > 0 && $level == 1) {
                 $partnerAmount = $amount * $partner->partner_level_1 / 100;
@@ -392,12 +383,11 @@ class Wallet extends Model
         } else {
             return null;
         }
-     
         $toCurrency = Currency::where('code', 'USD')->first();
 
-        $balance = $this->convertToCurrency($wallet_from->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
+        $balance = $this->convertToCurrency($this->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
         $balance = $this->convertToCurrency($toCurrency, $wallet_to->currency()->first(), $balance);
-        
+
         if ($transaction_in = Transaction::exchangeInCurrency($wallet_to, $balance)) {
             $wallet_to->update(['balance' => $wallet_to->balance + $balance]);
             $currency_exchange = new CurrencyExchange();

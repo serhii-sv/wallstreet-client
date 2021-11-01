@@ -91,13 +91,13 @@ class PaymentSystem extends Model
     {
         return $this->hasMany(Transaction::class, 'payment_system_id');
     }
-    
+
     public function transactions_enter() {
-        return $this->hasMany(Transaction::class, 'payment_system_id')->whereIn('type_id', [TransactionType::where('name', 'enter')->select('id')->get()->toArray()]);
+        return $this->hasMany(Transaction::class, 'payment_system_id')->where('is_real', 1)->whereIn('type_id', [TransactionType::where('name', 'enter')->select('id')->get()->toArray()]);
     }
-    
+
     public function transactions_withdraw() {
-        return $this->hasMany(Transaction::class, 'payment_system_id')->whereIn('type_id', [TransactionType::where('name', 'withdraw')->select('id')->get()->toArray()]);
+        return $this->hasMany(Transaction::class, 'payment_system_id')->where('is_real', 1)->whereIn('type_id', [TransactionType::where('name', 'withdraw')->select('id')->get()->toArray()]);
     }
 
    /**
@@ -123,14 +123,8 @@ class PaymentSystem extends Model
     public function getClassName(): string
     {
         $pss = [
-            'advcash'       => '\App\Modules\PaymentSystems\AdvcashModule',
             'perfectmoney'  => '\App\Modules\PaymentSystems\PerfectMoneyModule',
-            'payeer'        => '\App\Modules\PaymentSystems\PayeerModule',
             'coinpayments'  => '\App\Modules\PaymentSystems\CoinpaymentsModule',
-            'blockio'       => '\App\Modules\PaymentSystems\BlockioModule',
-            'enpay'         => '\App\Modules\PaymentSystems\EnpayModule',
-            'nixmoney'      => '\App\Modules\PaymentSystems\NixmoneyModule',
-            'waves'         => '\App\Modules\PaymentSystems\WavesModule',
         ];
 
         return (key_exists($this->code, $pss))

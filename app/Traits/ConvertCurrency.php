@@ -12,9 +12,9 @@ trait ConvertCurrency
             return 0;
         }
 
-        $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
+        $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code), 0);
 
-        return round((float)$rate * (float) $amount, $toCurrency->precision);
+        return round((float) $rate * (float) $amount, $toCurrency->precision);
 
     }
 
@@ -24,10 +24,10 @@ trait ConvertCurrency
             return 0;
         }
 
-        $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code));
+        $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code), 0);
         if ($rate) {
-            return round($rate * $amount, $toCurrency->precision);
+            return round((float) $rate * (float) $amount, $toCurrency->precision);
         }
-        return round($amount, $toCurrency->precision);
+        return round((float) $amount, $toCurrency->precision);
     }
 }
