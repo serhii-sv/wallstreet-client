@@ -65,7 +65,6 @@ class DashboardController extends Controller
         foreach ($deposit as $item) {
             /** @var Transaction $depositTransaction */
             $depositTransaction = Transaction::where('deposit_id', $item->id)
-                ->where('type_id', TransactionType::getByName('create_dep'))
                 ->first();
 
             if (null !== $depositTransaction) {
