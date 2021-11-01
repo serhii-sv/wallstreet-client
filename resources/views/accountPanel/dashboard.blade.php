@@ -72,7 +72,7 @@
                         <h6>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Earnings per second' contenteditable="true">{{ __('Earnings per second') }}</editor_block>
                           @else {{ __('Earnings per second') }}@endif</h6>
-                        <p>$ {{ number_format($total_revenue/604800, 5, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
+                        <p>$ {{ number_format($total_revenue / 24 / 60 / 60, 5, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='/sec' contenteditable="true">{{ __('/sec') }}</editor_block>
                           @else {{ __('/sec') }}@endif</p>
                       </div>
@@ -86,7 +86,7 @@
                         <h6>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Earnings per hour' contenteditable="true">{{ __('Earnings per hour') }}</editor_block>
                           @else {{ __('Earnings per hour') }}@endif</h6>
-                        <p>$ {{ number_format(($total_revenue/604800) * 3600, 4, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
+                        <p>$ {{ number_format(($total_revenue / 24), 4, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='/hour' contenteditable="true">{{ __('/hour') }}</editor_block>
                           @else {{ __('/hour') }}@endif</p>
                       </div>
@@ -100,7 +100,7 @@
                         <h6>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Daily earnings' contenteditable="true">{{ __('Daily earnings') }}</editor_block>
                           @else {{ __('Daily earnings') }}@endif</h6>
-                        <p>$ {{ number_format(($total_revenue/604800) * 86400, 2, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
+                        <p>$ {{ number_format(($total_revenue), 2, '.',',') ?? 0 }}@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='/day' contenteditable="true">{{ __('/day') }}</editor_block>
                           @else {{ __('/day') }}@endif</p>
                       </div>

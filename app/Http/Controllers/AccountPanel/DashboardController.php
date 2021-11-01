@@ -24,16 +24,16 @@ class DashboardController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        
+
     }
-    
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        
+
         $user = Auth::user();
         $wallets = Wallet::where('user_id', $user->id)->get();
         $withdraw_type = TransactionType::where('name', 'withdraw')->first();
@@ -44,8 +44,8 @@ class DashboardController extends Controller
         $period_graph = $this->getPeriodDays(7);
         $withdraws_week = [];
         $accruals_week = [];
-        
-        
+
+
         foreach ($period_graph as $period) {
             $accruals_week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_week_' . $period['start']->format('d.m.Y'), 60, function () use ($accruals_ids, $user, $period) {
                 return Transaction::where('user_id', $user->id)->whereIn('type_id', $accruals_ids)->where('approved', 1)->whereBetween('created_at', [
@@ -63,11 +63,18 @@ class DashboardController extends Controller
         $deposit = Deposit::where('user_id', $user->id)->where('datetime_closing', '>', Carbon::now())->where('active', true)->get();
         $total_revenue = 0;
         foreach ($deposit as $item) {
-            $total_revenue += $item->daily * $item->invested * 0.01 * $item->duration;
+            /** @var Transaction $depositTransaction */
+            $depositTransaction = Transaction::where('deposit_id', $item->id)
+                ->where('type_id', TransactionType::getByName('create_dep'))
+                ->first();
+
+            if (null !== $depositTransaction) {
+                $total_revenue += $depositTransaction->main_currency_amount / 100 * $item->daily;
+            }
         }
         $banners = Banner::all();
-        
-        
+
+
         $countries_stat = User::where('country', '!=', null)->select(['country as name'])->groupBy(['country'])->get();
         $countries_stat->map(function ($country) {
             $country->count = cache()->remember('dshb.country_stat_count_' . $country->name, 60, function () use ($country) {
@@ -75,8 +82,8 @@ class DashboardController extends Controller
             });
         });
         $countries_stat = $countries_stat->sortByDesc('count')->take(7);
-        
-        
+
+
         return view('accountPanel.dashboard', [
             'transactions' => Transaction::with('type', 'currency', 'paymentSystem')->where('user_id', $user->id)->orderByDesc('created_at')->limit(5)->get(),
             'wallets' => $wallets,
@@ -90,7 +97,7 @@ class DashboardController extends Controller
             'users_videos' => UserVideo::where('approved', true)->orderByDesc('created_at')->limit(20)->get(),
         ]);
     }
-    
+
     public function sendMoney(Request $request) {
         $request->validate([
             'user' => 'required',
@@ -111,20 +118,20 @@ class DashboardController extends Controller
         if ($wallet->balance < $amount) {
             return back()->with('short_error', 'Недостаточно средств!');
         }
-        
+
         $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)->first();
         if (empty($recipient_user_wallet)) {
             return back()->with('short_error', 'У пользователя нет кошелька с указанной валютой!');
         }
-        
+
         $commission = TransactionType::getByName('transfer_out')->commission;
         DB::beginTransaction();
         try {
             $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount - $amount * $commission * 0.01]);
             $wallet->update(['balance' => $wallet->balance - $amount - $amount * $commission * 0.01]);
-            
+
             if (Transaction::transferMoney($wallet, $amount, $user, $recipient_user)) {
-                
+
                 $notification_data = [
                     'notification_name' => 'Перевод средств',
                     'amount' => $amount . $wallet->currency->symbol,
@@ -139,7 +146,7 @@ class DashboardController extends Controller
                     'to_user' => $recipient_user,
                 ];
                 Notification::sendNotification($notification_data, 'new_transfer_out');
-                
+
                 DB::commit();
                 return back()->with('short_success', 'Средства успешно переведены пользователю ' . $recipient_user->name . '!');
             } else {
@@ -150,7 +157,7 @@ class DashboardController extends Controller
             return back()->with('short_error', 'Ошибка! ' . $exception->getMessage());
         }
     }
-    
+
     public function getPeriodDays($days = 7) {
         $period = [];
         for ($i = 0, $j = $days; $j >= $i; $j--) {
@@ -160,21 +167,21 @@ class DashboardController extends Controller
             } else {
                 $period[$j]['end'] = Carbon::now()->endOfDay()->subDay($j);
             }
-            
+
         }
         return $period;
     }
-    
+
     public function storeUserVideo(Request $request) {
         $video = $request->get('video');
         if (!strlen($video) > 0) {
             return back()->with('short_error', 'Поле "Ссылка на видео" обязательно для заполнения!');
         }
-        
+
         $user_video = new UserVideo();
         $user_video->link = htmlspecialchars($video);
         $user_video->user_id = Auth::user()->id;
-        
+
         if ($user_video->save()) {
             return back()->with('short_success', 'Ваше видео передано в обработку!');
         }
