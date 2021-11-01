@@ -22,7 +22,7 @@ class ImpersonateController extends Controller
      */
     public function impersonate($id)
     {
-        $admin = User::impersonateTokenDecode(request()->token);
+        $admin = User::impersonateTokenDecode(urldecode(request()->token));
         $user = User::find($id);
 
         if (null == $user || null == $admin) {
