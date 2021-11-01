@@ -268,24 +268,18 @@
               </div>
             </div>
             <div class="affiliate-bottom">
-              <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Make money with hyipland' contenteditable="true">{{ __('Make money with hyipland') }}</editor_block>
-                @else
-                  {{ __('Make money with hyipland') }}
-                @endif</h6>
-              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
-                @else
-                  {{ __('learn more') }}
-                @endif <i class="flaticon-right"></i>
-              </a>
+          
             </div>
           </div>
           <div class="col-lg-5 d-lg-block d-none">
             <div class="afiliate-thumb">
               <img src="{{ asset('theme/images/affiliate/affiliate.png') }}" alt="affiliate">
             </div>
+            <h6 class="title">@if(canEditLang() && checkRequestOnEdit())
+                <editor_block data-name='Make money with hyipland' contenteditable="true">{{ __('Make money with hyipland') }}</editor_block>
+              @else
+                {{ __('Make money with hyipland') }}
+              @endif</h6>
           </div>
         </div>
       </div>
@@ -297,7 +291,7 @@
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-md-7 col-xl-6">
+          <div class="col-md-12 ">
             <div class="call-item text-center text-sm-left">
               <div class="call-icon">
                 <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
@@ -311,13 +305,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
-            <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
-              @else
-                {{ __('learn more') }}
-              @endif <i class="flaticon-right"></i></a>
-          </div>
+        
         </div>
       </div>
     </section>
@@ -328,7 +316,7 @@
     <section class="total-affiliate-section padding-bottom padding-top">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-8">
+          <div class="col-lg-12">
             <div class="section-header">
               <span class="cate">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='You’re Part of something Big' contenteditable="true">{{ __('You’re Part of something Big') }}</editor_block>
@@ -480,7 +468,12 @@
                   @else
                     {{ __('Join Program') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Join Now
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Join Now' contenteditable="true">{{ __('Join Now') }}</editor_block>
+                  @else
+                    {{ __('Join Now') }}
+                  @endif
                   <i class="flaticon-right"></i></a>
               </div>
             </div>
@@ -498,7 +491,12 @@
                   @else
                     {{ __('Promote') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Tracking Link
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Tracking Link' contenteditable="true">{{ __('Tracking Link') }}</editor_block>
+                  @else
+                    {{ __('Tracking Link') }}
+                  @endif
                   <i class="flaticon-right"></i></a>
               </div>
             </div>
@@ -516,7 +514,12 @@
                   @else
                     {{ __('Earn') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>Commission Model
+                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  @if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Commission Model' contenteditable="true">{{ __('Commission Model') }}</editor_block>
+                  @else
+                    {{ __('Commission Model') }}
+                  @endif
                   <i class="flaticon-right"></i></a>
               </div>
             </div>
@@ -558,24 +561,30 @@
               <tbody>
                 @if($deposit_turnovers)
                   @foreach($deposit_turnovers as $item)
-                    <tr class="bonus-list" style="text-align: center" data-id="{{ $item->id }}" data-personal-turnover="{{ $item->personal_turnover ?? 0 }}">
+                    <tr class="bonus-list" style="text-align: center">
                       <td>
-                        {{ $item->status_name ?? '' }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{$item->status_name}}' contenteditable="true">{{ __($item->status_name) }}</editor_block>@else {{ __($item->status_name) }} @endif
                       </td>
                       <td>
-                        {{ $item->status_stage ?? '' }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{$item->status_stage}}' contenteditable="true">{{ __($item->status_stage) }}</editor_block>@else {{ __($item->status_stage) }} @endif
                       </td>
                       <td>
-                        {{ $item->personal_turnover ?? 0 }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{ $item->personal_turnover ? $item->personal_turnover : ""  }}' contenteditable="true">{{ $item->personal_turnover ? __($item->personal_turnover) : 0 }}</editor_block>@else {{ $item->personal_turnover ? __($item->personal_turnover) : 0  }} @endif
                       </td>
                       <td>
-                        {{ $item->total_turnover ?? 0 }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{ $item->total_turnover ? $item->total_turnover : "" }}' contenteditable="true">{{ $item->total_turnover ? __($item->total_turnover) : 0 }}</editor_block>@else {{ $item->total_turnover ? __($item->total_turnover) : 0 }} @endif
                       </td>
                       <td>
-                        {{ $item->reward ?? 0 }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{ $item->reward ? $item->reward : 0 }}' contenteditable="true">{{ $item->reward ? __($item->reward) : 0 }}</editor_block>@else {{ $item->reward ? __($item->reward) : 0  }} @endif
                       </td>
                       <td>
-                        {{ $item->leadership_bonus ?? '' }}
+                        @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='{{$item->leadership_bonus}}' contenteditable="true">{{ __($item->leadership_bonus) }}</editor_block>@else {{ __($item->leadership_bonus) }} @endif
                       </td>
                     </tr>
                   @endforeach
@@ -589,32 +598,26 @@
     
     
     <!-- ==========Why-Affiliate-Section Starts Here========== -->
-    <section class="why-affiliate-section padding-bottom padding-top pt-max-lg-0">
+    <section class="why-affiliate-section padding-bottom pt-4 pt-max-lg-0">
       <div class="why--thumb">
         <img src="{{ asset('theme/images/why/how.png') }}" alt="why">
       </div>
       <div class="container">
         <div class="row align-items-end">
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             <div class="why-affiliate-content">
               <div class="section-header left-style">
-                <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Why Should You' contenteditable="true">{{ __('Why Should You') }}</editor_block>
-                  @else
-                    {{ __('Why Should You') }}
-                  @endif</span>
+                
                 <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Join affiliate?' contenteditable="true">{{ __('Join affiliate?') }}</editor_block>
                   @else
                     {{ __('Join affiliate?') }}
                   @endif</h2>
-                <p>
-                  @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='The affiliate program is our special feature for loyal Investors.' contenteditable="true">{{ __('The affiliate program is our special feature for loyal Investors.') }}</editor_block>
+                <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                    <editor_block data-name='Why Should You' contenteditable="true">{{ __('Why Should You') }}</editor_block>
                   @else
-                    {{ __('The affiliate program is our special feature for loyal Investors.') }}
-                  @endif
-                </p>
+                    {{ __('Why Should You') }}
+                  @endif</span>
               </div>
               <div class="why-area">
                 <div class="why-item">

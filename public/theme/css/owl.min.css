@@ -81,11 +81,11 @@
 }
 @media (min-width: 991px) {
     .owl-carousel .owl-item.center {
-        -webkit-transform: scale(1.3);
-        -moz-transform: scale(1.3);
-        -ms-transform: scale(1.3);
-        -o-transform: scale(1.3);
-        transform: scale(1.3);
+        -webkit-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -o-transform: scale(1.5);
+        transform: scale(1.5);
     }
 }
 .offer-wrapper{

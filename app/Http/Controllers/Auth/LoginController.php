@@ -69,8 +69,9 @@ class LoginController extends Controller
             curl_setopt($ch, CURLOPT_HEADER, false);
             $data = curl_exec($ch);
             curl_close($ch);
-            
+  
             $data = json_decode($data, true);
+         
             if (!empty($data['access_token'])) {
                 // Токен получили, получаем данные пользователя.
                 $params = [
@@ -103,7 +104,7 @@ class LoginController extends Controller
                     }
                     
                     
-                    $password = Str::random(60);
+                    $password = Str::random(12);
                     
                     $user = User::create([
                         'name' => $info['name'] ?? '',
@@ -123,8 +124,8 @@ class LoginController extends Controller
                             $stats->save();
                         }
                     }
-                    $this->guard()->login($user);
-                    return $request->wantsJson() ? new JsonResponse([], 201) : redirect($this->redirectPath());
+                    Auth::login($user, true);
+                    return redirect()->intended($this->redirectPath());
                 }
             }
         }
@@ -146,20 +147,20 @@ class LoginController extends Controller
     public function loginWithGoogle(Request $request) {
         $user = User::where('email', $request->get('email'))->first();
         if ($user !== null) {
-            if ($this->attemptLoginGoogle($request)) {
+            if ($this->attemptLogin($request)) {
                 return $this->sendLoginResponse($request);
             }
             $this->incrementLoginAttempts($request);
         }
     }
     
-    protected function attemptLoginGoogle(Request $request) {
-        return $this->guard()->attempt($this->credentialsGoogle($request), true);
-    }
-    
-    protected function credentialsGoogle(Request $request) {
-        return $request->only($this->username(), 'password');
-    }
+//    protected function attemptLoginGoogle(Request $request) {
+//        return $this->guard()->attempt($this->credentialsGoogle($request), true);
+//    }
+//
+//    protected function credentialsGoogle(Request $request) {
+//        return $request->only($this->username(), 'password');
+//    }
     
     
     public function login(Request $request) {
