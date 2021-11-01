@@ -113,9 +113,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data) {
         if (isset($data['partner_id'])) {
-            $partner_id = $_COOKIE['partner_id'];
-        } else if (isset($_COOKIE['partner_id'])) {
             $partner_id = $data['partner_id'];
+        } else if (isset($_COOKIE['partner_id'])) {
+            $partner_id = $_COOKIE['partner_id'];
         } else {
             $partner_id = null;
         }
