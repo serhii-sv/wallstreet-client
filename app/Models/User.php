@@ -311,12 +311,6 @@ class User extends Authenticatable
         if (strlen($this->name) <= 18)
             return $this->name;
 
-        if (explode(' ', $this->name)[0] <= 15)
-            return explode(' ', $this->name)[0] . " " . substr(explode(' ', $this->name)[1], 0, 1) . ".";
-
-        if (explode(' ', $this->name)[0] <= 18)
-            return explode(' ', $this->name)[0];
-
         return substr($this->name, 0, 15) . "...";
     }
 
