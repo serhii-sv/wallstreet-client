@@ -159,22 +159,22 @@
               <label for="sign-up">Ваш Email или логин</label>
               <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-              @error('email')
+       {{--       @error('email')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-              @enderror
+              @enderror--}}
             </div>
             <div class="form-group">
               <label for="pass">Пароль</label>
 
               <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-              @error('password')
+          {{--    @error('password')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-              @enderror
+              @enderror--}}
 
               <span class="sign-in-recovery">Забыли пароль? <a href="{{route('password.request')}}">восстановить пароль</a></span>
             </div>
