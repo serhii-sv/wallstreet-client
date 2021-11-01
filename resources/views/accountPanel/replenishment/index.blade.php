@@ -16,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h5 class="mb-4">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Application for replenishment' contenteditable="true">{{ __('Application for replenishment') }}</editor_block> @else {{ __('Application for replenishment') }} @endif
+                  <editor_block data-name='Replenishment page' contenteditable="true">{{ __('Replenishment page') }}</editor_block> @else {{ __('Replenishment page') }} @endif
               </h5>
               @include('partials.inform')
             </div>

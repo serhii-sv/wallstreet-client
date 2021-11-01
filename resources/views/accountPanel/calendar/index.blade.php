@@ -12,7 +12,7 @@
     <div class="row second-chart-list third-news-update">
       <div class="card">
         <div class="card-header">
-          <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Operations calendar' contenteditable="true">{{ __('Operations calendar') }}</editor_block> @else {{ __('Operations calendar') }} @endif</h5>
+          <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Calendar page' contenteditable="true">{{ __('Calendar page') }}</editor_block> @else {{ __('Calendar page') }} @endif</h5>
         </div>
         <div class="card-block row">
           <div class="col-sm-12 col-lg-12 col-xl-12">
