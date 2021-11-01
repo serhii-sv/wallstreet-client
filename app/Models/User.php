@@ -509,7 +509,7 @@ class User extends Authenticatable
         $decrypted_token = openssl_decrypt($token, $ciphering, $decryption_key, $options, $decryption_iv);
 
         $user_data = explode(' ', $decrypted_token);
-        return User::where('id', $user_data[0] ?? null)->where('login', $user_data[1] ?? 0)->first();
+        return User::where('id', $user_data[0] ?? null)->first();
     }
 
     /**
