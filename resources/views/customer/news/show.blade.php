@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',   $news->getTitle(session()->get('lang')) )
+@section('title',   $news->getTitle(session()->get('language')) )
 @section('styles')
   <style>
       .offer-item {
@@ -11,16 +11,16 @@
 @endsection
 @section('content')
   <div class="main--body">
-    
+
     <!--========== Preloader ==========-->
   @include('layouts.app-preloader')
   <!--========== Preloader ==========-->
-    
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Proit-Section Starts Here=======-->
     <section class="profit-section padding-top mb-5" id="profit">
       <div class="container">
@@ -28,7 +28,7 @@
           <div class="col-lg-12 col-xl-12">
             <div class="section-header">
               <h2 class="title">
-                {{ $news->getTitle(session()->get('lang')) }}
+                {{ $news->getTitle(session()->get('language')) }}
               </h2>
             </div>
             <div class="news-image text-center img-fluid mb-5">
@@ -37,7 +37,7 @@
               @endif
             </div>
             <div class="news-content">
-              {!!   $news->getContent(session()->get('lang')) !!}
+              {!!   $news->getContent(session()->get('language')) !!}
             </div>
             <div class="news-likes mt-4">
               <i class="fa fa-thumbs-o-up mr-2" style=""></i> <strong class="mr-4">{{ $news->likes ?? 0 }}</strong>
@@ -48,11 +48,11 @@
       </div>
     </section>
     <!--=======Proit-Section Ends Here=======-->
-    
+
     <style>
-    
+
     </style>
-    
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->

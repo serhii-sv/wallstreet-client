@@ -26,7 +26,7 @@ class LanguageController extends Controller
         }
 
         session([
-            'lang' => $locale
+            'language' => $locale
         ]);
         return back()->with('short_success', __('The site language has been changed successfully'));
     }

@@ -97,7 +97,7 @@ class UserObserver
      * @param User $user
      */
     public function saved(User $user) {
-        if (null !== $user->partner_id && $user->isDirty('partner_id')) {
+        if (null !== $user->partner && $user->isDirty('partner_id')) {
             $user->generatePartnerTree($user->partner);
         }
     }

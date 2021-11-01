@@ -568,4 +568,9 @@ class User extends Authenticatable
     public function getAllChats() {
         return Chat::where('user_partner', $this->id)->orWhere('user_referral', $this->id)->get();
     }
+
+    public function loginSecurity()
+    {
+        return $this->hasMany(LoginSecurity::class, 'user_id');
+    }
 }

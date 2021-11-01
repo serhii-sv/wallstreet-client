@@ -73,9 +73,9 @@
                 transform: translate(-400%, 0)
             }
         }
-    
+
     </style>
-    
+
     <div class="left-header col-9 horizontal-wrapper ps-0 " style="text-align: right">
       {{--     <div class="currency-rates">
                <div class="wrapper">
@@ -87,20 +87,20 @@
            </div>--}}
       <strong style="font-size: 18px;">1 Sprint Token (SRT) = 1$</strong>
     </div>
-    
+
     <div class="nav-right col-3 pull-right right-header p-0">
       <ul class="nav-menus">
         <li class="language-nav">
           <div class="translate_wrapper">
             <div class="current_lang">
               <div class="lang">
-                <i class="flag-icon flag-icon-@if(session()->get('lang') == 'en')us @else{{ session()->get('lang') }}@endif"></i>
-                {{-- <span class="lang-txt">{{ strtoupper(session()->get('lang')) }}</span>--}}
+                <i class="flag-icon flag-icon-@if(session()->get('language') == 'en')us @else{{ session()->get('language') }}@endif"></i>
+                {{-- <span class="lang-txt">{{ strtoupper(session()->get('language')) }}</span>--}}
               </div>
             </div>
             <div class="more_lang">
               @foreach($languages as $lang)
-                <a href="{{ route('set.lang', $lang->code) }}" class="lang @if(session()->has('lang') && session()->get('lang') == $lang->code)selected @endif">
+                <a href="{{ route('set.lang', $lang->code) }}" class="lang @if(session()->has('lang') && session()->get('language') == $lang->code)selected @endif">
                   <i class="flag-icon flag-icon-@if($lang->code == 'en')us @else{{ $lang->code }}@endif"></i>
                   <span class="lang-txt">{{ $lang->name }}<span> ({{strtoupper($lang->code)}})</span></span>
                 </a>
@@ -129,7 +129,7 @@
             </div>
           </div>
         </li>
-        
+
         <style>
             .page-wrapper .page-header .header-wrapper .nav-right .notification-dropdown li:last-child {
                 text-align: left !important;
@@ -153,7 +153,7 @@
             <li><i data-feather="bell"></i>
               <h6 class="f-18 mb-0">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Уведомления' contenteditable="true">{{ __('Уведомления') }}</editor_block> @else {{ __('Уведомления') }} @endif</h6>
             </li>
-            
+
             @forelse($navbar_notifications as $item)
               <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
                 <p><i class="fa fa-circle-o me-3 font-success"> </i>{{ $item->notification->text }}
@@ -169,11 +169,11 @@
             @endforelse
           </ul>
         </li>
-        
+
         <li>
           <div class="mode"><i class="fa fa-moon-o"></i></div>
         </li>
-        
+
         <li class="profile-nav onhover-dropdown p-0 me-0">
           <div class="media profile-media">
             <img class="b-r-10" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/user.png') }}" alt="" width="36" height="36">
@@ -189,13 +189,13 @@
                 <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Account' contenteditable="true">{{ __('Account') }}</editor_block> @else {{ __('Account') }} @endif</span>
               </a>
             </li>
-      
+
             <li>
               <a href="{{ route('accountPanel.settings.security') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="settings"></i>
                 <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Settings' contenteditable="true">{{ __('Settings') }}</editor_block> @else {{ __('Settings') }} @endif</span>
               </a>
             </li>
-            
+
             @if(canEditLang() && checkRequestOnEdit())
               <li>
                 <a href="{{ url()->current() }}">

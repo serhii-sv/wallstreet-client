@@ -8,10 +8,10 @@ class Google2FAAuthenticator extends Authenticator
 {
     protected function canPassWithoutCheckingOTP()
     {
-        if($this->getUser()->loginSecurity == null)
+        if($this->getUser()->loginSecurity()->first() == null)
             return true;
         return
-            !$this->getUser()->loginSecurity->google2fa_enable ||
+            !$this->getUser()->loginSecurity()->first()->google2fa_enable ||
             !$this->isEnabled() ||
             $this->noUserIsAuthenticated() ||
             $this->twoFactorAuthStillValid();
@@ -19,7 +19,7 @@ class Google2FAAuthenticator extends Authenticator
 
     protected function getGoogle2FASecretKey()
     {
-        $secret = $this->getUser()->loginSecurity->{$this->config('otp_secret_column')};
+        $secret = $this->getUser()->loginSecurity()->first()->{$this->config('otp_secret_column')};
 
         if (is_null($secret) || empty($secret)) {
             throw new InvalidSecretKey('Secret key cannot be empty.');

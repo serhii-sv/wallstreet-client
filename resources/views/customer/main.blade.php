@@ -11,16 +11,16 @@
 @endsection
 @section('content')
   <div class="main--body">
-    
+
     <!--========== Preloader ==========-->
   {{--@include('layouts.app-preloader')--}}
   <!--========== Preloader ==========-->
-    
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Banner-Section Starts Here=======-->
     <section class="banner-section" id="home">
       <div class="banner-bg d-lg-none">
@@ -124,8 +124,8 @@
       </div>
     </section>
     <!--=======Banner-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Counter-Section Starts Here=======-->
     <div class="counter-section">
       <div class="container">
@@ -194,8 +194,8 @@
       </div>
     </div>
     <!--=======Counter-Section Ends Here=======-->
-    
-    
+
+
     <!--=======About-Section Starts Here=======-->
     <section class="about-section padding-top padding-bottom" id="about">
       <div class="container">
@@ -301,8 +301,8 @@
       </div>
     </section>
     <!--=======About-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Feature-Section Starts Here=======-->
     <section class="feature-section padding-top padding-bottom bg_img" data-background="{{ asset('theme/images/feature/feature-bg.png') }}" id="feature">
       <div class="ball-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
@@ -414,8 +414,8 @@
       </div>
     </section>
     <!--=======Feature-Section Ends Here=======-->
-    
-    
+
+
     <!--=======How-Section Starts Here=======-->
     <section class="get-section padding-top padding-bottom">
       <div class="container">
@@ -545,8 +545,8 @@
       </div>
     </section>
     <!--=======How-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
@@ -566,8 +566,8 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Offer-Section Stars Here=======-->
     <section class="offer-section padding-top pb-max-md-0" id="plan">
       <div class="ball-group-1" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
@@ -601,12 +601,12 @@
             </div>
           </div>
         </div>
-      
+
       </div>
     </section>
     <!--=======Offer-Section Ends Here=======-->
     <div class="offer-wrapper owl-carousel owl-video-wrapper">
-      
+
       <div class="offer-item">
         <iframe width="500" height="315" src="https://www.youtube.com/embed/SJms7JEKt8A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
@@ -616,7 +616,7 @@
       <div class="offer-item">
         <iframe width="500" height="315" src="https://www.youtube.com/embed/eFhyyWUhezE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-    
+
     </div>
     <style>
         .owl-item {
@@ -627,7 +627,6 @@
             pointer-events: auto;
         }
     </style>
-    
     <!--=======Proit-Section Starts Here=======-->
     <section class="profit-section padding-top" id="profit">
       <div class="container">
@@ -857,8 +856,8 @@
       </div>
     </section>
     <!--=======Proit-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Latest-Transaction-Section Starts Here=======-->
     <section class="latest-transaction padding-top padding-bottom" id="transaction">
       <div class="transaction-bg bg_img" data-background="{{ asset('theme/images/transaction/transaction-bg.png') }}">
@@ -908,7 +907,6 @@
               </li>
             @empty
             @endforelse
-          
           </ul>
           <div class="tab-area">
             @forelse($rate_groups as $rate_group)
@@ -921,29 +919,45 @@
                           <div class="transaction-header">
                             <h5 class="title">{{ $rate->name }}</h5>
                             <span class="title">
-                                                            @if(canEditLang() && checkRequestOnEdit())
-                                @if($rate->overall)
-                                  <editor_block data-name='return deposit: true' contenteditable="true">{{ __('return deposit: true') }}</editor_block>
+                                @if(canEditLang() && checkRequestOnEdit())
+                                    <div>
+                                <editor_block data-name='Daily earnings {{ $rate->id }}' contenteditable="true">{{ __('Daily earnings '.$rate->id) }}</editor_block>
+                                </div>
                                 @else
-                                  <editor_block data-name='return deposit: false' contenteditable="true">{{ __('return deposit: false') }}</editor_block>
+                                    <span class="date">{{ __('Daily earnings '.$rate->id) }} {{ $rate->daily }}%</span>
                                 @endif
-                              
-                              @else
-                                @if($rate->overall)
-                                  <span class="date">{{ __('return deposit: true') }}</span>
-                                @else
-                                  <span class="date">{{ __('return deposit: false') }}</span>
-                                @endif
-                              @endif
+
+                                    @if(canEditLang() && checkRequestOnEdit())
+                                        <div>
+                                <editor_block data-name='Duration {{ $rate->id }}' contenteditable="true">{{ __('Duration '.$rate->id) }}</editor_block>
+                                </div>
+                                    @else
+                                        <span class="date">{{ __('Duration '.$rate->id) }}</span>
+                                    @endif
 
                                                         </span>
                             @if(canEditLang() && checkRequestOnEdit())
                               <div>
-                                <editor_block data-name='Daily rate' contenteditable="true">{{ __('Daily rate') }} {{ $rate->daily }}%</editor_block>
+                                <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
                               </div>
                             @else
-                              <span class="date">{{ __('Daily rate') }} {{ $rate->daily }}%</span>
+                              <span class="date">{{ __('Daily rate '.$rate->id) }}</span>
                             @endif
+
+                              @if(canEditLang() && checkRequestOnEdit())
+                                  @if($rate->overall)
+                                      <editor_block data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
+                                  @else
+                                      <editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{{ __('return deposit: false '.$rate->id) }}</editor_block>
+                                  @endif
+
+                              @else
+                                  @if($rate->overall)
+                                      <span class="date">{{ __('return deposit: true '.$rate->id) }}</span>
+                                  @else
+                                      <span class="date">{{ __('return deposit: false '.$rate->id) }}</span>
+                                  @endif
+                              @endif
                           </div>
                           <div class="transaction-thumb">
                             {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
@@ -951,9 +965,9 @@
                           <div class="transaction-footer">
                                                   <span class="amount">
                                                       @if(canEditLang() && checkRequestOnEdit())
-                                                      <editor_block data-name='Can deposit' contenteditable="true">{{ __('Can deposit') }}</editor_block>
+                                                      <editor_block data-name='Can deposit {{ $rate->id }}' contenteditable="true">{{ __('Can deposit '.$rate->id) }}</editor_block>
                                                     @else
-                                                      {{ __('Can deposit') }}
+                                                      {{ __('Can deposit '.$rate->id) }}
                                                     @endif
                                                   </span>
                             <h5 class="sub-title">{{ round($rate->min, 0) }} - {{ round($rate->max, 0) }}$</h5>
@@ -1137,8 +1151,8 @@
       </div>
     </section>
     <!--=======Latest-Transaction-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Affiliate-Section Starts Here=======-->
     <section class="affiliate-programe" id="affiliate">
       <div class="container">
@@ -1238,8 +1252,8 @@
       </div>
     </section>
     <!--=======Affiliate-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
@@ -1262,7 +1276,7 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
+
     <!--=======Check-Section Starts Here=======-->
     <section class="client-section padding-bottom padding-top">
       <div class="background-map">
@@ -1405,8 +1419,8 @@
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->
