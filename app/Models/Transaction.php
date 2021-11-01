@@ -96,6 +96,10 @@ class Transaction extends Model
         'external',
     ];
 
+    protected $casts = [
+        'is_real' => 'boolean',
+    ];
+
     public const TRANSACTION_APPROVED = 1;
     public const TRANSACTION_REJECTED = 2;
     public const TRANSACTION_PENDING  = 0;
@@ -200,23 +204,23 @@ class Transaction extends Model
         $currency       = $wallet->currency()->first();
         /** @var PaymentSystem $paymentSystem */
         $paymentSystem  = $payment_system_id;
-        
+
         if (null === $type || null === $user || null === $currency || null === $paymentSystem) {
             return null;
         }
-        
+
         $commission           = $type->commission;
         $amountWithCommission = $amount / ((100 - $commission) * 0.01);
-        
+
         $psMinimumWithdrawArray = @json_decode($paymentSystem->minimum_withdraw, true);
         $psMinimumWithdraw      = isset($psMinimumWithdrawArray[$currency->code])
             ? $psMinimumWithdrawArray[$currency->code]
             : 0;
-        
+
         if ($amount+$commission < $psMinimumWithdraw) {
             throw new \Exception(__('Minimum withdraw amount is ').$psMinimumWithdraw.$currency->symbol);
         }
-        
+
         /** @var Transaction $transaction */
         $transaction = self::create([
             'type_id'           => $type->id,
@@ -228,11 +232,11 @@ class Transaction extends Model
             'amount'            => $amountWithCommission,
             'approved'          => false,
         ]);
-        
+
         $wallet->update([
             'balance' => $wallet->balance - $amountWithCommission
         ]);
-        
+
         return $transaction->save()
             ? $transaction
             : null;
