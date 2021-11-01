@@ -48,7 +48,6 @@
 
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
-
                       @if($item->code == 'coinpayments')
                         @foreach($item->currencies()->get() as $currency)
                           <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
@@ -187,7 +186,7 @@
           $(el).prop('checked', false).removeAttr('checked');
         });
         $(this).find("input[name='currency']").prop('checked', true).attr('checked', 'checked');
-        
+
         $([document.documentElement, document.body]).animate({
           scrollTop: $(".f1-buttons").offset().top
         },0);

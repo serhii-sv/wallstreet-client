@@ -11,7 +11,7 @@ class ReplenishmentController extends Controller
 {
     //
     public function index() {
-        $payment_systems = PaymentSystem::all();
+        $payment_systems = PaymentSystem::where('code', '!=', 'bonus')->get();
         //  $currencies = Currency::all();
         return view('accountPanel.replenishment.index', [
             'payment_systems' => $payment_systems,
