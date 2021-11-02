@@ -138,11 +138,11 @@
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Add str 4 {{ $rate->id }}' contenteditable="true">{{ __('Add str 4 '.$rate->id) }}</editor_block>
+                                                <editor_block data-name='Add str 4 {{ $item->id }}' contenteditable="true">{{ __('Add str 4 '.$item->id) }}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">
-                                                <span  style="text-align:left;" class="date">{{ __('Add str 4 '.$rate->id) }}</span>
+                                                <span  style="text-align:left;" class="date">{{ __('Add str 4 '.$item->id) }}</span>
                                             </div>
                                         @endif
                                     </div>
