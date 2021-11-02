@@ -959,6 +959,16 @@
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
+                                  <div style="text-align:left;">
+                                      <editor_block data-name='Add str 2 {{ $rate->id }}' contenteditable="true">{{ __('Add str 2 '.$rate->id) }}</editor_block>
+                                  </div>
+                              @else
+                                  <div style="text-align:left;">
+                                      <span  style="text-align:left;" class="date">{{ __('Add str 2 '.$rate->id) }}</span>
+                                  </div>
+                              @endif
+
+                              @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
                                       <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
                                   @else
