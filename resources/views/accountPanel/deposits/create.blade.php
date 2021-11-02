@@ -62,7 +62,9 @@
                                 <editor_block data-name='Daily earnings {{ $item->id }}' contenteditable="true">{{ __('Daily earnings '.$item->id) }}</editor_block>
                                 </div>
                                             @else
+                                                <div style="text-align:left;">
                                                 <span style="text-align:left;" class="date">{{ __('Daily earnings '.$item->id) }}</span>
+                                                </div>
                                             @endif
 
                                             @if(canEditLang() && checkRequestOnEdit())
@@ -135,6 +137,7 @@
                                         @endif
                                     </div>
 
+                                    <p>&nbsp;</p>
                                   <div class="input-group">
                                     <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
                                       <option value="" disabled selected hidden>Выберите кошелёк</option>
