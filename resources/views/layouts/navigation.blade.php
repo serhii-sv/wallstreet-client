@@ -37,7 +37,5 @@
               {{ __('FAQ') }}
             @endif</a>
         </li>
-        <!-- <li id="payoutPageMenuItem" class="navigation__item"><a class="navigation__link" href="{{ route('customer.payout') }}">{{ __('Выплаты') }}</a>
-        </li> -->
     </ul>
 </nav>
