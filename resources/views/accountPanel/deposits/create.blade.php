@@ -54,99 +54,87 @@
                                       {{ $item->name }}
                                     @endif
                                   </h3>
-                                  <h5>
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='Acc daily earnings {{ $item->id }}' contenteditable="true">{{ __('Acc daily earnings '.$item->id) }}</editor_block>
-                                      @else
-                                          {{ __('Acc daily earnings '.$item->id) }}
-                                      @endif
 
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='{{ '%'.' '.$item->id }}' contenteditable="true">{{ __('%'.' '.$item->id) }}</editor_block>
-                                      @else
-                                              {{ __('%'.' '.$item->id) }}
-                                      @endif
-                                  </h5>
-                                  <h6>
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Acc duration {{ $item->id }}' contenteditable="true">{{ __('Acc duration '.$item->id) }}</editor_block>
-                                      @else
-                                          {{ __('Acc duration '.$item->id) }}
-                                      @endif
-
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='Acc duration number {{ $item->id }}' contenteditable="true">{{ __('Acc duration number ' .$item->id) }}</editor_block>
-                                      @else
-                                              {{ __('Acc duration number ' .$item->id) }}
-                                      @endif
-
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='days' contenteditable="true">{{ __('days' .' '. $item->id) }}</editor_block>
-                                      @else
-                                        {{ __('days'.' '. $item->id) }}
-                                      @endif
-                                  </h6>
-                                  <h6>
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='Acc reinvest {{ $item->id }}' contenteditable="true">{{ __('Acc reinvest '.$item->id) }}</editor_block>
-                                      @else
-                                          {{ __('Acc reinvest '.$item->id) }}
-                                      @endif
-
-                                      @if($item->reinvest)
-                                              @if(canEditLang() && checkRequestOnEdit())
-                                                  <editor_block data-name='{{ 'Yes'. ' ' . $item->id }}' contenteditable="true">{{ __('Yes'. ' ' . $item->id) }}</editor_block>
-                                              @else
-                                                  {{ __('Yes'. ' ' . $item->id) }}
-                                              @endif
-                                    @else
-                                              @if(canEditLang() && checkRequestOnEdit())
-                                                  <editor_block data-name='{{ 'No' . ' ' . $item->id }}' contenteditable="true">{{ __('No' . ' ' . $item->id) }}</editor_block>
-                                              @else
-                                                  {{ __('No' . ' ' . $item->id) }}
-                                              @endif
-                                    @endif
-                                  </h6>
-                                  {{-- <h6>Реинвестирование</h6>
-                                   <div class="form-group row">
-                                     <label class="col-md-12 col-form-label sm-left-text" for="u-range-{{ $item->id }}">Процент реинвестирования</label>
-                                     <div class="col-md-12">
-                                       <input id="u-range-{{ $item->id }}" type="hidden" class="irs-hidden-input range-slider @if(!$item->reinvest) disable @endif" tabindex="-1" name="reinvest" readonly="" data-bs-original-title="" title="">
-                                     </div>
-                                   </div>--}}
-                                  <h5>
-                                    <span class="span badge rounded-pill pill-badge-primary" style="white-space: normal;">
-                                      @if($item->overall)
-                                            @if(canEditLang() && checkRequestOnEdit())
-                                                <editor_block data-name='Refund of the deposit at the end {{ $item->id }}' contenteditable="true">{{ __('Refund of the deposit at the end '.$item->id) }}</editor_block>
+                                    <div class="transaction-header">
+                                        <span class="title">
+                                @if(canEditLang() && checkRequestOnEdit())
+                                                <div style="text-align:left;">
+                                <editor_block data-name='Daily earnings {{ $item->id }}' contenteditable="true">{{ __('Daily earnings '.$item->id) }}</editor_block>
+                                </div>
                                             @else
-                                                {{ __('Refund of the deposit at the end '.$item->id) }}
+                                                <span style="text-align:left;" class="date">{{ __('Daily earnings '.$item->id) }}</span>
                                             @endif
-                                      @else
+
                                             @if(canEditLang() && checkRequestOnEdit())
-                                                <editor_block data-name='The deposit is not refundable {{ $item->id }}' contenteditable="true">{{ __('The deposit is not refundable '.$item->id) }}</editor_block>
+                                                <div style="text-align:left;">
+                                <editor_block data-name='Duration {{ $item->id }}' contenteditable="true">{{ __('Duration '.$item->id) }}</editor_block>
+                                </div>
                                             @else
-                                                {{ __('The deposit is not refundable '.$item->id) }}
+                                                <div style="text-align:left;">
+                                        <span  style="text-align:left;" class="date">{{ __('Duration '.$item->id) }}</span>
+                                        </div>
                                             @endif
-                                      @endif
-                                    </span>
-                                  </h5>
-                                  <h4 class="mb-2">
-                                      @if(canEditLang() && checkRequestOnEdit())
-                                        <editor_block data-name='Can deposit {{ $item->id }}' contenteditable="true">{{ __('Can deposit '.$item->id) }}</editor_block>
-                                      @else
-                                          {{ __('Can deposit '.$item->id) }}
-                                      @endif
-                                  </h4>
-                                  <p class="rate-min-max-block" data-rate="{{ $item->id }}" style="font-size: 15px;">
-                                    <strong>
+
+                                                        </span>
                                         @if(canEditLang() && checkRequestOnEdit())
-                                            <editor_block data-name='Amount {{ $item->id }}' contenteditable="true">{{ __('Amount '.$item->id) }}</editor_block>
+                                            <div style="text-align:left;">
+                                                <editor_block data-name='Daily rate {{ $item->id }}' contenteditable="true">{{ __('Daily rate '.$item->id) }}</editor_block>
+                                            </div>
                                         @else
-                                            {{ __('Amount '.$item->id) }}
+                                            <div style="text-align:left;">
+                                                <span  style="text-align:left;" class="date">{{ __('Daily rate '.$item->id) }}</span>
+                                            </div>
                                         @endif
-                                    </strong>
-                                  </p>
+
+                                        @if(canEditLang() && checkRequestOnEdit())
+                                            <div style="text-align:left;">
+                                                <editor_block data-name='Add str {{ $item->id }}' contenteditable="true">{{ __('Add str '.$item->id) }}</editor_block>
+                                            </div>
+                                        @else
+                                            <div style="text-align:left;">
+                                                <span  style="text-align:left;" class="date">{{ __('Add str '.$item->id) }}</span>
+                                            </div>
+                                        @endif
+
+                                        @if(canEditLang() && checkRequestOnEdit())
+                                            <div style="text-align:left;">
+                                                <editor_block data-name='Add str 2 {{ $item->id }}' contenteditable="true">{{ __('Add str 2 '.$item->id) }}</editor_block>
+                                            </div>
+                                        @else
+                                            <div style="text-align:left;">
+                                                <span  style="text-align:left;" class="date">{{ __('Add str 2 '.$item->id) }}</span>
+                                            </div>
+                                        @endif
+
+                                        @if(canEditLang() && checkRequestOnEdit())
+                                            <div style="text-align:left;">
+                                                <editor_block data-name='Add str 3 {{ $item->id }}' contenteditable="true">{{ __('Add str 3 '.$item->id) }}</editor_block>
+                                            </div>
+                                        @else
+                                            <div style="text-align:left;">
+                                                <span  style="text-align:left;" class="date">{{ __('Add str 3 '.$item->id) }}</span>
+                                            </div>
+                                        @endif
+
+                                        @if(canEditLang() && checkRequestOnEdit())
+                                            @if($item->overall)
+                                                <editor_block style="text-align:left;" data-name='return deposit: true {{ $item->id }}' contenteditable="true">{{ __('return deposit: true '.$item->id) }}</editor_block>
+                                            @else
+                                                <div style="text-align:left;">
+                                                    <editor_block data-name='return deposit: false {{ $item->id }}' contenteditable="true">{{ __('return deposit: false '.$item->id) }}</editor_block>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div style="text-align:left;">
+                                                @if($item->overall)
+                                                    <span style="text-align:left;" class="date">{{ __('return deposit: true '.$item->id) }}</span>
+                                                @else
+                                                    <span style="text-align:left;" class="date">{{ __('return deposit: false '.$item->id) }}</span>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+
                                   <div class="input-group">
                                     <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
                                       <option value="" disabled selected hidden>Выберите кошелёк</option>
