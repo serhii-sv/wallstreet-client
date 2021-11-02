@@ -21,9 +21,9 @@
                     <a class="nav-link @if($loop->first) active @endif" id="pills-{{ $group->id }}-tab" data-bs-toggle="pill" href="#pills-{{ $group->id }}" role="tab" aria-controls="pills-{{ $group->id }}" aria-selected="false" data-bs-original-title="" title="">
 
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='{{ $group->name }}' contenteditable="true">{{ __($group->name) }}</editor_block>
+                        <editor_block data-name='group {{ $group->id }}' contenteditable="true">{{ __('group '.$group->id) }}</editor_block>
                       @else
-                        {{ $group->name }}
+                            {{ __('group '.$group->id) }}
                       @endif
                     </a>
                   </li>
