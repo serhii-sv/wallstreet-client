@@ -171,7 +171,7 @@
                                     <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}">
                                   </div>
                                 </div>
-                                <button class="btn btn-lg btn-primary btn-block create-deposit-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif
+                                <button class="btn btn-lg btn-primary btn-block create-deposit-btn" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif >
                                       @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='Invest' contenteditable="true">{{ __('Invest') }}</editor_block>
                                       @else
