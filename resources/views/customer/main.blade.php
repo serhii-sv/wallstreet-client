@@ -982,16 +982,6 @@
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
-                                  <div style="text-align:left;">
-                                      <editor_block data-name='Add str 4 {{ $rate->id }}' contenteditable="true">{{ __('Add str 4 '.$rate->id) }}</editor_block>
-                                  </div>
-                              @else
-                                  <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Add str 4 '.$rate->id) }}</span>
-                                  </div>
-                              @endif
-
-                              @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
                                       <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
                                   @else
@@ -1008,10 +998,21 @@
                                       @endif
                                   </div>
                               @endif
+
+                              @if(canEditLang() && checkRequestOnEdit())
+                                  <div style="text-align:left;">
+                                      <editor_block data-name='Add str 4 {{ $rate->id }}' contenteditable="true">{{ __('Add str 4 '.$rate->id) }}</editor_block>
+                                  </div>
+                              @else
+                                  <div style="text-align:left;">
+                                      <span  style="text-align:left;" class="date">{{ __('Add str 4 '.$rate->id) }}</span>
+                                  </div>
+                              @endif
                           </div>
                           <div class="transaction-thumb">
                             {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
                           </div>
+                            <p>&nbsp;</p>
                           <div style="text-align:center;" class="transaction-footer">
                                                   <span class="amount" style="text-align:center;">
                                                       @if(canEditLang() && checkRequestOnEdit())
