@@ -888,6 +888,8 @@
             </div>
           </div>
         </div>
+      </div>
+        <div class="container" style="max-width:1350px;">
         <div class="tab transaction-tab d-flex flex-wrap justify-content-center">
           <ul class="tab-menu">
             @forelse($rate_groups as $rate_group)
