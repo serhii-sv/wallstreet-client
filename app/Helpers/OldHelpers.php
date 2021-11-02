@@ -2,7 +2,7 @@
 
 function canEditLang()
 : bool {
-    if (auth()->check() && auth()->user()->can('translate')) {
+    if (auth()->check() && auth()->user()->can('Переводить')) {
         return true;
     }
     return false;
