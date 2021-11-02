@@ -982,16 +982,16 @@
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
-                                      <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
+                                      <editor_block style="text-align:center;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
                                   @else
-                                      <div style="text-align:left;">
+                                      <div style="text-align:center;">
 <editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{{ __('return deposit: false '.$rate->id) }}</editor_block>
                                       </div>
                                   @endif
                               @else
-                                  <div style="text-align:left;">
+                                  <div style="text-align:center;">
                                       @if($rate->overall)
-                                          <span style="text-align:left;" class="date">{{ __('return deposit: true '.$rate->id) }}</span>
+                                          <span style="text-align:center;" class="date">{{ __('return deposit: true '.$rate->id) }}</span>
                                       @else
     <span style="text-align:left;" class="date">{{ __('return deposit: false '.$rate->id) }}</span>
                                       @endif
