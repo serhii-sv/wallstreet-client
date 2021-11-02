@@ -643,7 +643,7 @@
                 @else
                   {{ __('You Can Earn') }}
                 @endif</h2>
-            
+
             </div>
           </div>
         </div>
@@ -789,7 +789,7 @@
                   <div class="invest-amount" data-min="1.00 BTC" data-max="1000 BTC">
                     <div id="btc-range" class="invest-range-slider"></div>
                   </div>
-                
+
                 </div>
               </div>
               <div class="tab-item">
@@ -818,7 +818,7 @@
                   <div class="invest-amount" data-min="1.00 ETH" data-max="1000 ETH">
                     <div id="eth-range" class="invest-range-slider"></div>
                   </div>
-                
+
                 </div>
               </div>
               <div class="tab-item">
@@ -847,7 +847,7 @@
                   <div class="invest-amount" data-min="1.00 RUB" data-max="1000 RUB">
                     <div id="rub-range" class="invest-range-slider"></div>
                   </div>
-                
+
                 </div>
               </div>
             </div>
@@ -924,7 +924,7 @@
                                 <editor_block data-name='Daily earnings {{ $rate->id }}' contenteditable="true">{{ __('Daily earnings '.$rate->id) }}</editor_block>
                                 </div>
                                 @else
-                                    <span class="date">{{ __('Daily earnings '.$rate->id) }} {{ $rate->daily }}%</span>
+                                    <span class="date">{{ __('Daily earnings '.$rate->id) }}</span>
                                 @endif
 
                                     @if(canEditLang() && checkRequestOnEdit())
@@ -970,7 +970,13 @@
                                                       {{ __('Can deposit '.$rate->id) }}
                                                     @endif
                                                   </span>
-                            <h5 class="sub-title">{{ round($rate->min, 0) }} - {{ round($rate->max, 0) }}$</h5>
+                            <h5 class="sub-title">
+                                @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Min max {{ $rate->id }}' contenteditable="true">{{ __('Min max '.$rate->id) }}</editor_block>
+                                @else
+                                    {{ __('Min max '.$rate->id) }}
+                                @endif
+                            </h5>
                           </div>
                         </div>
                       </div>
@@ -1241,7 +1247,7 @@
                 </div>
               </div>
             </div>
-            
+
           </div>
           <div class="col-lg-5 d-lg-block d-none">
             <div class="afiliate-thumb">
@@ -1456,6 +1462,6 @@
         }
       })
     });
-    
+
   </script>
 @endpush
