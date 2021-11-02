@@ -136,6 +136,11 @@ class CoinpaymentsController extends Controller
             ->limit(1)
             ->first();
 
+        if (null === $transaction) {
+            \Log::info('Strange request from: '.$request->ip().'. Transaction not found. Entire request is: '.print_r($request->all(),true));
+            return response('ok');
+        }
+
         if ($transaction->result != 'complete' && $request->status >= 100 && $request->status_text == 'Complete') {
             $transaction->batch_id = $request->txn_id;
             $transaction->result = 'complete';
