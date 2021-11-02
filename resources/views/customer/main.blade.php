@@ -920,6 +920,7 @@
                         <div class="transaction-item">
                           <div class="transaction-header">
                             <h5 class="title">{{ $rate->name }}</h5>
+                              <p>&nbsp;</p>
                             <span class="title">
                                 @if(canEditLang() && checkRequestOnEdit())
                                     <div style="text-align:left;">
