@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('title', __('For partners'))
 @section('content')
-  
+
   <div class="main--body">
     <!--========== Preloader ==========-->
   {{--  @include('layouts.app-preloader')--}}
   <!--========== Preloader ==========-->
-    
-    
+
+
     <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Banner-Section Starts Here=======-->
     <section class="bg_img hero-section-2 " data-background="{{ asset('theme/images/about/hero-bg4.png') }}">
       <div class="container">
@@ -42,8 +42,8 @@
       </div>
     </section>
     <!--=======Banner-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Affiliate-Section Starts Here=======-->
     <section class="affiliate-programe padding-top pt-max-lg-0">
       <div class="ball-3" data-paroller-factor="0.30" data-paroller-factor-lg="-0.30"
@@ -268,7 +268,7 @@
               </div>
             </div>
             <div class="affiliate-bottom">
-          
+
             </div>
           </div>
           <div class="col-lg-5 d-lg-block d-none">
@@ -285,8 +285,8 @@
       </div>
     </section>
     <!--=======Affiliate-Section Ends Here=======-->
-    
-    
+
+
     <!--=======Check-Section Starts Here=======-->
     <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
       <div class="container">
@@ -305,13 +305,13 @@
               </div>
             </div>
           </div>
-        
+
         </div>
       </div>
     </section>
     <!--=======Check-Section Ends Here=======-->
-    
-    
+
+
     <!-- ==========Total-Affiliate-Section Starts Here========== -->
     <section class="total-affiliate-section padding-bottom padding-top">
       <div class="container">
@@ -418,8 +418,8 @@
       </div>
     </section>
     <!-- ==========Total-Affiliate-Section Ends Here========== -->
-    
-    
+
+
     <!-- ==========How-Section Starts Here========== -->
     <section class="how-section bg_img padding-top padding-bottom pt-max-md-0" data-background="{{ asset('theme/images/affiliate/affiliate-bg.png') }}">
       <div class="ball-3" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
@@ -528,7 +528,7 @@
       </div>
     </section>
     <!-- ==========How-Section Ends Here========== -->
-    
+
     <div class="partner-table">
       <div class="container">
         <div class="row">
@@ -563,25 +563,39 @@
                   @foreach($deposit_turnovers as $item)
                     <tr class="bonus-list" style="text-align: center">
                       <td>
-                        @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{$item->status_name}}' contenteditable="true">{{ __($item->status_name) }}</editor_block>@else {{ __($item->status_name) }} @endif
+                          @if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='{{$item->status_name}}' contenteditable="true">{{ __($item->status_name) }}</editor_block>
+                          @else {{ __($item->status_name) }}
+                          @endif
+                      </td>
+                      <td>
+                          @if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='{{$item->status_stage}}' contenteditable="true">{{ __($item->status_stage) }}</editor_block>
+                          @else
+                              {{ __($item->status_stage) }}
+                          @endif
                       </td>
                       <td>
                         @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{$item->status_stage}}' contenteditable="true">{{ __($item->status_stage) }}</editor_block>@else {{ __($item->status_stage) }} @endif
+                          <editor_block data-name='item personal turnover {{ $item->id }}' contenteditable="true">{{ __('item personal turnover '.$item->id) }}</editor_block>
+                          @else
+                              {{ __('item personal turnover '.$item->id) }}
+                          @endif
                       </td>
-                      <td>
-                        @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{ $item->personal_turnover ? $item->personal_turnover : ""  }}' contenteditable="true">{{ $item->personal_turnover ? __($item->personal_turnover) : 0 }}</editor_block>@else {{ $item->personal_turnover ? __($item->personal_turnover) : 0  }} @endif
-                      </td>
-                      <td>
-                        @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{ $item->total_turnover ? $item->total_turnover : "" }}' contenteditable="true">{{ $item->total_turnover ? __($item->total_turnover) : 0 }}</editor_block>@else {{ $item->total_turnover ? __($item->total_turnover) : 0 }} @endif
-                      </td>
-                      <td>
-                        @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{ $item->reward ? $item->reward : 0 }}' contenteditable="true">{{ $item->reward ? __($item->reward) : 0 }}</editor_block>@else {{ $item->reward ? __($item->reward) : 0  }} @endif
-                      </td>
+                        <td>
+                            @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='item total turnover {{ $item->id }}' contenteditable="true">{{ __('item total turnover '.$item->id) }}</editor_block>
+                            @else
+                                {{ __('item total turnover '.$item->id) }}
+                            @endif
+                        </td>
+                        <td>
+                            @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='item reward turnover {{ $item->id }}' contenteditable="true">{{ __('item reward turnover '.$item->id) }}</editor_block>
+                            @else
+                                {{ __('item reward turnover '.$item->id) }}
+                            @endif
+                        </td>
                       <td>
                         @if(canEditLang() && checkRequestOnEdit())
                           <editor_block data-name='{{$item->leadership_bonus}}' contenteditable="true">{{ __($item->leadership_bonus) }}</editor_block>@else {{ __($item->leadership_bonus) }} @endif
@@ -595,8 +609,8 @@
         </div>
       </div>
     </div>
-    
-    
+
+
     <!-- ==========Why-Affiliate-Section Starts Here========== -->
     <section class="why-affiliate-section padding-bottom pt-4 pt-max-lg-0">
       <div class="why--thumb">
@@ -607,7 +621,7 @@
           <div class="col-lg-12">
             <div class="why-affiliate-content">
               <div class="section-header left-style">
-                
+
                 <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Join affiliate?' contenteditable="true">{{ __('Join affiliate?') }}</editor_block>
                   @else
@@ -688,13 +702,13 @@
       </div>
     </section>
     <!-- ==========Why-Affiliate-Section Ends Here========== -->
-    
-    
+
+
     <!-- ==========Footer-Section Starts Here========== -->
   @include('layouts.app-footer')
   <!-- ==========Footer-Section Ends Here========== -->
-  
-  
+
+
   </div>
 
 @endsection
