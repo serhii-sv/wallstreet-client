@@ -938,15 +938,25 @@
                                     @endif
 
                                                         </span>
-                            @if(canEditLang() && checkRequestOnEdit())
-                              <div style="text-align:left;">
-                                <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
-                              </div>
-                            @else
+                              @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-<span  style="text-align:left;" class="date">{{ __('Daily rate '.$rate->id) }}</span>
+                                      <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
                                   </div>
-                            @endif
+                              @else
+                                  <div style="text-align:left;">
+                                      <span  style="text-align:left;" class="date">{{ __('Daily rate '.$rate->id) }}</span>
+                                  </div>
+                              @endif
+
+                              @if(canEditLang() && checkRequestOnEdit())
+                                  <div style="text-align:left;">
+                                      <editor_block data-name='Add str {{ $rate->id }}' contenteditable="true">{{ __('Add str '.$rate->id) }}</editor_block>
+                                  </div>
+                              @else
+                                  <div style="text-align:left;">
+                                      <span  style="text-align:left;" class="date">{{ __('Add str '.$rate->id) }}</span>
+                                  </div>
+                              @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
