@@ -1001,7 +1001,7 @@
                           <div class="transaction-thumb">
                             {{--   <img src="{{ asset('theme/images/transaction/transaction01.png') }}" alt="transaction">--}}
                           </div>
-                          <div style="text-align:left;" class="transaction-footer">
+                          <div style="text-align:center;" class="transaction-footer">
                                                   <span class="amount" style="text-align:left;">
                                                       @if(canEditLang() && checkRequestOnEdit())
                                                       <editor_block data-name='Can deposit {{ $rate->id }}' contenteditable="true">{{ __('Can deposit '.$rate->id) }}</editor_block>
