@@ -1,9 +1,9 @@
 @extends('layouts.accountPanel.app')
 @section('title')
   @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Replenishment page' contenteditable="true">{{ __('Replenishment page') }}</editor_block>
+    <editor_block data-name='Replenishment page 1' contenteditable="true">{{ __('Replenishment page 1') }}</editor_block>
   @else
-    {{ __('Replenishment page') }}
+    {{ __('Replenishment page 1') }}
   @endif
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h5 class="mb-4">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Replenishment page' contenteditable="true">{{ __('Replenishment page') }}</editor_block> @else {{ __('Replenishment page') }} @endif
+                  <editor_block data-name='Replenishment page 2' contenteditable="true">{{ __('Replenishment page 2') }}</editor_block> @else {{ __('Replenishment page 2') }} @endif
               </h5>
               @include('partials.inform')
             </div>
@@ -39,8 +39,8 @@
                     <div class="f1-step-icon"><i class="fa fa-key"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
-                      @else {{ __('Amount') }} @endif
+                        <editor_block data-name='Amount top' contenteditable="true">{{ __('Amount top') }}</editor_block>
+                      @else {{ __('Amount top') }} @endif
                     </p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@
                      </div>--}}
                   <div class="text-center mb-3">
                     <label class="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block> @else {{ __('Amount') }} @endif</label>
+                        <editor_block data-name='Amount bot' contenteditable="true">{{ __('Amount bot') }}</editor_block> @else {{ __('Amount bot') }} @endif</label>
                     <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin: auto">
                   </div>
 
