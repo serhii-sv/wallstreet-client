@@ -1246,17 +1246,17 @@
                   <div class="affiliate-thumb">
                     <h3 class="title">
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='affiliate percent 1' contenteditable="true">{{ __('affiliate percent 1') }}</editor_block>
+                        <editor_block data-name='affiliate percent 11' contenteditable="true">{{ __('affiliate percent 11') }}</editor_block>
                       @else
-                        {{ __('affiliate percent 1') }}
+                        {{ __('affiliate percent 11') }}
                       @endif
                     </h3>
                     <span class="remainder">%</span>
                     <span class="cont">
                         @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='1st' contenteditable="true">{{ __('1st') }}</editor_block>
+                        <editor_block data-name='11st' contenteditable="true">{{ __('11st') }}</editor_block>
                       @else
-                        {{ __('1st') }}
+                        {{ __('11st') }}
                       @endif
                        </span>
                   </div>
@@ -1267,17 +1267,17 @@
                   <div class="affiliate-thumb">
                     <h3 class="title">
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='affiliate percent 2' contenteditable="true">{{ __('affiliate percent 2') }}</editor_block>
+                        <editor_block data-name='affiliate percent 22' contenteditable="true">{{ __('affiliate percent 22') }}</editor_block>
                       @else
-                        {{ __('affiliate percent 2') }}
+                        {{ __('affiliate percent 22') }}
                       @endif
                     </h3>
                     <span class="remainder">%</span>
                     <span class="cont">
                                             @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='2nd' contenteditable="true">{{ __('2nd') }}</editor_block>
+                        <editor_block data-name='22nd' contenteditable="true">{{ __('22nd') }}</editor_block>
                       @else
-                        {{ __('2nd') }}
+                        {{ __('22nd') }}
                       @endif
                                         </span>
                   </div>
@@ -1288,17 +1288,17 @@
                   <div class="affiliate-thumb">
                     <h3 class="title">
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='affiliate percent 3' contenteditable="true">{{ __('affiliate percent 3') }}</editor_block>
+                        <editor_block data-name='affiliate percent 33' contenteditable="true">{{ __('affiliate percent 33') }}</editor_block>
                       @else
-                        {{ __('affiliate percent 3') }}
+                        {{ __('affiliate percent 33') }}
                       @endif
                     </h3>
                     <span class="remainder">%</span>
                     <span class="cont">
                                             @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='3rd' contenteditable="true">{{ __('3rd') }}</editor_block>
+                        <editor_block data-name='33rd' contenteditable="true">{{ __('33rd') }}</editor_block>
                       @else
-                        {{ __('3rd') }}
+                        {{ __('33rd') }}
                       @endif
                                         </span>
                   </div>
