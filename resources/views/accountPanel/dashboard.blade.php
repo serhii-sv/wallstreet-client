@@ -506,101 +506,84 @@
                       </tr>
                     </thead>
                     <tbody>
+                    @for($i=1; $i<=4; $i++)
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/8.jpg') }}" alt="">
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/'.$i.'.jpg') }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
-                              <span>John keter</span>
-                              <p class="font-roboto">2019</p>
+                              <span>
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                      <editor_block data-name='Username {{ $i }}' contenteditable="true">
+                                          {{ __('Username '.$i) }}
+                                      </editor_block>
+                                  @else
+                                      {{ __('Username '.$i) }}
+                                  @endif
+                              </span>
+                              <p class="font-roboto">
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                      <editor_block data-name='Year {{ $i }}' contenteditable="true">
+                                          {{ __('Year '.$i) }}
+                                      </editor_block>
+                                  @else
+                                      {{ __('Year '.$i) }}
+                                  @endif
+                              </p>
                             </div>
                           </div>
                         </td>
-                        <td>06 August</td>
-                        <td>CAP</td>
-                        <td><i class="flag-icon flag-icon-gb"></i></td>
                         <td>
-                          <span class="label">$5,08,652</span>
+                            @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Date {{ $i }}' contenteditable="true">
+                                    {{ __('Date '.$i) }}
+                                </editor_block>
+                            @else
+                                {{ __('Date '.$i) }}
+                            @endif
                         </td>
-                        <td class="text-end"><i class="fa fa-check-circle"></i>Done</td>
+                        <td>
+                            @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Cap {{ $i }}' contenteditable="true">
+                                    {{ __('Cap '.$i) }}
+                                </editor_block>
+                            @else
+                                {{ __('Cap '.$i) }}
+                            @endif
+                        </td>
+                          <?php
+                          $countryCodes = [
+                              'gb',
+                              'us',
+                              'za',
+                              'at',
+                              'br',
+                          ];
+                          ?>
+                        <td><i class="flag-icon flag-icon-{{ $countryCodes[$i-1] }}"></i></td>
+                        <td>
+                          <span class="label">
+                                  @if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Amount {{ $i }}' contenteditable="true">
+                                          {{ __('Amount '.$i) }}
+                                      </editor_block>
+                              @else
+                                  {{ __('Amount '.$i) }}
+                              @endif
+                          </span>
+                        </td>
+                        <td class="text-end"><i class="fa fa-check-circle"></i>
+                            @if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Status {{ $i }}' contenteditable="true">
+                                    {{ __('Status '.$i) }}
+                                </editor_block>
+                            @else
+                                {{ __('Status '.$i) }}
+                            @endif
+                        </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/4.jpg') }}" alt="">
-                            <div class="status-circle bg-primary"></div>
-                            <div class="d-inline-block">
-                              <span>Herry Venter</span>
-                              <p class="font-roboto">2020</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>21 March</td>
-                        <td>Branded Shoes</td>
-                        <td><i class="flag-icon flag-icon-us"></i></td>
-                        <td>
-                          <span class="label">$59,105</span>
-                        </td>
-                        <td class="text-end"><i class="fa fa-check-circle"></i>Pending</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/5.jpg') }}" alt="">
-                            <div class="status-circle bg-primary"></div>
-                            <div class="d-inline-block">
-                              <span>loain deo</span>
-                              <p class="font-roboto">2020</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>09 March</td>
-                        <td>Headphone</td>
-                        <td><i class="flag-icon flag-icon-za"></i></td>
-                        <td>
-                          <span class="label">$10,155</span>
-                        </td>
-                        <td class="text-end"><i class="fa fa-check-circle"></i>Success</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/4.jpg') }}" alt="">
-                            <div class="status-circle bg-primary"></div>
-                            <div class="d-inline-block">
-                              <span>Horen Hors</span>
-                              <p class="font-roboto">2020</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>14 February</td>
-                        <td>Cell Phone</td>
-                        <td><i class="flag-icon flag-icon-at"></i></td>
-                        <td>
-                          <span class="label">$90,568</span>
-                        </td>
-                        <td class="text-end"><i class="fa fa-check-circle"></i>In process</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/2.png') }}" alt="">
-                            <div class="status-circle bg-primary"></div>
-                            <div class="d-inline-block">
-                              <span>fenter Jessy</span>
-                              <p class="font-roboto">2021</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>12 January</td>
-                        <td>Earings</td>
-                        <td><i class="flag-icon flag-icon-br"></i></td>
-                        <td>
-                          <span class="label">$10,652</span>
-                        </td>
-                        <td class="text-end"><i class="fa fa-check-circle"></i>Pending</td>
-                      </tr>
+                    @endfor
                     </tbody>
                   </table>
                 </div>
