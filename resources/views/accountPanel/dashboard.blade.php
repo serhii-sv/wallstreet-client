@@ -510,7 +510,15 @@
                       <tr>
                         <td>
                           <div class="d-inline-block align-middle">
-                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/'.$i.'.jpg') }}" alt="">
+                              <?php
+                              $avatarCodes = [
+                                  '1.jpg',
+                                  '2.png',
+                                  '3.png',
+                                  '5.jpg',
+                              ];
+                              ?>
+                            <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/'.($avatarCodes[$i-1])) }}" alt="">
                             <div class="status-circle bg-primary"></div>
                             <div class="d-inline-block">
                               <span>
