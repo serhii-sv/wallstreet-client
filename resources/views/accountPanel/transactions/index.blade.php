@@ -66,7 +66,7 @@
                             <span class="badge rounded-pill pill-badge-info">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
                           </td>
                           <td>
-                            {{ $operation->paymentSystem->name ?? 'Не указано' }}
+                            {{ $operation->paymentSystem->name ?? $operation->currency->code }}
                             <br>
                             <span class="badge rounded-pill pill-badge-info">{{ $operation->external ?? '' }}</span>
                           </td>
