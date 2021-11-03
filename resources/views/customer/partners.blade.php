@@ -691,11 +691,11 @@
                   </div>
                 </div>
               </div>
-              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Join Now!' contenteditable="true">{{ __('Join Now!') }}</editor_block>
-                @else
-                  {{ __('Join Now!') }}
-                @endif</a>
+{{--              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                  <editor_block data-name='Join Now!' contenteditable="true">{{ __('Join Now!') }}</editor_block>--}}
+{{--                @else--}}
+{{--                  {{ __('Join Now!') }}--}}
+{{--                @endif</a>--}}
             </div>
           </div>
         </div>
