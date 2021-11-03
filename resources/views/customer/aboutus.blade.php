@@ -488,7 +488,7 @@
       <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-7 col-xl-6">
+            <div class="col-md-7 col-xl-12">
               <div class="call-item text-center text-sm-left">
                 <div class="call-icon">
                   <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
@@ -502,13 +502,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
+{{--            <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">--}}
 {{--              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
 {{--                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>--}}
 {{--                @else--}}
 {{--                  {{ __('learn more') }}--}}
 {{--                @endif <i class="flaticon-right"></i></a>--}}
-            </div>
+{{--            </div>--}}
           </div>
         </div>
       </section>
