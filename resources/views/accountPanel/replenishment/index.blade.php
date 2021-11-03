@@ -16,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h5 class="mb-4">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Replenishment page 2' contenteditable="true">{{ __('Replenishment page 2') }}</editor_block> @else {{ __('Replenishment page 2') }} @endif
+                  <editor_block data-name='Replenishment page 2' contenteditable="true">{{ __('Replenishment page 2') }}</editor_block> @else {{ __('Replenishment page 2') }} @endif <span id="payName"></span>
               </h5>
               @include('partials.inform')
             </div>
@@ -51,7 +51,7 @@
                       @if($item->code == 'coinpayments')
                         @foreach($item->currencies()->get() as $currency)
                           <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
-                            <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-manual="false">
+                            <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-manual="false" data-name="{{ $currency->name }}">
                             <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                               <img src="{{ asset('accountPanel/images/logos/' .  $currency->image ) }}" alt="{{ $currency->image_alt }}" title="{{ $currency->image_title }}">
                               <span>{{ $currency->name }}</span>
@@ -61,7 +61,7 @@
                         @endforeach
                       @else
                         <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
-                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
+                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-name="{{ $item->code }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
                           <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                             <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
                             <span>{{ $item->name }}</span>
@@ -192,6 +192,11 @@
         },0);
       });
       $(".btn-next").on('click', function (e) {
+
+          var paySystem = $("input[name='payment_system']:checked").attr('data-name');
+          $('#payName').html(paySystem);
+
+
 
         var manual = $("input[name='payment_system']:checked").attr('data-manual');
         if (manual == 'true'){
