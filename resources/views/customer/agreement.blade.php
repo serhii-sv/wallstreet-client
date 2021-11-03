@@ -66,7 +66,7 @@
                         {{ __('Agreement title') }}
                     @endif
                 </h2>
-                <div class="text">
+                <div class="text" style="margin-top:50px;">
                     <p>
                         @if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Agreement text' contenteditable="true">{{ __('Agreement text') }}</editor_block>
