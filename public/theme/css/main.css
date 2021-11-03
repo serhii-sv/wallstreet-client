@@ -1123,7 +1123,7 @@ input[type="submit"] {
 .section-header .cate {
     font-size: 24px;
     font-weight: 500;
-    text-transform: capitalize;
+
     color: #324fb0;
     display: block;
     margin-top: -5px;
@@ -1572,7 +1572,6 @@ input[type="submit"] {
         align-items: center;
         border-top: 1px solid rgba(51, 64, 106, 0.4);
         font-weight: 500;
-        text-transform: capitalize;
         justify-content: space-between;
     }
 
@@ -1652,7 +1651,6 @@ input[type="submit"] {
         align-items: center;
         border-top: 1px solid rgba(51, 64, 106, 0.4);
         font-weight: 500;
-        text-transform: capitalize;
         justify-content: space-between;
         color: #33406a;
     }
@@ -2387,7 +2385,6 @@ input[type="submit"] {
 .call-item .call-content .title {
     margin: 0;
     color: #ffffff;
-    text-transform: capitalize;
     font-weight: 500;
 }
 
@@ -4336,7 +4333,6 @@ body *::-webkit-scrollbar-track {
 
 .investor-item .investor-content .title {
     margin-bottom: 21px;
-    text-transform: capitalize;
 }
 
 .investor-item .investor-content .amount {
@@ -4366,7 +4362,6 @@ body *::-webkit-scrollbar-track {
 
 .ceo-content .author .subtitle a {
     font-weight: 500;
-    text-transform: capitalize;
     color: #23d605;
 }
 
@@ -4636,7 +4631,6 @@ body *::-webkit-scrollbar-track {
 
 .mission-item .mission-content a {
     font-weight: 500;
-    text-transform: capitalize;
     color: #33406a;
 }
 
@@ -4917,7 +4911,6 @@ body *::-webkit-scrollbar-track {
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .why-item .why-inner:hover {
@@ -5134,7 +5127,6 @@ body *::-webkit-scrollbar-track {
 
 .tot-wrapper .tot-item .counter--item p {
     font-weight: 500;
-    text-transform: capitalize;
     font-size: 16px;
     color: #484748;
 }
@@ -5195,7 +5187,6 @@ body *::-webkit-scrollbar-track {
     padding-left: 27px;
     line-height: 50px;
     color: #ffffff;
-    text-transform: capitalize;
 }
 
 .contact-wrapper .contact-content a:hover::before {
@@ -5302,7 +5293,6 @@ body *::-webkit-scrollbar-track {
 .contact-form .form-group input[type="submit"] {
     background: -webkit-linear-gradient(-103deg, #ef774c 0%, #ed684f 35%, #e84351 76%, #e73351 100%);
     font-weight: 500;
-    text-transform: capitalize;
     color: #ffffff;
     border: none;
     -webkit-border-radius: 25px;
@@ -5570,7 +5560,6 @@ body *::-webkit-scrollbar-track {
     margin-bottom: 16px;
     font-weight: 400;
     color: #ffffff;
-    text-transform: capitalize;
 }
 
 .dashboard-hero .header-top {
@@ -5913,7 +5902,6 @@ body *::-webkit-scrollbar-track {
 .notification-area .author-header .title {
     font-size: 20px;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .notification-area .author-header a {
@@ -6452,7 +6440,6 @@ body *::-webkit-scrollbar-track {
 .operations .main-title {
     margin-bottom: 10px;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .deposit {
@@ -6463,7 +6450,6 @@ body *::-webkit-scrollbar-track {
 .deposit .main-title {
     margin-bottom: 25px;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .deposit .main-subtitle {
@@ -6484,7 +6470,6 @@ body *::-webkit-scrollbar-track {
 .operation-filter .filter-item label {
     display: block;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .operation-filter .filter-item input, .operation-filter .filter-item .select-bar, .operation-filter .filter-item .select-item {
@@ -6529,7 +6514,6 @@ body *::-webkit-scrollbar-track {
     height: 40px;
     line-height: 40px;
     border: none;
-    text-transform: capitalize;
     font-weight: 400;
 }
 
@@ -7030,7 +7014,6 @@ body *::-webkit-scrollbar-track {
 .partners .main-title {
     margin-bottom: 30px;
     font-weight: 500;
-    text-transform: capitalize;
 }
 
 .button-2 {
@@ -7041,7 +7024,6 @@ body *::-webkit-scrollbar-track {
     border-radius: 30px;
     border: 1px solid #bccaea;
     font-weight: 500;
-    text-transform: capitalize;
     color: #526288;
 }
 
@@ -7327,7 +7309,6 @@ body *::-webkit-scrollbar-track {
 }
 
 .create_wrapper .subtitle {
-    text-transform: capitalize;
 }
 
 .create_form_group {
@@ -7553,7 +7534,6 @@ body *::-webkit-scrollbar-track {
 .account-header span a {
     color: #0403c4;
     font-weight: 600;
-    text-transform: capitalize;
 }
 
 .account-header .title {
@@ -7627,7 +7607,6 @@ body *::-webkit-scrollbar-track {
 .account-body span a {
     color: #0403c4;
     font-weight: 600;
-    text-transform: capitalize;
 }
 
 .account-form {
@@ -7693,7 +7672,6 @@ body *::-webkit-scrollbar-track {
 .sign-in-recovery a {
     color: #0403c4;
     font-weight: 600;
-    text-transform: capitalize;
 }
 
 .form-head {
@@ -7926,7 +7904,6 @@ body *::-webkit-scrollbar-track {
     background: -webkit-linear-gradient(-103deg, #ef774c 0%, #ed684f 35%, #e84351 76%, #e73351 100%);
     padding: 0 35px;
     display: inline-block;
-    text-transform: capitalize;
     font-weight: 500;
     font-size: 16px;
     border-radius: 25px;

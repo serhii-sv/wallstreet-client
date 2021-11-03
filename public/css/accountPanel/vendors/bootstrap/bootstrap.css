@@ -3907,7 +3907,7 @@ textarea.form-control-lg {
   display: none;
 }
 .tab-content > .tab-pane .card-header h6, .tab-content > .tab-pane .card-header .h6 {
-  text-transform: capitalize;
+
 }
 .tab-content > .active {
   display: block;
@@ -7149,7 +7149,7 @@ textarea.form-control-lg {
 }
 
 .text-capitalize {
-  text-transform: capitalize !important;
+
 }
 
 .text-start {
