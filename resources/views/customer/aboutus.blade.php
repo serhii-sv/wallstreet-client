@@ -15,26 +15,26 @@
   </style>
 @endsection
 @section('content')
-  
+
   <div class="main--body">
-  
+
  {{-- @include('layouts.app-preloader')--}}
-  
+
   <!--=======Header-Section Starts Here=======-->
   @include('layouts.app-header')
   <!--=======Header-Section Ends Here=======-->
-    
+
     <div class="main--body section-bg">
       <!--========== Preloader ==========-->
  {{--   @include('layouts.app-preloader')--}}
     <!--========== Preloader ==========-->
-      
-      
+
+
       <!--=======Header-Section Starts Here=======-->
     @include('layouts.app-header')
     <!--=======Header-Section Ends Here=======-->
-      
-      
+
+
       <!--=======Banner-Section Starts Here=======-->
       <section class="hero-section bg_img" data-background="{{asset('theme/images/about/hero-bg.png')}}">
         <div class="container">
@@ -66,8 +66,8 @@
         </div>
       </section>
       <!--=======Banner-Section Ends Here=======-->
-      
-      
+
+
       <!--=======About-Section Starts Here=======-->
       <section class="about-section padding-top padding-bottom section-bg">
         <div class="container">
@@ -159,8 +159,8 @@
         </div>
       </section>
       <!--=======About-Section Ends Here=======-->
-      
-      
+
+
       <!--=======CEO-Section Starts Here=======-->
       <section class="ceo-section padding-bottom padding-top bg_img" data-background="{{ asset('theme/images/about/ceo-bg.jpg') }}">
         <div class="container">
@@ -229,8 +229,8 @@
         </div>
       </section>
       <!--=======CEO-Section Ends Here=======-->
-      
-      
+
+
       <!--=======Mission-Section Starts Here=======-->
       <section class="mission-section padding-top padding-bottom">
         <div class="mission-shape">
@@ -282,7 +282,7 @@
                       @endif</h5>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
+                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque 1' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque 1') }}</editor_block>
                       @else
                         {{ __('Praesent sagittis nibh vehicula diam tesque 1') }}
                       @endif
@@ -301,7 +301,7 @@
                       @endif</h5>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
+                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque 2' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque 2') }}</editor_block>
                       @else
                         {{ __('Praesent sagittis nibh vehicula diam tesque 2') }}
                       @endif
@@ -320,7 +320,7 @@
                       @endif</h5>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
+                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque 3' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque 3') }}</editor_block>
                       @else
                         {{ __('Praesent sagittis nibh vehicula diam tesque 3') }}
                       @endif
@@ -339,7 +339,7 @@
                       @endif</h5>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque') }}</editor_block>
+                        <editor_block data-name='Praesent sagittis nibh vehicula diam tesque 4' contenteditable="true">{{ __('Praesent sagittis nibh vehicula diam tesque 4') }}</editor_block>
                       @else
                         {{ __('Praesent sagittis nibh vehicula diam tesque 4') }}
                       @endif
@@ -352,8 +352,8 @@
         </div>
       </section>
       <!--=======Mission-Section Ends Here=======-->
-      
-      
+
+
       <!--=======Investor-Section Starts Here=======-->
       <section class="investor-section padding-bottom padding-top pt-max-lg-0">
         <div class="ball-group-1 ball-group-4" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60" data-paroller-type="foreground" data-paroller-direction="horizontal">
@@ -482,8 +482,8 @@
         </div>
       </section>
       <!--=======Investor-Section Ends Here=======-->
-      
-      
+
+
       <!--=======Check-Section Starts Here=======-->
       <section class="call-section call-overlay bg_img" data-background="{{ asset('theme/images/call/call-bg.jpg') }}">
         <div class="container">
@@ -513,8 +513,8 @@
         </div>
       </section>
       <!--=======Check-Section Ends Here=======-->
-      
-      
+
+
       <!--=======Check-Section Starts Here=======-->
       <section class="client-section padding-bottom padding-top">
         <div class="background-map">
@@ -658,8 +658,8 @@
         </div>
       </section>
       <!--=======Check-Section Ends Here=======-->
-      
-      
+
+
       <!-- ==========Footer-Section Starts Here========== -->
     @include('layouts.app-footer')
     <!-- ==========Footer-Section Ends Here========== -->
