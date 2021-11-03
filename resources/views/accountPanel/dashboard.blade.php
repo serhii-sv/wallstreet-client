@@ -134,11 +134,11 @@
                         <i class="icon-bg" data-feather="credit-card"></i>
                         <div class="mt-3 wallet-button-wrapper ">
                           <a href="{{ route('accountPanel.replenishment') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-success">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Replenish' contenteditable="true">{{ __('Replenish') }}</editor_block>
-                            @else {{ __('Replenish') }}@endif</a>
+                              <editor_block data-name='Replenish1' contenteditable="true">{{ __('Replenish1') }}</editor_block>
+                            @else {{ __('Replenish1') }}@endif</a>
                           <a href="{{ route('accountPanel.withdrawal') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif class="btn btn-danger">@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='To withdraw' contenteditable="true">{{ __('To withdraw') }}</editor_block>
-                            @else {{ __('To withdraw') }}@endif</a>
+                              <editor_block data-name='To withdraw2' contenteditable="true">{{ __('To withdraw2') }}</editor_block>
+                            @else {{ __('To withdraw2') }}@endif</a>
                         </div>
                       </div>
                     </div>
