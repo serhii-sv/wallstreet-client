@@ -76,7 +76,7 @@
 
     </style>
 
-    <div class="left-header col-9 horizontal-wrapper ps-0 " style="text-align: right">
+    <div class="left-header col-9 horizontal-wrapper ps-0 ">
       {{--     <div class="currency-rates">
                <div class="wrapper">
                    @forelse($currency_rates as $key => $rates)
@@ -85,7 +85,13 @@
                    @endforelse
                </div>
            </div>--}}
-      <strong style="font-size: 18px;">1 Sprint Token (SRT) = 1$</strong>
+      <strong style="font-size: 18px;">
+          @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='1 Sprint Token (SRT) =' contenteditable="true">{{ __('1 Sprint Token (SRT) =') }}</editor_block>
+          @else
+              {{ __('1 Sprint Token (SRT) =') }} {{ number_format(\App\Models\ExchangeRateLog::where('rate_id', 15)->orderBy('created_at', 'desc')->first()->new_rate ?? 1, 2, '.', '') }}$
+          @endif
+      </strong>
     </div>
 
     <div class="nav-right col-3 pull-right right-header p-0">
