@@ -503,11 +503,11 @@
               </div>
             </div>
             <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">
-              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>
-                @else
-                  {{ __('learn more') }}
-                @endif <i class="flaticon-right"></i></a>
+{{--              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>--}}
+{{--                @else--}}
+{{--                  {{ __('learn more') }}--}}
+{{--                @endif <i class="flaticon-right"></i></a>--}}
             </div>
           </div>
         </div>
