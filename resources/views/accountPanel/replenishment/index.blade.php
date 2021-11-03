@@ -191,6 +191,10 @@
           scrollTop: $(".f1-buttons").offset().top
         },0);
       });
+      $(".btn-previous").on('click', function (e) {
+          var paySystem = $("input[name='payment_system']:checked").attr('data-name');
+          $('#payName').html("");
+      });
       $(".btn-next").on('click', function (e) {
 
           var paySystem = $("input[name='payment_system']:checked").attr('data-name');
