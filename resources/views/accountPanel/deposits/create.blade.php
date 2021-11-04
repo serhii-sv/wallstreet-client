@@ -184,6 +184,7 @@
                                             @endif
                                         </h5>
                                     </div>
+                                    <p></p>
                                   <h6 class="mb-2 mt-2">
                                       @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='Enter the amount {{ $item->id }}' contenteditable="true">{{ __('Enter the amount '.$item->id) }}</editor_block>
