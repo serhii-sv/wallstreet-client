@@ -688,17 +688,13 @@
                   @else
                     {{ __('Select the plan') }}
                   @endif</h5>
-                <select>
-                    @foreach(\App\Models\RateGroup::all() as $group)
-                        <optgroup label="{{ $group->name }}">
-                        @foreach(\App\Models\Rate::where('group_id', $group->id) as $rate)
-                            @if($rate->daily > 0)
-                                <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
-                            @else
-                             <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
-                            @endif
-                        @endforeach
-                        </optgroup>
+                <select id="calcRateId">
+                    @foreach(\App\Models\Rate::all() as $rate)
+                        @if($rate->daily > 0)
+                            <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
+                        @else
+                         <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
+                        @endif
                     @endforeach
                 </select>
               </div>
@@ -708,27 +704,12 @@
                   @else
                     {{ __('Select the currency') }}
                   @endif</h5>
-                <ul class="tab-menu">
-                  <li>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='usd' contenteditable="true">{{ __('usd') }}</editor_block>
-                    @else
-                      {{ __('usd') }}
-                    @endif</li>
-                  <li class="active">@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='btc' contenteditable="true">{{ __('btc') }}</editor_block>
-                    @else
-                      {{ __('btc') }}
-                    @endif</li>
-                  <li>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='eth' contenteditable="true">{{ __('eth') }}</editor_block>
-                    @else
-                      {{ __('eth') }}
-                    @endif</li>
-                  <li>@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='rub' contenteditable="true">{{ __('rub') }}</editor_block>
-                    @else
-                      {{ __('rub') }}
-                    @endif</li>
+                <ul class="tab-menu" id="calcCurrency">
+                    @foreach(\App\Models\Currency::whereIn('code', ['USD', 'BTC', 'ETH', 'RUB'])->get() as $currency)
+                      <li class="{{ $currency->code == 'USD' ? 'active' : '' }}">
+                          {{ $currency->code }}
+                      </li>
+                    @endforeach
                 </ul>
               </div>
               <div class="calculate-item">
@@ -737,128 +718,45 @@
                   @else
                     {{ __('Enter the amount') }}
                   @endif</h5>
-                <input type="number" value="100">
+                <input type="number" value="100" id="calcAmount">
               </div>
             </div>
             <div class="tab-area">
-              <div class="tab-item">
-                <div class="profit-calc">
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
-                      @else
-                        {{ __('Daily Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme-1">0.026400 USD</h2>
-                  </div>
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
-                      @else
-                        {{ __('Total Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme">1.320000 USD</h2>
-                  </div>
-                </div>
-                <div class="invest-range-area">
-                  <div class="main-amount">
-                    <input type="text" class="calculator-invest" id="usd-amount" readonly>
-                  </div>
-                  <div class="invest-amount" data-min="1.00 USD" data-max="1000 USD">
-                    <div id="usd-range" class="invest-range-slider"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-item active">
-                <div class="profit-calc">
-                  <div class="item">
-                  <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
-                    @else
-                      {{ __('Daily Profit') }}
-                    @endif</span>
-                    <h2 class="title cl-theme-1">0.026400 BTC</h2>
-                  </div>
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
-                      @else
-                        {{ __('Total Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme">1.320000 BTC</h2>
-                  </div>
-                </div>
-                <div class="invest-range-area">
-                  <div class="main-amount">
-                    <input type="text" class="calculator-invest" id="btc-amount" readonly>
-                  </div>
-                  <div class="invest-amount" data-min="1.00 BTC" data-max="1000 BTC">
-                    <div id="btc-range" class="invest-range-slider"></div>
-                  </div>
 
-                </div>
-              </div>
-              <div class="tab-item">
-                <div class="profit-calc">
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
-                      @else
-                        {{ __('Daily Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme-1">0.026400 ETH</h2>
+                @foreach(\App\Models\Currency::whereIn('code', ['USD', 'BTC', 'ETH', 'RUB'])->get() as $currency)
+                  <div class="tab-item {{ $currency->code == 'USD' ? 'active' : '' }}">
+                    <div class="profit-calc">
+                      <div class="item">
+                        <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
+                          @else
+                            {{ __('Daily Profit') }}
+                          @endif</span>
+                          <h2 class="title cl-theme-1"><span id="calcResultDailyProfit{{ $currency->code }}">0</span> {{ $currency->code }}</h2>
+                      </div>
+                      <div class="item">
+                        <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+                            <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
+                          @else
+                            {{ __('Total Profit') }}
+                          @endif</span>
+                        <h2 class="title cl-theme"><span id="calcResultTotalProfit{{ $currency->code }}">0</span> {{ $currency->code }}</h2>
+                      </div>
+                    </div>
+                    <div class="invest-range-area">
+                      <div class="main-amount">
+                        <input type="text" class="calculator-invest" id="{{ $currency->code }}-amount" readonly>
+                      </div>
+                      <div style="margin-top:30px; width:100%;" class="invest-amount" data-min="{{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }} {{ $currency->code }}" data-max="{{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 20000 }} {{ $currency->code }}">
+                        <div id="{{ $currency->code }}-range" class="invest-range-slider"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="item">
-                     <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                         <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
-                       @else
-                         {{ __('Total Profit') }}
-                       @endif</span>
-                    <h2 class="title cl-theme">1.320000 ETH</h2>
-                  </div>
-                </div>
-                <div class="invest-range-area">
-                  <div class="main-amount">
-                    <input type="text" class="calculator-invest" id="eth-amount" readonly>
-                  </div>
-                  <div class="invest-amount" data-min="1.00 ETH" data-max="1000 ETH">
-                    <div id="eth-range" class="invest-range-slider"></div>
-                  </div>
+                    @endforeach
 
-                </div>
-              </div>
-              <div class="tab-item">
-                <div class="profit-calc">
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Daily Profit' contenteditable="true">{{ __('Daily Profit') }}</editor_block>
-                      @else
-                        {{ __('Daily Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme-1">0.026400 RUB</h2>
-                  </div>
-                  <div class="item">
-                    <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Total Profit' contenteditable="true">{{ __('Total Profit') }}</editor_block>
-                      @else
-                        {{ __('Total Profit') }}
-                      @endif</span>
-                    <h2 class="title cl-theme">1.320000 RUB</h2>
-                  </div>
-                </div>
-                <div class="invest-range-area">
-                  <div class="main-amount">
-                    <input type="text" class="calculator-invest" id="rub-amount" readonly>
-                  </div>
-                  <div class="invest-amount" data-min="1.00 RUB" data-max="1000 RUB">
-                    <div id="rub-range" class="invest-range-slider"></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
     <!--=======Proit-Section Ends Here=======-->
@@ -1500,6 +1398,92 @@
 @push('js')
   <script>
     $(document).ready(function () {
+        @foreach(\App\Models\Currency::whereIn('code', ['USD', 'BTC', 'ETH', 'RUB'])->get() as $currency)
+        $( function() {
+            $( "#{{ $currency->code }}-range" ).slider({
+                range: "min",
+                step: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }},
+                value: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 100 : 0.0001 }},
+                min: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }},
+                max: {{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 20000 }},
+                slide: function( event, ui ) {
+                    var calcAmount = ui.value;
+                    var rateId = $('#calcRateId').val();
+
+                    $( "#{{ $currency->code }}-amount" ).val( calcAmount + " {{ $currency->code }}" );
+                    $('#calcAmount').val(calcAmount);
+
+                    var dailyIncome = 0;
+                    var totalIncome = 0;
+                    var dailyPercent = 0;
+                    var overall = 0;
+                    var duration = 0;
+
+                    @foreach(\App\Models\Rate::all() as $rate)
+                    if(rateId == "{{ $rate->id }}"){
+                        dailyPercent = {{ $rate->daily }};
+                        overall = {{ $rate->overall }};
+                        duration = {{ $rate->duration }};
+                    }
+                    @endforeach
+
+                        dailyIncome = calcAmount / 100 * dailyPercent;
+
+                    if (dailyPercent > 0) {
+                        totalIncome = dailyIncome * duration;
+                    } else {
+                        totalIncome = calcAmount / 100 * overall;
+                    }
+
+                    $('#calcResultDailyProfit{{ $currency->code }}').html(dailyIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // daily income
+                    $('#calcResultTotalProfit{{ $currency->code }}').html(totalIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // total income
+                },
+                change: function( event, ui ) {
+                    var calcAmount = ui.value;
+                    var rateId = $('#calcRateId').val();
+
+                    $( "#{{ $currency->code }}-amount" ).val( calcAmount + " {{ $currency->code }}" );
+
+                    var dailyIncome = 0;
+                    var totalIncome = 0;
+                    var dailyPercent = 0;
+                    var overall = 0;
+                    var duration = 0;
+
+                    @foreach(\App\Models\Rate::all() as $rate)
+                    if(rateId == "{{ $rate->id }}"){
+                        dailyPercent = {{ $rate->daily }};
+                        overall = {{ $rate->overall }};
+                        duration = {{ $rate->duration }};
+                    }
+                    @endforeach
+
+                        dailyIncome = calcAmount / 100 * dailyPercent;
+
+                    if (dailyPercent > 0) {
+                        totalIncome = dailyIncome * duration;
+                    } else {
+                        totalIncome = calcAmount / 100 * overall;
+                    }
+
+                    $('#calcResultDailyProfit{{ $currency->code }}').html(dailyIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // daily income
+                    $('#calcResultTotalProfit{{ $currency->code }}').html(totalIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // total income
+                },
+            });
+            $('#calcAmount').keyup(function(){
+                $( "#{{ $currency->code }}-range" ).slider("value", $(this).val());
+            });
+            $('#calcRateId').change(function(){
+                $( "#{{ $currency->code }}-range" ).slider("value", $('#calcAmount').val());
+            });
+            $( "#{{ $currency->code }}-amount" ).val( "{{ $currency->code }} " +  $( "#{{ $currency->code }}-range" ).slider( "value" ) );
+        } );
+        @endforeach
+
+
+
+
+
       $('.offer-wrapper').owlCarousel({
         loop: true,
         margin: 30,

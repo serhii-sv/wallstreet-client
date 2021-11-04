@@ -262,7 +262,7 @@
           }
       }
     })
-    
+
     $('.mission-wrapper').owlCarousel({
       loop: true,
       margin: 30,
@@ -302,53 +302,5 @@
         $(this).parent('.owl-item').siblings().children('.deposit-method-item').removeClass('active');
         $(this).addClass('active');
     })
-    $( function() {
-      $( "#btc-range" ).slider({
-        range: "min",
-        value: 300,
-        min: 1,
-        max: 1000,
-        slide: function( event, ui ) {
-          $( "#btc-amount" ).val( ui.value + " BTC" );
-        }
-      });
-      $( "#btc-amount" ).val( "BTC " +  $( "#btc-range" ).slider( "value" ) );
-    } );
-    $( function() {
-      $( "#usd-range" ).slider({
-        range: "min",
-        value: 500,
-        min: 1,
-        max: 1000,
-        slide: function( event, ui ) {
-          $( "#usd-amount" ).val( ui.value + " USD" );
-        }
-      });
-      $( "#usd-amount" ).val( "USD " +  $( "#usd-range" ).slider( "value" ) );
-    } );
-    $( function() {
-      $( "#eth-range" ).slider({
-        range: "min",
-        value: 400,
-        min: 1,
-        max: 1000,
-        slide: function( event, ui ) {
-          $( "#eth-amount" ).val( ui.value + " ETH" );
-        }
-      });
-      $( "#eth-amount" ).val( "ETH " +  $( "#eth-range" ).slider( "value" ) );
-    } );
-    $( function() {
-      $( "#rub-range" ).slider({
-        range: "min",
-        value: 600,
-        min: 1,
-        max: 1000,
-        slide: function( event, ui ) {
-          $( "#rub-amount" ).val( ui.value + " RUB" );
-        }
-      });
-      $( "#rub-amount" ).val( "RUB " +  $( "#rub-range" ).slider( "value" ) );
-    } );
   });
 })(jQuery);
