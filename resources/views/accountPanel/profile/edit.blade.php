@@ -49,8 +49,8 @@
                             @endif
                           </label>
                         </div>
-                        <button class="btn btn-pill btn-success btn-air-success btn-xs" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block> @else {{ __('Upliner') }} @endif
+                        <button type="submit" class="btn btn-pill btn-success btn-air-success btn-xs" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save photo' contenteditable="true">{{ __('Save photo') }}</editor_block> @else {{ __('Upliner') }} @endif
                         </button>
                       </form>
                     </div>

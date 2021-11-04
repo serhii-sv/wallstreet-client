@@ -7,7 +7,7 @@
   @endif
 @endsection
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="edit-profile">
       <div class="row">
@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="card-body pt-3">
-              
+
               <div class="row mb-2">
                 <div class="profile-title">
                   <div class="media">
@@ -49,8 +49,8 @@
                             @endif
                           </label>
                         </div>
-                        <button class="btn btn-pill btn-success btn-air-success btn-xs" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upliner' contenteditable="true">{{ __('Upliner') }}</editor_block> @else {{ __('Upliner') }} @endif
+                        <button type="submit" class="btn btn-pill btn-success btn-air-success btn-xs" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save photo' contenteditable="true">{{ __('Save photo') }}</editor_block> @else {{ __('Save photo') }} @endif
                         </button>
                       </form>
                     </div>
@@ -83,17 +83,17 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif</label>
-                <p><strong>{{ $user->country ?? 'Не указана' }}</strong></p>
+                <p><strong>{{ $user->country_manual ?? 'Не указана' }}</strong></p>
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='City' contenteditable="true">{{ __('City') }}</editor_block> @else {{ __('City') }} @endif</label>
-                <p><strong>{{ $user->city ?? 'Не указан' }}</strong></p>
+                <p><strong>{{ $user->city_manual ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral link' contenteditable="true">{{ __('Referral link') }}</editor_block> @else {{ __('Referral link') }} @endif</label>
                 <p><strong>{{ route('ref_link', $user->my_id) }}</strong></p>
               </div>
-            
+
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@
           </form>
         </div>
       </div>
-    
+
       <div class="row">
         <div class="col">
           <!-- Cod Box Copy begin -->
@@ -270,15 +270,15 @@
           $('.avatar-image').attr('src', $('.avatar-image').attr('data-old'));
         }
       }
-      
+
       $(".profile-avatar-input").change(function () {
         readURL(this);
       });
-      
+
       $('#uploadPassportImage').click(function () {
         document.getElementById('passportImage').click()
       })
-      
+
       $('#selfie').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
@@ -289,11 +289,11 @@
           reader.readAsDataURL(input.files[0]);
         }
       })
-      
+
       $('#uploadSelfie').click(function () {
         document.getElementById('selfie').click()
       })
-      
+
       $('#passportImage').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
