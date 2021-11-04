@@ -160,6 +160,30 @@
                                       @endforelse
                                     </select>
                                   </div>
+                                    <p>&nbsp;</p>
+                                    <div style="text-align:center;" class="transaction-footer">
+                                                  <span class="amount" style="text-align:center;">
+                                                      @if(canEditLang() && checkRequestOnEdit())
+                                                          <editor_block data-name='Can deposit {{ $rate->id }}' contenteditable="true">{{ __('Can deposit '.$rate->id) }}</editor_block>
+                                                      @else
+                                                          {{ __('Can deposit '.$rate->id) }}
+                                                      @endif
+                                                  </span>
+                                        <h5 class="sub-title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='Min {{ $rate->id }}' contenteditable="true">{{ __('Min '.$rate->id) }}</editor_block>
+                                            @else
+                                                {{ __('Min '.$rate->id) }}
+                                            @endif
+                                        </h5>
+                                        <h5 class="sub-title">
+                                            @if(canEditLang() && checkRequestOnEdit())
+                                                <editor_block data-name='Max {{ $rate->id }}' contenteditable="true">{{ __('Max '.$rate->id) }}</editor_block>
+                                            @else
+                                                {{ __('Max '.$rate->id) }}
+                                            @endif
+                                        </h5>
+                                    </div>
                                   <h6 class="mb-2 mt-2">
                                       @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='Enter the amount {{ $item->id }}' contenteditable="true">{{ __('Enter the amount '.$item->id) }}</editor_block>
