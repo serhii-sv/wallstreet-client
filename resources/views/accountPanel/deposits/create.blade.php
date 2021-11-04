@@ -224,9 +224,6 @@
                             <thead class="bg-primary">
                               <tr>
                                 <th scope="col">@if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='#' contenteditable="true">{{ __('#') }}</editor_block> @else {{ __('#') }} @endif
-                                </th>
-                                <th scope="col">@if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Tariff plan' contenteditable="true">{{ __('Tariff plan') }}</editor_block> @else {{ __('Tariff plan') }} @endif
                                 </th>
                                 <th scope="col">@if(canEditLang() && checkRequestOnEdit())
@@ -260,7 +257,6 @@
                                 @foreach($deposits as $deposit)
                                   {{--@if($group->id == $deposit->rate->rate_group_id)--}}
                                   <tr style="vertical-align: middle;">
-                                    <th scope="row">{{ $deposit->int_id  }}</th>
                                     <td>
                                       @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='{{ $deposit->rate->name }}' contenteditable="true">{{ __($deposit->rate->name) }}</editor_block>

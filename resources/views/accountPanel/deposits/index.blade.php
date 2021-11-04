@@ -18,7 +18,6 @@
               <table class="table">
                 <thead class="bg-primary">
                   <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Тарифный план</th>
                     <th scope="col">Валюта</th>
                     <th scope="col">Сумма инвестиций</th>
@@ -35,7 +34,6 @@
                     @foreach($deposits as $deposit)
                       {{--@if($group->id == $deposit->rate->rate_group_id)--}}
                       <tr style="vertical-align: middle;">
-                        <th scope="row">{{ $deposit->int_id  }}</th>
                         <td>
                           {{ $deposit->rate->name }}
                         </td>

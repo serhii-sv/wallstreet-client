@@ -46,7 +46,6 @@
                 <table class="table">
                   <thead class="bg-primary">
                     <tr>
-                      <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Transaction #' contenteditable="true">{{ __('Transaction #') }}</editor_block> @else {{ __('Transaction #') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Transaction type' contenteditable="true">{{ __('Transaction type') }}</editor_block> @else {{ __('Transaction type') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block> @else {{ __('Amount') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block> @else {{ __('Payment system') }} @endif</th>
@@ -58,7 +57,6 @@
                     @if(isset($transactions) && !empty($transactions))
                       @forelse($transactions as $operation)
                         <tr>
-                          <th scope="row">{{ $operation->int_id  }}</th>
                           <td>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='{{ 'locale.' . $operation->type->name }}' contenteditable="true">{{ __('locale.' . $operation->type->name) }}</editor_block> @else {{ __('locale.' . $operation->type->name) }} @endif</td>
                           <td>
                             <span class="">{{$operation->currency->symbol}} {{ number_format($operation->amount, $operation->currency->precision, '.', ',') ?? 0 }}</span>
