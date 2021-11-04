@@ -83,11 +83,11 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Country' contenteditable="true">{{ __('Country') }}</editor_block> @else {{ __('Country') }} @endif</label>
-                <p><strong>{{ $user->country ?? 'Не указана' }}</strong></p>
+                <p><strong>{{ $user->country_manual ?? 'Не указана' }}</strong></p>
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='City' contenteditable="true">{{ __('City') }}</editor_block> @else {{ __('City') }} @endif</label>
-                <p><strong>{{ $user->city ?? 'Не указан' }}</strong></p>
+                <p><strong>{{ $user->city_manual ?? 'Не указан' }}</strong></p>
               </div>
               <div class="mb-3">
                 <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral link' contenteditable="true">{{ __('Referral link') }}</editor_block> @else {{ __('Referral link') }} @endif</label>
