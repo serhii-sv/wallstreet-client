@@ -17,7 +17,9 @@ class ReferralsController extends Controller
 {
 
     public function index() {
+        /** @var User $user */
         $user = Auth::user();
+
         $upliner = auth()->user()->partner()->first();
         if ($upliner === null) {
             $upliner = false;
@@ -28,23 +30,18 @@ class ReferralsController extends Controller
         $all_referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->get();
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $total_referral_invested = 0;
-        $total_referral_revenue = 0;
+        $personal_turnover = 0;
         foreach ($all_referrals as $referral) {
             $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
-            });;
-            $reff_invested = cache()->remember('referral.invested_' . $referral->id, 60, function () use ($referral) {
-                return $referral->deposits()->sum('invested');
             });
-            $diff = cache()->remember('referral.invested_diff' . $referral->id, 60, function () use ($referral, $reff_invested) {
-                return $referral->deposits()->sum('balance') - $reff_invested;
-            });
-            if ($diff > 0) {
-                $total_referral_revenue += $diff;
-            }
         }
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = $user->referrals()->wherePivot('line', 1)->count();
+
+        $personal_turnover = $user->transactions()
+            ->where('type_id', TransactionType::getByName('create_dep')->id)
+            ->sum('main_currency_amount');
 
         return view('accountPanel.referrals.index', [
             'referrals' => $referrals,
@@ -53,7 +50,7 @@ class ReferralsController extends Controller
             'user' => $user,
             'upliner' => $upliner,
             'transaction_type_invest' => $transaction_type_invest,
-            'total_referral_revenue' => $total_referral_revenue,
+            'personal_turnover' => $personal_turnover,
             'registered_referrals' => $referrals->count(),
             'registered_referral_count' => $referrals->count(),
             'referral_link_registered' => $referral_link_registered,

@@ -7,7 +7,7 @@
   @endif
 @endsection
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       @include('partials.inform')
@@ -69,7 +69,7 @@
                             <i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Profit amount' contenteditable="true">{{ __('Profit amount') }}</editor_block> @else {{ __('Profit amount') }} @endif
                           </h6>
-                          <span>{{ number_format($total_referral_revenue, 2,'.', ' ') }}$</span>
+                          <span>{{ number_format($personal_turnover, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
                     </div>
@@ -84,7 +84,7 @@
                       </h5>
                       <script src="https://yastatic.net/share2/share.js"></script>
                       <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
-                    
+
                     </div>
                   </div>
                   <div class="col-lg-6">
@@ -112,15 +112,15 @@
                     </div>
                   </div>
                 </div>
-              
-              
+
+
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      
+
+
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -200,6 +200,6 @@
 @endsection
 @push('scripts')
   <script>
-  
+
   </script>
 @endpush
