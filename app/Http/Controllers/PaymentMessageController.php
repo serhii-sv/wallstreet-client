@@ -15,7 +15,7 @@ class PaymentMessageController extends BaseController
         } elseif ($status == 'error') {
             session()->flash('error', __('Can not update your balance'));
         }
-        $payment_systems = PaymentSystem::all();
+        $payment_systems = PaymentSystem::where('code', '!=', 'bonus')->get();
         return view('accountPanel.replenishment.index',[
             'payment_systems' => $payment_systems,
         ]);
