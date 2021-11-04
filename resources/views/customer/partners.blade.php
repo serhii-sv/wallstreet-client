@@ -570,9 +570,9 @@
                       </td>
                       <td>
                           @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='{{$item->status_stage}}' contenteditable="true">{{ __($item->status_stage) }}</editor_block>
+                              <editor_block data-name='stage {{$item->status_stage}}' contenteditable="true">{{ __('stage '.$item->status_stage) }}</editor_block>
                           @else
-                              {{ __($item->status_stage) }}
+                              {{ __('stage '. $item->status_stage) }}
                           @endif
                       </td>
                       <td>
@@ -598,7 +598,7 @@
                         </td>
                       <td>
                         @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='{{$item->leadership_bonus}}' contenteditable="true">{{ __($item->leadership_bonus) }}</editor_block>@else {{ __($item->leadership_bonus) }} @endif
+                          <editor_block data-name='bonus {{$item->leadership_bonus}}' contenteditable="true">{{ __('bonus '.$item->leadership_bonus) }}</editor_block>@else {{ __('bonus '.$item->leadership_bonus) }} @endif
                       </td>
                     </tr>
                   @endforeach
