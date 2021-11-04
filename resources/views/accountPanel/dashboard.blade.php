@@ -200,13 +200,7 @@
                                   @endif
                                 </td>
                                 <td>
-                                  @if($transaction->paymentSystem !== null)
-                                    {{ $transaction->paymentSystem->name }}
-                                  @else
-                                    @if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Not specified' contenteditable="true">{{ __('Not specified') }}</editor_block>
-                                    @else {{ __('Not specified') }}@endif
-                                  @endif
+                                    {{ $transaction->paymentSystem->name ?? $transaction->currency->code }}
                                 </td>
                                 <td>@switch($transaction->approved)
                                     @case(1)
