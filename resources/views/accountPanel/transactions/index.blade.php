@@ -62,8 +62,10 @@
                           <td>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='{{ 'locale.' . $operation->type->name }}' contenteditable="true">{{ __('locale.' . $operation->type->name) }}</editor_block> @else {{ __('locale.' . $operation->type->name) }} @endif</td>
                           <td>
                             <span class="">{{$operation->currency->symbol}} {{ number_format($operation->amount, $operation->currency->precision, '.', ',') ?? 0 }}</span>
+                            @if(!preg_match('/USD/', $operation->currency->cofe))
                             <br>
                             <span class="badge rounded-pill pill-badge-info">$ {{ number_format($operation->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+                            @endif
                           </td>
                           <td>
                             {{ $operation->paymentSystem->name ?? $operation->currency->code }}

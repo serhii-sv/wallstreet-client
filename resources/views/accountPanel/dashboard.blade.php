@@ -194,8 +194,10 @@
                                   {{-- {{ __('locale.' . $transaction->type->name) ?? 'Не указано' }}--}}</td>
                                 <td>
                                   <span class="">{{$transaction->currency->symbol}} {{ number_format($transaction->amount, $transaction->currency->precision, '.', ',') ?? 0 }}</span>
+                                  @if(!preg_match('/USD/', $transaction->currency->cofe))
                                   <br>
                                   <span class="badge rounded-pill pill-badge-info">$ {{ number_format($transaction->main_currency_amount, 2, '.', ',') ?? 0 }}</span>
+                                  @endif
                                 </td>
                                 <td>
                                   @if($transaction->paymentSystem !== null)
