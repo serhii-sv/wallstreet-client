@@ -88,6 +88,11 @@ class WithdrawalContoller extends Controller
         if (empty($wallet)) {
             return redirect()->back()->with('error', 'Кошелька не существует!');
         }
+
+        if (empty($wallet->external)) {
+            return redirect()->back()->with('error', 'Заполните реквизиты в настройках');
+        }
+
         $amount = (float)abs($request->get('amount'));
         if (!($amount > 0)) {
             return redirect()->back()->with('error', 'Сумма должна быть больше 0!');
