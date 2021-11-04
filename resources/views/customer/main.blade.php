@@ -689,11 +689,9 @@
                     {{ __('Select the plan') }}
                   @endif</h5>
                 <select class="select-bar">
-                  <option value="01">120% daily for 50 days</option>
-                  <option value="02">110% daily for 30 days</option>
-                  <option value="03">105% daily for 20 days</option>
-                  <option value="04">102% daily for 10 days</option>
-                  <option value="05">101% daily for 5 days</option>
+                    @foreach(\App\Models\Rate::all() as $rate)
+                        <option value="01">{{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 1, '.', '') }} дней</option>
+                    @endforeach
                 </select>
               </div>
               <div class="calculate-item">
