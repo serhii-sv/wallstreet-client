@@ -141,16 +141,16 @@
                             <editor_block data-name='Date/Time of registration' contenteditable="true">{{ __('Date/Time of registration') }}</editor_block> @else {{ __('Date/Time of registration') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Upliner login' contenteditable="true">{{ __('Upliner login') }}</editor_block> @else {{ __('Upliner login') }} @endif
+                            <editor_block data-name='Upliner login acc' contenteditable="true">{{ __('Upliner login acc') }}</editor_block> @else {{ __('Upliner login acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Invested' contenteditable="true">{{ __('Invested') }}</editor_block> @else {{ __('Invested') }} @endif
+                            <editor_block data-name='Invested acc' contenteditable="true">{{ __('Invested acc') }}</editor_block> @else {{ __('Invested acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Accruals' contenteditable="true">{{ __('Accruals') }}</editor_block> @else {{ __('Accruals') }} @endif
+                            <editor_block data-name='Accruals acc' contenteditable="true">{{ __('Accruals acc') }}</editor_block> @else {{ __('Accruals acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Reward' contenteditable="true">{{ __('Reward') }}</editor_block> @else {{ __('Reward') }} @endif
+                            <editor_block data-name='Reward acc' contenteditable="true">{{ __('Reward acc') }}</editor_block> @else {{ __('Reward acc') }} @endif
                         </th>
                       </tr>
                     </thead>
