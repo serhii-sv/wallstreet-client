@@ -177,8 +177,8 @@
                                 <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block>
                               @else {{ __('Payment system') }}@endif</th>
                             <th>@if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='Status' contenteditable="true">{{ __('Status') }}</editor_block>
-                              @else {{ __('Status') }}@endif</th>
+                                <editor_block data-name='Status operation' contenteditable="true">{{ __('Status operation') }}</editor_block>
+                              @else {{ __('Status operation') }}@endif</th>
                             <th class="">@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block>
                               @else {{ __('Date of operation') }}@endif</th>
