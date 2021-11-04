@@ -564,15 +564,15 @@
                     <tr class="bonus-list" style="text-align: center">
                       <td>
                           @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='{{$item->status_name}}' contenteditable="true">{{ __($item->status_name) }}</editor_block>
-                          @else {{ __($item->status_name) }}
+                              <editor_block data-name='name {{$item->id}}' contenteditable="true">{{ __('name '.$item->id) }}</editor_block>
+                          @else {{ __('name '.$item->id) }}
                           @endif
                       </td>
                       <td>
                           @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='stage {{$item->status_stage}}' contenteditable="true">{{ __('stage '.$item->status_stage) }}</editor_block>
+                              <editor_block data-name='stage {{$item->id}}' contenteditable="true">{{ __('stage '.$item->id) }}</editor_block>
                           @else
-                              {{ __('stage '. $item->status_stage) }}
+                              {{ __('stage '. $item->id) }}
                           @endif
                       </td>
                       <td>
@@ -598,7 +598,7 @@
                         </td>
                       <td>
                         @if(canEditLang() && checkRequestOnEdit())
-                          <editor_block data-name='bonus {{$item->leadership_bonus}}' contenteditable="true">{{ __('bonus '.$item->leadership_bonus) }}</editor_block>@else {{ __('bonus '.$item->leadership_bonus) }} @endif
+                          <editor_block data-name='bonus {{$item->id}}' contenteditable="true">{{ __('bonus '.$item->id) }}</editor_block>@else {{ __('bonus '.$item->id) }} @endif
                       </td>
                     </tr>
                   @endforeach
