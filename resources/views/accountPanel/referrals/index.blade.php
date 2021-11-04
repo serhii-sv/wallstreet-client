@@ -132,13 +132,13 @@
                       <tr>
                         <th class="f-22">
                           @if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='User' contenteditable="true">{{ __('User') }}</editor_block> @else {{ __('User') }} @endif
+                            <editor_block data-name='User acc' contenteditable="true">{{ __('User acc') }}</editor_block> @else {{ __('User acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif
+                            <editor_block data-name='Telephone acc' contenteditable="true">{{ __('Telephone acc') }}</editor_block> @else {{ __('Telephone acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Date/Time of registration' contenteditable="true">{{ __('Date/Time of registration') }}</editor_block> @else {{ __('Date/Time of registration') }} @endif
+                            <editor_block data-name='Date/Time of registration acc' contenteditable="true">{{ __('Date/Time of registration acc') }}</editor_block> @else {{ __('Date/Time of registration acc') }} @endif
                         </th>
                         <th>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Upliner login acc' contenteditable="true">{{ __('Upliner login acc') }}</editor_block> @else {{ __('Upliner login acc') }} @endif
