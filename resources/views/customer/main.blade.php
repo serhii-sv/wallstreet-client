@@ -1470,16 +1470,23 @@
                     $('#calcResultTotalProfit{{ $currency->code }}').html(totalIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // total income
                 },
             });
+
+            @if($currency->code == 'BTC' || $currency->code == 'ETH')
+            $( "#{{ $currency->code }}-range" ).slider("value", 0.1);
+            @else
+            $( "#{{ $currency->code }}-range" ).slider("value", 100);
+            @endif
+
             $('#calcAmount').keyup(function(){
                 $( "#{{ $currency->code }}-range" ).slider("value", $(this).val());
             });
             $('#calcRateId').change(function(){
                 $( "#{{ $currency->code }}-range" ).slider("value", $('#calcAmount').val());
             });
+
             $( "#{{ $currency->code }}-amount" ).val( "{{ $currency->code }} " +  $( "#{{ $currency->code }}-range" ).slider( "value" ) );
         } );
         @endforeach
-
 
 
 
