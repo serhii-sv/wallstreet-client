@@ -688,9 +688,13 @@
                   @else
                     {{ __('Select the plan') }}
                   @endif</h5>
-                <select class="select-bar">
+                <select class="select-bar" style="max-width:300px;">
                     @foreach(\App\Models\Rate::all() as $rate)
-                        <option value="01">{{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 1, '.', '') }} дней</option>
+                        @if($rate->daily > 0)
+                            <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
+                        @else
+                         <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
+                        @endif
                     @endforeach
                 </select>
               </div>
