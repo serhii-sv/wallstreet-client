@@ -319,9 +319,9 @@
           <div class="col-lg-12">
             <div class="section-header">
               <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='You’re Part of something Big 2' contenteditable="true">{{ __('You’re Part of something Big 2') }}</editor_block>
+                  <editor_block data-name='You’re Part of something Big' contenteditable="true">{{ __('You’re Part of something Big') }}</editor_block>
                 @else
-                  {{ __('You’re Part of something Big 2') }}
+                  {{ __('You’re Part of something Big') }}
                 @endif</span>
               <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='$50,257,285.47' contenteditable="true">{{ __('$50,257,285.47') }}</editor_block>
@@ -329,9 +329,9 @@
                   {{ __('$50,257,285.47') }}
                 @endif</h2>
               <p>@if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block>
+                  <editor_block data-name='Total Commissions Paid to Our Affiliates 2' contenteditable="true">{{ __('Total Commissions Paid to Our Affiliates 2') }}</editor_block>
                 @else
-                  {{ __('Total Commissions Paid to Our Affiliates') }}
+                  {{ __('Total Commissions Paid to Our Affiliates 2') }}
                 @endif</p>
             </div>
           </div>
