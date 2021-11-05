@@ -162,7 +162,7 @@
                         <?php
                         $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
 
-                        if (empty($referrals)) {
+                        if (!count($referrals)) {
                             break;
                         }
                         ?>
