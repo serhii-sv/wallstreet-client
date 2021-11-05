@@ -68,12 +68,12 @@ class TranslateFilesCommand extends Command
         $toManualArray = [];
 
         foreach ($fromArray as $key => $val) {
-            $toArray[$key] = $translate->unlessLanguageIs($to, $val);
+            $toArray[$key] = $translate->translate($val, $to);
             $this->info(print_r($val,true).' translated to '.print_r($toArray[$key],true));
         }
 
         foreach ($fromManualArray as $key => $val) {
-            $toManualArray[$key] = $translate->unlessLanguageIs($to, $val)['translated_text'] ?? $val;
+            $toManualArray[$key] = $translate->translate($val, $to)['translated_text'] ?? $val;
             $this->info(print_r($val,true).' translated to '.print_r($toManualArray[$key],true));
         }
 
