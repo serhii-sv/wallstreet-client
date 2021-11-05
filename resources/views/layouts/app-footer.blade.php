@@ -12,6 +12,11 @@
               @endif
             </h3>
             @foreach($paymentSystems as $paymentSystem)
+                <?php
+                if($loop->index >= 30) {
+                    break;
+                }
+                ?>
               @if($paymentSystem->code == 'coinpayments')
                 @foreach($paymentSystem->currencies as $currency)
                   @if($currency->image)
@@ -71,7 +76,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="container">
     <div class="footer-top">
       <div class="logo">
@@ -112,7 +117,7 @@
               {{ __('Affiliates') }}
             @endif</a>
         </li>
-        
+
         <li>
           <a href="{{ route('customer.faq') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>  @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='FAQ' contenteditable="true">{{ __('FAQ') }}</editor_block>
