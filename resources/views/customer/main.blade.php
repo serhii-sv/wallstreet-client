@@ -691,7 +691,7 @@
                 <select id="calcRateId">
                     @foreach(\App\Models\RateGroup::get() as $group)
                         <optgroup label="{{ $group->name }}">
-                            @foreach(\App\Models\Rate::where('group_id', $group->id)->orderBy('min')->get() as $rate)
+                            @foreach(\App\Models\Rate::where('rate_group_id', $group->id)->orderBy('min')->get() as $rate)
                                 @if($rate->daily > 0)
                                     <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
                                 @else
