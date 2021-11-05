@@ -553,7 +553,7 @@
         <div class="row align-items-center">
           <div class="col-lg-12">
             <div class="call--item">
-              <span class="cate">@if(canEditLang() && checkRequestOnEdit())
+              <span class="cate" style="color:white !important;">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Why We are always ready' contenteditable="true">
                             {{ __('Why We are always ready') }}
                           </editor_block>
@@ -1232,7 +1232,7 @@
                 <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
-                <h5 class="title" style="color:White;">@if(canEditLang() && checkRequestOnEdit())
+                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Ready To Start Your Earnings Through Crypto Currency' contenteditable="true">{{ __('Ready To Start Your Earnings Through Crypto Currency') }}</editor_block>
                   @else
                     {{ __('Ready To Start Your Earnings Through Crypto Currency') }}
