@@ -159,7 +159,14 @@
                         <tr>
                             <td colspan="7" style="font-weight:bold; text-align: center;">Уровень {{ $i }}</td>
                         </tr>
-                      @forelse(auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get() as $referral)
+                        <?php
+                        $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
+
+                        if (empty($referrals)) {
+                            break;
+                        }
+                        ?>
+                      @forelse($referrals as $referral)
                         <tr>
                           <td>
                             <div class="d-inline-block align-middle">
