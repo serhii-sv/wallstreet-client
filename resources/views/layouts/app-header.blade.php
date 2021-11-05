@@ -256,9 +256,11 @@
         <div class="container">
             <div class="header-area">
                 <div class="logo">
-                    <a href="{{ route('customer.main') }}">
-                        <img src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="150" alt="logo">
-                    </a>
+                    @if(Route::is('customer.main'))
+                        <a href="{{ route('customer.main') }}">
+                            <img src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="150" alt="logo">
+                        </a>
+                    @endif
                 </div>
                 <ul class="menu">
                     @if(!Route::is('customer.main'))

@@ -44,7 +44,7 @@
                 @if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='About Us desc' contenteditable="true">{{ __('About Us desc') }}</editor_block>
                 @else
-                  {{ __('About Us descr') }}
+                  {{ __('About Us desc') }}
                 @endif
               </li>
             </ul>
