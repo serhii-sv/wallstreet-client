@@ -20,17 +20,16 @@ class ReferralsController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        /** @var User $upliner */
         $upliner = auth()->user()->partner()->first();
+
         if ($upliner === null) {
             $upliner = false;
         }
 
-        //$referrals = Auth::user()->referrals()->distinct('id')->orderBy('pivot.line')->get();
-        $referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->paginate(12);
-        $all_referrals = Auth::user()->referrals()->distinct('id')->with('deposits')->get();
+        $all_referrals = $user->referrals()->distinct('id')->with('deposits')->get();
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $total_referral_invested = 0;
-        $personal_turnover = 0;
         foreach ($all_referrals as $referral) {
             $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
                 return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
@@ -44,15 +43,12 @@ class ReferralsController extends Controller
             ->sum('main_currency_amount');
 
         return view('accountPanel.referrals.index', [
-            'referrals' => $referrals,
             'all_referrals' => $all_referrals,
             'total_referral_invested' => $total_referral_invested,
             'user' => $user,
             'upliner' => $upliner,
             'transaction_type_invest' => $transaction_type_invest,
             'personal_turnover' => $personal_turnover,
-            'registered_referrals' => $referrals->count(),
-            'registered_referral_count' => $referrals->count(),
             'referral_link_registered' => $referral_link_registered,
             'referral_link_clicks' => $referral_link_clicks,
         ]);
