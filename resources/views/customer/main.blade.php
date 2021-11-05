@@ -1347,7 +1347,7 @@
                   </div>
                   <div class="client-thumb">
                     <a href="#0">
-                      <img src="{{ asset('theme/images/client/binance-logo-og.jpg') }}" alt="client">
+                      <img src="{{ asset('theme/images/client/binance.svg') }}" alt="client">
                     </a>
                   </div>
                 </div>
