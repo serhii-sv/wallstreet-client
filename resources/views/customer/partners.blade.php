@@ -636,11 +636,15 @@
                   @else
                     {{ __('Join affiliate?') }}
                   @endif</h2>
-                <span class="cate">@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Why Should You' contenteditable="true">{{ __('Why Should You') }}</editor_block>
-                  @else
-                    {{ __('Why Should You') }}
-                  @endif</span>
+
+                  <div class="row" style="margin:25px 0 25px 0; text-align: left;width:60%;margin-left:20%;">
+                      @if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='New descr 123' contenteditable="true">{{ __('New descr 123') }}</editor_block>
+                      @else
+                          {{ __('New descr 123') }}
+                      @endif
+                  </div>
+
               </div>
               <div class="why-area">
                 <div class="why-item">
