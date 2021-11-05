@@ -488,7 +488,7 @@ class User extends Authenticatable
     public static function impersonateTokenGenerate()
     {
         $user = auth()->user();
-        $simple_string = $user->id;
+        $simple_string = $user->int_id;
         $ciphering = "AES-128-CTR";
         $options = 0;
         $encryption_iv = 'htxmjY4QdGveQ8ta';
@@ -509,7 +509,7 @@ class User extends Authenticatable
         $decrypted_token = openssl_decrypt($token, $ciphering, $decryption_key, $options, $decryption_iv);
 
         $user_data = explode(' ', $decrypted_token);
-        return User::where('id', $user_data[0] ?? null)->first();
+        return User::where('int_id', $user_data[0] ?? null)->first();
     }
 
     /**
