@@ -39,26 +39,12 @@
       <section class="hero-section bg_img" data-background="{{asset('theme/images/about/hero-bg.png')}}">
         <div class="container">
           <div class="hero-content">
-            <h1 class="title">@if(canEditLang() && checkRequestOnEdit())
-                <editor_block data-name='About US' contenteditable="true">{{ __('About US') }}</editor_block>
-              @else
-                {{ __('About US') }}
-              @endif
-            </h1>
             <ul class="breadcrumb">
               <li>
-                <a href="{{ route('customer.main') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Home' contenteditable="true">{{ __('Home') }}</editor_block>
-                  @else
-                    {{ __('Home') }}
-                  @endif
-                </a>
-              </li>
-              <li>
                 @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='About Us' contenteditable="true">{{ __('About Us') }}</editor_block>
+                  <editor_block data-name='About Us desc' contenteditable="true">{{ __('About Us desc') }}</editor_block>
                 @else
-                  {{ __('About Us') }}
+                  {{ __('About Us descr') }}
                 @endif
               </li>
             </ul>
