@@ -419,6 +419,13 @@
     </section>
     <!-- ==========Total-Affiliate-Section Ends Here========== -->
 
+      <div class="row" style="margin:50px 0 50px 0;">
+          @if(canEditLang() && checkRequestOnEdit())
+              <editor_block data-name='New descr 123' contenteditable="true">{{ __('New descr 123') }}</editor_block>
+          @else
+              {{ __('New descr 123') }}
+          @endif
+      </div>
 
     <!-- ==========How-Section Starts Here========== -->
     <section class="how-section bg_img padding-top padding-bottom pt-max-md-0" data-background="{{ asset('theme/images/affiliate/affiliate-bg.png') }}">
@@ -455,14 +462,6 @@
             </div>
           </div>
         </div>
-
-          <div class="row justify-content-center mb-30-none">
-              @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='New descr 123' contenteditable="true">{{ __('New descr 123') }}</editor_block>
-              @else
-                  {{ __('New descr 123') }}
-              @endif
-          </div>
 
         <div class="row justify-content-center mb-30-none">
           <div class="col-md-6 col-lg-4 col-sm-10">
