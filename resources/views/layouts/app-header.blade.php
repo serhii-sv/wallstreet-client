@@ -378,7 +378,7 @@
                                     </a>
                                 </li>
                                 <li class="language__item">
-                                    <a href="{{ route('set.lang', ['locale' => 'zn']) }}">
+                                    <a href="{{ route('set.lang', ['locale' => 'zh']) }}">
                                         <button class="language__button">Chinese</button>
                                     </a>
                                 </li>
