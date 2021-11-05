@@ -166,7 +166,7 @@
 
                         <tr>
                             <td colspan="7" style="font-weight:bold; text-align: center;">
-                                <h3>Уровень {{ $i }}</h3>
+                                <h3>{{ $i }} линия</h3>
                             </td>
                         </tr>
 
