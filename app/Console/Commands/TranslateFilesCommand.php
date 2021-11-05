@@ -40,8 +40,13 @@ class TranslateFilesCommand extends Command
      */
     public function handle()
     {
+        $translate = new GoogleTranslate(new GoogleTranslateClient(config('googletranslate')));
+
         $from = $this->argument('from');
         $to = $this->argument('to');
+
+        $this->info('available languages');
+        $this->info(print_r($translate->getAvaliableTranslationsFor($from),true));
 
         if (!Storage::disk('lang')->exists($from.'.json') || !Storage::disk('lang')->exists($from.'_manual.json')) {
             $this->error('from files is not exists');
@@ -61,8 +66,6 @@ class TranslateFilesCommand extends Command
 
         $toArray = [];
         $toManualArray = [];
-
-        $translate = new GoogleTranslate(new GoogleTranslateClient(config('googletranslate')));
 
         foreach ($fromArray as $key => $val) {
             $toArray[$key] = $translate->unlessLanguageIs($to, $val)['translated_text'] ?? $val;
