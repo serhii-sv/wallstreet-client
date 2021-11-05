@@ -443,7 +443,8 @@
                   <editor_block data-name='Getting started? It’s simple' contenteditable="true">{{ __('Getting started? It’s simple') }}</editor_block>
                 @else
                   {{ __('Getting started? It’s simple') }}
-                @endif</h2>
+                @endif
+              </h2>
               <p>
                 @if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!' contenteditable="true">{{ __('The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!') }}</editor_block>
@@ -454,6 +455,15 @@
             </div>
           </div>
         </div>
+
+          <div class="row justify-content-center mb-30-none">
+              @if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='New descr 123' contenteditable="true">{{ __('New descr 123') }}</editor_block>
+              @else
+                  {{ __('New descr 123') }}
+              @endif
+          </div>
+
         <div class="row justify-content-center mb-30-none">
           <div class="col-md-6 col-lg-4 col-sm-10">
             <div class="how-item">
