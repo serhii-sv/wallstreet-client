@@ -689,7 +689,7 @@
                     {{ __('Select the plan') }}
                   @endif</h5>
                 <select id="calcRateId">
-                    @foreach(\App\Models\Rate::all() as $rate)
+                    @foreach(\App\Models\Rate::orderBy('min')->get() as $rate)
                         @if($rate->daily > 0)
                             <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
                         @else
