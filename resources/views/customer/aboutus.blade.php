@@ -39,7 +39,7 @@
       <section class="hero-section bg_img" data-background="{{asset('theme/images/about/hero-bg.png')}}">
         <div class="container">
           <div class="hero-content">
-            <ul class="breadcrumb">
+            <ul class="breadcrumb" style="width:50%;">
               <li>
                 @if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='About Us desc' contenteditable="true">{{ __('About Us desc') }}</editor_block>
