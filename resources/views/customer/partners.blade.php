@@ -419,7 +419,7 @@
     </section>
     <!-- ==========Total-Affiliate-Section Ends Here========== -->
 
-      <div class="row" style="margin:50px 0 50px 0; text-align: left;width:60%;margin-left:20%;">
+      <div class="row" style="margin:25px 0 25px 0; text-align: left;width:60%;margin-left:20%;">
           @if(canEditLang() && checkRequestOnEdit())
               <editor_block data-name='New descr 123' contenteditable="true">{{ __('New descr 123') }}</editor_block>
           @else
