@@ -364,7 +364,7 @@
                     <li class="">
                         <div class="language" style="margin-top: 10px">
                             <p class="language__name">
-                                <span>{{ !empty(session('language')) ? session('language') : 'cn' }}</span>
+                                <span>{{ !empty(session('language')) ? session('language') : 'ru' }}</span>
                             </p>
                             <ul class="language__list">
                                 <li class="language__item">
@@ -378,7 +378,7 @@
                                     </a>
                                 </li>
                                 <li class="language__item">
-                                    <a href="{{ route('set.lang', ['locale' => 'cn']) }}">
+                                    <a href="{{ route('set.lang', ['locale' => 'zn']) }}">
                                         <button class="language__button">Chinese</button>
                                     </a>
                                 </li>
