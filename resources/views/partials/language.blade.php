@@ -1,5 +1,5 @@
 <div class="language">
-    <p class="language__name"><span>{{ !empty(session('lang')) ? session('lang') : 'cn' }}</span></p>
+    <p class="language__name"><span>{{ !empty(session('language')) ? session('language') : 'cn' }}</span></p>
     <ul class="language__list">
         <li class="language__item">
             <a href="{{ route('set.lang', ['locale' => 'en']) }}"><button class="language__button">English</button></a>

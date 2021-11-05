@@ -118,7 +118,7 @@
                     }
 
                     .language:hover .language__list {
-                
+
                         visibility: visible;
                         opacity: 1;
                         -webkit-transform: none;
@@ -149,7 +149,7 @@
                         transition: all .3s ease
                     }
                     .language__item{
-              
+
                     }
                     .language__item, .language__item a {
                         width: 100%;
@@ -364,7 +364,7 @@
                     <li class="">
                         <div class="language" style="margin-top: 10px">
                             <p class="language__name">
-                                <span>{{ !empty(session('lang')) ? session('lang') : 'cn' }}</span>
+                                <span>{{ !empty(session('language')) ? session('language') : 'cn' }}</span>
                             </p>
                             <ul class="language__list">
                                 <li class="language__item">
