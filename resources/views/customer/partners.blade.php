@@ -642,7 +642,7 @@
                     {{ __('Join affiliate?') }}
                   @endif</h2>
 
-                  <div class="row" style="margin:5px 0 25px 0; text-align: left;width:60%;margin-left:0%;">
+                  <div class="row" style="margin:-15px 0 25px 0; text-align: left;width:60%;margin-left:0%;">
                       @if(canEditLang() && checkRequestOnEdit())
                           <editor_block data-name='New descr 1234' contenteditable="true">{{ __('New descr 1234') }}</editor_block>
                       @else
