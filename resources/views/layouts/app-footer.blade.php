@@ -13,7 +13,7 @@
             </h3>
             @foreach($paymentSystems as $paymentSystem)
                 <?php
-                if($loop->index >= 30) {
+                if($loop->index > 30) {
                     break;
                 }
                 ?>
