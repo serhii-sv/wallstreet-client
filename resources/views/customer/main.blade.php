@@ -137,7 +137,7 @@
               </div>
               <div class="counter-content">
                 <div class="counter-header">
-                  <h3 class="title odometer" data-odometer-final="36.9">0</h3>
+                  <h3 class="title odometer" data-odometer-final="13.2">0</h3>
                   <h3 class="title">M</h3>
                 </div>
                 <p>@if(canEditLang() && checkRequestOnEdit())
