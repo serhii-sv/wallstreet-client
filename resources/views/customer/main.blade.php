@@ -689,12 +689,14 @@
                     {{ __('Select the plan') }}
                   @endif</h5>
                 <select id="calcRateId">
-                    @foreach(\App\Models\Rate::orderBy('min')->get() as $rate)
-                        @if($rate->daily > 0)
-                            <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
-                        @else
-                         <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
-                        @endif
+                    @foreach(\App\Models\RateGroup::orderBy('min')->get() as $group)
+                        @foreach(\App\Models\Rate::where('group_id', $group->id)->orderBy('min')->get() as $rate)
+                            @if($rate->daily > 0)
+                                <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
+                            @else
+                             <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
+                            @endif
+                        @endforeach
                     @endforeach
                 </select>
               </div>
