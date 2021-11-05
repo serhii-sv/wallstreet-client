@@ -540,13 +540,12 @@
 
     <div class="partner-table">
       <div class="container">
+          <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
+                  <editor_block data-name='Title 1313' contenteditable="true">{{ __('Title 1313') }}</editor_block>
+              @else
+                  {{ __('Title 1313') }}
+              @endif</h2>
         <div class="row">
-            <h2 class="title">@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='Title 1313' contenteditable="true">{{ __('Title 1313') }}</editor_block>
-                @else
-                    {{ __('Title 1313') }}
-                @endif</h2>
-
           <div class="col responsive-table mt-3">
             <table class="table white border-radius-4 pt-1 table-bordered">
               <thead>
