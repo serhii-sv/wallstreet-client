@@ -192,7 +192,7 @@ trait HasReferral
     public function getAllReferrals(bool $json = false, $flag = 1)
     {
         /** @var User $referrals */
-        $referrals = $this->referrals()->get();
+        $referrals = $this->referrals()->wherePivot('line', 1)->get();
 
         $result = [
             'self' => $this,
