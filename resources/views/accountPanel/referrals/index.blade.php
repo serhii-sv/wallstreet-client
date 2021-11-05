@@ -156,9 +156,6 @@
                     </thead>
                     <tbody>
                     @for($i=1; $i <= 10; $i++)
-                        <tr>
-                            <td colspan="7" style="font-weight:bold; text-align: center;">Уровень {{ $i }}</td>
-                        </tr>
                         <?php
                         $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
 
@@ -166,6 +163,11 @@
                             break;
                         }
                         ?>
+
+                        <tr>
+                            <td colspan="7" style="font-weight:bold; text-align: center;">Уровень {{ $i }}</td>
+                        </tr>
+
                       @forelse($referrals as $referral)
                         <tr>
                           <td>
