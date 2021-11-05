@@ -165,7 +165,9 @@
                         ?>
 
                         <tr>
-                            <td colspan="7" style="font-weight:bold; text-align: center;">Уровень {{ $i }}</td>
+                            <td colspan="7" style="font-weight:bold; text-align: center;">
+                                <h3>Уровень {{ $i }}</h3>
+                            </td>
                         </tr>
 
                       @forelse($referrals as $referral)
