@@ -1232,7 +1232,7 @@
                 <img src="{{ asset('theme/images/call/icon01.png') }}" alt="call">
               </div>
               <div class="call-content">
-                <h5 class="title">@if(canEditLang() && checkRequestOnEdit())
+                <h5 class="title" style="color:White;">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Ready To Start Your Earnings Through Crypto Currency' contenteditable="true">{{ __('Ready To Start Your Earnings Through Crypto Currency') }}</editor_block>
                   @else
                     {{ __('Ready To Start Your Earnings Through Crypto Currency') }}
