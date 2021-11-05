@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use Carbon\Carbon;
 
 /**
  * Class LanguageController
@@ -28,6 +29,8 @@ class LanguageController extends Controller
         session([
             'language' => $locale
         ]);
+        setcookie('language', $locale, Carbon::now()->addDays(365)->timestamp, '/');
+
         return back()->with('short_success', __('The site language has been changed successfully'));
     }
 
