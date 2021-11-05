@@ -89,7 +89,7 @@
                     @else
                       {{ __('First name') }}
                       @endif</label>
-                  <input type="text" id="name" placeholder="name" name="name">
+                  <input type="text" id="name" placeholder="Иван" name="name">
                 </div>
                 <div class="form-group">
                   <label for="surename">@if(canEditLang() && checkRequestOnEdit())
@@ -97,7 +97,7 @@
                     @else
                       {{ __('Last name') }}
                       @endif</label>
-                  <input type="text" id="surename" placeholder="surename" name="name">
+                  <input type="text" id="surname" placeholder="Иванов" name="surname">
                 </div>
                 <div class="form-group">
                   <label for="email">@if(canEditLang() && checkRequestOnEdit())
@@ -105,7 +105,7 @@
                     @else
                       {{ __('Email') }}
                       @endif</label>
-                  <input type="text" id="email" placeholder="Enter your email" name="email">
+                  <input type="text" id="email" placeholder="ivanov@gmail.com" name="email">
                 </div>
                 <div class="form-group">
                   <label for="message">@if(canEditLang() && checkRequestOnEdit())
@@ -113,10 +113,10 @@
                     @else
                       {{ __('How can we help') }}
                       @endif</label>
-                  <textarea name="message" id="message" placeholder="Enter Message"></textarea>
+                  <textarea name="message" id="message" placeholder="Здравствуйте, у меня такой вопрос ...."></textarea>
                 </div>
                 <div class="form-group">
-                  <input type="submit" value="Send Message">
+                  <input type="submit" value="Отправить сообщение">
                 </div>
               </form>
             </div>
