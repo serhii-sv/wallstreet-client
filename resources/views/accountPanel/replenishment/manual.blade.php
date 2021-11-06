@@ -4,10 +4,10 @@ Topup balance details
 @endsection
 @section('content')
 
-  <div class="container-fluid" style="margin-top:50px;">
+  <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
 
-      <div class="row">
+      <div class="row" style="margin-top: 50px;">
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
