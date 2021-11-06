@@ -504,9 +504,9 @@ Account
                           <div class="d-inline-block align-middle">
                               <?php
                               $avatarCodes = [
-                                  '2021-11-06 14.25.51.jpg',
+                                  '1.jpg',
                                   '2.png',
-                                  '3.png',
+                                  '2021-11-06 14.25.51.jpg',
                                   '5.jpg',
                               ];
                               ?>
