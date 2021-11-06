@@ -37,12 +37,12 @@ Referrals page
                         <div class="col-md-4">
                             <h6>@if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</h6>
-                            <div class="follow-num counter">{{ $referral_link_registered }}</div>
+                            <span>{{ $referral_link_registered }}</span>
                         </div>
                         <div class="col-md-4">
                              <h6>@if(canEditLang() && checkRequestOnEdit())
                                      <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</h6>
-                            <span>{{ $all_referrals->count() }}</div>
+                            <span>{{ $all_referrals->count() }}</span>
                         </div>
                     </div>
                   </div>
