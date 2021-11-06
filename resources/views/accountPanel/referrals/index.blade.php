@@ -89,7 +89,7 @@ Referrals page
                           <editor_block data-name='Share your referral link on social media' contenteditable="true">{{ __('Share your referral link on social media') }}</editor_block> @else {{ __('Share your referral link on social media') }} @endif
                       </h5>
                       <script src="https://yastatic.net/share2/share.js"></script>
-                      <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,skype,linkedin"></div>
+                      <div class="ya-share2" data-url="{{ route('ref_link', auth()->user()->my_id) }}" data-curtain data-size="l" data-color-scheme="whiteblack" data-services="vkontakte,facebook,telegram,twitter,viber,whatsapp,skype,linkedin"></div>
 
                     </div>
                   </div>
