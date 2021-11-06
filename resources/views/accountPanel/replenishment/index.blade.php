@@ -104,11 +104,11 @@ Topup balance
                     <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin: auto">
                   </div>
 
-                  <div class="f1-buttons">
-                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
+                  <div class="f1-buttons" style="text-align: center;">
+                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
                     </button>
-                    <button class="btn btn-primary btn-submit" id="next" type="submit" data-bs-original-title="" title="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-submit" id="next" type="submit" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='vnesti' contenteditable="true">{{ __('vnesti') }}</editor_block> @else {{ __('vnesti') }} @endif
                     </button>
                   </div>
