@@ -4,7 +4,7 @@ Topup balance details
 @endsection
 @section('content')
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top:50px;">
     <div class="row second-chart-list third-news-update">
 
       <div class="row">
@@ -14,7 +14,7 @@ Topup balance details
               <h5 style="text-transform:none;">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif {{ $paymentSystem !== null ? $paymentSystem->name : '' }}</h5>
             </div>
-            <div class="card-body" style="text-align: center; font-size:21px;">
+            <div class="card-body" style="text-align: left; font-size:21px;">
                 <p>
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 1' contenteditable="true">{{ __('Replenishment text 1') }}</editor_block> @else {{ __('Replenishment text 1') }} @endif
