@@ -5,7 +5,7 @@ Topup balance
 @section('content')
 
     <style>
-        button {
+        .shake {
             animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
             transform: translate3d(0, 0, 0);
             backface-visibility: hidden;
@@ -109,7 +109,7 @@ Topup balance
                     </select>
                   </div>--}}
                   <div class="f1-buttons" style="text-align: center;">
-                    <button class="btn btn-primary btn-next" id="next" type="button" style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-next shake" id="next" type="button" style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Next' contenteditable="true">{{ __('Next') }}</editor_block> @else {{ __('Next') }} @endif
                     </button>
                   </div>
@@ -134,10 +134,10 @@ Topup balance
                   </div>
 
                   <div class="f1-buttons" style="text-align: center;margin-top:50px;">
-                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-previous shake" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
                     </button>
-                    <button class="btn btn-primary btn-submit" id="next" type="submit" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-submit shake" id="next" type="submit" data-bs-original-title="" title=""  style="margin-left:30px;padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='vnesti' contenteditable="true">{{ __('vnesti') }}</editor_block> @else {{ __('vnesti') }} @endif
                     </button>
                   </div>
