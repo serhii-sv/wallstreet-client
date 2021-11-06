@@ -160,7 +160,8 @@ class Transaction extends Model
      * @throws \Exception
      */
     public function getAmountAttribute($value) {
-        return sprintf('%40.20f', $value);
+        $precision = $this->currency->precision ?? 2;
+        return sprintf('%10.'.$precision.'f', $value);
     }
 
     /**
