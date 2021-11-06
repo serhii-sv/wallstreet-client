@@ -165,9 +165,6 @@ Referrals page
                         </tr>
 
                       @forelse($referrals as $referral)
-                          <?php
-                          die(print_r($referral,true));
-                          ?>
                         <tr>
                           <td>
                             <div class="d-inline-block align-middle">
