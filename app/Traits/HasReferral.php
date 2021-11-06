@@ -353,7 +353,7 @@ trait HasReferral
 
         /** @var User $referrals */
         $referrals = $this->referrals()
-            ->with('deposits')
+            ->with(['deposits'])
             ->wherePivot('line', 1)
             ->get();
 
