@@ -6,7 +6,7 @@ Topup balance
 
     <style>
         button {
-            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 60s cubic-bezier(.36,.07,.19,.97) both;
             transform: translate3d(0, 0, 0);
         }
     </style>
