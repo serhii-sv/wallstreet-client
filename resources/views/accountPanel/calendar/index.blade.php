@@ -112,8 +112,8 @@ Calendar page
           window.cal.createSchedules([{
             id: String(chance.guid()),
             calendarId: calendar.id,
-            title: "Рефералка {{ $item->main_currency_amount }}$",
-            body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за рефералку",
+            title: "Реферальные {{ $item->main_currency_amount }}$",
+            body: "Вам начислено {{ $item->amount . $item->currency->symbol }} ({{ $item->main_currency_amount }}$) за реферальные",
             isAllDay: isAllDay,
             start: "{{ $day }}",
             end: "{{ $day }}",
