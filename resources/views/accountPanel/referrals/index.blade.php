@@ -151,6 +151,9 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
+                    <?php
+                    die(print_r(auth()->user()->getAllReferralsForAccount(),true));
+                    ?>
                     @foreach(auth()->user()->getAllReferralsForAccount() as $level => $referrals)
                         <?php
                         if (!count($referrals)) {
