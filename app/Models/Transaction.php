@@ -162,8 +162,8 @@ class Transaction extends Model
     public function getAmountAttribute($value) {
         $precision = $this->currency->precision ?? 2;
 
-        if ($precision > 5) {
-            $precision = 5;
+        if ($precision > 8) {
+            $precision = 8;
         }
 
         return sprintf('%0.'.$precision.'f', $value);
