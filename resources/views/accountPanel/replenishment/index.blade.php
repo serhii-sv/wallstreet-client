@@ -128,8 +128,10 @@ Topup balance
                        @endforelse
                      </div>--}}
                   <div class="text-center mb-3" style="margin-top:50px;">
-                    <label class="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
-                        <editor_block data-name='Amount bot' contenteditable="true">{{ __('Amount bot') }}</editor_block> @else {{ __('Amount bot') }} @endif</label>
+                    <div style="margin-bottom:50px;">
+                        <label class="" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
+                                <editor_block data-name='Amount bot' contenteditable="true">{{ __('Amount bot') }}</editor_block> @else {{ __('Amount bot') }} @endif</label>
+                    </div>
                     <input class="form-control input-air-primary text-center" type="text" name="amount" style="font-size: 20px; padding: 10px;max-width: 320px;margin:auto;">
                   </div>
 
