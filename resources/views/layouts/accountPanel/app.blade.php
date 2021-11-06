@@ -70,22 +70,22 @@
             background: #3f51b5;
             box-shadow: 0 0 8px 0 #3f51b5;
         }
-    
+
     </style>
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/bootstrap.css') }}">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/style.css') }}">
-    
+
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/responsive.css') }}">
     <link id="color" rel="stylesheet" href="{{ asset('accountPanel/css/color-1.css') }}" media="screen">
     @stack('styles')
-  
+
   </head>
   <body class="{{--{{ (($themeSettings['theme-dark'] ?? null) == 'true') ? 'dark-only' : '' }}--}}">
-  
+
   {{--<div class="loader-wrapper">
     <div class="loader-index">
       <span></span>
@@ -112,6 +112,8 @@
       @include('layouts.accountPanel.sidebar')
       <!-- Page Sidebar Ends-->
         <div class="page-body">
+
+            @if(!\Illuminate\Support\Facades\Route::is('dashboard'))
           <div class="container-fluid">
             <div class="page-title @yield('title.show')">
               <div class="row">
@@ -122,15 +124,16 @@
               </div>
             </div>
           </div>
+            @endif
           <!-- Container-fluid starts-->
         @yield('content')
         <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
         @include('layouts.accountPanel.footer')
-      
+
       </div>
-    
+
     </div>
     <!-- latest jquery-->
     <script src="{{ asset('accountPanel/js/jquery-3.5.1.min.js') }}"></script>
@@ -172,16 +175,16 @@
     <script src="{{ asset('accountPanel/js/theme-customizer/customizer.js') }}"></script>
     <!-- login js-->
     <!-- Plugin used-->
-    
+
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
-    
+
     <script type="text/javascript">
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      
+
       $(document).ready(function () {
         var cityName, country, ip;
         var fillInPage = (function () {
@@ -203,15 +206,15 @@
               }
             });
           };
-          
+
           var onSuccess = function (geoipResponse) {
             updateCityText(geoipResponse);
           };
-          
+
           var onError = function (error) {
             console.log(error);
           };
-          
+
           return function () {
             if (typeof geoip2 !== 'undefined') {
               geoip2.city(onSuccess, onError);
@@ -335,7 +338,7 @@
           e.preventDefault();
           var $notification_count;
           var $count = parseInt($(".notification-box").find('.badge').text());
-          
+
           if ($count > 0) {
             var $id = parseInt($(this).attr('data-id'));
             $.ajax({
@@ -347,12 +350,12 @@
               },
               success: function success(data) {
                 var $data = $.parseJSON(data);
-                
+
                 if ($data['status'] == 'good') {
                   $(".notification-dropdown li.notification[data-id='" + $id + "']").remove();
                   $notification_count = $data['notification_count'];
                   $(".notification-box").find('.badge').text($notification_count);
-                  
+
                   if ($notification_count == 0) {
                     $(".notification-box").find('.badge').remove();
                     $(".notification-dropdown").append('<li class="notification"><p><i class="fa fa-circle-o me-3 font-success"> </i>Уведомлений нет! <span class="pull-right"></span></p></li>');
@@ -371,17 +374,17 @@
       $(document).ready(function () {
         $(".mode").on("click", function () {
           var $themeDark = false;
-          
+
           if (!$('.mode i').hasClass("fa-lightbulb-o")) {
             $themeDark = true;
           } else {
             $themeDark = false;
           }
           //  $('.mode i').hasClass()
-          
+
           // var color = $(this).attr("data-attr");
           //  localStorage.setItem('body', 'dark-only');
-          
+
           $.ajax({
             url: '/theme-settings',
             method: 'post',
@@ -428,7 +431,7 @@
                   });
             }
           })
-          
+
         });
       });
     </script>
@@ -440,9 +443,9 @@
               this.protocol = '';
               this.domain = '';
               this.params = {};
-              
+
             }
-            
+
             postJsonRequestAjax(url, method, data, callbackSuccess, callbackFail, callbackBefore, callbackAfter) {
               callbackSuccess = callbackSuccess || function () {
               };
@@ -455,9 +458,9 @@
               method = method || 'POST';
               data = data || {};
               url = url || '';
-              
+
               callbackBefore({}, data);
-              
+
               $.ajax({
                 type: method,
                 url: url,
@@ -480,7 +483,7 @@
                 }
               });
             }
-            
+
             queryAjax(url, data, success, fail, before, after) {
               data = data || {};
               this.postJsonRequestAjax(
@@ -493,11 +496,11 @@
                   after
               );
             }
-            
+
             objectMerge(a, b) {
               return Object.assign(a, b);
             }
-            
+
             messageSuccess(mes, data) {
               return {
                 error: false,
@@ -505,7 +508,7 @@
                 data: data || {}
               };
             }
-            
+
             messageError(mes, data) {
               return {
                 error: true,
@@ -514,7 +517,7 @@
               };
             }
           }
-          
+
           $('editor_block')
           .prop('contentEditable', true)
           .focusin(function () {
@@ -522,7 +525,7 @@
           })
           .focusout(function (e) {
             let $this = $(this);
-            
+
             (new Request()).queryAjax('{{ route('ajax.change.lang') }}', {
                   name: $this.attr('data-name'),
                   text: $this.text()
@@ -530,14 +533,14 @@
                   console.log('Сохранено!');
                   console.log($this.text());
                 }, function () {
-                
+
                 },
                 function () {
                   console.log('Сохранение');
                 }
             );
           });
-          
+
         });
       </script>
     @endif
