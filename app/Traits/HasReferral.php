@@ -359,7 +359,7 @@ trait HasReferral
 
         foreach ($referrals as $ref) {
             $result[$flag][] = $ref;
-            $result[$flag+1] = array_merge($result[$flag+1] ?? [], $ref->getAllReferralsForAccount($flag + 1));
+            $result[$flag+1][] = $ref->getAllReferralsForAccount($flag+1);
         }
 
         return $result;
