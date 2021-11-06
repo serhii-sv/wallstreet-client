@@ -160,7 +160,7 @@ class Transaction extends Model
      * @throws \Exception
      */
     public function getAmountAttribute($value) {
-        return $value;
+        return round($value, 8);
     }
 
     /**

@@ -36,7 +36,7 @@ class ReferralsController extends Controller
             });
         }
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
-        $referral_link_registered = $user->referrals()->wherePivot('line', 1)->count();
+        $referral_link_registered = $user->referrals()->count();
 
         $personal_turnover = $user->transactions()
             ->where('type_id', TransactionType::getByName('create_dep')->id)
