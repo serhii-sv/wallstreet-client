@@ -107,6 +107,11 @@ class Wallet extends Model
      */
     public function getAmountAttribute($value) {
         $precision = $this->currency->precision ?? 2;
+
+        if ($precision > 8) {
+            $precision = 8;
+        }
+
         return sprintf('%10.'.$precision.'f', $value);
     }
 
