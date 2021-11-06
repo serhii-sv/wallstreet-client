@@ -171,7 +171,7 @@ Referrals page
                         <tr>
                           <td>
                             <div class="d-inline-block align-middle">
-                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $referral->image ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
+                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $referral->avatar ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
                               <div class="status-circle bg-primary"></div>
                               <div class="d-inline-block">
                                 <span style="font-size: 18px;">{{ $referral->name }}</span>
