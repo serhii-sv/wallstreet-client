@@ -101,7 +101,7 @@ Referrals page
                             <h2 style="text-align: center;"><i class="fa fa-link"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif
                             </h2>
-                            <h4 style="text-align: center;">{{ route('ref_link', $user->my_id) }}</h4>
+                            <h4 style="text-align: center; margin-left:45px;">{{ route('ref_link', $user->my_id) }}</h4>
                           </div>
                         </div>
                       </div>
