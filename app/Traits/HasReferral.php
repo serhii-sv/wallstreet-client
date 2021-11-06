@@ -360,7 +360,7 @@ trait HasReferral
         if (!empty($referrals)) {
             foreach ($referrals as $ref) {
                 $result[$flag][] = $ref;
-                $result[$flag+1] = array_merge($result[$flag+1], $ref->getAllReferrals($flag + 1));
+                $result[$flag+1] = array_merge($result[$flag+1] ?? [], $ref->getAllReferrals($flag + 1));
             }
         }
 
