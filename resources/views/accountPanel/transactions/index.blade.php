@@ -5,8 +5,8 @@ Transactions
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
-      <div class="col-xl-4 email-wrap bookmark-wrap">
+    <div class="row second-chart-list third-news-update">
+      <div class="col-xl-4 email-wrap bookmark-wrap" style="margin-top:100px;">
         <div class="email-left-aside">
           <div class="card">
             <div class="card-body">
@@ -31,7 +31,7 @@ Transactions
         </div>
       </div>
 
-      <div class="col col-xl-8 box-col-6">
+      <div class="col col-xl-8 box-col-6" style="margin-top:100px;">
         <div class="card">
           <div class="card-header">
             <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Total transactions' contenteditable="true">{{ __('Total transactions') }}</editor_block> @else {{ __('Total transactions') }} @endif: {{ $transactions_count ?? 0 }}</h5>
