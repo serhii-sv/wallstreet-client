@@ -151,8 +151,10 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    @foreach(auth()->user()->getAllReferralsForAccount() as $level => $referrals)
+                    @for($i=1; $i <= 10; $i++)
                         <?php
+                        $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
+
                         if (!count($referrals)) {
                             break;
                         }
@@ -160,7 +162,7 @@ Referrals page
 
                         <tr>
                             <td colspan="7" style="font-weight:bold; text-align: center;">
-                                <h3>{{ $level }} линия</h3>
+                                <h3>{{ $i }} линия</h3>
                             </td>
                         </tr>
 
@@ -168,7 +170,7 @@ Referrals page
                         <tr>
                           <td>
                             <div class="d-inline-block align-middle">
-                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ isset($referral->avatar) && !empty($referral->avatar) ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
+                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $referral->image ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
                               <div class="status-circle bg-primary"></div>
                               <div class="d-inline-block">
                                 <span style="font-size: 18px;">{{ $referral->name }}</span>
@@ -195,7 +197,7 @@ Referrals page
                         </tr>
                       @empty
                       @endforelse
-                    @endforeach
+                    @endfor
                     </tbody>
                   </table>
                 </div>
