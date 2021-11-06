@@ -12,7 +12,7 @@ Withdrawals
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                <h5 style="text-align: center;">@if(canEditLang() && checkRequestOnEdit())
+                <h5 style="text-align: center;text-transform: none;">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='List of wallets' contenteditable="true">{{ __('List of wallets') }}</editor_block> @else {{ __('List of wallets') }} @endif
                 </h5>
               </div>
