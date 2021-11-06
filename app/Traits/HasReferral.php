@@ -337,4 +337,32 @@ trait HasReferral
 
         return $referrals;
     }
+
+    /**
+     * @param bool $json
+     * @param int $flag
+     * @return array
+     */
+    public function getAllReferralsForAccount($flag = 1)
+    {
+        $result[$flag] = [];
+
+        /** @var User $referrals */
+        $referrals = $this->referrals()
+            ->with('deposits')
+            ->wherePivot('line', 1)
+            ->get();
+
+        if ($flag > 1000) {
+            return $result;
+        }
+
+        if (!empty($referrals)) {
+            foreach ($referrals as $ref) {
+                $result[$flag] = array_merge($result[$flag], $ref->getAllReferrals($flag + 1));
+            }
+        }
+
+        return $result;
+    }
 }

@@ -151,10 +151,8 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    @for($i=1; $i <= 10; $i++)
+                    @foreach(auth()->user()->getAllReferralsForAccount() as $level => $referrals)
                         <?php
-                        $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
-
                         if (!count($referrals)) {
                             break;
                         }
@@ -162,7 +160,7 @@ Referrals page
 
                         <tr>
                             <td colspan="7" style="font-weight:bold; text-align: center;">
-                                <h3>{{ $i }} линия</h3>
+                                <h3>{{ $level }} линия</h3>
                             </td>
                         </tr>
 
