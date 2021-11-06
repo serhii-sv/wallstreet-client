@@ -701,7 +701,7 @@ Account
             top: -40
           }
         },
-        colors: [CubaAdminConfig.primary, '#00ff00'], // CubaAdminConfig.secondary
+        colors: ['#51bb25', CubaAdminConfig.secondary], // CubaAdminConfig.primary
         fill: {
           type: 'gradient',
           gradient: {
