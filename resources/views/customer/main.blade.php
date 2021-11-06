@@ -693,9 +693,9 @@
                         <optgroup label="{{ $group->name }}">
                             @foreach(\App\Models\Rate::where('rate_group_id', $group->id)->orderBy('min')->get() as $rate)
                                 @if($rate->daily > 0)
-                                    <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
+                                    <option value="{{ $rate->id }}">{{ __($rate->name) }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
                                 @else
-                                 <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall - 100, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
+                                 <option value="{{ $rate->id }}">{{ __($rate->name) }}: {{ number_format($rate->overall - 100, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
                                 @endif
                             @endforeach
                         </optgroup>
@@ -827,7 +827,13 @@
                       <div class="col-lg-4 col-xl-3 col-sm-6">
                         <div class="transaction-item">
                           <div class="transaction-header">
-                            <h5 class="title">{{ $rate->name }}</h5>
+                            <h5 class="title">
+                                @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='{{ $rate->name }}' contenteditable="true">{{ __($rate->name) }}</editor_block>
+                                @else
+                                    {{ __($rate->name) }}
+                                @endif
+                            </h5>
                               <p>&nbsp;</p>
                             <span class="title">
                                 @if(canEditLang() && checkRequestOnEdit())
