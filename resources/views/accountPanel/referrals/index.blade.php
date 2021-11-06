@@ -26,7 +26,7 @@ Referrals page
                 <div class="row">
                   <div class="col-sm-6 col-lg-4 order-sm-1 order-xl-0">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-4">
                         <div class="ttl-info text-start">
                           <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Referral link transitions' contenteditable="true">{{ __('Referral link transitions') }}</editor_block> @else {{ __('Referral link transitions') }} @endif
@@ -34,6 +34,16 @@ Referrals page
                           <span>{{ $referral_link_clicks ?? 0 }}</span>
                         </div>
                       </div>
+                        <div class="col-md-4">
+                            <div class="follow-num counter">{{ $referral_link_registered }}</div>
+                            <span>@if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</span>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="follow-num counter">{{ $all_referrals->count() }}</div>
+                            <span>@if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</span>
+                        </div>
                     </div>
                   </div>
                   <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
@@ -93,16 +103,6 @@ Referrals page
                             </h6>
                             <span>{{ route('ref_link', $user->my_id) }}</span>
                           </div>
-                        </div>
-                        <div class="col-lg-4 text-md-end">
-                          <div class="follow-num counter">{{ $referral_link_registered }}</div>
-                          <span>@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</span>
-                        </div>
-                        <div class="col-lg-4 text-md-start border-right">
-                          <div class="follow-num counter">{{ $all_referrals->count() }}</div>
-                          <span>@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</span>
                         </div>
                       </div>
                     </div>
