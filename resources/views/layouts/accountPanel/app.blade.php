@@ -113,18 +113,17 @@
       <!-- Page Sidebar Ends-->
         <div class="page-body">
 
-            @if(!\Illuminate\Support\Facades\Route::currentRouteName() == 'dashboard')
-          <div class="container-fluid">
-            <div class="page-title @yield('title.show')">
-              <div class="row">
-                <div class="col-6">
-                  <h3 class="">@yield('title')</h3>
-                </div>
-                @include('layouts.accountPanel.breadcrumbs')
-              </div>
-            </div>
-          </div>
-            @endif
+{{--          <div class="container-fluid">--}}
+{{--            <div class="page-title @yield('title.show')">--}}
+{{--              <div class="row">--}}
+{{--                <div class="col-6">--}}
+{{--                  <h3 class="">@yield('title')</h3>--}}
+{{--                </div>--}}
+{{--                @include('layouts.accountPanel.breadcrumbs')--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+
           <!-- Container-fluid starts-->
         @yield('content')
         <!-- Container-fluid Ends-->

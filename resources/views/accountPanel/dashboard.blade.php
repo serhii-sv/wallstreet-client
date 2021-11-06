@@ -23,6 +23,7 @@ Account
           <div class="card-body p-0">
             <div class="row m-0">
               <div class="col-xl-12 p-0">
+                  <p>&nbsp;</p>
                 <div class="chart-right">
                   <div class="row m-0 p-tb">
                     <div class="col-xl-8 col-md-8 col-sm-8 col-12 p-0">
