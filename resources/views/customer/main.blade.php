@@ -695,7 +695,7 @@
                                 @if($rate->daily > 0)
                                     <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->daily, 2, '.', '') }}% в день, на {{ number_format($rate->duration, 0, '.', '') }} дней</option>
                                 @else
-                                 <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
+                                 <option value="{{ $rate->id }}">{{ $rate->name }}: {{ number_format($rate->overall - 100, 2, '.', '') }}% через {{ $rate->duration }} дней</option>
                                 @endif
                             @endforeach
                         </optgroup>
@@ -1436,7 +1436,7 @@
                     if (dailyPercent > 0) {
                         totalIncome = dailyIncome * duration;
                     } else {
-                        totalIncome = calcAmount / 100 * overall;
+                        totalIncome = calcAmount / 100 * (overall - 100);
                     }
 
                     $('#calcResultDailyProfit{{ $currency->code }}').html(dailyIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // daily income
@@ -1467,7 +1467,7 @@
                     if (dailyPercent > 0) {
                         totalIncome = dailyIncome * duration;
                     } else {
-                        totalIncome = calcAmount / 100 * overall;
+                        totalIncome = calcAmount / 100 * (overall - 100);
                     }
 
                     $('#calcResultDailyProfit{{ $currency->code }}').html(dailyIncome.toFixed({{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 5 : 2 }})); // daily income
