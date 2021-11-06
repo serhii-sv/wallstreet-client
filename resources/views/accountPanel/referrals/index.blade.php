@@ -51,21 +51,21 @@ Referrals page
                   </div>
                   <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="ttl-info text-start">
+                                <h6>
+                                    <i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                                        <editor_block data-name='Profit amount' contenteditable="true">{{ __('Profit amount') }}</editor_block> @else {{ __('Profit amount') }} @endif
+                                </h6>
+                                <span>{{ number_format($personal_turnover, 2,'.', ' ') }}$</span>
+                            </div>
+                        </div>
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
                           <h6><i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name="Partners' investment amount" contenteditable="true">{{ __("Partners' investment amount") }}</editor_block> @else {{ __("Partners' investment amount") }} @endif
                           </h6>
                           <span>{{ number_format($total_referral_invested, 2,'.', ' ') }}$</span>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="ttl-info text-start">
-                          <h6>
-                            <i class="fa fa-location-arrow"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Profit amount' contenteditable="true">{{ __('Profit amount') }}</editor_block> @else {{ __('Profit amount') }} @endif
-                          </h6>
-                          <span>{{ number_format($personal_turnover, 2,'.', ' ') }}$</span>
                         </div>
                       </div>
                     </div>
