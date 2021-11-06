@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Support tasks page' contenteditable="true">{{ __('Support tasks page') }}</editor_block>
-  @else
-    {{ __('Support tasks page') }}
-  @endif
+Support tasks
 @endsection
 
 @section('content')

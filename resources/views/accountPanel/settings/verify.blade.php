@@ -1,13 +1,9 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Documents verify page' contenteditable="true">{{ __('Documents verify page') }}</editor_block>
-  @else
-    {{ __('Documents verify page') }}
-  @endif
+Verify documents
 @endsection
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="edit-profile">
       @if(!$user->documents_verified)
@@ -118,15 +114,15 @@
           $('.avatar-image').attr('src', $('.avatar-image').attr('data-old'));
         }
       }
-      
+
       $(".profile-avatar-input").change(function () {
         readURL(this);
       });
-      
+
       $('#uploadPassportImage').click(function () {
         document.getElementById('passportImage').click()
       })
-      
+
       $('#selfie').change(function () {
         let input = this;
         if (input.files && input.files[0]) {
@@ -137,11 +133,11 @@
           reader.readAsDataURL(input.files[0]);
         }
       })
-      
+
       $('#uploadSelfie').click(function () {
         document.getElementById('selfie').click()
       })
-      
+
       $('#passportImage').change(function () {
         let input = this;
         if (input.files && input.files[0]) {

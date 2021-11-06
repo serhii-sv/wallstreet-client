@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Edit profile page' contenteditable="true">{{ __('Edit profile page') }}</editor_block>
-  @else
-    {{ __('Edit profile page') }}
-  @endif
+Edit profile
 @endsection
 @section('content')
 

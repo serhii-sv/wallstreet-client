@@ -1,5 +1,5 @@
 @extends('layouts.accountPanel.app')
-@section('title', strtoupper(__('Все депозиты')))
+@section('title', 'Deposits page')
 @section('content')
 
   <div class="container-fluid">

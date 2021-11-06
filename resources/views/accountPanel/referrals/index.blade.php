@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Referral progress page' contenteditable="true">{{ __('Referral progress page') }}</editor_block>
-  @else
-    {{ __('Referral progress page') }}
-  @endif
+Referrals page
 @endsection
 @section('content')
 

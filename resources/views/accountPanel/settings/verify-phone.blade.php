@@ -1,13 +1,9 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Verify phone page' contenteditable="true">{{ __('Verify phone page') }}</editor_block>
-  @else
-    {{ __('Verify phone page') }}
-  @endif
+Veify phone
 @endsection
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="edit-profile">
       <div class="row">
@@ -68,8 +64,8 @@
           </div>
         </div>
       </div>
-    
-    
+
+
     </div>
   </div>
   <style>
@@ -78,6 +74,6 @@
 
 @push('scripts')
   <script>
-  
+
   </script>
 @endpush

@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Security page' contenteditable="true">{{ __('Security page') }}</editor_block>
-  @else
-    {{ __('Security page') }}
-  @endif
+Security settings
 @endsection
 @section('content')
   <div class="container-fluid">

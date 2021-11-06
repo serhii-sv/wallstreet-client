@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='User wallets page' contenteditable="true">{{ __('User wallets page') }}</editor_block>
-  @else
-    {{ __('User wallets page') }}
-  @endif
+Wallets
 @endsection
 @section('content')
 
@@ -52,13 +48,13 @@
                     <div class="tab-content" id="v-pills-tabContent">
                       @forelse($wallets as $wallet)
                         <div class="tab-pane fade @if($loop->first) active show @endif" id="v-pills-{{ $wallet->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $wallet->id }}-tab">
-                          
+
                           <form action="{{ route('accountPanel.profile.wallet.details.update') }}" method="post" class="mb-3">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                             <input type="hidden" name="wallet_id" value="{{ $wallet->id }}">
                             <input type="hidden" name="currency_id" value="{{ $wallet->currency->id }}">
-                            
+
                             <div class="row">
                               <div class="col">
                                 <div class="">

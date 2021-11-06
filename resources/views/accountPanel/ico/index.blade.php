@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Ico page' contenteditable="true">{{ __('Ico page') }}</editor_block>
-  @else
-    {{ __('Ico page') }}
-  @endif
+ICO
 @endsection
 
 @section('content')

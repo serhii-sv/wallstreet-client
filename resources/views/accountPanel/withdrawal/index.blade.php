@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Withdrawal page' contenteditable="true">{{ __('Withdrawal page') }}</editor_block>
-  @else
-    {{ __('Withdrawal page') }}
-  @endif
+Withdrawals
 @endsection
 @section('content')
 

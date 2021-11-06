@@ -1,14 +1,10 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Currency exchange page' contenteditable="true">{{ __('Currency exchange page') }}</editor_block>
-  @else
-    {{ __('Currency exchange page') }}
-  @endif
+Exchange currency
 @endsection
 @section('title.show', 'd-none')
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update justify-content-center">
       <div class="card">
@@ -39,7 +35,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-xl-10 risk-col xl-100 box-col-12">
         <div class="card total-users">
           <div class="card-header card-no-border">
@@ -88,7 +84,7 @@
                            </select>--}}
                         </div>
                       </div>
-                      
+
                       <div class="col-lg pl-lg-5">
                         <div class="mb-2 d-flex flex-column align-items-center">
                           <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
@@ -107,7 +103,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <ul class="col-xl-12">
                   <li>
                     <div class="form-group row">
@@ -134,11 +130,11 @@
                 </ul>
               </form>
             </div>
-          
+
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
 @endsection
@@ -175,7 +171,7 @@
   <script src="{{ asset('accountPanel/js/chart/apex-chart/stock-prices.js') }}"></script>
   <script src="{{ asset('accountPanel/js/chart/apex-chart/chart-custom.js') }}"></script>
   @if($exchange_rate_log)
-    
+
     <script>
       $(document).ready(function () {
         // browser-candlestick chart
@@ -253,7 +249,7 @@
             }
           }
         }
-        
+
         var chartcandlestickchart = new ApexCharts(
             document.querySelector("#chart-widget13"),
             optionscandlestickchart
@@ -281,7 +277,7 @@
         range_slider_custom.init();
       })(jQuery);
     </script>--}}
-  
+
   <script>
     $(document).ready(function () {
       var $deleted = '';
@@ -309,7 +305,7 @@
         $(".currency-symbol").text($prefix);
         $deleted = $(".exchange-second-wallet option[data-id='" + $id + "']");
         $(".exchange-second-wallet option[data-id='" + $id + "']").remove();
-        
+
       })*/
     });
   </script>

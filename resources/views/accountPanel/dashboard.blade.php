@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Dashboard page' contenteditable="true">{{ __('Dashboard page') }}</editor_block>
-  @else
-    {{ __('Dashboard page') }}
-  @endif
+Account
 @endsection
 @push('styles')
   <style>

@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Replenishment details page' contenteditable="true">{{ __('Replenishment details page') }}</editor_block>
-  @else
-    {{ __('Replenishment details page') }}
-  @endif
+Topup balance details
 @endsection
 @section('content')
 

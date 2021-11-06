@@ -1,18 +1,14 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='All banners page' contenteditable="true">{{ __('All banners page') }}</editor_block>
-  @else
-    {{ __('All banners page') }}
-  @endif
+Banners
 @endsection
 @section('content')
-  
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
       @include('partials.inform')
-      
-      
+
+
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body">
@@ -27,12 +23,12 @@
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
 @endsection
 @push('scripts')
   <script>
-  
+
   </script>
 @endpush

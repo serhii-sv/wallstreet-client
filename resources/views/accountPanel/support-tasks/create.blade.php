@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Create Task page' contenteditable="true">{{ __('Create Task page') }}</editor_block>
-  @else
-    {{ __('Create Task page') }}
-  @endif
+Create task
 @endsection
 @section('content')
 

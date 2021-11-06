@@ -1,10 +1,6 @@
 @extends('layouts.accountPanel.app')
 @section('title')
-  @if(canEditLang() && checkRequestOnEdit())
-    <editor_block data-name='Calendar page' contenteditable="true">{{ __('Calendar page') }}</editor_block>
-  @else
-    {{ __('Calendar page') }}
-  @endif
+Calendar page
 @endsection
 @section('content')
 
