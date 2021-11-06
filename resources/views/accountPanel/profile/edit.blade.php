@@ -6,7 +6,7 @@ Edit profile
 
   <div class="container-fluid">
     <div class="edit-profile">
-      <div class="row">
+      <div class="row" style="margin-top:50px;">
         <div class="col-xl-4">
           <div class="card">
             <div class="card-header pb-3 pt-3">

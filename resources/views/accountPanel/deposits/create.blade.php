@@ -8,7 +8,7 @@ Create deposit
     <div class="row second-chart-list third-news-update">
 
       @if(!empty($rates))
-        <div class="row">
+        <div class="row" style="margin-top:50px;">
           <div class="card height-equal">
             <div class="card-header pb-3 d-flex justify-content-center">
               <ul class="nav nav-dark mb-3" id="pills-darktab" role="tablist">

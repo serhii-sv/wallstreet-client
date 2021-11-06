@@ -5,7 +5,7 @@ Transactions
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update">
+    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
       <div class="col-xl-4 email-wrap bookmark-wrap">
         <div class="email-left-aside">
           <div class="card">

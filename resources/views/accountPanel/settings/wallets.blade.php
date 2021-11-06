@@ -7,7 +7,7 @@ Wallets
   <div class="container-fluid">
     <div class="edit-profile">
       @if(!empty($wallets))
-        <div class="row">
+        <div class="row" style="margin-top:50px;">
           <div class="col-sm-12 col-xl-12 ">
             <div class="card">
               <div class="card-header">

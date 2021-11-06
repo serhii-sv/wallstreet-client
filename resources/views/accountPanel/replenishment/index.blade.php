@@ -34,7 +34,7 @@ Topup balance
     </style>
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update">
+    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
 
       <div class="row" style="margin-top: 50px;">
         <div class="col-sm-12">

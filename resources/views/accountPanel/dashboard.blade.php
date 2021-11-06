@@ -17,7 +17,7 @@ Account
 @section('content')
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="margin-top:50px;">
       <div class="col-xl-12 xl-100 dashboard-sec box-col-12" style="margin-top:50px;">
         <div class="card earning-card">
           <div class="card-body p-0">

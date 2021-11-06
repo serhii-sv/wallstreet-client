@@ -7,7 +7,7 @@ Verify documents
   <div class="container-fluid">
     <div class="edit-profile">
       @if(!$user->documents_verified)
-        <div class="row">
+        <div class="row" style="margin-top:50px;">
           <div class="col-xl-12">
             <form class="card" method="post" action="{{ route('accountPanel.profile.upload-documents') }}" enctype="multipart/form-data">
               @include('partials.inform')

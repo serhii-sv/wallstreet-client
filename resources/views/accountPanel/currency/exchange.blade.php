@@ -6,7 +6,7 @@ Exchange currency
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update justify-content-center">
+    <div class="row second-chart-list third-news-update justify-content-center" style="margin-top:50px;">
       <div class="card">
         <div class="card-block row">
           <div class="col-12">

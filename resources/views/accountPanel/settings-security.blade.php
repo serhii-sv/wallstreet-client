@@ -5,7 +5,7 @@ Security settings
 @section('content')
   <div class="container-fluid">
     <div class="edit-profile">
-      <div class="row">
+      <div class="row" style="margin-top:50px;">
         <div class="col-xl-4">
           <div class="card">
             <div class="card-header">

@@ -5,7 +5,7 @@ Chat page
 @section('content')
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="margin-top:50px;">
       <div class="col call-chat-sidebar col-sm-12">
         <div class="card">
           <div class="card-body chat-body">

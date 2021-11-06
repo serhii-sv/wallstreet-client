@@ -9,7 +9,7 @@
           <h5>Всего депозитов: {{ $deposits_count ?? 0 }}</h5>
           <a href="{{ route('accountPanel.deposits.create') }}" class="mt-3 btn btn-success">Сделать депозит</a>
         </div>
-        <div class="card-block row">
+        <div class="card-block row"  style="margin-top:50px;">
           <div class="col-12">
             @include('partials.inform')
           </div>

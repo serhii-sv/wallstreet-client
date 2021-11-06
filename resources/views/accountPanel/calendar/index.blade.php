@@ -5,7 +5,7 @@ Calendar page
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update">
+    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
       <div class="card">
         <div class="card-header">
           <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Calendar page' contenteditable="true">{{ __('Calendar page') }}</editor_block> @else {{ __('Calendar page') }} @endif</h5>
