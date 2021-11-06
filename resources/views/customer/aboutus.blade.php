@@ -377,7 +377,7 @@
           <div class="investor-block">
             <div class="investor-item">
               <div class="investor-thumb">
-                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-41.jpg') }}" alt="investor">
+                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-41.jpg') }}" alt="investor" style="max-height:209px;">
               </div>
               <div class="investor-content">
                 <h5 class="title">
@@ -398,7 +398,7 @@
             </div>
             <div class="investor-item">
               <div class="investor-thumb">
-                <img src="{{ asset('accountPanel/images/user/2021-11-06 14.25.51.jpg') }}" alt="investor">
+                <img src="{{ asset('accountPanel/images/user/2021-11-06 14.25.51.jpg') }}" alt="investor" style="max-height:209px;" >
               </div>
               <div class="investor-content">
                 <h5 class="title">
@@ -421,7 +421,7 @@
             </div>
             <div class="investor-item">
               <div class="investor-thumb">
-                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-44.jpg') }}" alt="investor">
+                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-44.jpg') }}" alt="investor" style="max-height:209px;">
               </div>
               <div class="investor-content">
                 <h5 class="title">
@@ -443,7 +443,7 @@
             </div>
             <div class="investor-item">
               <div class="investor-thumb">
-                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-50.jpg') }}" alt="investor">
+                <img src="{{ asset('accountPanel/images/user/photo_2021-10-12_14-16-50.jpg') }}" alt="investor" style="max-height:209px;">
               </div>
               <div class="investor-content">
                 <h5 class="title">
