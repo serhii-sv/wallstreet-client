@@ -195,7 +195,7 @@ Referrals page
                         </tr>
                       @empty
                       @endforelse
-                    @endfor
+                    @endforeach
                     </tbody>
                   </table>
                 </div>
