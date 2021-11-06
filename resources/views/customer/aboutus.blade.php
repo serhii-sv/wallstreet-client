@@ -404,17 +404,17 @@
                 <h5 class="title">
                   <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='investor title 2' contenteditable="true">{{ __('investor title 2') }}</editor_block>
+                      <editor_block data-name='Мария Кокорина' contenteditable="true">{{ __('Мария Кокорина') }}</editor_block>
                     @else
-                      {{ __('investor title 2') }}
+                      {{ __('Мария Кокорина') }}
                     @endif
                   </a>
                 </h5>
                 <strong class="amount">
                   @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='investor amount 2' contenteditable="true">{{ __('investor amount 2') }}</editor_block>
+                    <editor_block data-name='Большой выбор депозитов и многоуровневая партнерская программа - это лучшее сочетание. Здесь точно можно заработать!' contenteditable="true">{{ __('Большой выбор депозитов и многоуровневая партнерская программа - это лучшее сочетание. Здесь точно можно заработать!') }}</editor_block>
                   @else
-                    {{ __('investor amount 2') }}
+                    {{ __('Большой выбор депозитов и многоуровневая партнерская программа - это лучшее сочетание. Здесь точно можно заработать!') }}
                   @endif
                 </strong>
               </div>
@@ -427,17 +427,17 @@
                 <h5 class="title">
                   <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='investor title 3' contenteditable="true">{{ __('investor title 3') }}</editor_block>
+                      <editor_block data-name='Tomasz Grodzki' contenteditable="true">{{ __('Tomasz Grodzki') }}</editor_block>
                     @else
-                      {{ __('investor title 3') }}
+                      {{ __('Tomasz Grodzki') }}
                     @endif
                   </a>
                 </h5>
                 <strong class="amount">
                   @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='investor amount 3' contenteditable="true">{{ __('investor amount 3') }}</editor_block>
+                    <editor_block data-name='Całe życie szukałem tego projektu. Radzę to rozgryźć i zacząć zarabiać już teraz.' contenteditable="true">{{ __('Całe życie szukałem tego projektu. Radzę to rozgryźć i zacząć zarabiać już teraz.') }}</editor_block>
                   @else
-                    {{ __('investor amount 3') }}
+                    {{ __('Całe życie szukałem tego projektu. Radzę to rozgryźć i zacząć zarabiać już teraz.') }}
                   @endif</strong>
               </div>
             </div>
@@ -449,17 +449,17 @@
                 <h5 class="title">
                   <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='investor title 4' contenteditable="true">{{ __('investor title 4') }}</editor_block>
+                      <editor_block data-name='Bill McConnell' contenteditable="true">{{ __('Bill McConnell') }}</editor_block>
                     @else
-                      {{ __('investor title 4') }}
+                      {{ __('Bill McConnell') }}
                     @endif
                   </a>
                 </h5>
                 <strong class="amount">
                   @if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='investor amount 4' contenteditable="true">{{ __('investor amount 4') }}</editor_block>
+                    <editor_block data-name='My whole family has already registered at SprintBank. My business partner has already invested. It was my turn too.' contenteditable="true">{{ __('My whole family has already registered at SprintBank. My business partner has already invested. It was my turn too.') }}</editor_block>
                   @else
-                    {{ __('investor amount 4') }}
+                    {{ __('My whole family has already registered at SprintBank. My business partner has already invested. It was my turn too.') }}
                   @endif
                 </strong>
               </div>
