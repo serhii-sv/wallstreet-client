@@ -93,14 +93,14 @@ Referrals page
 
                     </div>
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-12">
                     <div class="follow">
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="ttl-info text-start">
-                            <h6><i class="fa fa-link"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                            <h3><i class="fa fa-link"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Your referral link' contenteditable="true">{{ __('Your referral link') }}</editor_block> @else {{ __('Your referral link') }} @endif
-                            </h6>
+                            </h3>
                             <span>{{ route('ref_link', $user->my_id) }}</span>
                           </div>
                         </div>
