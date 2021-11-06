@@ -58,7 +58,7 @@ Wallets
                             <div class="row">
                               <div class="col">
                                 <div class="">
-                                  <label>Address</label>
+                                  <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external' contenteditable="true">{{ __('Wallet external') }}</editor_block> @else {{ __('Wallet external') }} @endif</label>
                                   <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                 </div>
                               </div>
