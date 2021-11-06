@@ -383,16 +383,16 @@
                 <h5 class="title">
                   <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
-                      <editor_block data-name='investor title 1' contenteditable="true">{{ __('investor title 1') }}</editor_block>
+                      <editor_block data-name='Tito Ortiz' contenteditable="true">{{ __('Tito Ortiz') }}</editor_block>
                     @else
-                      {{ __('investor title 1') }}
+                      {{ __('Tito Ortiz') }}
                     @endif
                   </a>
                 </h5>
                 <h3 class="amount">@if(canEditLang() && checkRequestOnEdit())
-                    <editor_block data-name='investor amount 1' contenteditable="true">{{ __('investor amount 1') }}</editor_block>
+                    <editor_block data-name='This is the best Crypto Bank on the market right now. I invested 4000 $ and believe in my profit. I wish Good Luck to everyone!' contenteditable="true">{{ __('This is the best Crypto Bank on the market right now. I invested 4000 $ and believe in my profit. I wish Good Luck to everyone!') }}</editor_block>
                   @else
-                    {{ __('investor amount 1') }}
+                    {{ __('This is the best Crypto Bank on the market right now. I invested 4000 $ and believe in my profit. I wish Good Luck to everyone!') }}
                   @endif</h3>
               </div>
             </div>
