@@ -398,7 +398,7 @@
             </div>
             <div class="investor-item">
               <div class="investor-thumb">
-                <img src="{{ asset('accountPanel/images/user/2021-11-06 14.25.51.jpg') }}" alt="investor">
+                <img src="{{ asset('accountPanel/images/user/image44.jpg') }}" alt="investor">
               </div>
               <div class="investor-content">
                 <h5 class="title">
