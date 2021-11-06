@@ -4,7 +4,7 @@ Withdrawals
 @endsection
 @section('content')
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top:50px;">
     <div class="row second-chart-list third-news-update">
 
       @if(!empty($wallets))
@@ -12,7 +12,7 @@ Withdrawals
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                <h5>@if(canEditLang() && checkRequestOnEdit())
+                <h5 style="text-align: center;">@if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='List of wallets' contenteditable="true">{{ __('List of wallets') }}</editor_block> @else {{ __('List of wallets') }} @endif
                 </h5>
               </div>
