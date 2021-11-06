@@ -166,7 +166,7 @@ class Transaction extends Model
             $precision = 8;
         }
 
-        return sprintf('%10.'.$precision.'f', $value);
+        return sprintf('%10.8f', $value);
     }
 
     /**
