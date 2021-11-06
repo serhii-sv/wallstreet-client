@@ -112,7 +112,7 @@ class Wallet extends Model
             $precision = 8;
         }
 
-        return sprintf('%0.8f', $value);
+        return sprintf('%10.'.$precision.'f', $value);
     }
 
     /**
