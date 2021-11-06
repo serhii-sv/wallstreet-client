@@ -86,7 +86,7 @@ Exchange currency
                       </div>
 
                       <div class="col-lg pl-lg-5">
-                        <div class="mb-2 d-flex flex-column align-items-center">
+                          <div class="col-lg-6 pr-lg-5">
                           <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif
                           </div>
@@ -113,7 +113,6 @@ Exchange currency
                             <editor_block data-name='How much do you want to exchange?' contenteditable="true">{{ __('How much do you want to exchange?') }}</editor_block> @else {{ __('How much do you want to exchange?') }} @endif
                         </label>
                         <div class="input-group mb-3">
-                          <span class="input-group-text currency-symbol">?</span>
                           <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}" placeholder="0.1">
                         </div>
                       </div>
