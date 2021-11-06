@@ -8,9 +8,9 @@ Referrals page
     <div class="row second-chart-list third-news-update">
       @include('partials.inform')
       <div class="user-profile">
-        <div class="row"  style="margin-top:50px;">
+        <div class="row">
           <!-- user profile first-style start-->
-          <div class="col-sm-12">
+          <div class="col-sm-12" style="margin-top:50px;">
             <div class="card hovercard text-center">
               <div class="cardheader" style="background: url('{{ asset('accountPanel/images/other-images/sprint bank banner_-01.jpg') }}') no-repeat; background-size: cover;max-height: 300px;"></div>
               <div class="user-image">

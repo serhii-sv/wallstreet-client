@@ -5,11 +5,11 @@ Banners
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
+    <div class="row second-chart-list third-news-update">
       @include('partials.inform')
 
 
-      <div class="col-xl-12">
+      <div class="col-xl-12" style="margin-top:50px;">
         <div class="card">
           <div class="card-body">
             @forelse($banners as $banner)
