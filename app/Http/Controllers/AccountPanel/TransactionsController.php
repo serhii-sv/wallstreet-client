@@ -23,7 +23,11 @@ class TransactionsController extends Controller
 
     public function index(Request $request, $type=null) {
         $user = Auth::user();
-        $transaction_types = TransactionType::orderByDesc('created_at')->get();
+        $transaction_types = TransactionType::whereNotIn('type_id', [
+            TransactionType::getByName('penalty')->id,
+        ])
+            ->orderByDesc('created_at')
+            ->get();
         $transactions = Transaction::where('user_id', $user->id)->when($type, function ($query) use ($type){
             return $query->where('type_id', $type);
         })->with('type', 'currency')->orderByDesc('created_at')->paginate(10);
