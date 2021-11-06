@@ -85,29 +85,28 @@ Exchange currency
                         </div>
                       </div>
 
-                        <div class="row">
-                            <div class="col-lg-6 pr-lg-5">
-                                <div class="mb-2 d-flex align-items-center flex-column">
-                                    <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
-                                            <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif
-                                    </div>
-                                    @forelse($wallets as $wallet)
-                                        <input class="currency-exchange-radio" type="radio" id="wal2{{ $wallet->id }}" name="wallet_to" value="{{ $wallet->id }}">
-                                        <label class="currency-exchange exchange-second-wallet" for="wal2{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
-                                            {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
-                                        </label>
-                                    @empty
-                                        <div>Кошельки отсутствуют</div>
-                                    @endforelse
-                                </div>
-                            </div>
+                      <div class="col-lg pl-lg-5">
+                        <div class="mb-2 d-flex flex-column align-items-center">
+                          <div class="currency-exchange-label col-form-label">@if(canEditLang() && checkRequestOnEdit())
+                              <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif
+                          </div>
+                          @forelse($wallets as $wallet)
+                            <input class="currency-exchange-radio" type="radio" id="wal2{{ $wallet->id }}" name="wallet_to" value="{{ $wallet->id }}">
+                            <label class="currency-exchange exchange-second-wallet" for="wal2{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
+                              {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
+                            </label>
+                          @empty
+                            <div>Кошельки отсутствуют</div>
+                          @endforelse
                         </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <ul class="col-xl-12">
-                  <li>
+                  <div class="row">
+                      <div class="col-lg-6 pr-lg-5">
+                          <div class="mb-2 d-flex align-items-center flex-column">
                     <div class="form-group row">
                       {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
                       <div class="col">
@@ -122,13 +121,14 @@ Exchange currency
                         <input id="u-range-02" type="hidden" class="irs-hidden-input" tabindex="-1" readonly="" data-bs-original-title="" title="">
                       </div>--}}
                     </div>
-                  </li>
-                  <li>
+<p>&nbsp;</p>
                     <button class="btn-download btn btn-gradient f-w-500">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Exchange' contenteditable="true">{{ __('Exchange') }}</editor_block> @else {{ __('Exchange') }} @endif
                     </button>
-                  </li>
-                </ul>
+
+                          </div>
+                      </div>
+                  </div>
               </form>
             </div>
 
