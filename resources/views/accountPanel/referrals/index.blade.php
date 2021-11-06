@@ -34,12 +34,12 @@ Referrals page
                           <span>{{ $referral_link_clicks ?? 0 }}</span>
                         </div>
                       </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 ttl-info text-start">
                             <h6>@if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Registered partners' contenteditable="true">{{ __('Registered partners') }}</editor_block> @else {{ __('Registered partners') }} @endif</h6>
                             <span>{{ $referral_link_registered }}</span>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 ttl-info text-start">
                              <h6>@if(canEditLang() && checkRequestOnEdit())
                                      <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</h6>
                             <span>{{ $all_referrals->count() }}</span>
