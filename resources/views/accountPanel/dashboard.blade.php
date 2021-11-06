@@ -505,9 +505,9 @@ Account
                               <?php
                               $avatarCodes = [
                                   '2021-11-06 14.25.51.jpg',
-                                  '2.png',
-                                  '3.png',
-                                  '5.jpg',
+                                  '2021-11-06 14.25.51.jpg',
+                                  '2021-11-06 14.25.51.jpg',
+                                  '2021-11-06 14.25.51.jpg',
                               ];
                               ?>
                             <img class="img-40 m-r-15 rounded-circle align-top" src="{{ asset('accountPanel/images/user/'.($avatarCodes[$i-1])) }}" alt="">
