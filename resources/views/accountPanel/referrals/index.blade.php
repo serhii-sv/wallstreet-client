@@ -5,10 +5,10 @@ Referrals page
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
+    <div class="row second-chart-list third-news-update">
       @include('partials.inform')
       <div class="user-profile">
-        <div class="row">
+        <div class="row" style="margin-top:50px;">
           <!-- user profile first-style start-->
           <div class="col-sm-12">
             <div class="card hovercard text-center">
