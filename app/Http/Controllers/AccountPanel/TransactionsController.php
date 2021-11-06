@@ -23,8 +23,8 @@ class TransactionsController extends Controller
 
     public function index(Request $request, $type=null) {
         $user = Auth::user();
-        $transaction_types = TransactionType::whereNotIn('type_id', [
-            TransactionType::getByName('penalty')->id,
+        $transaction_types = TransactionType::whereNotIn('name', [
+            'penalty',
         ])
             ->orderByDesc('created_at')
             ->get();
