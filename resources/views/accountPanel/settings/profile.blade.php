@@ -6,8 +6,8 @@ Edit profile
 
   <div class="container-fluid">
     <div class="edit-profile">
-      <div class="row" style="margin-top:50px;">
-        <div class="col-xl-4">
+      <div class="row">
+        <div class="col-xl-4" style="margin-top:50px;">
           <div class="card">
             <div class="card-header pb-3 pt-3">
               <h4 class="card-title mb-0">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='My Profile' contenteditable="true">{{ __('My Profile') }}</editor_block> @else {{ __('My Profile') }} @endif</h4>
@@ -93,7 +93,7 @@ Edit profile
             </div>
           </div>
         </div>
-        <div class="col-xl-8">
+        <div class="col-xl-8" style="margin-top:50px;">
           <form class="card" method="post" action="{{ route('accountPanel.profile.update') }}">
             @csrf
             {{ method_field('PUT') }}
