@@ -360,7 +360,7 @@ trait HasReferral
         foreach ($referrals as $ref) {
             $result[$flag][] = $ref;
 
-            $nextLevel = $ref->getAllReferralsForAccount($flag+1);
+            $nextLevel = $ref->getAllReferralsForAccount($flag+1)[$flag+1] ?? [];
 
             if (!empty($nextLevel) && count($nextLevel) > 0) {
                 $result[$flag + 1] = $nextLevel;
