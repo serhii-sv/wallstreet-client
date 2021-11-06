@@ -127,8 +127,8 @@ class DashboardController extends Controller
         $commission = TransactionType::getByName('transfer_out')->commission;
         DB::beginTransaction();
         try {
-            $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount - $amount * $commission * 0.01]);
             $wallet->update(['balance' => $wallet->balance - $amount - $amount * $commission * 0.01]);
+            $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount]);
 
             if (Transaction::transferMoney($wallet, $amount, $user, $recipient_user)) {
 
