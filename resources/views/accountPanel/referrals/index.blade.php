@@ -28,7 +28,7 @@ Referrals page
                     <div class="row">
                       <div class="col-md-4">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                          <h6>@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Referral link transitions' contenteditable="true">{{ __('Referral link transitions') }}</editor_block> @else {{ __('Referral link transitions') }} @endif
                           </h6>
                           <span>{{ $referral_link_clicks ?? 0 }}</span>
@@ -72,7 +72,7 @@ Referrals page
                         </div>
                       <div class="col-md-6">
                         <div class="ttl-info text-start">
-                          <h6><i class="fa fa-phone"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
+                          <h6><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name="Partners' investment amount" contenteditable="true">{{ __("Partners' investment amount") }}</editor_block> @else {{ __("Partners' investment amount") }} @endif
                           </h6>
                           <span>{{ number_format($total_referral_invested, 2,'.', ' ') }}$</span>
