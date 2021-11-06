@@ -23,10 +23,6 @@ Topup balance details
                 @if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Replenishment head 1' contenteditable="true">{{ __('Replenishment head 1') }}</editor_block> @else {{ __('Replenishment head 1') }} @endif
               </h6>
-              <p>
-                @if(canEditLang() && checkRequestOnEdit())
-                  <editor_block data-name='Replenishment text 2' contenteditable="true">{{ __('Replenishment text 2') }}</editor_block> @else {{ __('Replenishment text 2') }} @endif
-              </p>
 
                 <div class="f1-buttons" style="text-align: center;margin-top:50px;">
                     <button class="btn btn-primary btn-previous" type="button" onClick="location.assign('https://t.me/sprintbank')"  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
