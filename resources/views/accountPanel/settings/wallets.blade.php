@@ -7,8 +7,8 @@ Wallets
   <div class="container-fluid">
     <div class="edit-profile">
       @if(!empty($wallets))
-        <div class="row" style="margin-top:50px;">
-          <div class="col-sm-12 col-xl-12 ">
+        <div class="row">
+          <div class="col-sm-12 col-xl-12 "  style="margin-top:50px;">
             <div class="card">
               <div class="card-header">
                 <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system details' contenteditable="true">{{ __('Payment system details') }}</editor_block> @else {{ __('Payment system details') }} @endif</h5>
