@@ -113,7 +113,7 @@
       <!-- Page Sidebar Ends-->
         <div class="page-body">
 
-            @if(!\Illuminate\Support\Facades\Route::is('dashboard'))
+            @if(!\Illuminate\Support\Facades\Route::currentRouteName() == 'dashboard')
           <div class="container-fluid">
             <div class="page-title @yield('title.show')">
               <div class="row">
