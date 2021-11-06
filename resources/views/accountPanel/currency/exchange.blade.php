@@ -104,8 +104,8 @@ Exchange currency
                   </div>
                 </div>
 
-                  <div class="row">
-                      <div class="col-lg-8 pr-lg-2">
+                  <div class="row" style="margin-top:50px;">
+                      <div class="col-lg-12">
                           <div class="mb-2 d-flex align-items-center flex-column">
                     <div class="form-group row">
                       {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
