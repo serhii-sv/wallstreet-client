@@ -46,7 +46,7 @@ Topup balance details
                 </p>
             </div>
 
-              <div class="f1-buttons" style="text-align: center;margin-top:50px;">
+              <div class="f1-buttons" style="text-align: center;margin-top:50px;margin-bottom: 50px;">
                   <button class="btn btn-primary btn-previous" type="button" onClick="location.assign('https://t.me/sprintbank')"  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                           <editor_block data-name='Previous 2' contenteditable="true">{{ __('Previous 2') }}</editor_block> @else {{ __('Previous 2') }} @endif
                   </button>
