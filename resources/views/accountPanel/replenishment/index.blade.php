@@ -136,7 +136,7 @@ Topup balance
                   </div>
 
                   <div class="f1-buttons" style="text-align: center;margin-top:50px;">
-                    <button class="btn btn-primary btn-previous shake" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
+                    <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
                     </button>
                     <button class="btn btn-primary btn-submit shake" id="next" type="submit" data-bs-original-title="" title=""  style="margin-left:30px;padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
