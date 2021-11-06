@@ -63,7 +63,7 @@ Withdrawals
                             <span class="input-group-text">{{ $item->currency->symbol ?? '' }}</span>
                             <input class="form-control" type="text" name="amount">
                           </div>
-                          <div>
+                          <div style="margin-top:30px;">
                             @if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Commission 1 $' contenteditable="true">{{ __('Commission 1 $') }}</editor_block> @else {{ __('Commission 1 $') }} @endif
                           </div>
