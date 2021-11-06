@@ -151,9 +151,6 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    die(print_r(auth()->user()->getAllReferralsForAccount(),true));
-                    ?>
                     @foreach(auth()->user()->getAllReferralsForAccount() as $level => $referrals)
                         <?php
                         if (!count($referrals)) {
@@ -168,6 +165,9 @@ Referrals page
                         </tr>
 
                       @forelse($referrals as $referral)
+                          <?php
+                          die(print_r($referral,true));
+                          ?>
                         <tr>
                           <td>
                             <div class="d-inline-block align-middle">
