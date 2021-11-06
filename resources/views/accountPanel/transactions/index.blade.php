@@ -45,7 +45,7 @@ Transactions
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Transaction type' contenteditable="true">{{ __('Transaction type') }}</editor_block> @else {{ __('Transaction type') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Amount' contenteditable="true">{{ __('Amount') }}</editor_block> @else {{ __('Amount') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Payment system' contenteditable="true">{{ __('Payment system') }}</editor_block> @else {{ __('Payment system') }} @endif</th>
-                      <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Status 2' contenteditable="true">{{ __('Status 2') }}</editor_block> @else {{ __('Status 2') }} @endif</th>
+                      <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Status 22' contenteditable="true">{{ __('Status 22') }}</editor_block> @else {{ __('Status 22') }} @endif</th>
                       <th scope="col">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Date of operation' contenteditable="true">{{ __('Date of operation') }}</editor_block> @else {{ __('Date of operation') }} @endif</th>
                     </tr>
                   </thead>
