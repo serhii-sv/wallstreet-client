@@ -79,8 +79,8 @@ Topup balance
                       @endforelse
                     </select>
                   </div>--}}
-                  <div class="f1-buttons" style="text-align: center; padding:15px 50px 15px 50px; font-size:21px;">
-                    <button class="btn btn-primary btn-next" id="next" type="button" style="font-size: 20px;">@if(canEditLang() && checkRequestOnEdit())
+                  <div class="f1-buttons" style="text-align: center;">
+                    <button class="btn btn-primary btn-next" id="next" type="button" style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Next' contenteditable="true">{{ __('Next') }}</editor_block> @else {{ __('Next') }} @endif
                     </button>
                   </div>
