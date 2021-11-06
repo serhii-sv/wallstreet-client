@@ -106,7 +106,7 @@ class Wallet extends Model
      */
     public function getBalanceAttribute($value)
     {
-        return round($value, 8);
+        return sprintf('%40.20f', $value);
     }
 
     /**
