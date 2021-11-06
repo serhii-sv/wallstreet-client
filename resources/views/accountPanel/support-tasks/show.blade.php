@@ -5,8 +5,8 @@ Task details
 
 @section('content')
     <div class="container-fluid">
-        <div class="row" style="margin-top:50px;">
-            <div class="col call-chat-body">
+        <div class="row">
+            <div class="col call-chat-body" style="margin-top:50px;">
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="row chat-box">

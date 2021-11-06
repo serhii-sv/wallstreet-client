@@ -6,8 +6,8 @@ Create task
 
     <div class="container-fluid">
         <div class="edit-profile">
-            <div class="row" style="margin-top:50px;">
-                <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-12" style="margin-top:50px;">
                     <form class="form theme-form" method="post" action="{{ route('accountPanel.support-tasks.store') }}">
                         <div class="card p-30">
                             <div class="card-content">
