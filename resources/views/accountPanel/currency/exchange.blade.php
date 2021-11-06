@@ -8,7 +8,7 @@ Exchange currency
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update justify-content-center" style="margin-top:50px;">
       <div class="card">
-        <div class="card-block row">
+        <div class="card-block row" style="margin-top:50px;">
           <div class="col-12">
             <div class="donut-chart-widget">
               <div class="card">
