@@ -5,7 +5,7 @@ Referrals page
 @section('content')
 
   <div class="container-fluid">
-    <div class="row second-chart-list third-news-update" style="margin-top:50px;">
+    <div class="row second-chart-list third-news-update" style="margin-top:100px;">
       @include('partials.inform')
       <div class="user-profile">
         <div class="row">
