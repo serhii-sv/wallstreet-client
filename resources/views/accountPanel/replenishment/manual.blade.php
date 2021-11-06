@@ -14,33 +14,33 @@ Topup balance details
               <h5 style="text-transform:none;">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif {{ $paymentSystem !== null ? $paymentSystem->name : '' }}</h5>
             </div>
-            <div class="card-body" style="text-align: left; font-size:32px !important; margin-left:10%;">
-                <p>
+            <div class="card-body" style="text-align: left; margin-left:10%;">
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 1' contenteditable="true">{{ __('Replenishment text 1') }}</editor_block> @else {{ __('Replenishment text 1') }} @endif
                 </p>
 
-                <p>
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 2' contenteditable="true">{{ __('Replenishment text 2') }}</editor_block> @else {{ __('Replenishment text 2') }} @endif
                 </p>
 
-                <p>
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 3' contenteditable="true">{{ __('Replenishment text 3') }}</editor_block> @else {{ __('Replenishment text 3') }} @endif
                 </p>
 
-                <p>
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 4' contenteditable="true">{{ __('Replenishment text 4') }}</editor_block> @else {{ __('Replenishment text 4') }} @endif
                 </p>
 
-                <p>
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 5' contenteditable="true">{{ __('Replenishment text 5') }}</editor_block> @else {{ __('Replenishment text 5') }} @endif
                 </p>
 
-                <p>
+                <p style="font-size:26px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Replenishment text 6' contenteditable="true">{{ __('Replenishment text 6') }}</editor_block> @else {{ __('Replenishment text 6') }} @endif
                 </p>
