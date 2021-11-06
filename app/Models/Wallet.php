@@ -105,14 +105,14 @@ class Wallet extends Model
      * @return float
      * @throws \Exception
      */
-    public function getAmountAttribute($value) {
+    public function getBalanceAttribute($value) {
         $precision = $this->currency->precision ?? 2;
 
-        if ($precision > 8) {
-            $precision = 8;
+        if ($precision > 5) {
+            $precision = 5;
         }
 
-        return sprintf('%10.'.$precision.'f', $value);
+        return sprintf('%0.'.$precision.'f', $value);
     }
 
     /**
