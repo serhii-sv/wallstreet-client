@@ -114,12 +114,16 @@ class DashboardController extends Controller
             return back()->with('short_error', 'Нельзя переводить самому себе!');
         }
         $amount = abs($request->get('amount'));
-        $wallet = Wallet::where('user_id', $user->id)->where('id', $request->get('wallet_id'))->firstOrFail();
+        $wallet = Wallet::where('user_id', $user->id)
+            ->where('id', $request->get('wallet_id'))
+            ->firstOrFail();
         if ($wallet->balance < $amount) {
             return back()->with('short_error', 'Недостаточно средств!');
         }
 
-        $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)->first();
+        $recipient_user_wallet = Wallet::where('user_id', $recipient_user->id)
+            ->where('currency_id', $wallet->currency_id)
+            ->first();
         if (empty($recipient_user_wallet)) {
             return back()->with('short_error', 'У пользователя нет кошелька с указанной валютой!');
         }
@@ -128,7 +132,7 @@ class DashboardController extends Controller
         DB::beginTransaction();
         try {
             $wallet->update(['balance' => $wallet->balance - $amount - $amount * $commission * 0.01]);
-            $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount]);
+            $recipient_user_wallet->update(['balance' => $recipient_user_wallet->balance + $amount - $amount * $commission * 0.01]);
 
             if (Transaction::transferMoney($wallet, $amount, $user, $recipient_user)) {
 
