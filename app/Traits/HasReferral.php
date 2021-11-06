@@ -345,6 +345,10 @@ trait HasReferral
      */
     public function getAllReferralsForAccount($flag = 1)
     {
+        if ($flag > 10) {
+            return [];
+        }
+
         $result[$flag] = [];
 
         /** @var User $referrals */
@@ -353,15 +357,9 @@ trait HasReferral
             ->wherePivot('line', 1)
             ->get();
 
-        if ($flag > 1000) {
-            return $result;
-        }
-
-        if (!empty($referrals)) {
-            foreach ($referrals as $ref) {
-                $result[$flag][] = $ref;
-                $result[$flag+1] = array_merge($result[$flag+1] ?? [], $ref->getAllReferrals($flag + 1));
-            }
+        foreach ($referrals as $ref) {
+            $result[$flag][] = $ref;
+            $result[$flag+1] = array_merge($result[$flag+1] ?? [], $ref->getAllReferralsForAccount($flag + 1));
         }
 
         return $result;
