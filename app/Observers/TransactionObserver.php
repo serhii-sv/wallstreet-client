@@ -17,7 +17,7 @@ use App\Models\UserSidebarProperties;
  */
 class TransactionObserver
 {
-    
+
 
     /**
      * Listen to the Transaction created event.
@@ -49,6 +49,8 @@ class TransactionObserver
                 $item->save();
             }
         }
+
+        cache()->forget('referrals.total_invested_'.$transaction->user_id);
     }
 
     /**
@@ -60,7 +62,7 @@ class TransactionObserver
      */
     public function deleted(Transaction $transaction)
     {
-    
+
     }
 
     /**
@@ -72,7 +74,7 @@ class TransactionObserver
      */
     public function updated(Transaction $transaction)
     {
-    
+
     }
 
     /**
