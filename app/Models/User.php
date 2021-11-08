@@ -252,7 +252,7 @@ class User extends Authenticatable
     }
 
     public function invested() {
-        return $this->hasMany(Deposit::class, 'user_id')->sum('invested');
+        return $this->hasMany(Deposit::class, 'user_id')->sum('main_currency_amount');
     }
 
     public function deposit_reward() {
@@ -264,11 +264,13 @@ class User extends Authenticatable
     }
 
     public function deposits_accruals() {
-        $invested = $this->deposits()->sum('invested');
-        $balance = $this->deposits()->sum('balance');
-        if ($balance > $invested)
-            return $balance - $invested;
+        $dividendTypeId = TransactionType::getByName('dividend')->id;
+
+        return $this->transactions()
+            ->where('type_id', $dividendTypeId)
+            ->sum('main_currency_amount');
     }
+
     /**
      * @param boolean $useSymbols
      * @param string  $currencyId
