@@ -252,7 +252,11 @@ class User extends Authenticatable
     }
 
     public function invested() {
-        return $this->hasMany(Deposit::class, 'user_id')->sum('main_currency_amount');
+        $createDepId = TransactionType::getByName('create_dep')->id;
+
+        return $this->transactions()
+            ->where('type_id', $createDepId)
+            ->sum('main_currency_amount');
     }
 
     public function deposit_reward() {
