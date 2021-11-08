@@ -383,37 +383,29 @@ class Wallet extends Model
         }*/
     }
 
-    public function exchangeCurrency($wallet_from, $wallet_to, $amount, $commission = 0) {
-        if ($transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount)) {
-            $wallet_from->removeAmount($amount);
-        } else {
-            return null;
-        }
-        $toCurrency = Currency::where('code', 'USD')->first();
+    public function exchangeCurrency(Wallet $wallet_from, Wallet $wallet_to, float $amount, float $commission = 0)
+    {
+        $transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount);
+        $wallet_from->removeAmount($amount);
 
-        $balance = $this->convertToCurrency($this->currency()->first(), $toCurrency, abs($amount)) - $commission; // Комиссия
-        $balance = $this->convertToCurrency($toCurrency, $wallet_to->currency()->first(), $balance);
+        $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+        $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
 
-        if ($transaction_in = Transaction::exchangeInCurrency($wallet_to, $balance)) {
-            $wallet_to->update(['balance' => $wallet_to->balance + $balance]);
-            $currency_exchange = new CurrencyExchange();
-            $currency_exchange->user_id = $wallet_from->user_id;
-            $currency_exchange->transaction_in = $transaction_in->id;
-            $currency_exchange->transaction_out = $transaction_out->id;
-            $currency_exchange->currency_in = $wallet_to->currency()->first()->id;
-            $currency_exchange->currency_out = $wallet_from->currency()->first()->id;
-            $currency_exchange->amount_in = $transaction_in->amount;
-            $currency_exchange->amount_out = $transaction_out->amount;
-            $currency_exchange->main_currency_amount_in = $transaction_in->main_currency_amount;
-            $currency_exchange->main_currency_amount_out = $transaction_out->main_currency_amount;
-            $currency_exchange->commission = 1;
-            if ($currency_exchange->save()) {
-                return true;
-            }
-        } else {
-            return false;
-        }
+        $wallet_to->update(['balance' => $wallet_to->balance + $converted]);
+
+        $currency_exchange = new CurrencyExchange();
+        $currency_exchange->user_id = $wallet_from->user_id;
+        $currency_exchange->transaction_in = $transaction_in->id;
+        $currency_exchange->transaction_out = $transaction_out->id;
+        $currency_exchange->currency_in = $wallet_to->currency->id;
+        $currency_exchange->currency_out = $this->currency->id;
+        $currency_exchange->amount_in = $transaction_in->amount;
+        $currency_exchange->amount_out = $transaction_out->amount;
+        $currency_exchange->main_currency_amount_in = $transaction_in->main_currency_amount;
+        $currency_exchange->main_currency_amount_out = $transaction_out->main_currency_amount;
+        $currency_exchange->commission = abs($amount) / 100 * $commission;
+        $currency_exchange->save();
+
+        return true;
     }
-
-
 }
