@@ -33,7 +33,7 @@ class LoginSecurityController extends Controller
         if(null !== $loginSecurity = $user->loginSecurity()->first()){
             $google2fa = (new \PragmaRX\Google2FAQRCode\Google2FA());
             $google2fa_url = $google2fa->getQRCodeInline(
-                'MyNotePaper Demo',
+                config('app.name'),
                 $user->email,
                 $loginSecurity->google2fa_secret
             );
