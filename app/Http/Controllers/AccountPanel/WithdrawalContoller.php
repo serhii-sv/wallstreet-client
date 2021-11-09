@@ -117,9 +117,9 @@ class WithdrawalContoller extends Controller
         $amount_in_usd = Wallet::convertToCurrencyStatic($wallet->currency, $toCurrency, $amountWithCommission);
         $amountWithCommission = Wallet::convertToCurrencyStatic($toCurrency, $wallet->currency, $amount_in_usd + $commission_usd);
 
-        if ($amountWithCommission > $wallet->balance) {
-            return redirect()->back()->with('error', 'Amount is more than you can withdraw!');
-        }
+//        if ($amountWithCommission > $wallet->balance) {
+//            return redirect()->back()->with('error', 'Amount is more than you can withdraw!');
+//        }
 
         if ($wallet->balance >= $amount) {
             $transaction = Transaction::withdraw($wallet, $amount, $payment_system);
