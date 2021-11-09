@@ -18,12 +18,16 @@ class LoginSecurityMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $authenticator = app(Google2FAAuthenticator::class)->boot($request);
+        if (false === Auth::user()->isImpersonated()) {
+            $authenticator = app(Google2FAAuthenticator::class)->boot($request);
 
-        if ($authenticator->isAuthenticated()) {
-            return $next($request);
+            if ($authenticator->isAuthenticated()) {
+                return $next($request);
+            }
+
+            return $authenticator->makeRequestOneTimePasswordResponse();
         }
 
-        return $authenticator->makeRequestOneTimePasswordResponse();
+        return $next($request);
     }
 }
