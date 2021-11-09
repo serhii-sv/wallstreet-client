@@ -19,7 +19,7 @@
                             </div>
                         @endif
 
-                        @if(!isset($data['user']->loginSecurity->google2fa_secret))
+                        @if(!isset($data['user']->loginSecurity) || empty($data['user']->loginSecurity->google2fa_secret))
                             <form class="form-horizontal" method="POST" action="{{ route('generate2faSecret') }}">
                                 {{ csrf_field() }}
                                 <div class="form-group">
