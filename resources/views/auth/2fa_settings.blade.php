@@ -28,7 +28,7 @@
                                     </button>
                                 </div>
                             </form>
-                        @elseif(!$data['user']->loginSecurity->google2fa_enable)
+                        @elseif(!empty($data['user']->loginSecurity->google2fa_secret))
                             1. Scan this QR code with your Google Authenticator App. Alternatively, you can use the code: <code>{{ $data['secret'] }}</code><br/>
                             <img src="{{$data['google2fa_url'] }}" alt="">
                             <br/><br/>
