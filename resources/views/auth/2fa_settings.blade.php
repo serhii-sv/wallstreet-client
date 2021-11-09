@@ -19,7 +19,7 @@
                             </div>
                         @endif
 
-                        @if(empty($secret_key))
+                        @if(empty($secret))
                             <form class="form-horizontal" method="POST" action="{{ route('generate2faSecret') }}">
                                 {{ csrf_field() }}
                                 <div class="form-group">
@@ -28,7 +28,7 @@
                                     </button>
                                 </div>
                             </form>
-                        @elseif(!empty($secret_key))
+                        @elseif(!empty($secret))
                             1. Scan this QR code with your Google Authenticator App. Alternatively, you can use the code: <code>{{ $data['secret'] }}</code><br/>
                             <img src="{{$data['google2fa_url'] }}" alt="">
                             <br/><br/>
