@@ -10,7 +10,13 @@ class LoginSecurity extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'google2fa_enable',
+        'google2fa_secret',
+    ];
+
+    protected $casts = [
+        'google2fa_enable' => 'boolean',
     ];
 
     public function user()
