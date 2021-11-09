@@ -25,6 +25,7 @@ class LoginSecurityController extends Controller
     public function show2faForm(Request $request){
         $user = Auth::user();
         $google2fa_url = "";
+        $secret_enabled = false;
         $secret_key = "";
 
         if($user->loginSecurity()->exists() && isset($user->loginSecurity->google2fa_secret)){
@@ -35,12 +36,14 @@ class LoginSecurityController extends Controller
                 $user->loginSecurity->google2fa_secret
             );
             $secret_key = $user->loginSecurity->google2fa_secret;
+            $secret_enabled = $user->loginSecurity->google2fa_enable;
         }
 
         $data = array(
             'user' => $user,
             'secret' => $secret_key,
-            'google2fa_url' => $google2fa_url
+            'google2fa_url' => $google2fa_url,
+            'secret_enabled' => $secret_enabled,
         );
 
         return view('auth.2fa_settings')->with('data', $data);
