@@ -50,7 +50,7 @@ class LoginSecurityController extends Controller
             'secret_enabled' => $secret_enabled,
         );
 
-        return view('auth.2fa_settings')->with('data', $data);
+        return view('auth.2fa_settings')->with($data);
     }
 
     /**

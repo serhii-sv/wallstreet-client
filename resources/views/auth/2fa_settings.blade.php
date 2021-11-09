@@ -29,8 +29,8 @@
                                 </div>
                             </form>
                         @elseif(!empty($secret))
-                            1. Scan this QR code with your Google Authenticator App. Alternatively, you can use the code: <code>{{ $data['secret'] }}</code><br/>
-                            <img src="{{$data['google2fa_url'] }}" alt="">
+                            1. Scan this QR code with your Google Authenticator App. Alternatively, you can use the code: <code>{{ $secret }}</code><br/>
+                            <img src="{{ $google2fa_url  }}" alt="">
                             <br/><br/>
                             2. Enter the pin from Google Authenticator app:<br/><br/>
                             <form class="form-horizontal" method="POST" action="{{ route('enable2fa') }}">
