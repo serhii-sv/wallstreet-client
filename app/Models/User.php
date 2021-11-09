@@ -259,14 +259,14 @@ class User extends Authenticatable
             ->sum('main_currency_amount');
     }
 
-    public function deposit_reward() {
+    public function referral_accruals(User $user) {
         $partnerTypeId = TransactionType::getByName('partner')->id;
 
         $wallets = $this->wallets()
             ->get()
             ->pluck('id');
 
-        return $this->transactions()
+        return $user->transactions()
             ->where('type_id', $partnerTypeId)
             ->whereIn('source', $wallets)
             ->sum('main_currency_amount');
