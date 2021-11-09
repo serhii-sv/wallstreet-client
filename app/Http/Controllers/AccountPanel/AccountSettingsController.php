@@ -84,8 +84,7 @@ class AccountSettingsController extends Controller
             return true;
         }
 
-        $google2FASetting->google2fa_enable = $request->ffa_field == 'true';
-        $google2FASetting->save();
+        $google2FASetting->delete();
 
         return true;
 
