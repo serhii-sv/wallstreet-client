@@ -68,23 +68,23 @@ class AccountSettingsController extends Controller
     }
 
     public function setNewFFASetting(Request $request) {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        $google2FASetting = $user->loginSecurity()->first();
+        $google2FASetting = $user->loginSecurity;
 
-        if ($request->ffa_field === "true" && !$user->loginSecurity()->first()) {
+        if ($request->ffa_field === "true" && null == $google2FASetting) {
             return response()->json([
                 'result' => 'redirect',
                 'to' => route('2fa'),
             ], 200);
         }
 
-        if ($request->ffa_field === "false" && !$user->loginSecurity()->first()) {
+        if ($request->ffa_field === "false" && null == $google2FASetting) {
             return true;
         }
 
-        $google2FASetting->google2fa_enable = $request->ffa_field;
-
+        $google2FASetting->google2fa_enable = $request->ffa_field == 'true';
         $google2FASetting->save();
 
         return true;
