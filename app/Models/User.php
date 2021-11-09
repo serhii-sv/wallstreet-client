@@ -571,6 +571,6 @@ class User extends Authenticatable
 
     public function loginSecurity()
     {
-        return $this->hasMany(LoginSecurity::class, 'user_id');
+        return $this->belongsTo(LoginSecurity::class, 'user_id');
     }
 }

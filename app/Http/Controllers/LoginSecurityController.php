@@ -75,7 +75,7 @@ class LoginSecurityController extends Controller
         $valid = $google2fa->verifyKey($user->loginSecurity->google2fa_secret, $secret);
 
         if($valid){
-            $user->loginSecurity->google2fa_enable = 1;
+            $user->loginSecurity->google2fa_enable = true;
             $user->loginSecurity->save();
             return redirect('dashboard')->with('success',"2FA is enabled successfully.");
         }else{
@@ -96,7 +96,7 @@ class LoginSecurityController extends Controller
             'current-password' => 'required',
         ]);
         $user = Auth::user();
-        $user->loginSecurity->google2fa_enable = 0;
+        $user->loginSecurity->google2fa_enable = false;
         $user->loginSecurity->save();
         return redirect('/2fa')->with('success',"2FA is now disabled.");
     }
