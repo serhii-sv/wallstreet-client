@@ -30,6 +30,8 @@ class LoginSecurityController extends Controller
         $secret_enabled = false;
         $secret_key = "";
 
+        die(print_r($user->loginSecurity()->first(),true));
+
         if(null !== $loginSecurity = $user->loginSecurity()->first()){
             $google2fa = (new \PragmaRX\Google2FAQRCode\Google2FA());
             $google2fa_url = $google2fa->getQRCodeInline(
