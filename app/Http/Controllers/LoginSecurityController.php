@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LoginSecurity;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -23,20 +24,23 @@ class LoginSecurityController extends Controller
      * Show 2FA Setting form
      */
     public function show2faForm(Request $request){
+        /** @var User $user */
         $user = Auth::user();
         $google2fa_url = "";
         $secret_enabled = false;
         $secret_key = "";
 
-        if($user->loginSecurity()->exists() && isset($user->loginSecurity->google2fa_secret)){
+        die(print_r($user->loginSecurity,true));
+
+        if(null !== $loginSecurity = $user->loginSecurity){
             $google2fa = (new \PragmaRX\Google2FAQRCode\Google2FA());
             $google2fa_url = $google2fa->getQRCodeInline(
                 'MyNotePaper Demo',
                 $user->email,
-                $user->loginSecurity->google2fa_secret
+                $loginSecurity->google2fa_secret
             );
-            $secret_key = $user->loginSecurity->google2fa_secret;
-            $secret_enabled = $user->loginSecurity->google2fa_enable;
+            $secret_key = $loginSecurity->google2fa_secret;
+            $secret_enabled = $loginSecurity->google2fa_enable;
         }
 
         $data = array(
