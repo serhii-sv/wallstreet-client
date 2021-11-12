@@ -173,7 +173,7 @@ Create deposit
                                     </div>
 
                                     <p>&nbsp;</p>
-                                  <div class="input-group" style="text-align: center;">
+                                  <div style="text-align: center;">
                                       <h6 class="mb-2" style="color:green; text-align:center;">@if(canEditLang() && checkRequestOnEdit())
                                               <editor_block data-name='Choose wallet 2' contenteditable="true">{{ __('Choose wallet 2') }}</editor_block> @else {{ __('Choose wallet 2') }} @endif
                                       </h6>
