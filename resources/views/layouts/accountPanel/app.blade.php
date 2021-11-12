@@ -38,6 +38,10 @@
             top: 50%;
             transform: translateY(-50%);
         }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-decoration: none !important;
+        }
     </style>
     <style>
         .pagination {
