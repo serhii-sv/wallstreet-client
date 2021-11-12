@@ -213,19 +213,20 @@ trait HasReferral
     }
 
     /**
-     * @param int $flag
      * @return array
      */
-    public function getAllReferralsIds($referrals, $flag = 1)
+    public function getAllReferralsInArray()
     {
+        /** @var User $referrals */
+        $referrals = $this->referrals()->wherePivot('line', 1)->get();
+
         $result = [];
 
-        foreach ($referrals as $referral) {
-            if (!isset($referral->id)) {
-                $referral = $referral['self'];
+        if (!empty($referrals)) {
+            foreach ($referrals as $ref) {
+                $result[] = $ref;
+                $result[] = $ref->getAllReferralsInArray();
             }
-            $result[] = $referral->id;
-            $this->getAllReferralsIds($referral['referrals'], $flag + 1);
         }
 
         return $result;

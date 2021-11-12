@@ -42,7 +42,7 @@ Referrals page
                         <div class="col-md-4 ttl-info text-start">
                              <h6>@if(canEditLang() && checkRequestOnEdit())
                                      <editor_block data-name='Active partners' contenteditable="true">{{ __('Active partners') }}</editor_block> @else {{ __('Active partners') }} @endif</h6>
-                            <span>{{ $all_referrals->count() }}</span>
+                            <span>{{ $activeReferrals }}</span>
                         </div>
                     </div>
                   </div>
