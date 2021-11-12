@@ -173,7 +173,7 @@ Create deposit
                                     </div>
 
                                     <p>&nbsp;</p>
-                                  <div class="input-group">
+                                  <div class="input-group" style="text-align: center;">
                                       <h6 class="mb-2" style="color:green; text-align:center;">@if(canEditLang() && checkRequestOnEdit())
                                               <editor_block data-name='Choose wallet 2' contenteditable="true">{{ __('Choose wallet 2') }}</editor_block> @else {{ __('Choose wallet 2') }} @endif
                                       </h6>
@@ -246,6 +246,15 @@ Create deposit
                 <div class="col">
                   <div class="card">
                     <div class="card-block row">
+                      <div class="col-sm-12 col-lg-12 col-xl-12" style="text-align: center; margin:30px 0 50px 0;">
+                          <h3>
+                              @if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='{{ 'title 123123' }}' contenteditable="true">{{ __('title 123123') }}</editor_block>
+                              @else
+                                  {{ __('title 123123') }}
+                              @endif
+                          </h3>
+                      </div>
                       <div class="col-sm-12 col-lg-12 col-xl-12">
                         <div class="table-responsive">
                           <table class="table">
