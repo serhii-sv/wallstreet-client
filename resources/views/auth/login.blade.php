@@ -123,7 +123,7 @@
           <i class="fas fa-angle-left"></i>
           <span>Назад</span>
         </a>
-        <a href="#0" class="logo">
+        <a href="/" class="logo">
           <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="100" alt="logo">
         </a>
 

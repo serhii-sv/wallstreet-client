@@ -123,10 +123,10 @@
           <i class="fas fa-angle-left"></i>
           <span>Back</span>
         </a>
-        <a href="#0" class="logo">
+        <a href="/" class="logo">
           <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="100" alt="logo">
         </a>
-        
+
       </div>
       <div class="account-wrapper">
         <div class="account-body">
@@ -138,7 +138,7 @@
             <div class="form-group">
               <label for="sign-up">Введите код из смс сообщения</label>
               <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="code" value="{{ old('email') }}" required autocomplete="email" autofocus>
-              
+
               @error('email')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -150,7 +150,7 @@
             @else
               <a href="{{ route('login.send.verify.code') }}">Отправить код повторно</a>
             @endif
-            
+
             <div class="form-group text-center">
               <button type="submit" class="mt-2 mb-2">Продолжить</button>
             </div>

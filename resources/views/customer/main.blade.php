@@ -1319,7 +1319,7 @@
                     </div>
                   </div>
                   <div class="client-thumb">
-                    <a href="#0">
+                    <a href="/">
                       <img src="{{ asset('theme/images/client/ysb-logo-social-v2.png') }}" alt="client">
                     </a>
                   </div>
@@ -1352,7 +1352,7 @@
                     </div>
                   </div>
                   <div class="client-thumb">
-                    <a href="#0">
+                    <a href="/">
                       <img src="{{ asset('theme/images/client/binance.svg') }}" alt="client" style="min-width:77px; min-height:77px;">
                     </a>
                   </div>
@@ -1385,7 +1385,7 @@
                     </div>
                   </div>
                   <div class="client-thumb">
-                    <a href="#0">
+                    <a href="/">
                       <img src="{{ asset('theme/images/client/DiUkB_nXUAIpGjR.jpeg') }}" alt="client">
                     </a>
                   </div>

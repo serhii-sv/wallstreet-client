@@ -477,7 +477,7 @@
                   @else
                     {{ __('Join Program') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   @if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Join Now' contenteditable="true">{{ __('Join Now') }}</editor_block>
                   @else
@@ -500,7 +500,7 @@
                   @else
                     {{ __('Promote') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   @if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Tracking Link' contenteditable="true">{{ __('Tracking Link') }}</editor_block>
                   @else
@@ -523,7 +523,7 @@
                   @else
                     {{ __('Earn') }}
                   @endif</h5>
-                <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   @if(canEditLang() && checkRequestOnEdit())
                     <editor_block data-name='Commission Model' contenteditable="true">{{ __('Commission Model') }}</editor_block>
                   @else
@@ -709,7 +709,7 @@
                   </div>
                 </div>
               </div>
-{{--              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--              <a href="/" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
 {{--                  <editor_block data-name='Join Now!' contenteditable="true">{{ __('Join Now!') }}</editor_block>--}}
 {{--                @else--}}
 {{--                  {{ __('Join Now!') }}--}}

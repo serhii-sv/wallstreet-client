@@ -17,5 +17,5 @@
     </div>
   </div>
 </div>
-<a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<a href="/" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
 <div class="overlay"></div>

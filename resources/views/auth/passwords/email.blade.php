@@ -9,7 +9,7 @@
                 <a href="#" onclick="window.history.back()" class="back-home">
                     <i class="fas fa-angle-left"></i><span>Back</span>
                 </a>
-                <a href="#0" class="logo">
+                <a href="/" class="logo">
                     <img src="{{ asset('accountPanel/images/logo/sprint_bank_fin-02.png') }}" width="80" alt="logo">
                 </a>
             </div>

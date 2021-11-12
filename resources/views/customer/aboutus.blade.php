@@ -381,7 +381,7 @@
               </div>
               <div class="investor-content">
                 <h5 class="title">
-                  <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Tito Ortiz' contenteditable="true">{{ __('Tito Ortiz') }}</editor_block>
                     @else
@@ -402,7 +402,7 @@
               </div>
               <div class="investor-content">
                 <h5 class="title">
-                  <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Мария Кокорина' contenteditable="true">{{ __('Мария Кокорина') }}</editor_block>
                     @else
@@ -425,7 +425,7 @@
               </div>
               <div class="investor-content">
                 <h5 class="title">
-                  <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Tomasz Grodzki' contenteditable="true">{{ __('Tomasz Grodzki') }}</editor_block>
                     @else
@@ -447,7 +447,7 @@
               </div>
               <div class="investor-content">
                 <h5 class="title">
-                  <a href="#0" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                  <a href="/" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                     @if(canEditLang() && checkRequestOnEdit())
                       <editor_block data-name='Bill McConnell' contenteditable="true">{{ __('Bill McConnell') }}</editor_block>
                     @else
@@ -489,7 +489,7 @@
               </div>
             </div>
 {{--            <div class="col-md-5 col-xl-6 text-center text-sm-left text-md-right">--}}
-{{--              <a href="#0" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
+{{--              <a href="/" class="custom-button" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())--}}
 {{--                  <editor_block data-name='learn more' contenteditable="true">{{ __('learn more') }}</editor_block>--}}
 {{--                @else--}}
 {{--                  {{ __('learn more') }}--}}
@@ -566,7 +566,7 @@
                       </div>
                     </div>
                     <div class="client-thumb">
-                      <a href="#0">
+                      <a href="/">
                         <img src="{{ asset('theme/images/client/ysb-logo-social-v2.png') }}" alt="client">
                       </a>
                     </div>
@@ -599,7 +599,7 @@
                       </div>
                     </div>
                     <div class="client-thumb">
-                      <a href="#0">
+                      <a href="/">
                           <img src="{{ asset('theme/images/client/binance.svg') }}" alt="client" style="min-width:77px; min-height:77px;">
                       </a>
                     </div>
@@ -632,7 +632,7 @@
                       </div>
                     </div>
                     <div class="client-thumb">
-                      <a href="#0">
+                      <a href="/">
                         <img src="{{ asset('theme/images/client/DiUkB_nXUAIpGjR.jpeg') }}" alt="client">
                       </a>
                     </div>
