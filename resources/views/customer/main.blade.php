@@ -939,14 +939,14 @@
                                   @if(canEditLang() && checkRequestOnEdit())
                                       <editor_block data-name='Min {{ $rate->id }}' contenteditable="true">{{ __('Min '.$rate->id) }}</editor_block>
                                   @else
-{{ __('Min '.$rate->id) }} {{ number_format($rate->min, 2, '.', '') }}$
+{{ __('Min '.$rate->id) }} {{ number_format($rate->min, 0, '.', '') }}$
                                   @endif
                               </h5>
                               <h5 class="sub-title">
                                   @if(canEditLang() && checkRequestOnEdit())
                                       <editor_block data-name='Max {{ $rate->id }}' contenteditable="true">{{ __('Max '.$rate->id) }}</editor_block>
                                   @else
-{{ __('Max '.$rate->id) }} {{ number_format($rate->max, 2, '.', '') }}$
+{{ __('Max '.$rate->id) }} {{ number_format($rate->max, 0, '.', '') }}$
                                   @endif
                               </h5>
                           </div>
