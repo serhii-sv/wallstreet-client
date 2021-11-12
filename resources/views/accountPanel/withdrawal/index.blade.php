@@ -85,7 +85,7 @@ Withdrawals
                               <option value="" disabled>Введите реквизиты для вывода в настройках</option>
                             @endif
                           </select>
-                          <h6 class="mb-2 mt-2">@if(canEditLang() && checkRequestOnEdit())
+                          <h6 class="mb-2 mt-2" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif
                           </h6>
                           <div class="input-group">
