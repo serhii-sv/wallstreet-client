@@ -4,6 +4,35 @@ Create deposit
 @endsection
 @section('content')
 
+    <style>
+        .shake {
+            animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes shake {
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+    </style>
+
   <div class="container-fluid">
     <div class="row second-chart-list third-news-update">
 
@@ -145,7 +174,7 @@ Create deposit
 
                                     <p>&nbsp;</p>
                                   <div class="input-group">
-                                    <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
+                                    <select class="form-select form-control-inverse-fill wallet-select" style="color:green;" name="wallet_id" data-rate="{{ $item->id }}">
                                       <option value="" disabled selected hidden>Выберите кошелёк</option>
                                       @forelse($wallets as $wallet)
                                         <option value="{{ $wallet->id }}" data-currency="{{ $wallet->currency_id }}"
@@ -158,7 +187,7 @@ Create deposit
                                   </div>
                                     <p>&nbsp;</p>
                                     <div style="text-align:center;" class="transaction-footer">
-                                                  <span class="amount" style="text-align:center;">
+                                                  <span class="amount" style="text-align:center; color:green;">
                                                       @if(canEditLang() && checkRequestOnEdit())
                                                           <editor_block data-name='Can deposit {{ $item->id }}' contenteditable="true">{{ __('Can deposit '.$item->id) }}</editor_block>
                                                       @else
