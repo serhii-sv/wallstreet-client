@@ -174,8 +174,8 @@ Create deposit
 
                                     <p>&nbsp;</p>
                                   <div class="input-group">
-                                      <h6 class="mb-2 shake" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
-                                              <editor_block data-name='Choose wallet' contenteditable="true">{{ __('Choose wallet') }}</editor_block> @else {{ __('Choose wallet') }} @endif
+                                      <h6 class="mb-2" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Choose wallet 2' contenteditable="true">{{ __('Choose wallet 2') }}</editor_block> @else {{ __('Choose wallet 2') }} @endif
                                       </h6>
 
                                     <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
