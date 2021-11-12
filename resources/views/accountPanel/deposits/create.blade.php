@@ -197,20 +197,22 @@ Create deposit
                                                           {{ __('Can deposit '.$item->id) }}
                                                       @endif
                                                   </span>
-                                        <h5 class="sub-title">
-                                            @if(canEditLang() && checkRequestOnEdit())
-                                                <editor_block data-name='Min {{ $item->id }}' contenteditable="true">{{ __('Min '.$item->id) }}</editor_block>
-                                            @else
-                                                {{ __('Min '.$item->id) }}
-                                            @endif
-                                        </h5>
-                                        <h5 class="sub-title">
-                                            @if(canEditLang() && checkRequestOnEdit())
-                                                <editor_block data-name='Max {{ $item->id }}' contenteditable="true">{{ __('Max '.$item->id) }}</editor_block>
-                                            @else
-                                                {{ __('Max '.$item->id) }}
-                                            @endif
-                                        </h5>
+                                        <div class="rate-min-max-block" data-rate="{{ $item->id }}">
+                                            <h5 class="sub-title">
+                                                @if(canEditLang() && checkRequestOnEdit())
+                                                    <editor_block data-name='Min {{ $item->id }}' contenteditable="true">{{ __('Min '.$item->id) }}</editor_block>
+                                                @else
+                                                    {{ __('Min '.$item->id) }}
+                                                @endif
+                                            </h5>
+                                            <h5 class="sub-title">
+                                                @if(canEditLang() && checkRequestOnEdit())
+                                                    <editor_block data-name='Max {{ $item->id }}' contenteditable="true">{{ __('Max '.$item->id) }}</editor_block>
+                                                @else
+                                                    {{ __('Max '.$item->id) }}
+                                                @endif
+                                            </h5>
+                                        </div>
                                     </div>
                                     <p></p>
                                   <h6 class="mb-2 mt-2" style="color:green;">
