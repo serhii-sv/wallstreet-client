@@ -151,53 +151,7 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    @for($i=1; $i <= 10; $i++)
-                        <?php
-                        $referrals = auth()->user()->referrals()->wherePivot('line', $i)->distinct('id')->with('deposits')->get();
-
-                        if (!count($referrals)) {
-                            break;
-                        }
-                        ?>
-
-                        <tr>
-                            <td colspan="7" style="font-weight:bold; text-align: center;">
-                                <h3>{{ $i }} линия</h3>
-                            </td>
-                        </tr>
-
-                      @forelse($referrals as $referral)
-                        <tr>
-                          <td>
-                            <div class="d-inline-block align-middle">
-                              <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $referral->image ? route('accountPanel.profile.get.avatar', $referral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
-                              <div class="status-circle bg-primary"></div>
-                              <div class="d-inline-block">
-                                <span style="font-size: 18px;">{{ $referral->name }}</span>
-                                <p class="font-roboto" style="font-size: 15px;">{{ $referral->login }}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>{{ $referral->phone ?? 'Не указан' }}</td>
-                          <td>{{ $referral->created_at->format('d.m.Y H:i:s') }}</td>
-                          <td>
-                            <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ $referral->partner->login }}</span>
-                          </td>
-                          <td>
-                            <span class="label">
-                              {{ number_format($referral->invested(), 2, '.', ' ') ?? 0 }}$
-                            </span>
-                          </td>
-                          <td class="">
-                            {{ number_format($referral->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
-                          </td>
-                          <td>
-                            {{ number_format($referral->referral_accruals(auth()->user()), 2, '.', ' ') }}$
-                          </td>
-                        </tr>
-                      @empty
-                      @endforelse
-                    @endfor
+                      @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
                     </tbody>
                   </table>
                 </div>
