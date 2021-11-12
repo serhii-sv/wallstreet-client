@@ -174,8 +174,11 @@ Create deposit
 
                                     <p>&nbsp;</p>
                                   <div class="input-group">
-                                    <select class="form-select form-control-inverse-fill wallet-select" style="color:green;" name="wallet_id" data-rate="{{ $item->id }}">
-                                      <option value="" disabled selected hidden>Выберите кошелёк</option>
+                                      <h6 class="mb-2 shake" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
+                                              <editor_block data-name='Choose wallet' contenteditable="true">{{ __('Choose wallet') }}</editor_block> @else {{ __('Choose wallet') }} @endif
+                                      </h6>
+
+                                    <select class="form-select form-control-inverse-fill wallet-select" name="wallet_id" data-rate="{{ $item->id }}">
                                       @forelse($wallets as $wallet)
                                         <option value="{{ $wallet->id }}" data-currency="{{ $wallet->currency_id }}"
                                             @if(old('wallet_id') == $wallet->id) selected="selected" @endif>
