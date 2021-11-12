@@ -11,7 +11,8 @@
 
 @if($level > 0)
 <tr>
-    <td style="padding-left:{{ $level * 15 }}px;">
+    @php($p = $level > 5 ? 5 : $level)
+    <td style="padding-left:{{ $p * 15 }}px;">
         <div class="d-inline-block align-middle">
             <img class="img-40 m-r-15 rounded-circle align-top" src="{{ $self->image ? route('accountPanel.profile.get.avatar', $self->id) : asset('accountPanel/images/user/user.png') }}" alt="">
             <div class="status-circle bg-primary"></div>
