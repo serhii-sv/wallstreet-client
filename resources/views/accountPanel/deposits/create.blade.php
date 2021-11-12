@@ -202,14 +202,14 @@ Create deposit
                                                 @if(canEditLang() && checkRequestOnEdit())
                                                     <editor_block data-name='Min {{ $item->id }}' contenteditable="true">{{ __('Min '.$item->id) }}</editor_block>
                                                 @else
-                                                    {{ __('Min '.$item->id) }} {{ number_format($item->min, 2, '.', '') }}
+                                                    {{ __('Min '.$item->id) }} {{ number_format($item->min, 2, '.', '') }}$
                                                 @endif
                                             </h5>
                                             <h5 class="sub-title">
                                                 @if(canEditLang() && checkRequestOnEdit())
                                                     <editor_block data-name='Max {{ $item->id }}' contenteditable="true">{{ __('Max '.$item->id) }}</editor_block>
                                                 @else
-                                                    {{ __('Max '.$item->id) }} {{ number_format($item->min, 2, '.', '') }}
+                                                    {{ __('Max '.$item->id) }} {{ number_format($item->min, 2, '.', '') }}$
                                                 @endif
                                             </h5>
                                         </div>
