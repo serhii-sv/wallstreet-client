@@ -273,13 +273,7 @@
                             </a>
                         </li>
                     @endif
-                    <li>
-                        <a href="{{ route('customer.aboutus') }}">@if(canEditLang() && checkRequestOnEdit())
-                                <editor_block data-name='About' contenteditable="true">{{ __('About') }}</editor_block>
-                            @else
-                                {{ __('About') }}
-                            @endif</a>
-                    </li>
+
                     <li>
                         <a href="{{ route('customer.partners') }}">@if(canEditLang() && checkRequestOnEdit())
                                 <editor_block data-name='Affiliate' contenteditable="true">{{ __('Affiliate') }}</editor_block>
