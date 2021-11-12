@@ -187,7 +187,7 @@ Create deposit
                                   </div>
                                     <p>&nbsp;</p>
                                     <div style="text-align:center;" class="transaction-footer">
-                                                  <span class="amount" style="text-align:center; color:green;">
+                                                  <span class="amount" style="text-align:center;">
                                                       @if(canEditLang() && checkRequestOnEdit())
                                                           <editor_block data-name='Can deposit {{ $item->id }}' contenteditable="true">{{ __('Can deposit '.$item->id) }}</editor_block>
                                                       @else
@@ -210,7 +210,7 @@ Create deposit
                                         </h5>
                                     </div>
                                     <p></p>
-                                  <h6 class="mb-2 mt-2">
+                                  <h6 class="mb-2 mt-2" style="color:green;">
                                       @if(canEditLang() && checkRequestOnEdit())
                                         <editor_block data-name='Enter the amount {{ $item->id }}' contenteditable="true">{{ __('Enter the amount '.$item->id) }}</editor_block>
                                       @else
