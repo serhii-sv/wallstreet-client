@@ -44,7 +44,7 @@
                 {{ __('To Get Exclusive Benefits') }}
               @endif
             </h3>
-            <a class="link-login" href="{{ route('login') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
+            <a class="link-login" href="https://drive.google.com/file/d/1_sf3cAqyGXehrAxDHyTZEHY5HZDecydO/view" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
                 <editor_block data-name='subscribe' contenteditable="true">{{ __('subscribe') }}</editor_block>
               @else
                 {{ __('subscribe') }}
@@ -86,17 +86,17 @@
              </a>--}}
         <ul class="social-icons">
           <li>
-            <a href="#0">
+            <a href="https://www.facebook.com/">
               <i class="fab fa-facebook-f"></i>
             </a>
           </li>
           <li>
-            <a href="#0" class="active">
+            <a href="https://twitter.com/sprintbank_us" class="active">
               <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a href="#0">
+            <a href="https://www.instagram.com/sprintbank.us/">
               <i class="fab fa-instagram"></i>
             </a>
           </li>
