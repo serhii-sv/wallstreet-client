@@ -160,11 +160,31 @@ class Transaction extends Model
      * @throws \Exception
      */
     public function getAmountAttribute($value) {
+        if ($value < 0.00000001) {
+            return 0.00000001;
+        }
+
         $precision = $this->currency->precision ?? 2;
 
         if ($precision > 8) {
             $precision = 8;
         }
+
+        return sprintf('%0.'.$precision.'f', $value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return float
+     * @throws \Exception
+     */
+    public function getMainCurrencyAmountAttribute($value) {
+        if ($value < 0.01) {
+            return 0.01;
+        }
+
+        $precision = 2;
 
         return sprintf('%0.'.$precision.'f', $value);
     }
