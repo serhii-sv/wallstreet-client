@@ -28,12 +28,14 @@ class ReferralsController extends Controller
         }
 
         $all_referrals = $user->getAllReferralsInArray();
-        $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
+        $transaction_type_invest = TransactionType::where('name', 'enter')->first();
         $activeReferrals = 0;
         $total_referral_invested = 0;
         foreach ($all_referrals as $referral) {
             $invested = cache()->remember('referrals.total_invested_' . $referral->id, 60, function () use ($referral, $transaction_type_invest) {
-                return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
+                return $referral->transactions->where('type_id', $transaction_type_invest->id)
+                    ->where('is_real', true)
+                    ->sum('main_currency_amount');
             });
 
             if ($invested > 0) {
