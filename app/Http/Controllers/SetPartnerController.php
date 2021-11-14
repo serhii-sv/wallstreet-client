@@ -17,25 +17,29 @@ class SetPartnerController extends Controller
      */
     public function index(Request $request, $partner_id) {
         $check['partner_id'] = trim($partner_id);
-        
+
         $validator = Validator::make($check, [
             'partner_id' => 'required|exists:users,my_id',
         ]);
-        
+
         if ($validator->fails()) {
             return redirect('/')->withErrors($validator);
         }
         $partner = User::where('my_id', $partner_id)->first();
-        $stats = ReferralLinkStat::where('partner_id', $partner->id)->where('user_id', null)->where('ip', $request->ip())->first();
-        if ($stats === null) {
-            $stats = new ReferralLinkStat();
-            $stats->partner_id = $partner->id;
-            $stats->ip = $request->ip();
-        }else{
-            $stats->click_count++;
+
+        if (null !== $partner) {
+            $stats = ReferralLinkStat::where('partner_id', $partner->id)->where('user_id', null)->where('ip', $request->ip())->first();
+            if ($stats === null) {
+                $stats = new ReferralLinkStat();
+                $stats->partner_id = $partner->id;
+                $stats->ip = $request->ip();
+            } else {
+                $stats->click_count++;
+            }
+            $stats->save();
+            setcookie("partner_id", $partner_id, time() + 2592000, '/'); // expire in 30 days
         }
-        $stats->save();
-        setcookie("partner_id", $partner_id, time() + 2592000, '/'); // expire in 30 days
+
         return redirect(route('register'));
     }
 }
