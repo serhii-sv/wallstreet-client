@@ -202,11 +202,15 @@ class AccountSettingsController extends Controller
 
 
         if ($dispatch_method->s_value == 'voice') {
-
-            $client->calls->create($this->phone_format(Auth::user()->phone), // to
+            try {
+                $client->calls->create(Auth::user()->phone, // to
                     $twilio_number, // from
                     // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
                     ["url" => 'https://demo.twilio.com/docs/voice.xml']);
+            } catch (\Exception $e) {
+                return back()->with('error', 'Ошибка звонка на номер '.Auth::user()->phone);
+            }
+
             $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
             if ($statusCode == '201') {
                 $sms = new UserPhoneMessages();
@@ -221,11 +225,17 @@ class AccountSettingsController extends Controller
             if ($last_sms === null) {
 
                 $text = Setting::where('s_key', 'verification_text')->first();
-                $client->messages->create(// Where to send a text message (your cell phone?)
-                    $this->phone_format(Auth::user()->phone), [
-                    'from' => $twilio_number,
-                    'body' => $text->s_value . ' ' . $code,
-                ]);
+
+                try {
+                    $client->messages->create(// Where to send a text message (your cell phone?)
+                        Auth::user()->phone, [
+                        'from' => $twilio_number,
+                        'body' => $text->s_value . ' ' . $code,
+                    ]);
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Ошибка отправки смс на номер '.Auth::user()->phone);
+                }
+
                 $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
                 if ($statusCode == '201') {
                     $sms = new UserPhoneMessages();

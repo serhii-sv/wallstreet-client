@@ -24,13 +24,13 @@ use Twilio\Rest\Client;
 
 class ProfileController extends Controller
 {
-    
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit() {
         $wallets = Wallet::with('currency')->where('user_id', auth()->user()->id)->with('currency')->get();
-        
+
         $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
         return view('accountPanel.profile.edit', [
             'user' => Auth::user(),
@@ -38,7 +38,7 @@ class ProfileController extends Controller
             'wallets' => $wallets,
         ]);
     }
-    
+
     public function updateWalletDetails(Request $request) {
         $request->validate([
             'user_id' => 'required|uuid',
@@ -46,27 +46,27 @@ class ProfileController extends Controller
             'currency_id' => 'required|uuid',
             'external' => 'max:255',
         ]);
-        
+
         $external = $request->get('external');
         $user_id = $request->get('user_id');
         $wallet_id = $request->get('wallet_id');
         $currency_id = $request->get('currency_id');
-        
+
         if ($user_id !== auth()->user()->id) {
             return redirect()->back()->with('error', 'Жулик!');
         }
-        
+
         $wallet = Wallet::where('id', $wallet_id)->where('user_id', $user_id)->where('currency_id', $currency_id)->first();
         if ($wallet === null) {
             return redirect()->back()->with('error', 'Попробуй заново!');
         }
-        
+
         $wallet->external = $external;
         $wallet->save();
-        
+
         return redirect()->back()->with('success', 'Данные успешно сохранены!');
     }
-    
+
     /**
      * @param Request $request
      *
@@ -89,7 +89,7 @@ class ProfileController extends Controller
         $user->update(['phone_verified' => $phone_verified]);
         return redirect()->route('accountPanel.settings.profile')->with('success', 'Данные успешно изменены!');
     }
-    
+
     /**
      * @param Request $request
      *
@@ -99,11 +99,11 @@ class ProfileController extends Controller
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
         $file = $request->file('avatar');
         $folder_id = $request->folder_id;
         $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
-        
+
         try {
             DB::transaction(function () use ($newName, $file, $folder_id) {
                 if (!is_null($folder_id)) {
@@ -112,11 +112,11 @@ class ProfileController extends Controller
                 } else {
                     $upload = Storage::disk('do_spaces')->put($newName, $file, 'private');
                 }
-                
+
                 $user = auth()->user();
                 /** @var User $createdBy */
                 $createdBy = $user;
-                
+
                 $cloudFile = CloudFile::create([
                     'created_by' => $createdBy->id,
                     'name' => strtolower($file->getClientOriginalName()),
@@ -127,17 +127,17 @@ class ProfileController extends Controller
                     'last_access' => null,
                     'size' => $file->getSize(),
                 ]);
-                
+
                 $user->avatar = $cloudFile->id;
                 $user->save();
             });
         } catch (\Exception $exception) {
             die($exception->getMessage());
         }
-        
+
         return redirect()->route('accountPanel.settings.profile', !is_null($folder_id) ? ['folder' => $folder_id] : [])->with('success', 'Файл успешно загружен');
     }
-    
+
     /**
      * @param $id
      *
@@ -146,15 +146,15 @@ class ProfileController extends Controller
      */
     public function getAvatar($id) {
         $avatar_id = User::findOrFail($id)->avatar;
-        
+
         $file = CloudFile::findOrFail($avatar_id);
         $fileFromStorage = Storage::disk('do_spaces')->get($file->url);
-        
+
         return response($fileFromStorage, 200, [
             'Content-type' => $file->mime,
         ]);
     }
-    
+
     /**
      * @param Request $request
      *
@@ -167,34 +167,34 @@ class ProfileController extends Controller
         ], [
             'passportImage.required' => 'Фото паспорта обязятельно',
             'passportImage.mimes' => 'Неверный формат файла для фото паспорта',
-            
+
             'selfie.required' => 'Селфи обязятельно',
             'selfie.mimes' => 'Неверный формат файла для селфи',
-            
+
             'full_name.required' => 'Поле имени обязательно',
             'full_name.max' => 'Максимальное количество символов 255',
         ]);
-        
+
         if (count($validator->errors()->messages())) {
             return back()->with('short_error_array', $validator->errors()->messages());
         }
-        
+
         $passportFile = $request->file('passportImage');
         $selfie = $request->file('selfie');
-        
+
         try {
             DB::transaction(function () use ($passportFile, $selfie, $request) {
                 $newName = md5($passportFile->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $passportFile->getExtension();
                 $passportFile = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $passportFile, $newName);
-                
+
                 $newName = md5($selfie->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $selfie->getExtension();
                 $selfie = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $selfie, $newName);
-                
+
                 Storage::disk('do_spaces')->setVisibility($passportFile, 'public');
                 Storage::disk('do_spaces')->setVisibility($selfie, 'public');
-                
+
                 $user = auth()->user();
-                
+
                 $user->verifiedDocuments()->create([
                     'passport_image' => $passportFile,
                     'selfie_image' => $selfie,
@@ -203,10 +203,10 @@ class ProfileController extends Controller
         } catch (\Exception $exception) {
             return back()->with('short_error', $exception->getMessage());
         }
-        
+
         return back()->with('short_success', 'Заявка на подтверждение личности создана');
     }
-    
+
     public function loginSendVerifyCode(Request $request) {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -223,31 +223,35 @@ class ProfileController extends Controller
         if (!(Auth::user()->phone_verified)) {
             return redirect()->route('accountPanel.dashboard');
         }
-    
+
         $browser = Parser::browserFamily();
         $browser_version = Parser::browserVersion();
         $device_platform = Parser::platformName();
         $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
-    
+
         if ($user_device !== null){
             if ($user_device->sms_verified){
                 return redirect()->route('accountPanel.dashboard');
             }
         }
-        
+
         $dispatch_method = Setting::where('s_key', 'verification_type')->first();
         $account_sid = env("TWILIO_ACCOUNT_SID");
         $auth_token = env("TWILIO_AUTH_TOKEN");
         $twilio_number = env("TWILIO_PHONE_NUMBER");
         $code = $this->generatePIN(4);
         $client = new Client($account_sid, $auth_token);
-    
+
         if ($dispatch_method->s_value == 'voice') {
-        
-            $client->calls->create($this->phone_format(Auth::user()->phone), // to
-                $twilio_number, // from
-                // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
-                ["url" => 'https://demo.twilio.com/docs/voice.xml']);
+            try {
+                $client->calls->create(Auth::user()->phone, // to
+                    $twilio_number, // from
+                    // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
+                    ["url" => 'https://demo.twilio.com/docs/voice.xml']);
+            } catch (\Exception $e) {
+                return back()->with('error', 'Ошибка звонка на номер '.Auth::user()->phone);
+            }
+
             $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
             if ($statusCode == '201') {
                 $sms = new UserPhoneMessages();
@@ -260,13 +264,18 @@ class ProfileController extends Controller
         } else {
             $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
             if ($last_sms === null) {
-            
+
                 $text = Setting::where('s_key', 'verification_text')->first();
-                $client->messages->create(// Where to send a text message (your cell phone?)
-                    $this->phone_format(Auth::user()->phone), [
-                    'from' => $twilio_number,
-                    'body' => $text->s_value . ' ' . $code,
-                ]);
+
+                try {
+                    $client->messages->create(// Where to send a text message (your cell phone?)
+                        Auth::user()->phone, [
+                        'from' => $twilio_number,
+                        'body' => $text->s_value . ' ' . $code,
+                    ]);
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Ошибка отправки смс на номер '.Auth::user()->phone);
+                }
                 $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
                 if ($statusCode == '201') {
                     $sms = new UserPhoneMessages();
@@ -280,15 +289,15 @@ class ProfileController extends Controller
         }
         return redirect()->route('login.enter.verify.code');
     }
-    
+
     public function enterVerifyLoginCode() {
         $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
-    
+
         return view('auth.verify-code', [
             'last_sms' => $last_sms,
         ]);
     }
-    
+
     public function verifyCode(Request $request) {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
@@ -309,7 +318,7 @@ class ProfileController extends Controller
         $browser_version = Parser::browserVersion();
         $device_platform = Parser::platformName();
         $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
-    
+
         if ($user_device !== null){
             if ($user_device->sms_verified){
                 return redirect()->route('accountPanel.dashboard');
@@ -333,7 +342,7 @@ class ProfileController extends Controller
             }
             $user_device->save();
         }
-        
+
         $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
         if ($last_sms === null) {
             return redirect()->route('login.enter.verify.code')->with('error', 'Код не верный!');
