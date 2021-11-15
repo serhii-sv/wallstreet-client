@@ -1,4 +1,4 @@
-@php($parent = $us->getAllReferrals())
+@php($parent = $us->getAllReferrals(false, 1, 1))
 @php($self = $parent['self'])
 
 @if($level == 1)
