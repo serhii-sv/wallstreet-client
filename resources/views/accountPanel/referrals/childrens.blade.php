@@ -1,4 +1,4 @@
-@php($parent = $us->getAllReferrals())
+@php($parent = cache()->remember('us.referrals.'.$us->id, 60, function() use($us) { return $us->getAllReferrals(); }))
 @php($self = $parent['self'])
 
 @if($level == 1)
