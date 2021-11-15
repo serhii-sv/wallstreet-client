@@ -152,6 +152,7 @@ Referrals page
                     </thead>
                     <tbody>
                       @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
+
                     </tbody>
                   </table>
                 </div>
