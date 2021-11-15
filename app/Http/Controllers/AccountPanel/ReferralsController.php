@@ -44,7 +44,6 @@ class ReferralsController extends Controller
 
             $total_referral_invested += $invested;
         }
-        die('ok');
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);
 
