@@ -51,7 +51,8 @@
         },
         "files": [
             "app/Helpers/Helper.php",
-            "app/Helpers/OldHelpers.php"
+            "app/Helpers/OldHelpers.php",
+            "app/Helpers/PaginationHelper.php"
         ]
     },
     "autoload-dev": {
