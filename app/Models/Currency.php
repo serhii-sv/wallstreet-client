@@ -127,7 +127,7 @@ class Currency extends Model
      */
     public static function balances(): array
     {
-        return cache()->remember('admin.currency.nullBalance', 60, function () {
+        return cache()->remember('admin.currency.nullBalance', now()->addMinutes(60), function () {
             foreach (self::all() as $currency) {
                 $balances[$currency->code] = 0.00;
             }
