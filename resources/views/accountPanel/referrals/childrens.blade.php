@@ -47,6 +47,6 @@
 @include('accountPanel.referrals.childrens', ['us' => $self, 'level' => $level+1])
 @endforeach
 
-@if($level == 0)
+@if($level == 1)
     paginator
 @endif
