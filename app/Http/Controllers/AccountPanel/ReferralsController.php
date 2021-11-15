@@ -27,7 +27,9 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = $user->getAllReferralsInArray();
+        $all_referrals = cache()->remember('referrals.array.'.$user->id, 60, function() use($user) {
+            return $user->getAllReferralsInArray();
+        });
         $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $activeReferrals = 0;
         $total_referral_invested = 0;
