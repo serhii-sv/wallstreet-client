@@ -130,12 +130,12 @@ Account
                         </span>
                           <h4 class="mb-0 counter">{{ $item->balance ?? 0 }} {{ $item->currency->symbol }}</h4>
 
-                          <span class="m-0">@if(canEditLang() && checkRequestOnEdit())
+                          <span style="display:block; margin-top:10px;" class="m-0">@if(canEditLang() && checkRequestOnEdit())
                                   <editor_block data-name='Total user enter' contenteditable="true">{{ __('Total user enter') }}</editor_block>
                               @else {{ __('Total user enter') }}@endif {{ $item->totalEnter() ?? 0 }} {{ $item->currency->symbol }}
                         </span>
 
-                          <span class="m-0">@if(canEditLang() && checkRequestOnEdit())
+                          <span style="display:block; margin-top:5px;" class="m-0">@if(canEditLang() && checkRequestOnEdit())
                                   <editor_block data-name='Total user withdraw' contenteditable="true">{{ __('Total user withdraw') }}</editor_block>
                               @else {{ __('Total user withdraw') }}@endif {{ $item->totalWithdraw() ?? 0 }} {{ $item->currency->symbol }}
                         </span>
