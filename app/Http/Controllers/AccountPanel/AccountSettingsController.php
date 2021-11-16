@@ -34,7 +34,14 @@ class AccountSettingsController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function securitySettings() {
-        return view('accountPanel.settings.settings-security')->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        $verification_enable = $verification_enable !== null ? $verification_enable->s_value : 'off';
+
+        return view('accountPanel.settings.settings-security')->with([
+            'fa_field' => auth()->user()->loginSecurity()->first()->google2fa_enable ?? false,
+            'user' => Auth::user(),
+            'verification_enable' => $verification_enable
+        ]);
     }
 
     public function setNewPassword(Request $request) {
@@ -117,19 +124,6 @@ class AccountSettingsController extends Controller
     public function verifyAccount() {
         return view('accountPanel.settings.verify', [
             'user' => Auth::user(),
-        ]);
-    }
-
-    public function showVerifyPhone() {
-        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            $verification_enable = $verification_enable->s_value;
-        }else{
-            $verification_enable = 'off';
-        }
-        return view('accountPanel.settings.verify-phone', [
-            'user' => Auth::user(),
-            'verification_enable' => $verification_enable
         ]);
     }
 
