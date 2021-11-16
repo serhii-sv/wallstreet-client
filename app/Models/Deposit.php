@@ -430,16 +430,18 @@ class Deposit extends Model
         /** @var Wallet $wallet */
         $wallet = $this->wallet()->first();
 
-        /** @var User $user */
-        $user = $this->user()->first();
-
-
         if ($this->overall) {
             $amountOverall = $this->invested * $this->overall * 0.01;
             $transactionOverall = Transaction::dividend($wallet, $amountOverall, $this);
 
+            $accrue = $wallet->addAmountWithoutAccrueToPartner($amountOverall);
+
+            if ($this->overall - 100 > 0) {
+                $wallet->accrueToPartner($this->invested * ($this->overall-100) * 0.01, 'deposit');
+            }
+
             if ($transactionOverall->update([
-                'approved' => $wallet->addAmountWithoutAccrueToPartner($amountOverall),
+                'approved' => $accrue,
             ])) {
                 $this->update(['condition' => 'overall']);
             } else {
@@ -449,10 +451,6 @@ class Deposit extends Model
 
         $amount = $this->balance;
         $closeTransaction = Transaction::closeDeposit($this, $amount);
-
-        if (!$wallet->addAmountWithoutAccrueToPartner($amount)) {
-            throw new \Exception("deposit not close!");
-        }
 
         $closeTransaction->update(['approved' => true]);
         $this->update(['condition' => 'closed']);
