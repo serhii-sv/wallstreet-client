@@ -34,7 +34,7 @@ class AccountSettingsController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function securitySettings() {
-        return view('accountPanel.settings-security')->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
+        return view('accountPanel.settings.settings-security')->with('fa_field', auth()->user()->loginSecurity()->first()->google2fa_enable ?? false);
     }
 
     public function setNewPassword(Request $request) {
