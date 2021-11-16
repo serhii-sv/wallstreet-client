@@ -144,6 +144,8 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/ico', [IsoController::class, 'index' ])->name('ico');
 
+            Route::get('/show', [\App\Http\Controllers\AccountPanel\ShopController::class, 'index' ])->name('shop');
+
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
 

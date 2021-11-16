@@ -83,7 +83,7 @@
               <i data-feather="users"></i>
               <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
             </a>--}}
-  
+
             <a class="sidebar-link sidebar-title" href="#">
               <i data-feather="users"></i>
               <span class="lan-6" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referrals' contenteditable="true">{{ __('Referrals') }}</editor_block> @else {{ __('Referrals') }} @endif</span>
@@ -111,8 +111,8 @@
                 </a>
               </li>
             </ul>
-            
-            
+
+
           </li>
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
@@ -121,16 +121,24 @@
               <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Currency exchange' contenteditable="true">{{ __('Currency exchange') }}</editor_block> @else {{ __('Currency exchange') }} @endif</span>
             </a>
           </li>
-          
-          
-          <li class="sidebar-list">
-            {{--<label class="badge badge-success">2</label>--}}
-            <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.ico') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-              <i data-feather="trending-down"></i>
-              <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='ICO' contenteditable="true">{{ __('ICO') }}</editor_block> @else {{ __('ICO') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>
-            </a>
-          </li>
-          
+
+
+            <li class="sidebar-list">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.ico') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <i data-feather="trending-down"></i>
+                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='ICO' contenteditable="true">{{ __('ICO') }}</editor_block> @else {{ __('ICO') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>
+                </a>
+            </li>
+
+            <li class="sidebar-list">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.shop') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <i data-feather="trending-down"></i>
+                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Shop link' contenteditable="true">{{ __('Shop link') }}</editor_block> @else {{ __('Shop link') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>
+                </a>
+            </li>
+
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
@@ -167,20 +175,16 @@
               </li>
               <li class="">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="" href="{{ route('accountPanel.settings.verify.phone') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                  <i data-feather="user"></i>
-                  <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Verify Phone' contenteditable="true">{{ __('Verify Phone') }}</editor_block> @else {{ __('Verify Phone') }} @endif</span>
-                </a>
-              </li>
-              <li class="">
-                {{--<label class="badge badge-success">2</label>--}}
                 <a class="" href="{{ route('accountPanel.support-tasks.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
                   <i data-feather="info"></i>
                   <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Support tasks' contenteditable="true">{{ __('Support tasks') }}</editor_block> @else {{ __('Support tasks') }} @endif</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('accountPanel.settings.security') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Security' contenteditable="true">{{ __('Security') }}</editor_block> @else {{ __('Security') }} @endif</a>
+                <a href="{{ route('accountPanel.settings.security') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <i data-feather="user"></i>
+                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Security' contenteditable="true">{{ __('Security') }}</editor_block> @else {{ __('Security') }} @endif</span>
+                </a>
               </li>
             </ul>
           </li>
