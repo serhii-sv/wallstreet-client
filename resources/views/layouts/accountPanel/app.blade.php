@@ -75,6 +75,11 @@
             box-shadow: 0 0 8px 0 #3f51b5;
         }
 
+        .tap-top {
+            z-index: 555 !important;
+            left:50px !important;
+        }
+
     </style>
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
