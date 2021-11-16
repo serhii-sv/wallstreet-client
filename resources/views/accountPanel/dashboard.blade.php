@@ -132,15 +132,13 @@ Account
 
                           <span class="m-0">@if(canEditLang() && checkRequestOnEdit())
                                   <editor_block data-name='Total user enter' contenteditable="true">{{ __('Total user enter') }}</editor_block>
-                              @else {{ __('Total user enter') }}@endif
+                              @else {{ __('Total user enter') }}@endif {{ $item->totalEnter() ?? 0 }} {{ $item->currency->symbol }}
                         </span>
-                          <h4 class="mb-0 counter">{{ $item->totalEnter() ?? 0 }} {{ $item->currency->symbol }}</h4>
 
                           <span class="m-0">@if(canEditLang() && checkRequestOnEdit())
                                   <editor_block data-name='Total user withdraw' contenteditable="true">{{ __('Total user withdraw') }}</editor_block>
-                              @else {{ __('Total user withdraw') }}@endif
+                              @else {{ __('Total user withdraw') }}@endif {{ $item->totalWithdraw() ?? 0 }} {{ $item->currency->symbol }}
                         </span>
-                          <h4 class="mb-0 counter">{{ $item->totalWithdraw() ?? 0 }} {{ $item->currency->symbol }}</h4>
 
                         <i class="icon-bg" data-feather="credit-card"></i>
                         <div class="mt-3 wallet-button-wrapper ">
