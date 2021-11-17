@@ -81,6 +81,7 @@ class CurrencyController extends Controller
 
     public function getExchangeRate(Request $request)
     {
+        return 1;
         $request->validate([
             'amount'        => 'required',
             'wallet_from'   => 'required',
@@ -88,7 +89,7 @@ class CurrencyController extends Controller
         ]);
 
         if ($request->get('wallet_from') == $request->get('wallet_to')){
-            return redirect()->back()->with('error', 'Кошельки должны отличаться!');
+            return 0;
         }
 
         /** @var float $amount */
