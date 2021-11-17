@@ -751,7 +751,7 @@
                       <div class="main-amount">
                         <input type="text" class="calculator-invest" id="{{ $currency->code }}-amount" readonly>
                       </div>
-                      <div style="margin-top:30px; width:100%;" class="invest-amount" data-min="{{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }} {{ $currency->code }}" data-max="{{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 20000 }} {{ $currency->code }}">
+                      <div style="margin-top:30px; width:100%;" class="invest-amount" data-min="{{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }} {{ $currency->code }}" data-max="{{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 50000 }} {{ $currency->code }}">
                         <div id="{{ $currency->code }}-range" class="invest-range-slider"></div>
                       </div>
                     </div>
@@ -1415,7 +1415,7 @@
                 step: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }},
                 value: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 100 : 0.0001 }},
                 min: {{ $currency->code == 'RUB' || $currency->code == 'USD' ? 1 : 0.0001 }},
-                max: {{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 20000 }},
+                max: {{ $currency->code == 'BTC' || $currency->code == 'ETH' ? 10 : 50000 }},
                 slide: function( event, ui ) {
                     var calcAmount = ui.value;
                     var rateId = $('#calcRateId').val();
