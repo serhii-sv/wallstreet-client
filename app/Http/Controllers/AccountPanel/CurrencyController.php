@@ -87,21 +87,23 @@ class CurrencyController extends Controller
             'wallet_to'     => 'required',
         ]);
 
-        if ($request->get('wallet_from') == $request->get('wallet_to')){
+        if ($_GET['wallet_from'] == $_GET['wallet_to']){
             return 0;
         }
 
+        die(print_r($_GET,true));
+
         /** @var float $amount */
-        $amount = abs($request->get('amount'));
+        $amount = abs($_GET['amount']);
 
         /** @var float $commission */
         $commission = 1; // %
 
         /** @var Wallet $wallet_from */
-        $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->firstOrFail();
+        $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $_GET['wallet_from'])->firstOrFail();
 
         /** @var Wallet $wallet_to */
-        $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_to'))->firstOrFail();
+        $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $_GET['wallet_to'])->firstOrFail();
 
 
 
