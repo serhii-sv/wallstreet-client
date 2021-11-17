@@ -183,10 +183,8 @@ Exchange currency
       $(document).ready(function () {
           $('#exchangeAmount').keyup(function(){
               var val = $(this).val();
-              var from = $('.wallet_from').val();
-              var to = $('.wallet_to').val();
-
-              alert(from+'/'+to);
+              var from = $('.wallet_from:checked').val();
+              var to = $('.wallet_to:checked').val();
 
               $('.fromAmount').html(val);
 
