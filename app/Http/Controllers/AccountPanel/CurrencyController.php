@@ -98,10 +98,10 @@ class CurrencyController extends Controller
         $commission = 1; // %
 
         /** @var Wallet $wallet_from */
-        $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->first();
+        $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->firstOrFail();
 
         /** @var Wallet $wallet_to */
-        $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_to'))->first();
+        $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_to'))->firstOrFail();
 
 
 
