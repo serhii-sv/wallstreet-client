@@ -78,4 +78,40 @@ class CurrencyController extends Controller
             return back()->with('error', 'Ошибка! ' . $exception->getMessage());
         }
     }
+
+    public function getExchangeRate(Request $request)
+    {
+        $request->validate([
+            'amount'        => 'required',
+            'wallet_from'   => 'required',
+            'wallet_to'     => 'required',
+        ]);
+
+        if ($request->get('wallet_from') == $request->get('wallet_to')){
+            return redirect()->back()->with('error', 'Кошельки должны отличаться!');
+        }
+
+        /** @var float $amount */
+        $amount = abs($request->get('amount'));
+
+        /** @var float $commission */
+        $commission = 1; // %
+
+        /** @var Wallet $wallet_from */
+        $wallet_from = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_from'))->first();
+
+        /** @var Wallet $wallet_to */
+        $wallet_to = Wallet::where('user_id', Auth::user()->id)->where('id', $request->get('wallet_to'))->first();
+
+
+
+
+        $converted = $this->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+
+        if ((float) $converted <= 0) {
+            throw new \Exception('no rate for change '.$wallet_from->currency->code.' -> '.$wallet_to->currency->code);
+        }
+
+        return $converted;
+    }
 }

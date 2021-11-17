@@ -62,7 +62,7 @@ Exchange currency
                               <editor_block data-name='Choose the first wallet' contenteditable="true">{{ __('Choose the first wallet') }}</editor_block> @else {{ __('Choose the first wallet') }} @endif
                           </div>
                           @forelse($wallets as $wallet)
-                            <input class="currency-exchange-radio" type="radio" id="wal1{{ $wallet->id }}" name="wallet_from" value="{{ $wallet->id }}">
+                            <input class="currency-exchange-radio wallet_from" type="radio" id="wal1{{ $wallet->id }} " name="wallet_from" value="{{ $wallet->id }}">
                             <label class="currency-exchange" for="wal1{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
                               {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
                             </label>
@@ -91,7 +91,7 @@ Exchange currency
                               <editor_block data-name='Choose a second wallet' contenteditable="true">{{ __('Choose a second wallet') }}</editor_block> @else {{ __('Choose a second wallet') }} @endif
                           </div>
                           @forelse($wallets as $wallet)
-                            <input class="currency-exchange-radio" type="radio" id="wal2{{ $wallet->id }}" name="wallet_to" value="{{ $wallet->id }}">
+                            <input class="currency-exchange-radio wallet_to" type="radio" id="wal2{{ $wallet->id }}" name="wallet_to" value="{{ $wallet->id }}">
                             <label class="currency-exchange exchange-second-wallet" for="wal2{{ $wallet->id }}" data-id="{{ $wallet->id }}" data-prefix="{{ $wallet->currency->symbol }}" data-step="{{ $wallet->currency->precision }}" data-max="{{ $wallet->balance }}">
                               {{ $wallet->currency->name ?? '' }} - {{ $wallet->balance ?? '' }} {{ $wallet->currency->symbol ?? '' }}
                             </label>
@@ -105,7 +105,10 @@ Exchange currency
                 </div>
 
                   <div class="row" style="margin-top:50px;">
-                      <div class="col-lg-12">
+                      <div class="col-lg-3">
+                          <h4 class="fromAmount">0</h4>
+                      </div>
+                      <div class="col-lg-6">
                           <div class="mb-2 d-flex align-items-center flex-column">
                     <div class="form-group row">
                       {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
@@ -114,7 +117,7 @@ Exchange currency
                             <editor_block data-name='How much do you want to exchange?' contenteditable="true">{{ __('How much do you want to exchange?') }}</editor_block> @else {{ __('How much do you want to exchange?') }} @endif
                         </label>
                         <div class="input-group mb-3">
-                          <input class="form-control" type="text" name="amount" value="{{ old('amount') ?? '' }}" placeholder="0.1">
+                          <input class="form-control" type="text" id="exchangeAmount" name="amount" value="{{ old('amount') ?? '' }}" placeholder="0.1">
                         </div>
                       </div>
                       {{--<div class="col-md-12">
@@ -127,6 +130,9 @@ Exchange currency
                     </button>
 
                           </div>
+                      </div>
+                      <div class="col-lg-3">
+                          <h4 class="toAmount">0</h4>
                       </div>
                   </div>
               </form>
@@ -175,6 +181,23 @@ Exchange currency
 
     <script>
       $(document).ready(function () {
+          $('#exchangeAmount').keyup(function(){
+              var val = $(this).val();
+              var from = $('.wallet_from').val();
+              var to = $('.wallet_to').val();
+
+              $('.fromAmount').html(val);
+
+              $.ajax({
+                  type:'GET',
+                  url:'/get_exchange_rate',
+                  data:'?amount='+val+'&wallet_from='+from+'&wallet_to='+to,
+                  success:function(resp){
+                      $('.toAmount').html(resp);
+                  },
+              });
+          });
+
         // browser-candlestick chart
         var optionscandlestickchart = {
           chart: {

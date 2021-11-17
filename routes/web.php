@@ -103,6 +103,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/currency-exchange', [CurrencyController::class, 'showCurrencyExchange'])->name('currency.exchange');
             Route::post('/currency-exchange', [CurrencyController::class, 'currencyExchange'])->name('currency.exchange');
+            Route::get('/get_exchange_rate', [CurrencyController::class, 'getExchangeRate'])->name('get_exchange_rate');
 
             Route::get('/withdrawal', [WithdrawalContoller::class, 'index'])->name('withdrawal');
             Route::post('/withdrawal/add/', [WithdrawalContoller::class, 'addWithdrawal'])->name('withdrawal.add');
