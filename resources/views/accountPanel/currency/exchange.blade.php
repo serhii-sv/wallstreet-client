@@ -106,7 +106,7 @@ Exchange currency
 
                   <div class="row" style="margin-top:50px;">
                       <div class="col-lg-3">
-                          <h4 class="fromAmount">0</h4>
+                          <h4 class="fromAmount">Вы отдаете 0</h4>
                       </div>
                       <div class="col-lg-6">
                           <div class="mb-2 d-flex align-items-center flex-column">
@@ -132,7 +132,7 @@ Exchange currency
                           </div>
                       </div>
                       <div class="col-lg-3">
-                          <h4 class="toAmount">0</h4>
+                          <h4 class="toAmount">Вы получаете 0</h4>
                       </div>
                   </div>
               </form>
@@ -186,14 +186,14 @@ Exchange currency
               var from = $('.wallet_from:checked').val();
               var to = $('.wallet_to:checked').val();
 
-              $('.fromAmount').html(val);
+              $('.fromAmount').html('Вы отдаете: '+val);
 
               $.ajax({
                   type:'GET',
                   url:'/get_exchange_rate',
                   data:'amount='+val+'&wallet_from='+from+'&wallet_to='+to,
                   success:function(resp){
-                      $('.toAmount').html(resp);
+                      $('.toAmount').html('Вы получаете: '+resp);
                   },
               });
           });
