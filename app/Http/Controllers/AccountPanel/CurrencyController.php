@@ -81,13 +81,6 @@ class CurrencyController extends Controller
 
     public function getExchangeRate(Request $request)
     {
-        return 1;
-        $request->validate([
-            'amount'        => 'required',
-            'wallet_from'   => 'required',
-            'wallet_to'     => 'required',
-        ]);
-
         if ($request->get('wallet_from') == $request->get('wallet_to')){
             return 0;
         }
@@ -107,7 +100,7 @@ class CurrencyController extends Controller
 
 
 
-        $converted = $this->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+        $converted = $wallet_from->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
 
         if ((float) $converted <= 0) {
             throw new \Exception('no rate for change '.$wallet_from->currency->code.' -> '.$wallet_to->currency->code);
