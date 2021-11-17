@@ -186,6 +186,8 @@ Exchange currency
               var from = $('.wallet_from').val();
               var to = $('.wallet_to').val();
 
+              alert(from+'/'+to);
+
               $('.fromAmount').html(val);
 
               $.ajax({
