@@ -81,6 +81,12 @@ class CurrencyController extends Controller
 
     public function getExchangeRate(Request $request)
     {
+        $request->validate([
+            'amount'        => 'required',
+            'wallet_from'   => 'required',
+            'wallet_to'     => 'required',
+        ]);
+
         if ($request->get('wallet_from') == $request->get('wallet_to')){
             return 0;
         }
