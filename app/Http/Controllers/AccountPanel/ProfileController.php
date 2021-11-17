@@ -295,6 +295,10 @@ class ProfileController extends Controller
     }
 
     public function enterVerifyLoginCode() {
+        if (!Auth::user()) {
+            return back();
+        }
+
         $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
 
         return view('auth.verify-code', [
