@@ -199,7 +199,7 @@ Exchange currency
                   url:'/get_exchange_rate',
                   data:'amount='+val+'&wallet_from='+from+'&wallet_to='+to,
                   success:function(resp){
-                      $('#toAmount').html(resp);
+                      $('#toAmount').val(resp);
                   },
               });
           });
