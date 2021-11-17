@@ -198,6 +198,14 @@ Exchange currency
               });
           });
 
+          $('.wallet_from').click(function(){
+              $('#exchangeAmount').keyup();
+          });
+
+          $('.wallet_to').click(function(){
+              $('#exchangeAmount').keyup();
+          });
+
         // browser-candlestick chart
         var optionscandlestickchart = {
           chart: {
