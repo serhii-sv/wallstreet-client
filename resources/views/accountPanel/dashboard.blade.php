@@ -652,7 +652,7 @@ Account
         }],
         chart: {
           height: 240,
-          type: 'column',
+          type: 'line',
           toolbar: {
             show: true
           },
