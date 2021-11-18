@@ -48,7 +48,7 @@ class CurrencyController extends Controller
         }
 
         /** @var float $amount */
-        $amount = abs($request->get('amount'));
+        $amount = (float) abs($request->get('amount'));
 
         /** @var float $commission */
         $commission = 1; // %
