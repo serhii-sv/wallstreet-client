@@ -654,11 +654,11 @@ Account
           height: 240,
           type: 'area',
           toolbar: {
-            show: false
+            show: true
           },
         },
         dataLabels: {
-          enabled: false
+          enabled: true
         },
         stroke: {
           curve: 'smooth'
@@ -668,7 +668,7 @@ Account
           low: 0,
           offsetX: 0,
           offsetY: 0,
-          show: false,
+          show: true,
           categories: [@foreach($period_graph as $period) "{{ $period['start']->format('d.m.Y') }}", @endforeach],
           labels: {
             low: 0,
@@ -678,7 +678,7 @@ Account
           axisBorder: {
             low: 0,
             offsetX: 0,
-            show: false,
+            show: true,
           },
         },
         markers: {
@@ -697,16 +697,16 @@ Account
           labels: {
             low: 0,
             offsetX: 0,
-            show: false,
+            show: true,
           },
           axisBorder: {
             low: 0,
             offsetX: 0,
-            show: false,
+            show: true,
           },
         },
         grid: {
-          show: false,
+          show: true,
           padding: {
             left: 0,
             right: 0,
