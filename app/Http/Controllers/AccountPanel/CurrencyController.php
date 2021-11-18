@@ -108,10 +108,6 @@ class CurrencyController extends Controller
 
         $converted = $wallet_from->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
 
-        if ((float) $converted <= 0) {
-            throw new \Exception('no rate for change '.$wallet_from->currency->code.' -> '.$wallet_to->currency->code);
-        }
-
         return $converted;
     }
 }

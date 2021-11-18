@@ -388,7 +388,7 @@ class Wallet extends Model
         $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
         $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
 
-        if ((float) $converted <= 0) {
+        if ((float) $amount > 0 && (float) $converted <= 0) {
             throw new \Exception('no rate for change '.$this->currency->code.' -> '.$wallet_to->currency->code);
         }
 
