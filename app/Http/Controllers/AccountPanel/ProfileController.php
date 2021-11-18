@@ -218,7 +218,7 @@ class ProfileController extends Controller
             return redirect()->route('accountPanel.dashboard');
         }
 
-        if (!!Auth::user()) {
+        if (!Auth::user()) {
             return redirect()->route('accountPanel.dashboard');
         }
         if (!Auth::user()->phone){
