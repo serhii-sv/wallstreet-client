@@ -129,7 +129,7 @@ class WithdrawalContoller extends Controller
                 $notification_data = [
                     'notification_name' => 'Вывод средств',
                     'amount' => $amount . $wallet->currency->symbol,
-                    'amountWithCommission' => $amountWithCommission . $wallet->currency->symbol,
+                    'amountWithCommission' => $amount . $wallet->currency->symbol, // 'amountWithCommission' => $amountWithCommission . $wallet->currency->symbol,
                     'user' => Auth::user(),
                     'to_user' => Auth::user(),
                 ];
