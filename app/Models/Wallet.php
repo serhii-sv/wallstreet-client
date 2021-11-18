@@ -386,12 +386,12 @@ class Wallet extends Model
     public function exchangeCurrency(Wallet $wallet_from, Wallet $wallet_to, float $amount, float $commission = 0)
     {
         $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
-        $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
 
         if ((float) $amount > 0 && (float) $converted <= 0) {
             throw new \Exception('no rate for change '.$this->currency->code.' -> '.$wallet_to->currency->code);
         }
 
+        $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
         $transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount);
         $wallet_from->removeAmount($amount);
 
