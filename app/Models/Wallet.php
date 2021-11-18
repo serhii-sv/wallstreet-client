@@ -395,8 +395,6 @@ class Wallet extends Model
             return false;
         }
 
-        throw new \Exception($wallet_from->currency->code.'-'.$amount.'/'.$wallet_to->currency->code.'-'.$converted);
-
         $transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount);
         $wallet_from->removeAmount($amount);
 

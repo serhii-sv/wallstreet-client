@@ -128,7 +128,7 @@ Exchange currency
                                   <div class="col">
                                       <label class="form-label">Вы получаете</label>
                                       <div class="input-group mb-3">
-                                          <input class="form-control" type="text" id="toAmount" name="amount" value="" placeholder="0.1" readonly>
+                                          <input class="form-control" type="text" id="toAmount" value="" placeholder="0.1" readonly>
                                       </div>
                                   </div>
                                   {{--<div class="col-md-12">
