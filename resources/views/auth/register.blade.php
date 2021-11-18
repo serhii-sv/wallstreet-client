@@ -236,7 +236,7 @@
             </div>
 
             <div class="form-group text-center">
-              <button type="submit">{{ __('Register') }}</button>
+              <button type="submit">Зарегистрироваться</button>
               <span class="d-block mt-15">Уже есть аккаунт?? <a href="{{ route('login') }}">Авторизоваться</a></span>
             </div>
           </form>
