@@ -84,6 +84,8 @@ class WithdrawalContoller extends Controller
             'amount' => 'required|numeric|min:0',
             'wallet_id' => 'required|uuid',
         ]);
+
+        /** @var Wallet $wallet */
         $wallet = Wallet::where('id', $request->get('wallet_id'))->where('user_id', auth()->user()->id)->first();
         if (empty($wallet)) {
             return redirect()->back()->with('error', 'Кошелька не существует!');
@@ -103,6 +105,14 @@ class WithdrawalContoller extends Controller
 
         if (null == $currency) {
             return redirect()->back()->with('error', 'Валюта не найдена');
+        }
+
+        if ($currency->precision == 2 && $wallet->convertToCurrency($wallet->currency, Currency::where('code', 'USD')->first(), $amount) < 1) {
+            return redirect()->back()->with('error', 'Минимальная сумма вывода 1$ в эквиваленте');
+        }
+
+        if ($currency->precision > 2 && $wallet->convertToCurrency($wallet->currency, Currency::where('code', 'USD')->first(), $amount) < 10) {
+            return redirect()->back()->with('error', 'Минимальная сумма вывода 10$ в эквиваленте');
         }
 
         $payment_system = PaymentSystem::whereHas('currencies', function($q) use($currency) {
