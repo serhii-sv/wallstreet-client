@@ -651,7 +651,7 @@ Account
           data: [@foreach($withdraws_week as $item) {{ number_format($item, 2, '.', '') }}@if(!$loop->last), @endif @endforeach]
         }],
         chart: {
-          height: 300,
+          height: 350,
           type: 'area',
           toolbar: {
             show: false
