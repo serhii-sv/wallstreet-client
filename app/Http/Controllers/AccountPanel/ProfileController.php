@@ -62,6 +62,9 @@ class ProfileController extends Controller
         }
 
         $wallet->external = $external;
+        $wallet->external_payeer = $request->has('external_payeer')
+            ? $request->external_payeer
+            : null;
         $wallet->save();
 
         return redirect()->back()->with('success', 'Данные успешно сохранены!');

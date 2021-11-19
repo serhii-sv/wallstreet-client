@@ -81,6 +81,10 @@ Withdrawals
                                   }
                                 ?>
                               <option value="{{ $item->id }}">{{ $walletName }} {{ strtoupper($item->external) }}</option>
+
+                                @if($currency->code == 'USD')
+                                <option value="payeer:{{ $item->id }}">Payeer {{ strtoupper($item->external_payeer) }}</option>
+                                @endif
                             @else
                               <option value="" disabled>Введите реквизиты для вывода в настройках</option>
                             @endif

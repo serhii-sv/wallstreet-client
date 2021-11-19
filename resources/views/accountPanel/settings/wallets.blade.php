@@ -24,7 +24,7 @@ Wallets
                             $currency = $wallet->currency;
                             $walletName = $currency->name;
                             if ($currency->code == 'USD') {
-                                $walletName = 'PerfectMoney';
+                                $walletName = 'PerfectMoney && Payeer';
                             } elseif ($currency->code == 'UAH') {
                                 $walletName = 'UAH VISA/MASTERCARD';
                             } elseif ($currency->code == 'RUB') {
@@ -61,7 +61,17 @@ Wallets
                                   <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external {{ $wallet->currency_id }}' contenteditable="true">{{ __('Wallet external '.$wallet->currency_id) }}</editor_block> @else {{ __('Wallet external '.$wallet->currency_id) }} @endif</label>
                                   <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                 </div>
+
+                                  @if($wallet->currency->code == 'USD')
+                                      <div style="margin-top:30px;">
+                                          <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external Payeer' contenteditable="true">{{ __('Wallet Payeer') }}</editor_block> @else {{ __('Wallet external Payeer') }} @endif</label>
+                                          <input class="form-control input-air-primary" type="text" name="external_payeer" value="{{ $wallet->external_payeer ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                      </div>
+                                  @endif
                               </div>
+                                @if($wallet->currency->code == 'USD')
+                                    <div style="clear:both; margin:20px 0 20px 0;"></div>
+                                @endif
                               <div class="col align-self-end">
                                 <button class="btn btn-success">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Save' contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif</button>
                               </div>

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $user_id
  * @property string $currency_id
  * @property string|null $external
+ * @property string|null $external_payeer
  * @property float $balance
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -56,6 +57,7 @@ class Wallet extends Model
         'currency_id',
         'main_currency_amount',
         'external',
+        'external_payeer',
         'balance',
     ];
 
@@ -385,20 +387,16 @@ class Wallet extends Model
 
     public function exchangeCurrency(Wallet $wallet_from, Wallet $wallet_to, float $amount, float $commission = 0)
     {
-        $converted = $wallet_from->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+        $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+        $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
 
-        if ((float) $amount > 0 && (float) $converted <= 0) {
-            throw new \Exception('no rate for change '.$wallet_from->currency->code.' -> '.$wallet_to->currency->code);
-        }
-
-        if ($converted <= 0) {
-            return false;
+        if ((float) $converted <= 0) {
+            throw new \Exception('no rate for change '.$this->currency->code.' -> '.$wallet_to->currency->code);
         }
 
         $transaction_out = Transaction::exchangeOutCurrency($wallet_from, $amount);
         $wallet_from->removeAmount($amount);
 
-        $transaction_in = Transaction::exchangeInCurrency($wallet_to, $converted);
         $wallet_to->update(['balance' => $wallet_to->balance + $converted]);
 
         $currency_exchange = new CurrencyExchange();

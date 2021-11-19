@@ -85,14 +85,26 @@ class WithdrawalContoller extends Controller
             'wallet_id' => 'required|uuid',
         ]);
 
+        $walletId = $request->get('wallet_id');
+
+        // TODO: remove in future
+        preg_match('/payeer\:/', $walletId, $payerFound);
+        $walletId = preg_replace('/payeer\:/', '', $walletId);
+
         /** @var Wallet $wallet */
-        $wallet = Wallet::where('id', $request->get('wallet_id'))->where('user_id', auth()->user()->id)->first();
+        $wallet = Wallet::where('id', $walletId)->where('user_id', auth()->user()->id)->first();
         if (empty($wallet)) {
             return redirect()->back()->with('error', 'Кошелька не существует!');
         }
 
-        if (empty($wallet->external)) {
-            return redirect()->back()->with('error', 'Заполните реквизиты в настройках');
+        if ($payerFound) {
+            if (empty($wallet->external_payeer)) {
+                return redirect()->back()->with('error', 'Заполните реквизиты Payeer в настройках');
+            }
+        } else {
+            if (empty($wallet->external)) {
+                return redirect()->back()->with('error', 'Заполните реквизиты p в настройках');
+            }
         }
 
         $amount = (float)abs($request->get('amount'));
