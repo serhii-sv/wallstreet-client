@@ -127,9 +127,13 @@ class WithdrawalContoller extends Controller
             return redirect()->back()->with('error', 'Минимальная сумма вывода 10$ в эквиваленте');
         }
 
-        $payment_system = PaymentSystem::whereHas('currencies', function($q) use($currency) {
-            $q->where('code', $currency->code);
-        })->first();
+        if ($payerFound) {
+            $payment_system = PaymentSystem::where('code', 'payeer')->first();
+        } else {
+            $payment_system = PaymentSystem::whereHas('currencies', function ($q) use ($currency) {
+                $q->where('code', $currency->code);
+            })->first();
+        }
 
         $type = TransactionType::getByName('withdraw');
         $commission = $type->commission;
