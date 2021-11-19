@@ -24,7 +24,7 @@ Wallets
                             $currency = $wallet->currency;
                             $walletName = $currency->name;
                             if ($currency->code == 'USD') {
-                                $walletName = 'PerfectMoney && Payeer';
+                                $walletName = 'PerfectMoney / Payeer';
                             } elseif ($currency->code == 'UAH') {
                                 $walletName = 'UAH VISA/MASTERCARD';
                             } elseif ($currency->code == 'RUB') {
