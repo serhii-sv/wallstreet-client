@@ -431,13 +431,13 @@ class Deposit extends Model
         $wallet = $this->wallet()->first();
 
         if ($this->overall) {
-            $amountOverall = $this->invested * $this->overall * 0.01;
+            $amountOverall = $this->balance * $this->overall * 0.01;
             $transactionOverall = Transaction::dividend($wallet, $amountOverall, $this);
 
             $accrue = $wallet->addAmountWithoutAccrueToPartner($amountOverall);
 
             if ($this->overall - 100 > 0) {
-                $wallet->accrueToPartner($this->invested * ($this->overall-100) * 0.01, 'deposit');
+                $wallet->accrueToPartner($this->balance * ($this->overall-100) * 0.01, 'deposit');
             }
 
             if ($transactionOverall->update([

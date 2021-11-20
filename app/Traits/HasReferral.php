@@ -191,25 +191,29 @@ trait HasReferral
      */
     public function getAllReferrals(bool $json = false, $flag = 1)
     {
-        /** @var User $referrals */
-        $referrals = $this->referrals()->wherePivot('line', 1)->get();
+        $th = $this;
 
-        $result = [
-            'self' => $this,
-            'referrals' => []
-        ];
+        return cache()->remember('all_referrals.'.$th->id, now()->addMinutes(60), function() use($th, $flag, $json) {
+            /** @var User $referrals */
+            $referrals = $th->referrals()->wherePivot('line', 1)->get();
 
-        if ($flag > 1000) {
-            return $result;
-        }
+            $result = [
+                'self' => $th,
+                'referrals' => []
+            ];
 
-        if (!empty($referrals)) {
-            foreach ($referrals as $ref) {
-                $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
+            if ($flag > 1000) {
+                return $result;
             }
-        }
 
-        return $result;
+            if (!empty($referrals)) {
+                foreach ($referrals as $ref) {
+                    $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
+                }
+            }
+
+            return $result;
+        });
     }
 
     /**
@@ -217,19 +221,23 @@ trait HasReferral
      */
     public function getAllReferralsInArray()
     {
-        /** @var User $referrals */
-        $referrals = $this->referrals()->wherePivot('line', 1)->get();
+        $th = $this;
 
-        $result = [];
+        return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th) {
+            /** @var User $referrals */
+            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
-        if (!empty($referrals)) {
-            foreach ($referrals as $ref) {
-                $result[$ref->int_id] = $ref;
-                $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
+            $result = [];
+
+            if (!empty($referrals)) {
+                foreach ($referrals as $ref) {
+                    $result[$ref->id] = $ref;
+                    $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
+                }
             }
-        }
 
-        return $result;
+            return $result;
+        });
     }
 
     /**
@@ -320,22 +328,26 @@ trait HasReferral
     }
 
     public function getChildrens($limit = 7) {
-        if ($limit === 0) {
-            return [];
-        }
+        $th = $this;
 
-        $referrals = [];
-        $referrals['name'] = $this->login;
+        return cache()->remember('referrals_childrens.'.$th->id, now()->addMinutes(60), function() use($th, $limit) {
+            if ($limit === 0) {
+                return [];
+            }
 
-        if (!$this->hasReferrals()) {
+            $referrals = [];
+            $referrals['name'] = $th->login;
+
+            if (!$th->hasReferrals()) {
+                return $referrals;
+            }
+
+            foreach ($th->referrals()->wherePivot('line', 1)->get() as $r) {
+                $referral = $r->getChildrens($limit - 1);
+                $referrals['children'][] = $referral;
+            }
+
             return $referrals;
-        }
-
-        foreach ($this->referrals()->wherePivot('line', 1)->get() as $r) {
-            $referral = $r->getChildrens($limit - 1);
-            $referrals['children'][] = $referral;
-        }
-
-        return $referrals;
+        });
     }
 }
