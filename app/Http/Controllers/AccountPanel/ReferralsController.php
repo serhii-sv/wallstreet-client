@@ -5,10 +5,13 @@ namespace App\Http\Controllers\AccountPanel;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\CloudFile;
+use App\Models\Currency;
+use App\Models\Deposit;
 use App\Models\Referral;
 use App\Models\ReferralLinkStat;
 use App\Models\TransactionType;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -30,19 +33,28 @@ class ReferralsController extends Controller
         $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
             return $user->getAllReferralsInArray();
         });
-        $transaction_type_invest = TransactionType::where('name', 'create_dep')->first();
         $activeReferrals = 0;
         $total_referral_invested = 0;
+        $usdCurrency = Currency::where('code', 'USD')->first();
+
+        /** @var User $referral */
         foreach ($all_referrals as $referral) {
-            $invested = cache()->remember('referrals.total_invested_' . $referral->id, now()->addMinutes(60), function () use ($referral, $transaction_type_invest) {
-                return $referral->transactions->where('type_id', $transaction_type_invest->id)->sum('main_currency_amount');
+            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, now()->addMinutes(60), function () use ($referral, $usdCurrency) {
+                $invested = 0;
+                $referral
+                    ->deposits()
+                    ->where('active', 1)
+                    ->get()
+                    ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
+                        $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+                    });
+
+                return $invested;
             });
 
-            if ($invested > 0) {
-                $activeReferrals += 1;
-            }
-
-            $total_referral_invested += $invested;
+            $activeReferrals += $referral->deposits()
+                    ->where('status', 1)
+                    ->count() > 0 ? 1 : 0;
         }
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);
