@@ -53,7 +53,7 @@ class ReferralsController extends Controller
             });
 
             $activeReferrals += $referral->deposits()
-                    ->where('status', 1)
+                    ->where('active', 1)
                     ->count() > 0 ? 1 : 0;
         }
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
