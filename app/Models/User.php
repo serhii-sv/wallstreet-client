@@ -267,16 +267,18 @@ class User extends Authenticatable
     }
 
     public function referral_accruals(User $user) {
-        $partnerTypeId = TransactionType::getByName('partner')->id;
+        return cache()->remember('user.referral_accruals' . $user->id, now()->addMinutes(60), function () use ($user) {
+            $partnerTypeId = TransactionType::getByName('partner')->id;
 
-        $wallets = $this->wallets()
-            ->get()
-            ->pluck('id');
+            $wallets = $this->wallets()
+                ->get()
+                ->pluck('id');
 
-        return $user->transactions()
-            ->where('type_id', $partnerTypeId)
-            ->whereIn('source', $wallets)
-            ->sum('main_currency_amount');
+            return $user->transactions()
+                ->where('type_id', $partnerTypeId)
+                ->whereIn('source', $wallets)
+                ->sum('main_currency_amount');
+        });
     }
 
     public function deposits_accruals() {
