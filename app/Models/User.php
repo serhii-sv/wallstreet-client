@@ -252,11 +252,15 @@ class User extends Authenticatable
     }
 
     public function invested() {
-        $createDepId = TransactionType::getByName('create_dep')->id;
-
-        return $this->transactions()
-            ->where('type_id', $createDepId)
-            ->sum('main_currency_amount');
+        $invested = 0;
+        $usdCurrency = Currency::where('code', 'USD')->first();
+        $this->deposits()
+            ->where('active', 1)
+            ->get()
+            ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
+                $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+            });
+        return $invested;
     }
 
     public function referral_accruals(User $user) {
