@@ -59,9 +59,13 @@ class ReferralsController extends Controller
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);
 
-        $personal_turnover = $user->transactions()
-            ->where('type_id', TransactionType::getByName('create_dep')->id)
-            ->sum('main_currency_amount');
+        $personal_turnover = 0;
+        $user->deposits()
+            ->where('active', 1)
+            ->get()
+            ->each(function(Deposit $deposit) use(&$personal_turnover, $usdCurrency) {
+                $personal_turnover += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+            });
 
         return view('accountPanel.referrals.index', [
             'all_referrals' => $all_referrals,
