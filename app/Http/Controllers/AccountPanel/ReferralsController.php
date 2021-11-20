@@ -69,7 +69,6 @@ class ReferralsController extends Controller
             'total_referral_invested' => $total_referral_invested,
             'user' => $user,
             'upliner' => $upliner,
-            'transaction_type_invest' => $transaction_type_invest,
             'personal_turnover' => $personal_turnover,
             'referral_link_registered' => $referral_link_registered,
             'referral_link_clicks' => $referral_link_clicks,
