@@ -301,7 +301,7 @@ class User extends Authenticatable
 
             $th->transactions()
                 ->where('type_id', $closeDepTypeId)
-                ->each(function(Transaction $transaction, User $th, $createDepTypeId, &$dividends, $usdCurrency) {
+                ->each(function(Transaction $transaction) use($th, $createDepTypeId, &$dividends, $usdCurrency) {
                     $investedTransaction = $th->transactions()
                         ->where('type_id', $createDepTypeId)
                         ->where('deposit_id', $transaction->deposit_id)
