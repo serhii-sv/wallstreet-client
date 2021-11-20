@@ -252,15 +252,18 @@ class User extends Authenticatable
     }
 
     public function invested() {
-        $invested = 0;
-        $usdCurrency = Currency::where('code', 'USD')->first();
-        $this->deposits()
-            ->where('active', 1)
-            ->get()
-            ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
-                $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
-            });
-        return $invested;
+        $th = $this;
+        return cache()->remember('user.total_invested_' . $this->id, now()->addMinutes(60), function () use ($th) {
+            $invested = 0;
+            $usdCurrency = Currency::where('code', 'USD')->first();
+            $this->deposits()
+                ->where('active', 1)
+                ->get()
+                ->each(function (Deposit $deposit) use (&$invested, $usdCurrency) {
+                    $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+                });
+            return $invested;
+        });
     }
 
     public function referral_accruals(User $user) {
