@@ -107,7 +107,11 @@ class CurrencyController extends Controller
 
 
         $converted = $wallet_from->convertToCurrency($wallet_from->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
+        $rate = $wallet_from->convertToCurrency($wallet_from->currency, $wallet_to->currency, 1);
 
-        return $converted;
+        return [
+            'amount' => $converted,
+            'rate' => $rate,
+        ];
     }
 }

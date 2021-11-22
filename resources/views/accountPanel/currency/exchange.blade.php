@@ -105,7 +105,7 @@ Exchange currency
                 </div>
 
                   <div class="row" style="margin-top:50px;">
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
                               <div class="form-group row">
                                   {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
                                   <div class="col">
@@ -122,7 +122,22 @@ Exchange currency
                               </div>
                               <p>&nbsp;</p>
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
+                          <div class="form-group row">
+                              {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
+                              <div class="col">
+                                  <label class="form-label">КУРС</label>
+                                  <div class="input-group mb-3">
+                                      <input class="form-control" type="text" id="rate" value="" placeholder="0.1" readonly>
+                                  </div>
+                              </div>
+                              {{--<div class="col-md-12">
+                                <input id="u-range-02" type="hidden" class="irs-hidden-input" tabindex="-1" readonly="" data-bs-original-title="" title="">
+                              </div>--}}
+                          </div>
+                          <p>&nbsp;</p>
+                      </div>
+                      <div class="col-lg-4">
                               <div class="form-group row">
                                   {{-- <label class="col-md-12 control-label sm-left-text" for="u-range-02">Сколько хотите обменять?</label>--}}
                                   <div class="col">
@@ -199,7 +214,8 @@ Exchange currency
                   url:'/get_exchange_rate',
                   data:'amount='+val+'&wallet_from='+from+'&wallet_to='+to,
                   success:function(resp){
-                      $('#toAmount').val(resp);
+                      $('#toAmount').val(resp.amount.toFixed(8));
+                      $('#rate').val(resp.rate.toFixed(8));
                   },
               });
           });
