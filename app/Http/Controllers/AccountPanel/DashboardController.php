@@ -47,13 +47,13 @@ class DashboardController extends Controller
 
 
         foreach ($period_graph as $period) {
-            $accruals_week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_week_' . $period['start']->format('d.m.Y'), now()->addMinutes(60), function () use ($accruals_ids, $user, $period) {
+            $accruals_week[$period['start']->format('d.m.Y')] = cache()->remember('accruals_week_' . $period['start']->format('d.m.Y').'-'.$user->id, now()->addMinutes(60), function () use ($accruals_ids, $user, $period) {
                 return Transaction::where('user_id', $user->id)->whereIn('type_id', $accruals_ids)->where('approved', 1)->whereBetween('created_at', [
                     $period['start'],
                     $period['end'],
                 ])->sum('main_currency_amount');
             });
-            $withdraws_week[$period['start']->format('d.m.Y')] = cache()->remember('withdraws_week_' . $period['start']->format('d.m.Y'), now()->addMinutes(60), function () use ($withdraw_type, $user, $period) {
+            $withdraws_week[$period['start']->format('d.m.Y')] = cache()->remember('withdraws_week_' . $period['start']->format('d.m.Y').'-'.$user->id, now()->addMinutes(60), function () use ($withdraw_type, $user, $period) {
                 return Transaction::where('user_id', $user->id)->where('type_id', $withdraw_type->id)->where('approved', 1)->whereBetween('created_at', [
                     $period['start'],
                     $period['end'],
