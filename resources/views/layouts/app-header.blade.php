@@ -367,21 +367,13 @@
                                 <span>{{ !empty(session('language')) ? session('language') : 'ru' }}</span>
                             </p>
                             <ul class="language__list">
+                                @foreach($languages as $lang)
                                 <li class="language__item">
-                                    <a href="{{ route('set.lang', ['locale' => 'en']) }}">
-                                        <button class="language__button">English</button>
+                                    <a href="{{ route('set.lang', ['locale' => $lang->code]) }}">
+                                        <button class="language__button">{{ $lang->name }}</button>
                                     </a>
                                 </li>
-                                <li class="language__item">
-                                    <a href="{{ route('set.lang', ['locale' => 'ru']) }}">
-                                        <button class="language__button">Russian</button>
-                                    </a>
-                                </li>
-                                <li class="language__item">
-                                    <a href="{{ route('set.lang', ['locale' => 'zh']) }}">
-                                        <button class="language__button">Chinese</button>
-                                    </a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </li>
