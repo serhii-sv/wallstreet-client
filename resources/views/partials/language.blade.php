@@ -3,7 +3,7 @@
     <ul class="language__list">
         @foreach($languages as $lang)
         <li class="language__item">
-            <a href="{{ route('set.lang', ['locale' => $lang->code]) }}"><button class="language__button">{{ $lang->name }}</button></a>
+            <a href="{{ route('set.lang', ['locale' => $lang->code]) }}"><button class="language__button">{{ session('lang') == 'ru' ? $lang->name : $lang->original_name }}</button></a>
         </li>
         @endforeach
     </ul>
