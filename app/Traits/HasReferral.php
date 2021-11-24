@@ -195,7 +195,12 @@ trait HasReferral
 
         return cache()->remember('all_referrals.'.$th->id, now()->addMinutes(60), function() use($th, $flag, $json) {
             /** @var User $referrals */
-            $referrals = $th->referrals()->wherePivot('line', 1)->get();
+            $referrals = $th->referrals()
+                ->select([
+                    'id', 'login', 'email',
+                ])
+                ->wherePivot('line', 1)
+                ->get();
 
             $result = [
                 'self' => $th,
