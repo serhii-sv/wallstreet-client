@@ -113,9 +113,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data) {
         if (isset($data['partner_id'])) {
-            $partner_id = $data['partner_id'];
+            $partner_id = (float) $data['partner_id'];
         } else if (isset($_COOKIE['partner_id'])) {
-            $partner_id = $_COOKIE['partner_id'];
+            $partner_id = (float) $_COOKIE['partner_id'];
         } else {
             $partner_id = null;
         }
@@ -125,6 +125,7 @@ class RegisterController extends Controller
 
         if (null === $partner) {
             $partner = User::where('login', 'sprintbank')->first();
+            $partner_id = $partner->my_id;
         }
 
         if (empty($data['login'])) {
