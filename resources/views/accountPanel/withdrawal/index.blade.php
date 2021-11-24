@@ -98,7 +98,7 @@ Withdrawals
                           </div>
                           <div style="margin-top:30px;">
                             @if(canEditLang() && checkRequestOnEdit())
-                              <editor_block data-name='Commission 1 $' contenteditable="true">{{ __('Commission 1 $') }}</editor_block> @else {{ __('Commission 1 $') }} @endif
+                              <editor_block data-name='Withdraw commission 0%' contenteditable="true">{{ __('Withdraw commission 0%') }}</editor_block> @else {{ __('Withdraw commission 0%') }} @endif
                           </div>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>@if(canEditLang() && checkRequestOnEdit())
