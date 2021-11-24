@@ -197,7 +197,7 @@ trait HasReferral
             /** @var User $referrals */
             $referrals = $th->referrals()
                 ->select([
-                    'id', 'login', 'email',
+                    'id', 'login', 'email', 'created_at', 'phone',
                 ])
                 ->wherePivot('line', 1)
                 ->get();
