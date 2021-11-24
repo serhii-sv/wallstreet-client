@@ -422,7 +422,7 @@ class Wallet extends Model
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('enter')->id)
-                ->sum('main_currency_amount');
+                ->sum('amount');
         });
     }
 
@@ -433,7 +433,7 @@ class Wallet extends Model
                 ->where('approved', 1)
                 ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('withdraw')->id)
-                ->sum('main_currency_amount');
+                ->sum('amount');
         });
     }
 }
