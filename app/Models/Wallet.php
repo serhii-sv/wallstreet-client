@@ -385,6 +385,14 @@ class Wallet extends Model
         }*/
     }
 
+    /**
+     * @param Wallet $wallet_from
+     * @param Wallet $wallet_to
+     * @param float $amount
+     * @param float|int $commission
+     * @return bool
+     * @throws \Exception
+     */
     public function exchangeCurrency(Wallet $wallet_from, Wallet $wallet_to, float $amount, float $commission = 0)
     {
         $converted = $this->convertToCurrency($this->currency, $wallet_to->currency, (abs($amount) - (abs($amount) / 100 * $commission)));
