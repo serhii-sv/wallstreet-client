@@ -415,6 +415,10 @@ class Wallet extends Model
         return true;
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function totalEnter() {
         $wl = $this;
         return cache()->remember('personal_sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($wl) {
@@ -426,6 +430,10 @@ class Wallet extends Model
         });
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function totalWithdraw() {
         $wl = $this;
         return cache()->remember('personal_sum_transactions_withdraw.'.$this->id, now()->addMinutes(60), function() use($wl) {
