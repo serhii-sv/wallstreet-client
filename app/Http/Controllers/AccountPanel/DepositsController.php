@@ -69,7 +69,7 @@ class DepositsController extends Controller
 
             return json_encode([
                 'rate_min_max' => '<h5 class="sub-title">'.__('Min '.$rate_id).' ' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</h5>
-                <h5 class="sub-title">'.__('Min '.$rate_id).' ' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</h5 >',
+                <h5 class="sub-title">'.__('Max '.$rate_id).' ' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</h5 >',
             ]);
         }
         return json_encode([
@@ -158,12 +158,12 @@ class DepositsController extends Controller
         ]);
         $reinvest = abs(intval($request->get('reinvest')));
         if ($reinvest < 0 || $reinvest > 100) {
-            return redirect()->back()->with('error', 'Ты нормальный ? Процент от 0 до 100!');
+            return redirect()->back()->with('error', 'Процент от 0 до 100!');
         }
         $deposit = Deposit::where('id', $request->get('deposit_id'))->where('active', true)->first();
         // Если на фронте все таки отправили форму
         if (!$deposit->rate->reinvest) {
-            return redirect()->back()->with('error', 'Ты нормальный ? !');
+            return redirect()->back()->with('error', 'Ошибка реинвеста');
         }
         if ($deposit === null) {
             return redirect()->back()->with('error', 'Депозит не найден!');
