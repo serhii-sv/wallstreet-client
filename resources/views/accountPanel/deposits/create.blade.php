@@ -437,7 +437,7 @@ Create deposit
       $(".create-deposit-btn").on('click', function (e) {
         e.preventDefault();
         swal({
-          title: "Вы уверены?",
+          title: "Вы подтверждаете?",
           text: "С вашего баланса будут списаны денежные средства!",
           icon: "warning",
           buttons: true,

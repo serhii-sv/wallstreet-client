@@ -91,7 +91,7 @@ $(document).ready(function () {
               return false;
           }
           swal({
-              title: "Вы уверены?",
+              title: "Вы подтверждаете?",
               // text: "You will not be able to recover this imaginary file!",
               icon: 'warning',
               buttons: {
@@ -123,7 +123,7 @@ $(document).ready(function () {
 
       $('.invoice-action-view:not(:first-child)').click(function () {
           swal({
-              title: "Вы уверены?",
+              title: "Вы подтверждаете?",
               // text: "You will not be able to recover this imaginary file!",
               icon: 'warning',
               buttons: {
