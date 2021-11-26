@@ -81,13 +81,14 @@ Withdrawals
                                   }
                                 ?>
                               <option value="{{ $item->id }}">{{ $walletName }} {{ strtoupper($item->external) }}</option>
-
-                                @if($currency->code == 'USD')
-                                <option value="payeer:{{ $item->id }}">Payeer {{ strtoupper($item->external_payeer) }}</option>
-                                @endif
                             @else
+                                  @if($currency->code != 'USD')
                               <option value="" disabled>Введите реквизиты для вывода в настройках</option>
+                                  @endif
                             @endif
+                                @if($currency->code == 'USD')
+                                    <option value="payeer:{{ $item->id }}">Payeer {{ strtoupper($item->external_payeer) }}</option>
+                                @endif
                           </select>
                           <h6 class="mb-2 mt-2" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
                               <editor_block data-name='Enter the amount' contenteditable="true">{{ __('Enter the amount') }}</editor_block> @else {{ __('Enter the amount') }} @endif
