@@ -266,21 +266,6 @@ class User extends Authenticatable
         });
     }
 
-    public function referral_accruals(User $user) {
-        return cache()->remember('user.referral_accruals' . $user->id, now()->addMinutes(60), function () use ($user) {
-            $partnerTypeId = TransactionType::getByName('partner')->id;
-
-            $wallets = $this->wallets()
-                ->get()
-                ->pluck('id');
-
-            return $user->transactions()
-                ->where('type_id', $partnerTypeId)
-                ->whereIn('source', $wallets)
-                ->sum('main_currency_amount');
-        });
-    }
-
     public function deposits_accruals() {
         $th = $this;
 
@@ -509,30 +494,6 @@ class User extends Authenticatable
         return AdminChatMessage::where('chat_id', $chat_id)->where('user_id', $this->id)->where('is_read', false)->count();
     }
 
-    public function partner() {
-        return $this->belongsTo(User::class, 'partner_id', 'my_id');
-    }
-    public function userReferrals() {
-        return $this->hasMany(User::class, 'partner_id', 'my_id');
-    }
-
-    public function getReferralLinkClickCount() {
-        return $this->hasMany(ReferralLinkStat::class, 'partner_id','id')->sum('click_count');
-    }
-
-    public function hasPartner() {
-        return $this->belongsTo(User::class, 'partner_id', 'my_id')->count() ? true : false;
-    }
-    public function firstPartner($user) {
-        $partner = $user->partner()->first();
-
-        if ($user->hasPartner() && $partner->login != 'sprintbank') {
-            return $user->firstPartner($partner);
-        } else {
-            return $user;
-        }
-    }
-
     /**
      * @return false|string
      */
@@ -568,46 +529,6 @@ class User extends Authenticatable
      */
     public function lastVerificationRequest() {
         return $this->verifiedDocuments()->orderBy('created_at', 'desc')->first();
-    }
-
-    public function getReferralChatId() {
-        $user_partner = auth()->user()->id;
-        $user_referral = $this->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
-            'user_partner' => $user_partner,
-            'user_referral' => $user_referral,
-        ]);
-        return $chat->id;
-    }
-
-    public function getReferralChat() {
-        $user_partner = auth()->user()->id;
-        $user_referral = $this->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
-            'user_partner' => $user_partner,
-            'user_referral' => $user_referral,
-        ]);
-        return $chat;
-    }
-
-    public function getPartnerChatId() {
-        $user_partner = $this->id;
-        $user_referral = auth()->user()->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
-            'user_partner' => $user_partner,
-            'user_referral' => $user_referral,
-        ]);
-        return $chat->id;
-    }
-
-    public function getPartnerChat() {
-        $user_partner = $this->id;
-        $user_referral = auth()->user()->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
-            'user_partner' => $user_partner,
-            'user_referral' => $user_referral,
-        ]);
-        return $chat;
     }
 
     public function getAllChats() {
