@@ -269,7 +269,7 @@ class DepositsController extends Controller
                 ->count();
 
             if ($checkExists > 0){
-                return 0;
+                return back()->with('success', 'Апгрейд прошел успешно!');
             }
 
             $deposit_new = new Deposit;
