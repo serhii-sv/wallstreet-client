@@ -265,7 +265,7 @@ class DepositsController extends Controller
 
         DB::transaction(function() use($rate, $from_currency, $deposit, $user) {
             $checkExists = $user->deposits()
-                ->where('created_at', '>=', now()->subSeconds(30)->toDateTimeString())
+                ->where('created_at', '>=', now()->subSeconds(5)->toDateTimeString())
                 ->count();
 
             if ($checkExists > 0){
