@@ -62,12 +62,13 @@ Withdrawals
                               <editor_block data-name='Choose wallet' contenteditable="true">{{ __('Choose wallet') }}</editor_block> @else {{ __('Choose wallet') }} @endif
                           </h6>
                           <select class="js-example-basic-single col-sm-12" name="wallet_id">
+                              <?php
+                              /** @var \App\Models\Currency $currency */
+                              $currency = $item->currency;
+                              $walletName = $currency->name;
+                              ?>
                             @if($item->external !== null)
                                 <?php
-                                  /** @var \App\Models\Currency $currency */
-                                  $currency = $item->currency;
-                                  $walletName = $currency->name;
-
                                   if ($currency->code == 'USD') {
                                       $walletName = 'PerfectMoney';
                                   } elseif ($currency->code == 'UAH') {
