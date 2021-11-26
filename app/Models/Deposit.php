@@ -579,6 +579,6 @@ class Deposit extends Model
         $rate_max = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $this->rate->max);
 
         return $rate_max > 0
-            && $this->balance >= $rate_max;
+            && $this->balance >= ($rate_max + 1); // +1 обычно следующий план на доллар дороже
     }
 }
