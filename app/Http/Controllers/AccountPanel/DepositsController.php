@@ -269,7 +269,7 @@ class DepositsController extends Controller
                 ->count();
 
             if ($checkExists > 0){
-                return back()->with('success', 'Апгрейд прошел успешно!');
+                return;
             }
 
             $deposit_new = new Deposit;
@@ -308,12 +308,10 @@ class DepositsController extends Controller
                 $transaction->update(['approved' => true]);
                 $deposit_new->update(['active' => true]);
 
-                if ($deposit_new->createSequence()) {
-                    return back()->with('success', 'Апгрейд прошел успешно!');
-                } else {
-                    return back()->with('error', 'Не удалось совершить апгрейд!');
-                }
+                $deposit_new->createSequence();
             }
         });
+
+        return back()->with('success', 'Апгрейд прошел успешно!');
     }
 }
