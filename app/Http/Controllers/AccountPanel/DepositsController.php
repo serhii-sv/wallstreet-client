@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DepositsController extends Controller
 {
@@ -262,47 +263,57 @@ class DepositsController extends Controller
             return redirect()->back()->with('error', 'Подходящий для апгрейда тарифный план не найден.');
         }
 
-        $deposit_new = new Deposit;
-        $deposit_new->rate_id = $rate->id;
-        $deposit_new->currency_id = $from_currency->id;
-        $deposit_new->wallet_id = $deposit->wallet->id;
-        $deposit_new->user_id = $user->id;
-        $deposit_new->invested = $deposit->balance;
-        $deposit_new->daily = $rate->daily;
-        $deposit_new->overall = $rate->overall;
-        $deposit_new->duration = $rate->duration;
-        $deposit_new->payout = $rate->payout;
-        $deposit_new->balance = $deposit->balance;
-        $deposit_new->reinvest = 0;
-        $deposit_new->autoclose = $rate->autoclose;
-        $deposit_new->condition = 'create';
-        $deposit_new->datetime_closing = now()->addDays($rate->duration);
+        DB::transaction(function() use($rate, $from_currency, $deposit, $user) {
+            $checkExists = $user->deposits()
+                ->where('created_at', '>=', now()->subSeconds(30)->toDateTimeString())
+                ->count();
 
-        $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
+            if ($checkExists > 0){
+                return 0;
+            }
 
-        if (null != $transaction) {
-            $deposit->depositQueue()->where('done', false)->update([
-                'done' => true,
-            ]);
+            $deposit_new = new Deposit;
+            $deposit_new->rate_id = $rate->id;
+            $deposit_new->currency_id = $from_currency->id;
+            $deposit_new->wallet_id = $deposit->wallet->id;
+            $deposit_new->user_id = $user->id;
+            $deposit_new->invested = $deposit->balance;
+            $deposit_new->daily = $rate->daily;
+            $deposit_new->overall = $rate->overall;
+            $deposit_new->duration = $rate->duration;
+            $deposit_new->payout = $rate->payout;
+            $deposit_new->balance = $deposit->balance;
+            $deposit_new->reinvest = 0;
+            $deposit_new->autoclose = $rate->autoclose;
+            $deposit_new->condition = 'create';
+            $deposit_new->datetime_closing = now()->addDays($rate->duration);
 
-            $amount = $deposit->balance;
-            $closeTransaction = Transaction::closeDeposit($deposit, $amount);
-            $closeTransaction->update(['approved' => true]);
-            $deposit->update([
-                'condition' => 'closed',
-                'active' => false,
-            ]);
+            $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
+
+            if (null != $transaction) {
+                $deposit->depositQueue()->where('done', false)->update([
+                    'done' => true,
+                ]);
+
+                $amount = $deposit->balance;
+                $closeTransaction = Transaction::closeDeposit($deposit, $amount);
+                $closeTransaction->update(['approved' => true]);
+                $deposit->update([
+                    'condition' => 'closed',
+                    'active' => false,
+                ]);
 
 //            $deposit_new->wallet->accrueToPartner($deposit->balance, 'refill');
 
-            $transaction->update(['approved' => true]);
-            $deposit_new->update(['active' => true]);
+                $transaction->update(['approved' => true]);
+                $deposit_new->update(['active' => true]);
 
-            if ($deposit_new->createSequence()) {
-                return back()->with('success', 'Апгрейд прошел успешно!');
-            } else {
-                return back()->with('error', 'Не удалось совершить апгрейд!');
+                if ($deposit_new->createSequence()) {
+                    return back()->with('success', 'Апгрейд прошел успешно!');
+                } else {
+                    return back()->with('error', 'Не удалось совершить апгрейд!');
+                }
             }
-        }
+        });
     }
 }
