@@ -410,7 +410,7 @@ trait HasReferral
     }
 
     public function referral_accruals(User $user) {
-        return cache()->remember('user.referral_accruals' . $user->id, now()->addMinutes(60), function () use ($user) {
+        return cache()->remember('user.referral_accruals' . $this->id, now()->addMinutes(60), function () use ($user) {
             $partnerTypeId = TransactionType::getByName('partner')->id;
 
             $wallets = $this->wallets()
