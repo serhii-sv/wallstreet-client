@@ -320,23 +320,13 @@
                            @endguest--}}
                     @guest
                         <li>
-                            <a href="{{ route('login') }}" class="btn btn-pill btn-sm btn-success " style="color: white;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;"
-                                    @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                                @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='Sign In' contenteditable="true">{{ __('Sign In') }}</editor_block>
-                                @else
-                                    {{ __('Sign In') }}
-                                @endif
+                            <a href="{{ route('login') }}" class="btn btn-pill btn-sm btn-success " style="color: white;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;">
+                               Войти
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('register') }}" class="btn btn-pill btn-sm btn-primary " style="color: white;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;"
-                                    @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                                @if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='Sign Up' contenteditable="true">{{ __('Sign Up') }}</editor_block>
-                                @else
-                                    {{ __('Sign Up') }}
-                                @endif
+                            <a href="{{ route('register') }}" class="btn btn-pill btn-sm btn-primary " style="color: white;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;">
+                               Регистрация
                             </a>
                         </li>
                     @endguest
