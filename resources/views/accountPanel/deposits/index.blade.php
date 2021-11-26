@@ -20,8 +20,7 @@
                   <tr>
                     <th scope="col">Тарифный план</th>
                     <th scope="col">Валюта</th>
-                    <th scope="col">Сумма инвестиций</th>
-                    <th scope="col">Текущий баланс</th>
+                    <th scope="col">Сумма депозита</th>
                     <th scope="col">Начислено</th>
                     <th scope="col">Дата открытия</th>
                     <th>Реинвестирование</th>
@@ -38,9 +37,6 @@
                           {{ $deposit->rate->name }}
                         </td>
                         <td>{{ $deposit->currency->name }}</td>
-                        <td>
-                          <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
-                        </td>
                         <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
                         <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
                         <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>

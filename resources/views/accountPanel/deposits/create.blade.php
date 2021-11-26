@@ -269,9 +269,6 @@ Create deposit
                                     <editor_block data-name='Currency' contenteditable="true">{{ __('Currency') }}</editor_block> @else {{ __('Currency') }} @endif
                                 </th>
                                 <th scope="col">@if(canEditLang() && checkRequestOnEdit())
-                                    <editor_block data-name='Amount of investment' contenteditable="true">{{ __('Amount of investment') }}</editor_block> @else {{ __('Amount of investment') }} @endif
-                                </th>
-                                <th scope="col">@if(canEditLang() && checkRequestOnEdit())
                                     <editor_block data-name='Current balance' contenteditable="true">{{ __('Current balance') }}</editor_block> @else {{ __('Current balance') }} @endif
                                 </th>
                                 <th scope="col">@if(canEditLang() && checkRequestOnEdit())
@@ -304,9 +301,6 @@ Create deposit
                                       @endif
                                     </td>
                                     <td>{{ $deposit->currency->name }}</td>
-                                    <td>
-                                      <span class="">{{ number_format($deposit->invested, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</span>
-                                    </td>
                                     <td>{{ number_format($deposit->balance, $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</td>
                                     <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
                                     <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
