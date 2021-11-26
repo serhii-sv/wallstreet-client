@@ -26,7 +26,7 @@
     <td>{{ $self->phone ?? 'Не указан' }}</td>
     <td>{{ $self->created_at->format('d.m.Y H:i:s') }}</td>
     <td>
-        <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ $self->partner->login ?? 'undefined' }}</span>
+        <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ \App\Models\User::where('partner_id', $self->my_id)->first()->login ?? 'undefined' }}</span>
     </td>
     <td>
                             <span class="label">
