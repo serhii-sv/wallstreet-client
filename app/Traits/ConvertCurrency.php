@@ -28,10 +28,12 @@ trait ConvertCurrency
             return 0;
         }
 
-        $rate = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_'.strtolower($toCurrency->code), 0);
-        if ($rate) {
-            return round((float) $rate * (float) $amount, $toCurrency->precision);
-        }
-        return round((float) $amount, $toCurrency->precision);
+        $rateInUsd = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_usd', 0);
+        $amountInUsd = (float) $amount * (float) $rateInUsd;
+
+        $rateInTarget = \App\Models\Setting::getValue('usd_to_'.strtolower($toCurrency->code), 0);
+        $amountInTarget = $amountInUsd * $rateInTarget;
+
+        return $amountInTarget;
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\Rate;
 use App\Models\RateGroup;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,77 +209,102 @@ class DepositsController extends Controller
         return redirect()->back()->with('error', 'Непредвиденная ошибка!');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
+     */
     public function upgrade(Request $request) {
         $request->validate([
             'deposit_id' => 'required | uuid',
         ]);
-        $deposit = Deposit::where('id', $request->get('deposit_id'))->where('user_id', Auth::user()->id)->where('active', true)->first();
-        // Если на фронте все таки отправили форму
-        if ($deposit === null) {
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        /** @var Deposit $deposit */
+        $deposit = $user->deposits()
+            ->where('id', $request->get('deposit_id'))
+            ->where('active', true)
+            ->first();
+
+        if (null === $deposit) {
             return redirect()->back()->with('error', 'Депозит не найден!');
         }
+
+        /** @var Rate $rate */
         $rate = $deposit->rate;
+
+        /** @var RateGroup $rate_group_id */
         $rate_group_id = $rate->rate_group_id;
-        if ($deposit->canUpdate()) {
 
-            $from_currency = $deposit->currency;
-            $to_currency = Currency::where('code', 'USD')->first();
-            $deposit_balance = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $deposit->balance);
-
-
-            $check_deposit = Rate::where('rate_group_id', $rate_group_id)->where('max', ' > ', $deposit_balance)->orderBy('max', 'asc')->first();
-
-            if ($check_deposit === null) {
-                return redirect()->back()->with('error', 'Депозит максимальный в своей группе!');
-            }
-
-            $rate = Rate::where('rate_group_id', $rate_group_id)->where('id', ' != ', $rate->id)->where('max', ' > ', $deposit_balance)->where('min', ' < ', $deposit_balance)->orderBy('min', 'asc')->first();
-
-            $deposit_new = new Deposit;
-            $deposit_new->rate_id = $rate->id;
-            $deposit_new->currency_id = $deposit->wallet->currency_id;
-            $deposit_new->wallet_id = $deposit->wallet->id;
-            $deposit_new->user_id = Auth::user()->id;
-            $deposit_new->invested = $deposit->balance;
-            $deposit_new->daily = $rate->daily;
-            $deposit_new->overall = $rate->overall;
-            $deposit_new->duration = $rate->duration;
-            $deposit_new->payout = $rate->payout;
-            $deposit_new->balance = $deposit->balance;
-            $deposit_new->reinvest = 0;
-            $deposit_new->autoclose = $rate->autoclose;
-            $deposit_new->condition = 'create';
-            $deposit_new->datetime_closing = now()->addDays($rate->duration);
-
-            $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
-
-            if (null != $transaction) {
-                $deposit->depositQueue()->where('done', false)->update([
-                    'done' => true,
-                ]);
-
-                $amount = $deposit->balance;
-                $closeTransaction = Transaction::closeDeposit($deposit, $amount);
-                $closeTransaction->update(['approved' => true]);
-                $deposit->update([
-                    'condition' => 'closed',
-                    'active' => false,
-                ]);
-
-                $deposit_new->wallet->accrueToPartner($deposit->balance, 'refill');
-
-                $transaction->update(['approved' => true]);
-                $deposit_new->update(['active' => true]);
-
-                if ($deposit_new->createSequence()) {
-                    return back()->with('success', 'Апгрейд прошел успешно!');
-                } else {
-                    return back()->with('error', 'Не удалось совершить апгрейд!');
-                }
-            }
-
-
+        if (false === $deposit->canUpdate()) {
+            return redirect()->back()->with('error', 'Данный депозит нельзя апгрейдить!');
         }
-        return redirect()->back()->with('error', 'Данный депозит нельзя апгрейдить!');
+
+        /** @var Currency $from_currency */
+        $from_currency = $deposit->currency;
+
+        /** @var Currency $to_currency */
+        $to_currency = Currency::where('code', 'USD')->first();
+
+        $deposit_balance = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $deposit->balance);
+
+        $check_deposit = Rate::where('rate_group_id', $rate_group_id)->where('max', ' > ', $deposit_balance)->orderBy('max', 'asc')->first();
+
+        if ($check_deposit === null) {
+            return redirect()->back()->with('error', 'Депозит максимальный в своей группе!');
+        }
+
+        /** @var Deposit $rate */
+        $rate = Rate::where('rate_group_id', $rate_group_id)
+            ->where('id', '!=', $rate->id)
+            ->where('max', '>=', $deposit_balance)
+            ->where('min', '<=', $deposit_balance)
+            ->orderBy('min', 'asc')
+            ->first();
+
+        $deposit_new = new Deposit;
+        $deposit_new->rate_id = $rate->id;
+        $deposit_new->currency_id = $from_currency->id;
+        $deposit_new->wallet_id = $deposit->wallet->id;
+        $deposit_new->user_id = $user->id;
+        $deposit_new->invested = $deposit->balance;
+        $deposit_new->daily = $rate->daily;
+        $deposit_new->overall = $rate->overall;
+        $deposit_new->duration = $rate->duration;
+        $deposit_new->payout = $rate->payout;
+        $deposit_new->balance = $deposit->balance;
+        $deposit_new->reinvest = 0;
+        $deposit_new->autoclose = $rate->autoclose;
+        $deposit_new->condition = 'create';
+        $deposit_new->datetime_closing = now()->addDays($rate->duration);
+
+        $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
+
+        if (null != $transaction) {
+            $deposit->depositQueue()->where('done', false)->update([
+                'done' => true,
+            ]);
+
+            $amount = $deposit->balance;
+            $closeTransaction = Transaction::closeDeposit($deposit, $amount);
+            $closeTransaction->update(['approved' => true]);
+            $deposit->update([
+                'condition' => 'closed',
+                'active' => false,
+            ]);
+
+//            $deposit_new->wallet->accrueToPartner($deposit->balance, 'refill');
+
+            $transaction->update(['approved' => true]);
+            $deposit_new->update(['active' => true]);
+
+            if ($deposit_new->createSequence()) {
+                return back()->with('success', 'Апгрейд прошел успешно!');
+            } else {
+                return back()->with('error', 'Не удалось совершить апгрейд!');
+            }
+        }
     }
 }
