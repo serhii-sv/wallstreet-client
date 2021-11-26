@@ -250,12 +250,6 @@ class DepositsController extends Controller
 
         $deposit_balance = Wallet::convertToCurrencyStatic($from_currency, $to_currency, $deposit->balance);
 
-        $check_deposit = Rate::where('rate_group_id', $rate_group_id)->where('max', ' > ', $deposit_balance)->orderBy('max', 'asc')->first();
-
-        if ($check_deposit === null) {
-            return redirect()->back()->with('error', 'Депозит максимальный в своей группе!');
-        }
-
         /** @var Deposit $rate */
         $rate = Rate::where('rate_group_id', $rate_group_id)
             ->where('id', '!=', $rate->id)
@@ -263,6 +257,10 @@ class DepositsController extends Controller
             ->where('min', '<=', $deposit_balance)
             ->orderBy('min', 'asc')
             ->first();
+
+        if (null === $rate) {
+            return redirect()->back()->with('error', 'Подходящий для апгрейда тарифный план не найден.');
+        }
 
         $deposit_new = new Deposit;
         $deposit_new->rate_id = $rate->id;
