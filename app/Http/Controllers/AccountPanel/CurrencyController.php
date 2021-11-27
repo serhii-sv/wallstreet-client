@@ -4,9 +4,11 @@ namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
+use App\Models\CurrencyExchange;
 use App\Models\ExchangeRateLog;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -62,6 +64,17 @@ class CurrencyController extends Controller
         //  $balance = $wallet_from->convertToCurrency($wallet->currency()->first(), $toCurrency, abs($wallet->balance));
         if ($amount > $wallet_from->balance) {
             return redirect()->back()->with('error', 'Недостаточно средств на балансе!');
+        }
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        $existsLatestCurrencyExchange = CurrencyExchange::where('user_id', $user->id)
+            ->where('created_at', '>=', now()->subHours(6))
+            ->count() > 0;
+
+        if ($existsLatestCurrencyExchange > 0) {
+            return redirect()->back()->with('error', 'Нельзя проводить обмены чаще чем раз в 6 часов.');
         }
 
         DB::beginTransaction();
