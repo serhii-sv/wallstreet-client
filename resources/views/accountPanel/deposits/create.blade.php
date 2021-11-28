@@ -385,9 +385,7 @@ Create deposit
                                           </div>
                                         </form>
                                       @else
-                                        <div class="text-center">@if(canEditLang() && checkRequestOnEdit())
-                                            <editor_block data-name='Unavailable' contenteditable="true">{{ __('Unavailable') }}</editor_block> @else {{ __('Unavailable') }} @endif
-                                        </div>
+                                            <strong>недоступно</strong>
                                       @endif
                                     </td>
                                   </tr>
