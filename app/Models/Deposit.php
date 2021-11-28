@@ -565,7 +565,7 @@ class Deposit extends Model
      * @return bool
      */
     public function canUpdate() {
-        if ($this->rate->name == 'Кредитование'){
+        if (!$this->rate->upgradable){
             return false;
         }
 
