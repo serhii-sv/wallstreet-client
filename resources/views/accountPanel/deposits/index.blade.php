@@ -41,6 +41,7 @@
                         <th scope="col">{{number_format($deposit->total_assessed(), $deposit->currency->precision, '.', ',') ?? 0 }} {{ $deposit->currency->symbol }}</th>
                         <td>{{ $deposit->created_at->format('d-m-Y H:i') }}</td>
                         <td>
+                            @if($deposit->rate->reinvest)
                           <form action="{{ route('accountPanel.deposits.set.reinvest') }}" method="post">
                             @csrf
                             <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
@@ -74,6 +75,7 @@
                               });
                             </script>
                           @endpush
+                                @endif
                         </td>
                         <td>
                           <form action="{{ route('accountPanel.deposits.add.balance') }}" method="post">
