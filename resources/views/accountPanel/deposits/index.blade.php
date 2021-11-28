@@ -78,6 +78,7 @@
                                 @endif
                         </td>
                         <td>
+                            @if($deposit->rate->reinvest)
                           <form action="{{ route('accountPanel.deposits.add.balance') }}" method="post">
                             @csrf
                             <input type="hidden" name="deposit_id" value="{{ $deposit->id }}">
@@ -105,6 +106,7 @@
                             </form>
                           @else
                           @endif
+                            @endif
                         </td>
                       </tr>
                       {{--@endif--}}
