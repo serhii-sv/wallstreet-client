@@ -211,19 +211,20 @@ class ProfileController extends Controller
     }
 
     public function loginSendVerifyCode(Request $request) {
-        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            if (!($verification_enable->s_value == 'on'))
-            {
-                return redirect()->route('accountPanel.dashboard');
-            }
-        }else{
-            return redirect()->route('accountPanel.dashboard');
-        }
+        // $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        // if ($verification_enable !== null){
+        //     if (!($verification_enable->s_value == 'on'))
+        //     {
+        //         return redirect()->route('accountPanel.dashboard');
+        //     }
+        // }else{
+        //     return redirect()->route('accountPanel.dashboard');
+        // }
 
         if (!Auth::user()) {
             return redirect()->route('accountPanel.dashboard');
         }
+
         if (!Auth::user()->phone){
             return redirect()->route('accountPanel.dashboard');
         }
