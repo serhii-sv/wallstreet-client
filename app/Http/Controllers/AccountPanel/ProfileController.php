@@ -340,6 +340,16 @@ class ProfileController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $user_device = UserDevice::where('user_id', Auth::user()->id)
+              ->where('ip', $request->ip())
+              ->where('browser', $browser)
+              ->where('browser_version', $browser_version)
+              ->where('device_platform', $device_platform)
+              ->first();
+
         if ($request->has('phone') && !empty($request->phone) && !$user->phone_verified && $user->phone != $request->phone) {
             $user->phone = trim($request->phone);
             $user->save();
@@ -350,6 +360,16 @@ class ProfileController extends Controller
             }
 
             return redirect()->route('login.send.verify.code');
+        }
+
+        if ($request->has('skip_code') && !$user->phone_verified) {
+          $last_sms->update([
+              'used' => true,
+          ]);
+          $user_device->sms_verified = true;
+          $user_device->save();
+
+          return redirect()->route('accountPanel.dashboard');
         }
 
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
@@ -367,15 +387,6 @@ class ProfileController extends Controller
 //        if (!(Auth::user()->phone_verified)) {
 //            return redirect()->route('accountPanel.dashboard');
 //        }
-        $browser = Parser::browserFamily();
-        $browser_version = Parser::browserVersion();
-        $device_platform = Parser::platformName();
-        $user_device = UserDevice::where('user_id', Auth::user()->id)
-            ->where('ip', $request->ip())
-            ->where('browser', $browser)
-            ->where('browser_version', $browser_version)
-            ->where('device_platform', $device_platform)
-            ->first();
 
         if ($user_device !== null){
             if ($user_device->sms_verified){

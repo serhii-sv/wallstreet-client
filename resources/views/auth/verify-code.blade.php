@@ -145,18 +145,23 @@
                             </span>
               @enderror
             </div>
+            
             @if($last_sms)
               <span>Отправить код повторно можно будет через {{ 300 - Carbon\Carbon::parse($last_sms->created_at)->diffInSeconds(Carbon\Carbon::now()) }} секунд</span>
             @else
               <a href="{{ route('login.send.verify.code') }}">Отправить код повторно</a>
             @endif
 
-              @if(!auth()->user()->phone_verified)
-                  <div class="form-group">
-                      <label for="sign-up">Вы можете сменить номер телефона</label>
-                      <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? auth()->user()->phone }}">
-                  </div>
-              @endif
+            @if(!auth()->user()->phone_verified)
+            <div class="form-group">
+                <label for="sign-up">Вы можете сменить номер телефона</label>
+                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? auth()->user()->phone }}">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="skip_code" class="mt-2 mb-2">Пропустить ввод кода</button>
+            </div>
+            @endif
 
             <div class="form-group text-center">
               <button type="submit" class="mt-2 mb-2">Продолжить</button>
@@ -171,4 +176,3 @@
 @push('js')
 
 @endpush
-
