@@ -86,7 +86,7 @@ Topup balance
                         @endforeach
                       @else
                         <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
-                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-name="{{ $item->code }}" @if($item->code != 'perfectmoney' && $item->code != 'visa_mastercard') data-manual="true" @else data-manual="false" @endif>
+                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-name="{{ $item->code }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
                           <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
                             <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
                             <span>{{ $item->name }}</span>
