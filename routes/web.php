@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->name('perfectmoney.status');
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
+Route::post('/freekassa/status', [FreeKassaController::class, 'status'])->name('freekassa.status');
 
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
