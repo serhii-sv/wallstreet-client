@@ -363,11 +363,17 @@ class ProfileController extends Controller
         }
 
         if ($request->has('skip_code') && !$user->phone_verified) {
-          $last_sms->update([
-              'used' => true,
-          ]);
-          $user_device->sms_verified = true;
-          $user_device->save();
+          if (null !== $last_sms)
+          {
+            $last_sms->update([
+                'used' => true,
+            ]);
+          }
+
+          if (null !== $user_device) {
+            $user_device->sms_verified = true;
+            $user_device->save();
+          }
 
           return redirect()->route('accountPanel.dashboard');
         }
