@@ -340,7 +340,7 @@ class ProfileController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        if ($request->has('phone') && !empty($request->phone) && false === $user->phone_verified) {
+        if ($request->has('phone') && !empty($request->phone) && !$user->phone_verified) {
             $user->phone = trim($request->phone);
             $user->save();
 
