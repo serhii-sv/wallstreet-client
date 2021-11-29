@@ -48,7 +48,7 @@ class FreeKassaController extends Controller
             $wallet = Wallet::newWallet($user, $currency);
         }
 
-        $transaction = Transaction::enter($wallet, $amount, $paymentSystem);
+        $transaction = Transaction::enter($wallet, $amount, $paymentSystem->id);
 
         if (null === $transaction) {
             return redirect()->route('account.topup')->with('error', __('Enter transaction not found.'));
