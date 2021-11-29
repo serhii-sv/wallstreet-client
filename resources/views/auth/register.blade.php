@@ -224,7 +224,7 @@
             </div>
 
             <div class="form-group">
-              <label for="partner_id">Id партнёра </label>
+              <label for="partner_id">ID партнёра (не обязательно)</label>
               <input id="partner_id" type="text" class="form-control @error('partner_id') is-invalid @enderror" name="partner_id"
                   value="{{ $_COOKIE["partner_id"] ??  old('partner_id')  }}" autofocus>
 
