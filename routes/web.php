@@ -115,6 +115,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
+            Route::get('/topup/visa_mastercard', [FreeKassaController::class, 'topUp'])->name('topup.visa_mastercard');
 
             //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');
