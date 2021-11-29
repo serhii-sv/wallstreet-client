@@ -66,7 +66,7 @@ class FreeKassaController extends Controller
         // Forming an array for signature generation
         $signature = md5($merchantId.':'.$amount.':'.env('FREEKASSA_MERCHANT_KEY').':'.$orderId);
 
-        return view('ps.freekassa', [
+        return view('accountPanel.ps.freekassa', [
             'currency'   => $currencyCode,
             'amount'     => $amount,
             'user'       => $user,
