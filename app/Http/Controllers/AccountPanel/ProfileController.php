@@ -211,6 +211,8 @@ class ProfileController extends Controller
     }
 
     public function loginSendVerifyCode(Request $request) {
+die('ok');
+
         // $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         // if ($verification_enable !== null){
         //     if (!($verification_enable->s_value == 'on'))
