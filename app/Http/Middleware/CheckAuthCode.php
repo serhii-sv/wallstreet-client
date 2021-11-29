@@ -37,26 +37,24 @@ class CheckAuthCode
                 return $next($request);
             }
 
-            if ($user->auth_with_phone) {
-                $browser = Parser::browserFamily();
-                $browser_version = Parser::browserVersion();
-                $device_platform = Parser::platformName();
-                $user_device = UserDevice::where('user_id', $user->id)
-                    ->where('ip', $request->ip())
-                    ->where('browser', $browser)
-                    ->where('browser_version', $browser_version)
-                    ->where('device_platform', $device_platform)
-                    ->first();
+            $browser = Parser::browserFamily();
+            $browser_version = Parser::browserVersion();
+            $device_platform = Parser::platformName();
+            $user_device = UserDevice::where('user_id', $user->id)
+                ->where('ip', $request->ip())
+                ->where('browser', $browser)
+                ->where('browser_version', $browser_version)
+                ->where('device_platform', $device_platform)
+                ->first();
 
-                if ($user_device !== null) {
-                    if ($user_device->sms_verified) {
-                        return $next($request);
-                    } else {
-                        return redirect()->route('login.send.verify.code');
-                    }
+            if ($user_device !== null) {
+                if ($user_device->sms_verified) {
+                    return $next($request);
                 } else {
                     return redirect()->route('login.send.verify.code');
                 }
+            } else {
+                return redirect()->route('login.send.verify.code');
             }
         }
 
