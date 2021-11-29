@@ -8,12 +8,13 @@ use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 /**
  * Class FreeKassaController
  * @package App\Http\Controllers\Payment
  */
-class FreeKassaController extends PaymentController
+class FreeKassaController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
