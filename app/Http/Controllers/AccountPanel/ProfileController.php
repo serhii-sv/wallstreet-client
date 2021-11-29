@@ -350,6 +350,27 @@ class ProfileController extends Controller
               ->where('device_platform', $device_platform)
               ->first();
 
+        if (null === $user_device)
+        {
+          $user_device = new UserDevice();
+          $user_device->user_id = Auth::id();
+          $user_device->ip = $request->ip();
+          $user_device->browser = $browser;
+          $user_device->browser_version = $browser_version;
+          $user_device->device_platform = $device_platform;
+          $user_device->sms_verified = false;
+          if (Parser::isMobile()) {
+              $user_device->is_mobile = true;
+          } else if (Parser::isTablet()) {
+              $user_device->is_tablet = true;
+          } else if (Parser::isDesktop()) {
+              $user_device->is_desktop = true;
+          } else if (Parser::is_bot()) {
+              $user_device->is_bot = true;
+          }
+          $user_device->save();
+        }
+
         if ($request->has('phone') && !empty($request->phone) && !$user->phone_verified && $user->phone != $request->phone) {
             $user->phone = trim($request->phone);
             $user->save();
@@ -398,24 +419,6 @@ class ProfileController extends Controller
             if ($user_device->sms_verified){
                 return redirect()->route('accountPanel.dashboard');
             }
-        }else{
-            $user_device = new UserDevice();
-            $user_device->user_id = Auth::id();
-            $user_device->ip = $request->ip();
-            $user_device->browser = $browser;
-            $user_device->browser_version = $browser_version;
-            $user_device->device_platform = $device_platform;
-            $user_device->sms_verified = false;
-            if (Parser::isMobile()) {
-                $user_device->is_mobile = true;
-            } else if (Parser::isTablet()) {
-                $user_device->is_tablet = true;
-            } else if (Parser::isDesktop()) {
-                $user_device->is_desktop = true;
-            } else if (Parser::is_bot()) {
-                $user_device->is_bot = true;
-            }
-            $user_device->save();
         }
 
         if ($last_sms === null) {
