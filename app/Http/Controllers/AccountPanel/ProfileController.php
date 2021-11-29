@@ -211,17 +211,15 @@ class ProfileController extends Controller
     }
 
     public function loginSendVerifyCode(Request $request) {
-die('ok');
-
-        // $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        // if ($verification_enable !== null){
-        //     if (!($verification_enable->s_value == 'on'))
-        //     {
-        //         return redirect()->route('accountPanel.dashboard');
-        //     }
-        // }else{
-        //     return redirect()->route('accountPanel.dashboard');
-        // }
+        $verification_enable = Setting::where('s_key', 'verification_enable')->first();
+        if ($verification_enable !== null){
+            if (!($verification_enable->s_value == 'on'))
+            {
+                return redirect()->route('accountPanel.dashboard');
+            }
+        }else{
+            return redirect()->route('accountPanel.dashboard');
+        }
 
         if (!Auth::user()) {
             return redirect()->route('accountPanel.dashboard');
@@ -295,7 +293,7 @@ die('ok');
                         'body' => $text->s_value . ' ' . $code,
                     ]);
                 } catch (\Exception $e) {
-                    return back()->with('error', 'Ошибка отправки смс на номер '.Auth::user()->phone);
+                    return redirect()->route('login.enter.verify.code');
                 }
 
                 $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
