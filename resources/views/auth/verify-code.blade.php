@@ -160,10 +160,10 @@
             @endif
 
             <div class="form-group text-center">
-              <button type="submit" class="mt-2 mb-2">Продолжить</button>
+              <button type="submit" class="mt-2 mb-2">Подтвердить</button>
 
               @if(!auth()->user()->phone_verified)
-              <button type="submit" name="skip_code" class="mt-2 mb-2">Пропустить ввод кода</button>
+              <button type="submit" name="skip_code" class="mt-2 mb-2">Подтвердить позже</button>
               @endif
             </div>
           </form>
