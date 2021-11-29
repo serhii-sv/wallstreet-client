@@ -137,9 +137,9 @@
             <input type="hidden" name="g-recaptcha-response" id="recaptcha">
             <div class="form-group">
               <label for="sign-up">Введите код из смс сообщения</label>
-              <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="code" value="{{ old('email') }}" required autocomplete="email" autofocus>
+              <input id="email" type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" required autofocus>
 
-              @error('email')
+              @error('code')
               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -150,6 +150,13 @@
             @else
               <a href="{{ route('login.send.verify.code') }}">Отправить код повторно</a>
             @endif
+
+              @if(!auth()->user()->phone_verified)
+                  <div class="form-group">
+                      <label for="sign-up">Вы можете сменить номер телефона</label>
+                      <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? auth()->user()->phone }}">
+                  </div>
+              @endif
 
             <div class="form-group text-center">
               <button type="submit" class="mt-2 mb-2">Продолжить</button>

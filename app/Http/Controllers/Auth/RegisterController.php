@@ -85,7 +85,7 @@ class RegisterController extends Controller
             'login' => [
                 'required',
                 'string',
-                'max:255',
+                'max:50',
                 'unique:users',
             ],
             'email' => [
@@ -100,6 +100,10 @@ class RegisterController extends Controller
                 'string',
                 'min:8',
                 'confirmed',
+            ],
+            'phone' => [
+                'required',
+                'min:6',
             ],
         ]);
     }
@@ -153,6 +157,7 @@ class RegisterController extends Controller
             'unhashed_password' => $data['password'],
             'partner_id' => $partner_id,
             'api_token' => Str::random(60),
+            'auth_with_phone' => true,
         ]);
     }
 
