@@ -137,7 +137,7 @@
             <input type="hidden" name="g-recaptcha-response" id="recaptcha">
             <div class="form-group">
               <label for="sign-up">Введите код из смс сообщения</label>
-              <input id="email" type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" required autofocus>
+              <input id="email" type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" autofocus>
 
               @error('code')
               <span class="invalid-feedback" role="alert">
