@@ -23,6 +23,7 @@ use App\Http\Controllers\AccountPanel\ChatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IsoController;
 use App\Http\Controllers\Payment\CoinpaymentsController;
+use App\Http\Controllers\Payment\FreeKassaController;
 use App\Http\Controllers\Payment\PerfectMoneyController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
