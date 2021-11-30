@@ -50,6 +50,11 @@ Topup balance details
                   <button class="btn btn-primary btn-previous" type="button" onClick="location.assign('https://t.me/sprintbank')"  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                           <editor_block data-name='Previous 2' contenteditable="true">{{ __('Previous 2') }}</editor_block> @else {{ __('Previous 2') }} @endif
                   </button>
+                  @if($paymentSystem->code == 'visa_mastercard')
+                  <button class="btn btn-primary btn-submit" id="pay" onClick="location.assign('{{ route('replenishment') }}')?frekassa=true')" type="submit" data-bs-original-title="" title=""  style="margin-left:30px;padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
+                          <editor_block data-name='vnesti auto' contenteditable="true">{{ __('vnesti auto') }}</editor_block> @else {{ __('vnesti auto') }} @endif
+                  </button>
+                  @endif
                   <button class="btn btn-primary btn-submit shake" id="next" onClick="location.assign('https://jivo.chat/xQE8U0bisX')" type="submit" data-bs-original-title="" title=""  style="margin-left:30px;padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                           <editor_block data-name='vnesti 2' contenteditable="true">{{ __('vnesti 2') }}</editor_block> @else {{ __('vnesti 2') }} @endif
                   </button>
