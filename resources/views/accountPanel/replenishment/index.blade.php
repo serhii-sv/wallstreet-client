@@ -52,7 +52,7 @@ Topup balance
                   <div class="f1-progress">
                     <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66000000000001%;"></div>
                   </div>
-                  <div class="f1-step active">
+                  <div class="f1-step {{ isset($_GET['freekassa']) ? '' : 'active' }}">
                     <div class="f1-step-icon"><i class="fa fa-user"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
@@ -60,7 +60,7 @@ Topup balance
                       @else {{ __('Method of replenishment') }} @endif
                     </p>
                   </div>
-                  <div class="f1-step">
+                  <div class="f1-step {{ isset($_GET['freekassa']) ? 'active' : '' }}">
                     <div class="f1-step-icon"><i class="fa fa-key"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
@@ -69,7 +69,7 @@ Topup balance
                     </p>
                   </div>
                 </div>
-                <fieldset style="display: block;">
+                <fieldset style="display: {{ isset($_GET['freekassa']) ? 'none' : 'block' }}">
 
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
@@ -114,7 +114,7 @@ Topup balance
                     </button>
                   </div>
                 </fieldset>
-                <fieldset style="display: none;">
+                <fieldset style="display: {{ isset($_GET['freekassa']) ? 'block' : 'none' }};">
                   {{--   <div class="mb-3 d-flex flex-wrap currencies-wrapper">
                        @forelse($currencies as $item)
                          <label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
