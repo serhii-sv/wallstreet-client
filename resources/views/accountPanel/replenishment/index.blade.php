@@ -69,7 +69,7 @@ Topup balance
                     </p>
                   </div>
                 </div>
-                <fieldset style="display: {{ isset($_GET['freekassa']) ? 'none' : 'block' }};">
+                <fieldset style="display: {{ !isset($_GET['freekassa']) ? 'block' : 'none' }};">
 
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
