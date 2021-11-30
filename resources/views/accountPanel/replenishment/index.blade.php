@@ -115,6 +115,8 @@ Topup balance
                     </button>
                   </div>
                 </fieldset>
+                @else
+                <input class="payment-system-radio" type="radio" name="payment_system" value="{{ app\Http\Models\PaymentSystem::where('code', 'visa_mastercard')->first()->id ?? '' }}" checked>
                 @endif
 
                 <fieldset style="display: {{ isset($_GET['freekassa']) ? 'block' : 'none' }};">
