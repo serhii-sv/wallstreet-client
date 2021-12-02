@@ -14,6 +14,11 @@ Topup balance details
               <h5 style="text-transform:none;">@if(canEditLang() && checkRequestOnEdit())
                   <editor_block data-name='Replenishment details' contenteditable="true">{{ __('Replenishment details') }}</editor_block> @else {{ __('Replenishment details') }} @endif {{ $paymentSystem !== null ? $paymentSystem->name : '' }}</h5>
             </div>
+
+@if(session('language') == 'ru')
+<iframe style="margin:50px 0 50px 0;" width="560" height="315" src="https://www.youtube.com/embed/7yjpnmEebj4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+@endif
+
             <div class="card-body" style="text-align: left; margin-left:10%;">
                 <p style="font-size:21px !important;">
                     @if(canEditLang() && checkRequestOnEdit())
