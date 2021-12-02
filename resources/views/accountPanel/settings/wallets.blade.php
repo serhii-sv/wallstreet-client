@@ -28,7 +28,7 @@ Wallets
                             } elseif ($currency->code == 'UAH') {
                                 $walletName = 'UAH VISA/MASTERCARD';
                             } elseif ($currency->code == 'RUB') {
-                                $walletName = 'RUB VISA/MASTERCARD';
+                                $walletName = 'RUB VISA/MC / QIWI';
                             } elseif ($currency->code == 'KZT') {
                                 $walletName = 'KZT VISA/MASTERCARD';
                             } elseif ($currency->code == 'EUR') {
@@ -76,7 +76,7 @@ Wallets
                                     </div>
                                 @endif
                               </div>
-                                @if($wallet->currency->code == 'USD')
+                                @if($wallet->currency->code == 'USD' || $wallet->currency->code == 'RUB')
                                     <div style="clear:both; margin:20px 0 20px 0;"></div>
                                 @endif
                               <div class="col align-self-end">
