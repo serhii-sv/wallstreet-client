@@ -91,7 +91,7 @@ Withdrawals
                                 <option value="payeer:{{ $item->id }}">Payeer {{ strtoupper($item->external_payeer) }}</option>
                             @endif
                             @if($currency->code == 'RUB')
-                                <option value="payeer:{{ $item->id }}">Qiwi {{ strtoupper($item->external_qiwi) }}</option>
+                                <option value="qiwi:{{ $item->id }}">Qiwi {{ strtoupper($item->external_qiwi) }}</option>
                             @endif
                           </select>
                           <h6 class="mb-2 mt-2" style="color:green;">@if(canEditLang() && checkRequestOnEdit())
