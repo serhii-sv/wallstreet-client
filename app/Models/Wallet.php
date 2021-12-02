@@ -432,7 +432,6 @@ class Wallet extends Model
         return cache()->remember('personal_sum_transactions_enter.'.$this->id, now()->addMinutes(60), function() use($wl) {
             return round($wl->transactions()
                 ->where('approved', 1)
-                ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('enter')->id)
                 ->sum('amount'), $wl->currency->precision);
         });
@@ -447,7 +446,6 @@ class Wallet extends Model
         return cache()->remember('personal_sum_transactions_withdraw.'.$this->id, now()->addMinutes(60), function() use($wl) {
             return round($wl->transactions()
                 ->where('approved', 1)
-                ->where('is_real', true)
                 ->where('type_id', TransactionType::getByName('withdraw')->id)
                 ->sum('amount'), $wl->currency->precision);
         });

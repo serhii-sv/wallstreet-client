@@ -224,17 +224,24 @@ class ProfileController extends Controller
         if (!Auth::user()) {
             return redirect()->route('accountPanel.dashboard');
         }
+
         if (!Auth::user()->phone){
             return redirect()->route('accountPanel.dashboard');
         }
-        if (!Auth::user()->phone_verified) {
-            return redirect()->route('accountPanel.dashboard');
-        }
+
+//        if (!Auth::user()->phone_verified) {
+//            return redirect()->route('accountPanel.dashboard');
+//        }
 
         $browser = Parser::browserFamily();
         $browser_version = Parser::browserVersion();
         $device_platform = Parser::platformName();
-        $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+        $user_device = UserDevice::where('user_id', Auth::user()->id)
+            ->where('ip', $request->ip())
+            ->where('browser', $browser)
+            ->where('browser_version', $browser_version)
+            ->where('device_platform', $device_platform)
+            ->first();
 
         if ($user_device !== null){
             if ($user_device->sms_verified){
@@ -269,9 +276,14 @@ class ProfileController extends Controller
                 $sms->save();
             }
         } else {
-            $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'verification')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
-            if ($last_sms === null) {
+            $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)
+                ->where('type', 'verification')
+                ->where('created_at', '>', Carbon::now()->subMinutes(5))
+                ->where('used', false)
+                ->orderByDesc('created_at')
+                ->first();
 
+            if ($last_sms === null) {
                 $text = Setting::where('s_key', 'verification_text')->first();
 
                 try {
@@ -281,9 +293,11 @@ class ProfileController extends Controller
                         'body' => $text->s_value . ' ' . $code,
                     ]);
                 } catch (\Exception $e) {
-                    return back()->with('error', 'Ошибка отправки смс на номер '.Auth::user()->phone);
+                    return redirect()->route('login.enter.verify.code');
                 }
+
                 $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
+
                 if ($statusCode == '201') {
                     $sms = new UserPhoneMessages();
                     $sms->user_id = Auth::user()->id;
@@ -294,6 +308,7 @@ class ProfileController extends Controller
                 }
             }
         }
+
         return redirect()->route('login.enter.verify.code');
     }
 
@@ -302,7 +317,12 @@ class ProfileController extends Controller
             return back();
         }
 
-        $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
+        $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)
+            ->where('type', 'auth')
+            ->where('created_at', '>', Carbon::now()->subMinutes(5))
+            ->where('used', false)
+            ->orderByDesc('created_at')
+            ->first();
 
         return view('auth.verify-code', [
             'last_sms' => $last_sms,
@@ -310,6 +330,76 @@ class ProfileController extends Controller
     }
 
     public function verifyCode(Request $request) {
+        /** @var User $user */
+        $user = auth()->user();
+
+        /** @var UserPhoneMessages $last_sms */
+        $last_sms = UserPhoneMessages::where('user_id', $user->id)
+            ->where('type', 'auth')
+            ->where('created_at', '>', Carbon::now()->subMinutes(5))
+            ->where('used', false)
+            ->orderByDesc('created_at')
+            ->first();
+
+        $browser = Parser::browserFamily();
+        $browser_version = Parser::browserVersion();
+        $device_platform = Parser::platformName();
+        $user_device = UserDevice::where('user_id', Auth::user()->id)
+              ->where('ip', $request->ip())
+              ->where('browser', $browser)
+              ->where('browser_version', $browser_version)
+              ->where('device_platform', $device_platform)
+              ->first();
+
+        if (null === $user_device)
+        {
+          $user_device = new UserDevice();
+          $user_device->user_id = Auth::id();
+          $user_device->ip = $request->ip();
+          $user_device->browser = $browser;
+          $user_device->browser_version = $browser_version;
+          $user_device->device_platform = $device_platform;
+          $user_device->sms_verified = false;
+          if (Parser::isMobile()) {
+              $user_device->is_mobile = true;
+          } else if (Parser::isTablet()) {
+              $user_device->is_tablet = true;
+          } else if (Parser::isDesktop()) {
+              $user_device->is_desktop = true;
+          } else if (Parser::is_bot()) {
+              $user_device->is_bot = true;
+          }
+          $user_device->save();
+        }
+
+        if ($request->has('phone') && !empty($request->phone) && !$user->phone_verified && $user->phone != $request->phone) {
+            $user->phone = trim($request->phone);
+            $user->save();
+
+            if (null !== $last_sms) {
+                $last_sms->used = true;
+                $last_sms->save();
+            }
+
+            return redirect()->route('login.send.verify.code');
+        }
+
+        if ($request->has('skip_code') && !$user->phone_verified) {
+          if (null !== $last_sms)
+          {
+            $last_sms->update([
+                'used' => true,
+            ]);
+          }
+
+          if (null !== $user_device) {
+            $user_device->sms_verified = true;
+            $user_device->save();
+          }
+
+          return redirect()->route('accountPanel.dashboard');
+        }
+
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         if ($verification_enable !== null){
             if (!($verification_enable->s_value == 'on'))
@@ -322,39 +412,16 @@ class ProfileController extends Controller
         if (!(Auth::user()->phone)){
             return redirect()->route('accountPanel.dashboard');
         }
-        if (!(Auth::user()->phone_verified)) {
-            return redirect()->route('accountPanel.dashboard');
-        }
-        $browser = Parser::browserFamily();
-        $browser_version = Parser::browserVersion();
-        $device_platform = Parser::platformName();
-        $user_device = UserDevice::where('user_id', Auth::user()->id)->where('ip', $request->ip())->where('browser', $browser)->where('browser_version', $browser_version)->where('device_platform', $device_platform)->first();
+//        if (!(Auth::user()->phone_verified)) {
+//            return redirect()->route('accountPanel.dashboard');
+//        }
 
         if ($user_device !== null){
             if ($user_device->sms_verified){
                 return redirect()->route('accountPanel.dashboard');
             }
-        }else{
-            $user_device = new UserDevice();
-            $user_device->user_id = Auth::id();
-            $user_device->ip = $request->ip();
-            $user_device->browser = $browser;
-            $user_device->browser_version = $browser_version;
-            $user_device->device_platform = $device_platform;
-            $user_device->sms_verified = false;
-            if (Parser::isMobile()) {
-                $user_device->is_mobile = true;
-            } else if (Parser::isTablet()) {
-                $user_device->is_tablet = true;
-            } else if (Parser::isDesktop()) {
-                $user_device->is_desktop = true;
-            } else if (Parser::is_bot()) {
-                $user_device->is_bot = true;
-            }
-            $user_device->save();
         }
 
-        $last_sms = UserPhoneMessages::where('user_id', Auth::user()->id)->where('type', 'auth')->where('created_at', '>', Carbon::now()->subMinutes(5))->where('used', false)->orderByDesc('created_at')->first();
         if ($last_sms === null) {
             return redirect()->route('login.enter.verify.code')->with('error', 'Код не верный!');
         } else {
@@ -364,6 +431,10 @@ class ProfileController extends Controller
                 ]);
                 $user_device->sms_verified = true;
                 $user_device->save();
+
+                $user->phone_verified = true;
+                $user->save();
+
                 return redirect()->route('accountPanel.dashboard');
             }
         }

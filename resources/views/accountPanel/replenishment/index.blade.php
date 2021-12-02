@@ -52,7 +52,7 @@ Topup balance
                   <div class="f1-progress">
                     <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66000000000001%;"></div>
                   </div>
-                  <div class="f1-step active">
+                  <div class="f1-step {{ isset($_GET['freekassa']) ? '' : 'active' }}">
                     <div class="f1-step-icon"><i class="fa fa-user"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
@@ -60,7 +60,7 @@ Topup balance
                       @else {{ __('Method of replenishment') }} @endif
                     </p>
                   </div>
-                  <div class="f1-step">
+                  <div class="f1-step {{ isset($_GET['freekassa']) ? 'active' : '' }}">
                     <div class="f1-step-icon"><i class="fa fa-key"></i></div>
                     <p>
                       @if(canEditLang() && checkRequestOnEdit())
@@ -69,7 +69,8 @@ Topup balance
                     </p>
                   </div>
                 </div>
-                <fieldset style="display: block;">
+                @if(!isset($_GET['freekassa']))
+                <fieldset>
 
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
@@ -114,7 +115,11 @@ Topup balance
                     </button>
                   </div>
                 </fieldset>
-                <fieldset style="display: none;">
+                @else
+                <input class="payment-system-radio" type="radio" name="payment_system" value="{{ \App\Models\PaymentSystem::where('code', 'visa_mastercard')->first()->id ?? '' }}" checked>
+                @endif
+
+                <fieldset style="display: {{ isset($_GET['freekassa']) ? 'block' : 'none' }};">
                   {{--   <div class="mb-3 d-flex flex-wrap currencies-wrapper">
                        @forelse($currencies as $item)
                          <label class="d-flex flex-column align-items-center justify-content-center currency-wrapper-item">
@@ -136,9 +141,11 @@ Topup balance
                   </div>
 
                   <div class="f1-buttons" style="text-align: center;margin-top:50px;">
+                    @if(!isset($_GET['freekassa']))
                     <button class="btn btn-primary btn-previous" type="button" data-bs-original-title="" title=""  style="padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='Previous' contenteditable="true">{{ __('Previous') }}</editor_block> @else {{ __('Previous') }} @endif
                     </button>
+                    @endif
                     <button class="btn btn-primary btn-submit shake" id="next" type="submit" data-bs-original-title="" title=""  style="margin-left:30px;padding:15px 50px 15px 50px; font-size:21px;">@if(canEditLang() && checkRequestOnEdit())
                         <editor_block data-name='vnesti' contenteditable="true">{{ __('vnesti') }}</editor_block> @else {{ __('vnesti') }} @endif
                     </button>

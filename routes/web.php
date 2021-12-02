@@ -23,6 +23,7 @@ use App\Http\Controllers\AccountPanel\ChatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IsoController;
 use App\Http\Controllers\Payment\CoinpaymentsController;
+use App\Http\Controllers\Payment\FreeKassaController;
 use App\Http\Controllers\Payment\PerfectMoneyController;
 use App\Http\Controllers\ReplenishmentController;
 use App\Http\Controllers\SetPartnerController;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->name('perfectmoney.status');
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
+Route::post('/freekassa/status', [FreeKassaController::class, 'status'])->name('freekassa.status');
 
 Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
@@ -115,6 +117,7 @@ Route::group(['middleware' => ['checkSiteEnabled']], function () {
 
             Route::get('/topup/perfectmoney', [PerfectMoneyController::class, 'topUp'])->name('topup.perfectmoney');
             Route::get('/topup/coinpayments', [CoinpaymentsController::class, 'topUp'])->name('topup.coinpayments');
+            Route::get('/topup/visa_mastercard', [FreeKassaController::class, 'topUp'])->name('topup.visa_mastercard');
 
             //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
             Route::get('/profile/avatar/{id}', [ProfileController::class, 'getAvatar'])->name('profile.get.avatar');

@@ -36,9 +36,12 @@ class ReplenishmentController extends Controller
         if ($currencyId) {
             $currency = Currency::where('id', $currencyId)->first();
         } else{
-            if ($paymentSystem->code == 'perfectmoney') {
-                $currency = Currency::where('code', 'USD')->first();
-            }
+          if ($paymentSystem->code == 'perfectmoney') {
+              $currency = Currency::where('code', 'USD')->first();
+          }
+          if ($paymentSystem->code == 'visa_mastercard') {
+              $currency = Currency::where('code', 'RUB')->first();
+          }
         }
 
         if (empty($currency)) {
