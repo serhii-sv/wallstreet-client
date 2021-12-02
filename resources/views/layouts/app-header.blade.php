@@ -1,10 +1,7 @@
 <header class="header-section">
     <div class="currency-rates">
         <div class="wrapper">
-            @forelse($currency_rates as $key => $rates)
-                <span>{{ $key }} - {{ $rates }}</span>
-            @empty
-            @endforelse
+          <div style="height:62px; background-color: #FFFFFF; overflow:hidden; box-sizing: border-box; border: 0px solid #56667F; border-radius: 4px; text-align: right; line-height:14px; block-size:42px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=light&pref_coin_id=1505&invert_hover=" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div></div>
         </div>
     </div>
     <div class="header-top p-0">
