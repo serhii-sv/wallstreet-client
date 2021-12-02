@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $currency_id
  * @property string|null $external
  * @property string|null $external_payeer
+ * @property string|null $external_qiwi
  * @property float $balance
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -58,6 +59,7 @@ class Wallet extends Model
         'main_currency_amount',
         'external',
         'external_payeer',
+        'external_qiwi',
         'balance',
     ];
 

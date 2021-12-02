@@ -62,12 +62,19 @@ Wallets
                                   <input class="form-control input-air-primary" type="text" name="external" value="{{ $wallet->external ?? '' }}" placeholder="" data-bs-original-title="" title="">
                                 </div>
 
-                                  @if($wallet->currency->code == 'USD')
-                                      <div style="margin-top:30px;">
-                                          <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external Payeer' contenteditable="true">{{ __('Wallet Payeer') }}</editor_block> @else {{ __('Wallet external Payeer') }} @endif</label>
-                                          <input class="form-control input-air-primary" type="text" name="external_payeer" value="{{ $wallet->external_payeer ?? '' }}" placeholder="" data-bs-original-title="" title="">
-                                      </div>
-                                  @endif
+                                @if($wallet->currency->code == 'USD')
+                                    <div style="margin-top:30px;">
+                                        <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external Payeer' contenteditable="true">{{ __('Wallet Payeer') }}</editor_block> @else {{ __('Wallet external Payeer') }} @endif</label>
+                                        <input class="form-control input-air-primary" type="text" name="external_payeer" value="{{ $wallet->external_payeer ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                    </div>
+                                @endif
+
+                                @if($wallet->currency->code == 'RUB')
+                                    <div style="margin-top:30px;">
+                                        <label>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Wallet external Qiwi' contenteditable="true">{{ __('Wallet Qiwi') }}</editor_block> @else {{ __('Wallet external Qiwi') }} @endif</label>
+                                        <input class="form-control input-air-primary" type="text" name="external_qiwi" value="{{ $wallet->external_qiwi ?? '' }}" placeholder="" data-bs-original-title="" title="">
+                                    </div>
+                                @endif
                               </div>
                                 @if($wallet->currency->code == 'USD')
                                     <div style="clear:both; margin:20px 0 20px 0;"></div>

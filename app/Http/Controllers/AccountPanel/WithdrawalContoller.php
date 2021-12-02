@@ -91,6 +91,10 @@ class WithdrawalContoller extends Controller
         preg_match('/payeer\:/', $walletId, $payerFound);
         $walletId = preg_replace('/payeer\:/', '', $walletId);
 
+        // TODO: remove in future
+        preg_match('/qiwi\:/', $walletId, $qiwiFound);
+        $walletId = preg_replace('/qiwi\:/', '', $walletId);
+
         /** @var Wallet $wallet */
         $wallet = Wallet::where('id', $walletId)->where('user_id', auth()->user()->id)->first();
         if (empty($wallet)) {
@@ -100,6 +104,10 @@ class WithdrawalContoller extends Controller
         if ($payerFound) {
             if (empty($wallet->external_payeer)) {
                 return redirect()->back()->with('error', 'Заполните реквизиты Payeer в настройках');
+            }
+        } elseif ($qiwiFound) {
+            if (empty($wallet->external_qiwi)) {
+                return redirect()->back()->with('error', 'Заполните реквизиты Qiwi в настройках');
             }
         } else {
             if (empty($wallet->external)) {
@@ -133,6 +141,8 @@ class WithdrawalContoller extends Controller
 
         if ($payerFound) {
             $payment_system = PaymentSystem::where('code', 'payeer')->first();
+        } elseif ($qiwiFound) {
+            $payment_system = PaymentSystem::where('code', 'qiwi')->first();
         } else {
             $payment_system = PaymentSystem::whereHas('currencies', function ($q) use ($currency) {
                 $q->where('code', $currency->code);
