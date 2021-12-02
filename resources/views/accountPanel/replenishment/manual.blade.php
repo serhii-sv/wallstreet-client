@@ -16,7 +16,9 @@ Topup balance details
             </div>
 
 @if(session('language') == 'ru')
-<iframe style="margin:50px 0 50px 0;" width="560" height="315" src="https://www.youtube.com/embed/7yjpnmEebj4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div style="width:80%; margin-left:10%;">
+  <iframe style="margin:50px 0 50px 0; width:100%;" height="315" src="https://www.youtube.com/embed/7yjpnmEebj4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 @endif
 
             <div class="card-body" style="text-align: left; margin-left:10%;">
