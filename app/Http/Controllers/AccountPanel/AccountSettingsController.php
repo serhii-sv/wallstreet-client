@@ -36,11 +36,13 @@ class AccountSettingsController extends Controller
     public function securitySettings() {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         $verification_enable = $verification_enable !== null ? $verification_enable->s_value : 'off';
+        $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
 
         return view('accountPanel.settings.settings-security')->with([
             'fa_field' => auth()->user()->loginSecurity()->first()->google2fa_enable ?? false,
             'user' => Auth::user(),
-            'verification_enable' => $verification_enable
+            'verification_enable' => $verification_enable,
+            'auth_log' => $auth_log,
         ]);
     }
 
@@ -105,10 +107,8 @@ class AccountSettingsController extends Controller
     }
 
     public function editProfile() {
-        $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
         return view('accountPanel.settings.profile', [
             'user' => Auth::user(),
-            'auth_log' => $auth_log,
         ]);
     }
 

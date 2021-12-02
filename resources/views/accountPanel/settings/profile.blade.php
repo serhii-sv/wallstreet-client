@@ -197,39 +197,6 @@ Edit profile
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <!-- Cod Box Copy begin -->
-          <div class="card">
-            <div class="card-header card-no-border">
-              <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Login history' contenteditable="true">{{ __('Login history') }}</editor_block> @else {{ __('Login history') }} @endif</h5>
-            </div>
-            <div class="card-body new-update pt-0">
-              <div class="activity-timeline">
-                @forelse($auth_log as $item)
-                  <div class="media">
-                    <div class="activity-line"></div>
-                    <div class="activity-dot-secondary"></div>
-                    <div class="media-body">
-                      <span class="badge rounded-pill pill-badge-info">ip: {{ $item->ip }}</span>
-                      <p class="font-roboto">{{ $item->created_at->format('H:i:s d.F.Y') }}</p>
-                    </div>
-                  </div>
-                @empty
-                @endforelse
-                {{--   <div class="media">
-                     <div class="activity-dot-primary"></div>
-                     <div class="media-body">
-                       <span>You liked James products</span>
-                       <p class="font-roboto">Aenean sit amet magna vel magna fringilla ferme.</p>
-                     </div>
-                   </div>--}}
-              </div>
-            </div>
-          </div>
-          <!-- Cod Box Copy end -->
-        </div>
-      </div>
     </div>
   </div>
   <style>
