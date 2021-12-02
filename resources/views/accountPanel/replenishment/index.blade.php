@@ -86,17 +86,23 @@ Topup balance
                           </label>
                         @endforeach
                       @else
-                        <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
-                          <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-name="{{ $item->code }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
-                          <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
-                            <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
-                            <span>{{ $item->name }}</span>
-                          </div>
-                        </label>
+                      <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
+                        <input class="payment-system-radio" type="radio" name="payment_system" value="{{ $item->id }}" data-name="{{ $item->code }}" @if($item->code != 'perfectmoney') data-manual="true" @else data-manual="false" @endif>
+                        <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
+                          <img src="{{ asset('accountPanel/images/logos/' .  $item->image ) }}" alt="{{ $item->image_alt }}" title="{{ $item->image_title }}">
+                          <span>{{ $item->name }}</span>
+                        </div>
+                      </label>
                       @endif
 
                     @empty
                     @endforelse
+
+                    <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item">
+                      <div class=" payment-system-item d-flex flex-column align-items-center justify-content-center">
+                        <span>Вашей платежной системы нет в списке? Напишите нам в Службу Поддержки и мы постараемся принять перевод.</span>
+                      </div>
+                    </label>
                   </div>
 
                   {{--<div class="mb-3">
