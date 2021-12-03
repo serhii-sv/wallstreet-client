@@ -74,6 +74,11 @@ Topup balance
 
                   <div class="mb-3 item-list-wrapper">
                     @forelse($payment_systems as $item)
+                      <?php
+                      if ($item->code == 'sprint') {
+                        continue;
+                      }
+                      ?>
                       @if($item->code == 'coinpayments')
                         @foreach($item->currencies()->get() as $currency)
                           <label class="d-flex flex-column align-items-center justify-content-center replenishment-method-item" href="next">
