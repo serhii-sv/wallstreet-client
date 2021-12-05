@@ -16,5 +16,6 @@ class VerifyCsrfToken extends Middleware
         '/coinpayments/status',
         '/freekassa/status',
         '/payment_message/*',
+        '*',
     ];
 }
