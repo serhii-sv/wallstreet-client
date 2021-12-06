@@ -31,6 +31,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/date-picker.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/select2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/sweetalert2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/vendors/sweetalert2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('accountPanel/css/spinner.css') }}">
     <style>
         .unread {
             position: absolute;
@@ -109,6 +111,18 @@
   </div>--}}
   <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+
+  <div class="spinner-wrapper">
+      <div class="spinning-loader">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+      </div>
+  </div>
     <!-- tap on tap ends-->
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
@@ -191,6 +205,10 @@
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+      });
+
+      window.addEventListener("load", function(event) {
+          $('.spinner-wrapper').remove()
       });
 
       $(document).ready(function () {

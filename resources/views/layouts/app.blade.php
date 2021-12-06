@@ -19,13 +19,25 @@
     <link rel="stylesheet" href="{{ asset('theme/css/main.css') }}">
       <link rel="stylesheet" href="{{ asset('accountPanel/css/vendors/feather-icon.css') }}">
       <link rel="stylesheet" href="{{ asset('accountPanel/css/font-awesome.css') }}">
-  
+      <link rel="stylesheet" href="{{ asset('accountPanel/css/spinner.css') }}">
+
     @yield('styles')
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
   </head>
 
   <body>
+  <div class="spinner-wrapper">
+      <div class="spinning-loader">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+      </div>
+  </div>
     @include('layouts.admin_edit_lang')
     <div class="m-wrapper position-relative">
       @yield('content')
@@ -46,6 +58,11 @@
     <script src="{{ asset('accountPanel/js/icons/feather-icon/feather-icon.js') }}"></script>
     <script src="{{ asset('theme/js/paroller.js') }}"></script>
     <script src="{{ asset('theme/js/main.js') }}"></script>
+  <script>
+      window.addEventListener("load", function(event) {
+          $('.spinner-wrapper').remove()
+      });
+  </script>
     @if(auth()->check() && (!(auth()->user()->country) || !(auth()->user()->city) || !(auth()->user()->ip)))
       <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
       <script>
