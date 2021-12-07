@@ -28,7 +28,7 @@ class UserLocationController extends Controller
                     DB::commit();
                     return json_encode([
                         'status' => 'good',
-                        'msg' => 'User location updated!',
+                        'msg' => 'Местонахождение пользователя обновлено!',
                     ]);
                 }
             }
@@ -41,7 +41,7 @@ class UserLocationController extends Controller
         }
         return json_encode([
             'status' => 'bad',
-            'msg' => 'Some problems!',
+            'msg' => 'Возникла ошибка!',
         ]);
     }
 
@@ -69,7 +69,7 @@ class UserLocationController extends Controller
                     DB::commit();
                     return json_encode([
                         'status' => 'good',
-                        'msg' => 'User location setted!',
+                        'msg' => 'Местонахождение пользователь установлено!',
                     ]);
                 }
                 return json_encode([
@@ -86,7 +86,7 @@ class UserLocationController extends Controller
         }
         return json_encode([
             'status' => 'bad',
-            'msg' => 'Some problems!',
+            'msg' => 'Возникла ошибка!',
         ]);
     }
 }

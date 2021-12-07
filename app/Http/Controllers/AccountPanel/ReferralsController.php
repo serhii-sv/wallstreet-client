@@ -95,7 +95,7 @@ class ReferralsController extends Controller
 
     public function reftree($id = null) {
         if (null == $id) {
-            throw new \Exception('reftree id is null');
+            throw new \Exception('id реф дерева null');
         }
         $user = User::find($id);
         if (empty($user)) {

@@ -34,7 +34,7 @@ class SupportController extends Controller
         $counter = $counter > 0 ? $counter + 1 : 0;
 
         if ($counter > config('mail.spam_protection.limit')) {
-            return back()->with('error', trans('main.emails.spam_protection'));
+            return back()->with('error', 'Защита от спама');
         }
 
         $email = htmlspecialchars($request->email);
@@ -46,6 +46,6 @@ class SupportController extends Controller
         ]);
 
         cache()->put($cacheKey, $counter, now()->addHours(config('mail.spam_protection.lifetime')));
-        return back()->with('success', trans('main.emails.sent_successfully'));
+        return back()->with('success', "Сообщение удачно отправлено");
     }
 }

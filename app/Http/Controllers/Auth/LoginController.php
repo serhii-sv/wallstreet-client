@@ -216,14 +216,21 @@ class LoginController extends Controller
     }
 
     protected function validateLogin(Request $request) {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-            /* 'g-recaptcha-response' => config('app.env') == 'production'
-                 ? 'required|recaptchav3:login,0.5'
-                 : '',*/
-        ], [/*       'recaptchav3' => 'Captcha error! Try again',*/
-        ]);
+        $request->validate(
+            [
+                $this->username() => 'required|string',
+                'password' => 'required|string',
+                /* 'g-recaptcha-response' => config('app.env') == 'production'
+                     ? 'required|recaptchav3:login,0.5'
+                     : '',*/
+            ],
+            [
+                $this->username() . '.required' => 'Поле ' . ($this->username() == 'login' ? 'логин' : 'email') . ' обязательно',
+                $this->username() . '.string' => 'Поле ' . ($this->username() == 'login' ? 'логин' : 'email') . ' должно быть строкой',
+                'password.required' => 'Поле пароль обязательно',
+                'password.string' => 'Поле пароль должно быть строкой'
+            ]
+        );
     }
 
     public function createUserAuthDevice(Request $request, $user) {

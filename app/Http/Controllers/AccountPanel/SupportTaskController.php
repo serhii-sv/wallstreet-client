@@ -36,6 +36,13 @@ class SupportTaskController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string'
+        ], [
+            'title.required' => 'Поле :attribute обязательно',
+            'title.string' => 'Поле :attribute должно быть строкой',
+            'external.max' => 'Поле :attribute не должно быть больше чем :max',
+
+            'description.required' => 'Поле :attribute обязательно',
+            'description.string' => 'Поле :attribute должно быть строкой'
         ]);
 
         if (count($validator->errors()->messages())) {

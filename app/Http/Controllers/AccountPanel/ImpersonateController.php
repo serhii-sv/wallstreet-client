@@ -26,7 +26,7 @@ class ImpersonateController extends Controller
         $user = User::find($id);
 
         if (null == $user || null == $admin) {
-            return back()->with('error', __('User not found'))->withInput();
+            return back()->with('error', 'Пользователь не найден')->withInput();
         }
 
         Auth::login($admin);

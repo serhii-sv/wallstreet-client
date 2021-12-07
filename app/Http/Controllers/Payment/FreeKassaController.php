@@ -30,7 +30,7 @@ class FreeKassaController extends Controller
         $i = session('buy.i');
 
         if (empty($paymentSystem) || empty($currency)) {
-            session()->flash('error', __('your_request_cannot_be_processed'));
+            session()->flash('error', 'ЗАпрос не может быть обработан');
             return back();
         }
 
@@ -51,7 +51,7 @@ class FreeKassaController extends Controller
         $transaction = Transaction::enter($wallet, $amount, $paymentSystem->id);
 
         if (null === $transaction) {
-            return redirect()->route('account.topup')->with('error', __('Enter transaction not found.'));
+            return redirect()->route('account.topup')->with('error', "Трпнзакия не найдена");
         }
 
         $transaction->source = preg_replace('/[^0-9]/', '', $transaction->id);

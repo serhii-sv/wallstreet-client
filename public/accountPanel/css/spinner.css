@@ -11,10 +11,6 @@
     z-index:99999;
 }
 
-html, body.spinner-wrapper {
-    overflow: hidden !important;
-}
-
 div.spinning-loader {
     /*-moz-animation: rotateLoader 10s infinite linear;*/
     /*-webkit-animation: rotateLoader 10s infinite linear;*/

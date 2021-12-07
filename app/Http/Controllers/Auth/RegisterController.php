@@ -77,34 +77,33 @@ class RegisterController extends Controller
      */
     protected function validator(array $data) {
         return Validator::make($data, [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'login' => [
-                'required',
-                'string',
-                'max:50',
-                'unique:users',
-            ],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'unique:users',
-            ],
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'confirmed',
-            ],
-            'phone' => [
-                'required',
-                'min:6',
-            ],
+            'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:50', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'min:6'],
+        ], [
+            'name.required' => 'Поле имя обязательно',
+            'name.string' => 'Поле имя должно быть строкой',
+            'name.max' => 'Поле имя не должно быть больше чем :max',
+
+            'login.required' => 'Поле логин обязательно',
+            'login.string' => 'Поле логин должно быть строкой',
+            'login.max' => 'Поле логин не должно быть больше чем :max',
+            'login.unique' => 'Логин уже используется',
+
+            'email.required' => 'Поле :attribute обязательно',
+            'email.string' => 'Поле :attribute должно быть строкой',
+            'email.max' => 'Поле :attribute не должно быть больше чем :max',
+            'email.unique' => ':attribute уже используется',
+
+            'password.required' => 'Поле пароль обязательно',
+            'password.string' => 'Поле пароль должно быть строкой',
+            'password.min' => 'Поле пароль не должно быть меньше чем :min',
+            'password.confirmed' => 'Пароль не подтвержден',
+
+            'phone.required' => 'Поле телефон обязательно',
+            'phone.min' => 'Поле телефон не должно быть меньше чем :min',
         ]);
     }
 

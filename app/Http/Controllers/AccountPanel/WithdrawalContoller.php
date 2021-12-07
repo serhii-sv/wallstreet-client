@@ -80,10 +80,18 @@ class WithdrawalContoller extends Controller
     }*/
 
     public function addWithdrawal(Request $request) {
-        $request->validate([
-            'amount' => 'required|numeric|min:0',
-            'wallet_id' => 'required',
-        ]);
+        $request->validate(
+            [
+                'amount' => 'required|numeric|min:0',
+                'wallet_id' => 'required',
+            ],
+            [
+                'user_id.required' => 'Поле :attribute обязательно',
+                'user_id.numeric' => 'Поле :attribute должно быть числом',
+                'amount.min' => 'Поле :attribute должно быть не меньше :min',
+                'wallet_id.required' => 'Поле :attribute обязательно',
+            ]
+        );
 
         $walletId = $request->get('wallet_id');
 

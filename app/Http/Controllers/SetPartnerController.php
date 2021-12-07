@@ -20,6 +20,9 @@ class SetPartnerController extends Controller
 
         $validator = Validator::make($check, [
             'partner_id' => 'required|exists:users,my_id',
+        ], [
+            'partner_id.required' => 'Поле :attribute обязательно',
+            'partner_id.uuid' => 'Выбранный :attribute является недействительным.',
         ]);
 
         if ($validator->fails()) {

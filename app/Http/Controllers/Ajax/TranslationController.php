@@ -13,14 +13,14 @@ class TranslationController extends Controller
         $name = $request->post('name');
         $value = $request->post('text');
         $lang = app()->getLocale();
-        
+
         // Check lang file
         if (Storage::disk('lang')->exists($lang . '.json')) {
             $translations = json_decode(Storage::disk('lang')->get($lang . '.json'), true);
         } else {
             $translations = [];
         }
-        
+
         // check lang_manual file
         if (Storage::disk('lang')->exists($lang . '_manual.json')) {
             $manual = json_decode(Storage::disk('lang')->get($lang . '_manual.json'), true);
@@ -39,19 +39,19 @@ class TranslationController extends Controller
             }
             Storage::disk('lang')->put($lang . '_manual.json', json_encode($manual));
         }
-        
+
         $translations[$name] = htmlspecialchars($value);
-        
+
         if (Storage::disk('lang')->put($lang . '.json', json_encode($translations))) {
             return json_encode([
                 'status' => 'good',
-                'msg' => 'Phrase is changed!',
+                'msg' => 'Фраза изменена!',
             ]);
         }
-        
+
         return json_encode([
             'status' => 'bad',
-            'msg' => 'Phrase is not changed!',
+            'msg' => 'Фраза не была изменена!',
         ]);
     }
 }

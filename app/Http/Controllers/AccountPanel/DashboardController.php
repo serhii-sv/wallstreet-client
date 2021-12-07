@@ -99,11 +99,18 @@ class DashboardController extends Controller
     }
 
     public function sendMoney(Request $request) {
-        $request->validate([
+        $request->validate(
+            [
             'user' => 'required',
             'amount' => 'required',
             'wallet_id' => 'required|uuid',
-        ]);
+        ],
+            [
+                'user.required' => 'Поле :attribute обязательно',
+                'wallet_id.required' => 'Поле :attribute обязательно',
+                'amount.uuid' => 'Поле :attribute должно быть действительного UUID'
+            ]
+        );
         $request_user = $request->get('user');
         $user = Auth::user();
         $recipient_user = User::where('login', $request_user)->orWhere('email', $request_user)->first();
