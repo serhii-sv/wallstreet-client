@@ -6,6 +6,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ActivityLog;
 use App\Http\Middleware\CheckAuthCode;
 use App\Http\Middleware\CheckPermissions;
 use App\Http\Middleware\CheckSiteEnabled;
@@ -81,5 +82,6 @@ class Kernel extends HttpKernel
         'checkSiteEnabled' => CheckSiteEnabled::class,
         'checkAuthCode' => CheckAuthCode::class,
 
+        'activity-log' => ActivityLog::class,
     ];
 }

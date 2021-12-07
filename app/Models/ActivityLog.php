@@ -64,33 +64,35 @@ class ActivityLog extends Model
      */
     public static function setActivityLog()
     {
-        $user = auth()->user();
-        $activities = $user->activities;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $activities = $user->activities;
 
-        if (!$activities->count()) {
-            $user->activities()->create([
-                'value' => 0
-            ]);
-        } else {
-            $lastActivity = $activities->last();
-            $differenceInSeconds = $lastActivity->updated_at->diffInSeconds(Carbon::now());
-
-            $now = Carbon::now()->format('H');
-            if ($now !== $lastActivity->updated_at->format('H') && $now !== $lastActivity->created_at->format('H')) {
+            if (!$activities->count()) {
                 $user->activities()->create([
                     'value' => 0
                 ]);
-                return;
-            }
-
-            if ($differenceInSeconds <= 300) {
-                $lastActivity->update([
-                    'value' => $lastActivity->value + $differenceInSeconds
-                ]);
             } else {
-                $lastActivity->update([
-                    'value' => $lastActivity->value + 0
-                ]);
+                $lastActivity = $activities->last();
+                $differenceInSeconds = $lastActivity->updated_at->diffInSeconds(Carbon::now());
+
+                $now = Carbon::now()->format('H');
+                if ($now !== $lastActivity->updated_at->format('H') && $now !== $lastActivity->created_at->format('H')) {
+                    $user->activities()->create([
+                        'value' => 0
+                    ]);
+                    return;
+                }
+
+                if ($differenceInSeconds <= 300) {
+                    $lastActivity->update([
+                        'value' => $lastActivity->value + $differenceInSeconds
+                    ]);
+                } else {
+                    $lastActivity->update([
+                        'value' => $lastActivity->value + 0
+                    ]);
+                }
             }
         }
     }
