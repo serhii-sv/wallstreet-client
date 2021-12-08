@@ -39,11 +39,18 @@ class CurrencyController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function currencyExchange(Request $request) {
-        $request->validate([
-            'amount'        => 'required',
-            'wallet_from'   => 'required',
-            'wallet_to'     => 'required',
-        ]);
+        $request->validate(
+            [
+                'amount' => 'required',
+                'wallet_from' => 'required',
+                'wallet_to' => 'required',
+            ],
+            [
+                'wallet_from.required' => 'Поле :attribute обязательно',
+                'wallet_to.required' => 'Поле :attribute обязательно',
+                'amount.required' => 'Поле сумма обязательно'
+            ]
+        );
 
         if ($request->get('wallet_from') == $request->get('wallet_to')){
             return redirect()->back()->with('error', 'Кошельки должны отличаться!');
@@ -94,11 +101,18 @@ class CurrencyController extends Controller
 
     public function getExchangeRate(Request $request)
     {
-        $request->validate([
-            'amount'        => 'required',
-            'wallet_from'   => 'required',
-            'wallet_to'     => 'required',
-        ]);
+        $request->validate(
+            [
+                'amount' => 'required',
+                'wallet_from' => 'required',
+                'wallet_to' => 'required',
+            ],
+            [
+                'wallet_from.required' => 'Поле :attribute обязательно',
+                'wallet_to.required' => 'Поле :attribute обязательно',
+                'amount.required' => 'Поле сумма обязательно'
+            ]
+        );
 
         if ($request->get('wallet_from') == $request->get('wallet_to')){
             return 0;

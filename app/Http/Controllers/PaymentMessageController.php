@@ -11,9 +11,9 @@ class PaymentMessageController extends BaseController
     public function message(Request $request, $status='ok')
     {
         if ($status == 'ok') {
-            session()->flash('success', __('Balance successfully updated'));
+            session()->flash('success', "Баланс успешно обновлен");
         } elseif ($status == 'error') {
-            session()->flash('error', __('Can not update your balance'));
+            session()->flash('error', "Баланс не обновлен");
         }
         $payment_systems = PaymentSystem::where('code', '!=', 'bonus')->get();
         return view('accountPanel.replenishment.index',[

@@ -23,7 +23,7 @@ class LanguageController extends Controller
         $checkExists = Language::where('code', $locale)->get()->count();
 
         if ($checkExists == 0) {
-            return back()->with('short_error', __('Language code error'));
+            return back()->with('short_error', "Ошибка кода языка");
         }
 
         session([
@@ -31,7 +31,7 @@ class LanguageController extends Controller
         ]);
         setcookie('language', $locale, Carbon::now()->addDays(365)->timestamp, '/');
 
-        return back()->with('short_success', __('The site language has been changed successfully'));
+        return back()->with('short_success', "Язык сайта был успешно изменен");
     }
 
 }

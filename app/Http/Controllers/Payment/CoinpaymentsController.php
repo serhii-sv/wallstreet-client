@@ -33,7 +33,7 @@ class CoinpaymentsController extends Controller
         $currency = session('topup.currency');
 
         if (empty($paymentSystem) || empty($currency)) {
-            return redirect()->route('accountPanel.replenishment')->with('error', __('Can not process your request, try again.'));
+            return redirect()->route('accountPanel.replenishment')->with('error', 'Нельзя обработать ваш запрос, попробуйте еще раз.');
         }
 
         $amount = abs(session('topup.amount'));

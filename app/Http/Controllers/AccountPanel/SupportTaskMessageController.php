@@ -17,9 +17,16 @@ class SupportTaskMessageController extends Controller
     {
         $supportTask = SupportTask::findOrFail($id);
 
-        $request->validate([
-            'message' => 'required|string|min:1'
-        ]);
+        $request->validate(
+            [
+                'message' => 'required|string|min:1'
+            ],
+            [
+                'user_id.required' => 'Поле :attribute обязательно',
+                'message.string' => 'Поле :attribute должно быть строкой',
+                'message.min' => 'Поле :attribute должно быть не меньше :min'
+            ]
+        );
 
         $result = $supportTask->messages()->create([
             'message' => $request->message,

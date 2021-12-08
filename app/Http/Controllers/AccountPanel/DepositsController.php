@@ -70,8 +70,8 @@ class DepositsController extends Controller
             $max = Wallet::convertToCurrencyStatic($currency_usd, $currency, $rate->max);
 
             return json_encode([
-                'rate_min_max' => '<h5 class="sub-title">'.__('Min '.$rate_id).' ' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</h5>
-                <h5 class="sub-title">'.__('Max '.$rate_id).' ' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</h5 >',
+                'rate_min_max' => '<h5 class="sub-title">мин '.$rate_id.' ' . number_format($min, $currency->precision, '.', ',') . ' '. $currency->symbol . '</h5>
+                <h5 class="sub-title">макс '.$rate_id.' ' . number_format($max, $currency->precision, '.', ' ') . ' '. $currency->symbol . '</h5 >',
             ]);
         }
         return json_encode([
@@ -80,11 +80,20 @@ class DepositsController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'rate_id' => 'required | uuid',
-            'wallet_id' => 'required | uuid',
-            'amount' => 'required',
-        ]);
+        $request->validate(
+            [
+                'rate_id' => 'required | uuid',
+                'wallet_id' => 'required | uuid',
+                'amount' => 'required',
+            ],
+            [
+                'rate_id.required' => 'Поле :attribute обязательно',
+                'rate_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'wallet_id.required' => 'Поле :attribute обязательно',
+                'wallet_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'amount.required' => 'Поле сумма обязательно'
+            ]
+        );
 
         $amount = abs(doubleval(str_replace(',', ' . ', $request->get('amount'))));
 
@@ -155,9 +164,15 @@ class DepositsController extends Controller
     }
 
     public function setReinvestPercent(Request $request) {
-        $request->validate([
-            'deposit_id' => 'required | uuid',
-        ]);
+        $request->validate(
+            [
+                'deposit_id' => 'required | uuid',
+            ],
+            [
+                'deposit_id.required' => 'Поле :attribute обязательно',
+                'deposit_id.uuid' => 'Поле :attribute должно быть действительного UUID'
+            ]
+        );
         $reinvest = abs(intval($request->get('reinvest')));
         if ($reinvest < 0 || $reinvest > 100) {
             return redirect()->back()->with('error', 'Процент от 0 до 100!');
@@ -180,11 +195,21 @@ class DepositsController extends Controller
     }
 
     public function addBalance(Request $request) {
-        $request->validate([
-            'deposit_id' => 'required | uuid',
-            'wallet_id' => 'required | uuid',
-            'amount' => 'required | numeric',
-        ]);
+        $request->validate(
+            [
+                'deposit_id' => 'required | uuid',
+                'wallet_id' => 'required | uuid',
+                'amount' => 'required | numeric',
+            ],
+            [
+                'deposit_id.required' => 'Поле :attribute обязательно',
+                'deposit_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'wallet_id.required' => 'Поле :attribute обязательно',
+                'wallet_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'amount.required' => 'Поле :attribute обязательно',
+                'amount.uuid' => 'Поле :attribute должно быть действительного UUID'
+            ]
+        );
         $deposit = Deposit::where('id', $request->get('deposit_id'))->where('user_id', Auth::user()->id)->where('active', true)->first();
         // Если на фронте все таки отправили форму
         if ($deposit === null) {
@@ -216,9 +241,15 @@ class DepositsController extends Controller
      * @throws \Throwable
      */
     public function upgrade(Request $request) {
-        $request->validate([
-            'deposit_id' => 'required | uuid',
-        ]);
+        $request->validate(
+            [
+                'deposit_id' => 'required | uuid',
+            ],
+            [
+                'deposit_id.required' => 'Поле :attribute обязательно',
+                'deposit_id.uuid' => 'Поле :attribute должно быть действительного UUID'
+            ]
+        );
 
         /** @var User $user */
         $user = auth()->user();

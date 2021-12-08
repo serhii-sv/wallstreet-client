@@ -24,7 +24,8 @@ class AccountSettingsController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -33,7 +34,8 @@ class AccountSettingsController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function securitySettings() {
+    public function securitySettings()
+    {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
         $verification_enable = $verification_enable !== null ? $verification_enable->s_value : 'off';
         $auth_log = UserAuthLog::orderByDesc('created_at')->limit(5)->get();
@@ -46,7 +48,8 @@ class AccountSettingsController extends Controller
         ]);
     }
 
-    public function setNewPassword(Request $request) {
+    public function setNewPassword(Request $request)
+    {
         $user = Auth::user();
         if ($request->password_old) {
             if ($request->password) {
@@ -76,7 +79,8 @@ class AccountSettingsController extends Controller
         ]);
     }
 
-    public function setNewFFASetting(Request $request) {
+    public function setNewFFASetting(Request $request)
+    {
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
@@ -100,19 +104,22 @@ class AccountSettingsController extends Controller
         //$google2FASetting->{Config::get('otp_secret_column')} = $request->ffa_field;
     }
 
-    public function setNewSettings(Request $request) {
+    public function setNewSettings(Request $request)
+    {
         /*$settingsService = SettingsService::init();
 
         $settingsService->registerSettings();*/
     }
 
-    public function editProfile() {
+    public function editProfile()
+    {
         return view('accountPanel.settings.profile', [
             'user' => Auth::user(),
         ]);
     }
 
-    public function editWallets() {
+    public function editWallets()
+    {
         $wallets = Wallet::with('currency')->where('user_id', auth()->user()->id)->with('currency')->get();
 
         return view('accountPanel.settings.wallets', [
@@ -121,16 +128,23 @@ class AccountSettingsController extends Controller
         ]);
     }
 
-    public function verifyAccount() {
+    public function verifyAccount()
+    {
         return view('accountPanel.settings.verify', [
             'user' => Auth::user(),
         ]);
     }
 
-    public function updatePhone(Request $request) {
-        $request->validate([
-            'phone' => 'max:255',
-        ]);
+    public function updatePhone(Request $request)
+    {
+        $request->validate(
+            [
+                'phone' => 'max:255',
+            ],
+            [
+                'phone.max' => 'Поле телефон не должно быть больше чем :max',
+            ]
+        );
         $phone = $request->get('phone');
         $user = Auth::user();
         if ($phone == $user->phone && $user->phone_verified == true) {
@@ -145,17 +159,17 @@ class AccountSettingsController extends Controller
         return redirect()->back()->with('success', 'Данные обновлены!');
     }
 
-    public function showEnterVerifyCode() {
+    public function showEnterVerifyCode()
+    {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            if (!($verification_enable->s_value == 'on'))
-            {
+        if ($verification_enable !== null) {
+            if (!($verification_enable->s_value == 'on')) {
                 return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
             }
-        }else{
+        } else {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
-        if (!(Auth::user()->phone)){
+        if (!(Auth::user()->phone)) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон не указан');
         }
         if (Auth::user()->phone_verified) {
@@ -169,17 +183,17 @@ class AccountSettingsController extends Controller
         ]);
     }
 
-    public function sendVerifyCode() {
+    public function sendVerifyCode()
+    {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            if (!($verification_enable->s_value == 'on'))
-            {
+        if ($verification_enable !== null) {
+            if (!($verification_enable->s_value == 'on')) {
                 return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
             }
-        }else{
+        } else {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
-        if (!(Auth::user()->phone)){
+        if (!(Auth::user()->phone)) {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Телефон не указан');
         }
         if (Auth::user()->phone_verified) {
@@ -194,7 +208,6 @@ class AccountSettingsController extends Controller
         $client = new Client($account_sid, $auth_token);
 
 
-
         if ($dispatch_method->s_value == 'voice') {
             try {
                 $client->calls->create(Auth::user()->phone, // to
@@ -202,7 +215,7 @@ class AccountSettingsController extends Controller
                     // ["url" => route('accountPanel.verify.voice.text.xml', $code)]
                     ["url" => 'https://demo.twilio.com/docs/voice.xml']);
             } catch (\Exception $e) {
-                return back()->with('error', 'Ошибка звонка на номер '.Auth::user()->phone);
+                return back()->with('error', 'Ошибка звонка на номер ' . Auth::user()->phone);
             }
 
             $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
@@ -227,7 +240,7 @@ class AccountSettingsController extends Controller
                         'body' => $text->s_value . ' ' . $code,
                     ]);
                 } catch (\Exception $e) {
-                    return back()->with('error', 'Ошибка отправки смс на номер '.Auth::user()->phone);
+                    return back()->with('error', 'Ошибка отправки смс на номер ' . Auth::user()->phone);
                 }
 
                 $statusCode = $client->getHttpClient()->lastResponse->getStatusCode(); // ->lastResponse->getHeaders()
@@ -244,14 +257,14 @@ class AccountSettingsController extends Controller
         return redirect()->route('accountPanel.settings.enter.verify.code');
     }
 
-    public function verifyPhone(Request $request) {
+    public function verifyPhone(Request $request)
+    {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            if (!($verification_enable->s_value == 'on'))
-            {
+        if ($verification_enable !== null) {
+            if (!($verification_enable->s_value == 'on')) {
                 return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
             }
-        }else{
+        } else {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
         if (Auth::user()->phone == null) {
@@ -277,19 +290,20 @@ class AccountSettingsController extends Controller
         return redirect()->route('accountPanel.settings.enter.verify.code')->with('error', 'Код не верный!');
     }
 
-    public function showVerifyVoiceTextXml($code) {
+    public function showVerifyVoiceTextXml($code)
+    {
         $text = Setting::where('s_key', 'verification_voice_text')->first();
         return response()->view('accountPanel.settings.verify-voice-text-xml', compact('text, code'))->header('Content-Type', 'text/xml');
     }
 
-    public function updateAuthWithPhone(Request $request) {
+    public function updateAuthWithPhone(Request $request)
+    {
         $verification_enable = Setting::where('s_key', 'verification_enable')->first();
-        if ($verification_enable !== null){
-            if (!($verification_enable->s_value == 'on'))
-            {
+        if ($verification_enable !== null) {
+            if (!($verification_enable->s_value == 'on')) {
                 return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
             }
-        }else{
+        } else {
             return redirect()->route('accountPanel.settings.verify.phone')->with('error', 'Верификация отключена');
         }
 

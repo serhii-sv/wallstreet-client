@@ -45,14 +45,14 @@ class ReplenishmentController extends Controller
         }
 
         if (empty($currency)) {
-            return back()->with('error', __('Undefined currency'))->withInput();
+            return back()->with('error', "Неизвестная валюта")->withInput();
         }
 
         $psMinimumTopupArray = @json_decode($paymentSystem->minimum_topup, true);
         $psMinimumTopup = isset($psMinimumTopupArray[$currency->code]) ? $psMinimumTopupArray[$currency->code] : 0;
 
         if ($request->amount < $psMinimumTopup) {
-            return back()->with('error', __('Minimum balance recharge is ') . $psMinimumTopup . $currency->symbol)->withInput();
+            return back()->with('error', "Минимальная сумма пополнения баланса составляет" . $psMinimumTopup . $currency->symbol)->withInput();
         }
 
         session()->flash('topup.payment_system', $paymentSystem);
@@ -62,10 +62,17 @@ class ReplenishmentController extends Controller
     }
 
     public function newRequest(Request $request) {
-        $request->validate([
-            'currency' => 'uuid',
-            'payment_system' => 'required|uuid',
-        ]);
+        $request->validate(
+            [
+                'currency' => 'uuid',
+                'payment_system' => 'required|uuid',
+            ],
+            [
+                'currency.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'payment_system.required' => 'Поле :attribute обязательно',
+                'payment_system.uuid' => 'Поле :attribute должно быть действительного UUID',
+            ]
+        );
         $currency = Currency::where('id', $request->get('currency'))->first();
         $payment_system = PaymentSystem::where('id', $request->get('payment_system'))->first();
         if ($currency === null) {
@@ -98,7 +105,7 @@ class ReplenishmentController extends Controller
                 if ($currencies === null) {
                     return json_encode([
                         'status' => 'bad',
-                        'html' => 'Try choose any payment system',
+                        'html' => 'Выберите платежную ситему',
                     ]);
                 }
                 foreach ($currencies as $currency) {
@@ -118,13 +125,13 @@ class ReplenishmentController extends Controller
             } else {
                 return json_encode([
                     'status' => 'bad',
-                    'html' => 'Try choose any payment system',
+                    'html' => 'Выберите платежную ситему',
                 ]);
             }
         }
         return json_encode([
             'status' => 'bad',
-            'html' => 'Try choose any payment system',
+            'html' => 'Выберите платежную ситему',
         ]);
     }
 }

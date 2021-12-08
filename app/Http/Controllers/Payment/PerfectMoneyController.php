@@ -37,7 +37,7 @@ class PerfectMoneyController extends Controller
         $currency = session('topup.currency');
 
         if (empty($paymentSystem) || empty($currency)) {
-            return redirect()->route('accountPanel.replenishment')->with('error', __('Can not process your request, try again.'));
+            return redirect()->route('accountPanel.replenishment')->with('error', "Нельзя обработать ваш запрос");
         }
 
         $amount = abs(session('topup.amount'));
@@ -56,7 +56,7 @@ class PerfectMoneyController extends Controller
         } elseif ($currency->code == 'EUR') {
             $payeeAccount = config('money.pm_payee_account_eur');
         } else {
-            return redirect()->route('accountPanel.replenishment')->with('error', __('Wrong currency'));
+            return redirect()->route('accountPanel.replenishment')->with('error', "Неизвестная валюта");
         }
 
         $payeeName   = config('money.pm_payee_name');

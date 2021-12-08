@@ -39,13 +39,25 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function updateWalletDetails(Request $request) {
-        $request->validate([
-            'user_id' => 'required|uuid',
-            'wallet_id' => 'required|uuid',
-            'currency_id' => 'required|uuid',
-            'external' => 'max:255',
-        ]);
+    public function updateWalletDetails(Request $request)
+    {
+        $request->validate(
+            [
+                'user_id' => 'required|uuid',
+                'wallet_id' => 'required|uuid',
+                'currency_id' => 'required|uuid',
+                'external' => 'max:255',
+            ],
+            [
+                'user_id.required' => 'Поле :attribute обязательно',
+                'user_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'wallet_id.required' => 'Поле :attribute обязательно',
+                'wallet_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'currency_id.required' => 'Поле :attribute обязательно',
+                'currency_id.uuid' => 'Поле :attribute должно быть действительного UUID',
+                'external.max' => 'Поле :attribute не должно быть больше чем :max'
+            ]
+        );
 
         $external = $request->get('external');
         $user_id = $request->get('user_id');
@@ -79,11 +91,23 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request) {
-        $request->validate([
-            'login' => 'required|min:3|unique:users,login,' . Auth::user()->id,
-            'email' => 'required|min:3|unique:users,email,' . Auth::user()->id,
-            'name' => 'required|min:2',
-        ]);
+        $request->validate(
+            [
+                'login' => 'required|min:3|unique:users,login,' . Auth::user()->id,
+                'email' => 'required|min:3|unique:users,email,' . Auth::user()->id,
+                'name' => 'required|min:2',
+            ],
+            [
+                'login.required' => 'Поле :attribute обязательно',
+                'login.min' => 'Поле :attribute должно быть не меньше :min',
+                'login.unique' => ':attribute уже используется',
+                'email.required' => 'Поле :attribute обязательно',
+                'email.min' => 'Поле :attribute должно быть не меньше :min',
+                'email.unique' => ':attribute уже используется',
+                'name.required' => 'Поле :attribute обязательно',
+                'name.min' => 'Поле :attribute должно быть не меньше :min'
+            ]
+        );
         $phone = $request->get('phone');
         $user = Auth::user();
         if ($phone == $user->phone && $user->phone_verified == true) {
@@ -102,9 +126,17 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function updatePhoto(Request $request) {
-        $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $request->validate(
+            [
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],
+            [
+                'avatar.required' => 'Поле :attribute обязательно',
+                'login.image' => 'Поле :attribute должно быть изображением',
+                'login.mimes' => 'Поле :attribute должно быть: :values',
+                'email.max' => 'Поле :attribute не должно быть больше чем :max',
+            ]
+        );
 
         $file = $request->file('avatar');
         $folder_id = $request->folder_id;

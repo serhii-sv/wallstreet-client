@@ -68,7 +68,7 @@ class LoginSecurityController extends Controller
         $login_security->google2fa_secret = $google2fa->generateSecretKey();
         $login_security->save();
 
-        return redirect('/2fa')->with('success',"Secret key is generated.");
+        return redirect('/2fa')->with('success',"Секретный ключ сгенерирова успешно");
     }
 
     /**
@@ -84,9 +84,9 @@ class LoginSecurityController extends Controller
         if($valid){
             $user->loginSecurity->google2fa_enable = true;
             $user->loginSecurity->save();
-            return redirect('dashboard')->with('success',"2FA is enabled successfully.");
+            return redirect('dashboard')->with('success',"2FA включена успешно.");
         }else{
-            return redirect('2fa')->with('error',"Invalid verification Code, Please try again.");
+            return redirect('2fa')->with('error',"Неверный код верификации, попробуйте пожалуйста позже.");
         }
     }
 
@@ -96,15 +96,20 @@ class LoginSecurityController extends Controller
     public function disable2fa(Request $request){
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
-            return redirect()->back()->with("error","Your password does not matches with your account password. Please try again.");
+            return redirect()->back()->with("error","Пароль не совпадает с текущим, пожалуйста повторите");
         }
 
-        $validatedData = $request->validate([
+        $validatedData = $request->validate(
+            [
             'current-password' => 'required',
-        ]);
+        ],
+            [
+                'current-password.required' => 'Поле :attribute обязательно'
+            ]
+        );
         $user = Auth::user();
         $user->loginSecurity->google2fa_enable = false;
         $user->loginSecurity->save();
-        return redirect('/2fa')->with('success',"2FA is now disabled.");
+        return redirect('/2fa')->with('success',"2FA отключена.");
     }
 }
