@@ -33,9 +33,6 @@
                               {{ number_format($self->invested(), 2, '.', ' ') ?? 0 }}$
                             </span>
     </td>
-    <td class="">
-        {{ number_format($self->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
-    </td>
     <td>
         {{ number_format($self->referral_accruals(auth()->user()), 2, '.', ' ') }}$
     </td>
