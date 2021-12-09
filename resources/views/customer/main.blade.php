@@ -838,88 +838,88 @@
                             <span class="title">
                                 @if(canEditLang() && checkRequestOnEdit())
                                     <div style="text-align:left;">
-                                <editor_block data-name='Daily earnings {{ $rate->id }}' contenteditable="true">{{ __('Daily earnings '.$rate->id) }}</editor_block>
+                                <editor_block data-name='Daily earnings {{ $rate->id }}' contenteditable="true">{!! __('Daily earnings '.$rate->id) !!}</editor_block>
                                 </div>
                                 @else
-                                    <span style="text-align:left;" class="date">{{ __('Daily earnings '.$rate->id) }}</span>
+                                    <span style="text-align:left;" class="date">{!! html_entity_decode(__('Daily earnings '.$rate->id)) !!}</span>
                                 @endif
 
                                     @if(canEditLang() && checkRequestOnEdit())
                                         <div style="text-align:left;">
-                                <editor_block data-name='Duration {{ $rate->id }}' contenteditable="true">{{ __('Duration '.$rate->id) }}</editor_block>
+                                <editor_block data-name='Duration {{ $rate->id }}' contenteditable="true">{!! __('Duration '.$rate->id) !!}</editor_block>
                                 </div>
                                     @else
                                         <div style="text-align:left;">
-                                        <span  style="text-align:left;" class="date">{{ __('Duration '.$rate->id) }}</span>
+                                        <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Duration '.$rate->id)) !!}</span>
                                         </div>
                                     @endif
 
                                                         </span>
                               @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-                                      <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{{ __('Daily rate '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Daily rate {{ $rate->id }}' contenteditable="true">{!! __('Daily rate '.$rate->id) !!}</editor_block>
                                   </div>
                               @else
                                   <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Daily rate '.$rate->id) }}</span>
+                                      <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Daily rate '.$rate->id)) !!}</span>
                                   </div>
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-                                      <editor_block data-name='Add str {{ $rate->id }}' contenteditable="true">{{ __('Add str '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Add str {{ $rate->id }}' contenteditable="true">{!! __('Add str '.$rate->id) !!}</editor_block>
                                   </div>
                               @else
                                   <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Add str '.$rate->id) }}</span>
+                                      <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Add str '.$rate->id)) !!}</span>
                                   </div>
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-                                      <editor_block data-name='Add str 2 {{ $rate->id }}' contenteditable="true">{{ __('Add str 2 '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Add str 2 {{ $rate->id }}' contenteditable="true">{!! __('Add str 2 '.$rate->id) !!}</editor_block>
                                   </div>
                               @else
                                   <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Add str 2 '.$rate->id) }}</span>
+                                      <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Add str 2 '.$rate->id)) !!}</span>
                                   </div>
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-                                      <editor_block data-name='Add str 3 {{ $rate->id }}' contenteditable="true">{{ __('Add str 3 '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Add str 3 {{ $rate->id }}' contenteditable="true">{!! __('Add str 3 '.$rate->id) !!}</editor_block>
                                   </div>
                               @else
                                   <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Add str 3 '.$rate->id) }}</span>
+                                      <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Add str 3 '.$rate->id)) !!}</span>
                                   </div>
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
-                                      <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{{ __('return deposit: true '.$rate->id) }}</editor_block>
+                                      <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{!! __('return deposit: true '.$rate->id) !!}</editor_block>
                                   @else
                                       <div style="text-align:left;">
-<editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{{ __('return deposit: false '.$rate->id) }}</editor_block>
+<editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: true '.$rate->id)) !!}</editor_block>
                                       </div>
                                   @endif
                               @else
                                   <div style="text-align:left;">
                                       @if($rate->overall)
-                                          <span style="text-align:left;" class="date">{{ __('return deposit: true '.$rate->id) }}</span>
+                                          <span style="text-align:left;" class="date">{!! __('return deposit: true '.$rate->id) !!}</span>
                                       @else
-    <span style="text-align:left;" class="date">{{ __('return deposit: false '.$rate->id) }}</span>
+                                        <span style="text-align:left;" class="date">{!! __('return deposit: true '.$rate->id) !!}</span>
                                       @endif
                                   </div>
                               @endif
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   <div style="text-align:left;">
-                                      <editor_block data-name='Add str 4 {{ $rate->id }}' contenteditable="true">{{ __('Add str 4 '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Add str 4 {{ $rate->id }}' contenteditable="true">{!! __('Add str 4 '.$rate->id) !!}</editor_block>
                                   </div>
                               @else
                                   <div style="text-align:left;">
-                                      <span  style="text-align:left;" class="date">{{ __('Add str 4 '.$rate->id) }}</span>
+                                      <span  style="text-align:left;" class="date">{!! html_entity_decode(__('Add str 4 '.$rate->id)) !!}</span>
                                   </div>
                               @endif
                           </div>
@@ -930,23 +930,23 @@
                           <div style="text-align:center;" class="transaction-footer">
                                                   <span class="amount" style="text-align:center;">
                                                       @if(canEditLang() && checkRequestOnEdit())
-                                                      <editor_block data-name='Can deposit {{ $rate->id }}' contenteditable="true">{{ __('Can deposit '.$rate->id) }}</editor_block>
+                                                      <editor_block data-name='Can deposit {{ $rate->id }}' contenteditable="true">{!! __('Can deposit '.$rate->id) !!}</editor_block>
                                                     @else
-{{ __('Can deposit '.$rate->id) }}
+                                                          {!! html_entity_decode(__('Can deposit '.$rate->id)) !!}
                                                     @endif
                                                   </span>
                               <h5 class="sub-title">
                                   @if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Min {{ $rate->id }}' contenteditable="true">{{ __('Min '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Min {{ $rate->id }}' contenteditable="true">{!! __('Min '.$rate->id) !!}</editor_block>
                                   @else
-{{ __('Min '.$rate->id) }} {{ number_format($rate->min, 0, '.', '') }}$
+                                      {!! html_entity_decode(__('Min '.$rate->id)) !!} {{ number_format($rate->min, 0, '.', '') }}$
                                   @endif
                               </h5>
                               <h5 class="sub-title">
                                   @if(canEditLang() && checkRequestOnEdit())
-                                      <editor_block data-name='Max {{ $rate->id }}' contenteditable="true">{{ __('Max '.$rate->id) }}</editor_block>
+                                      <editor_block data-name='Max {{ $rate->id }}' contenteditable="true">{!! __('Max '.$rate->id) !!}</editor_block>
                                   @else
-{{ __('Max '.$rate->id) }} {{ number_format($rate->max, 0, '.', '') }}$
+                                      {!! html_entity_decode(__('Max '.$rate->id)) !!} {{ number_format($rate->max, 0, '.', '') }}$
                                   @endif
                               </h5>
                           </div>
