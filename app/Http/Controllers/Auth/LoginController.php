@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DeviceStat;
 use App\Models\Language;
 use App\Models\ReferralLinkStat;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserAuthLog;
 use App\Models\UserDevice;
@@ -192,6 +193,9 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user) {
         //
+        if ($user->hasRole((Role::findByName('fired')->name ?? null), 'web')) {
+            $this->logout($request);
+        }
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
