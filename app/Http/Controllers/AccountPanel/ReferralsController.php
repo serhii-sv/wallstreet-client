@@ -31,7 +31,7 @@ class ReferralsController extends Controller
         }
 
         $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
-            return $user->getAllReferralsInArray();
+            return $user->getAllReferralsInArray(1,1);
         });
         $activeReferrals = 0;
         $total_referral_invested = 0;
