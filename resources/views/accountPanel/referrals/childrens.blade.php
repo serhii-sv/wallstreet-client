@@ -39,7 +39,7 @@
 </tr>
 @endif
 
-@foreach($level == 0 ? \App\Helpers\PaginationHelper::paginate(collect($parent['referrals']), 5) : collect($parent['referrals']) as $referralParent)
+@foreach($level == 0 ? \App\Helpers\PaginationHelper::paginate(collect($parent['referrals']), 10) : collect($parent['referrals']) as $referralParent)
 @php($self = $referralParent['self'])
 @include('accountPanel.referrals.childrens', ['us' => $self, 'level' => $level+1])
 @endforeach
