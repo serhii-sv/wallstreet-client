@@ -192,11 +192,11 @@ trait HasReferral
      * @param int $flag
      * @return array
      */
-    public function getAllReferrals(bool $json = false, $flag = 1)
+    public function getAllReferrals(bool $json = false, $flag = 1, $max=1000)
     {
         $th = $this;
 
-        return cache()->remember('all_referrals.'.$th->id, now()->addMinutes(60), function() use($th, $flag, $json) {
+        return cache()->remember('all_referrals.'.$th->id.$flag.$max, now()->addMinutes(60), function() use($th, $flag, $json, $max) {
             /** @var User $referrals */
             $referrals = $th->referrals()
                 ->wherePivot('line', 1)
@@ -207,13 +207,13 @@ trait HasReferral
                 'referrals' => []
             ];
 
-            if ($flag > 1000) {
+            if ($flag > $max) {
                 return $result;
             }
 
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
-                    $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1);
+                    $result['referrals'][] = $ref->getAllReferrals($json, $flag + 1, $max);
                 }
             }
 
