@@ -196,20 +196,20 @@ trait HasReferral
     {
         $th = $this;
 
-        return cache()->remember('all_referrals.'.$th->id.$flag.$max, now()->addMinutes(60), function() use($th, $flag, $json, $max) {
+        $result = [
+            'self' => $th,
+            'referrals' => []
+        ];
+
+        if ($flag > $max) {
+            return $result;
+        }
+
+        return cache()->remember('all_referrals.'.$th->id.$flag.$max, now()->addMinutes(60), function() use($th, $result, $flag, $json, $max) {
             /** @var User $referrals */
             $referrals = $th->referrals()
                 ->wherePivot('line', 1)
                 ->get();
-
-            $result = [
-                'self' => $th,
-                'referrals' => []
-            ];
-
-            if ($flag > $max) {
-                return $result;
-            }
 
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
