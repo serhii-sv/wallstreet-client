@@ -193,9 +193,6 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user) {
         //
-        if ($user->hasRole((Role::findByName('fired')->name ?? null), 'web')) {
-            $this->logout($request);
-        }
         $this->createUserAuthLog($request, $user);
         $this->createUserAuthDevice($request, $user);
         $this->checkForMultiAccounts($request, $user);
