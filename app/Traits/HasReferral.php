@@ -232,7 +232,7 @@ trait HasReferral
             return [];
         }
 
-        return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th, $level) {
+        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addMinutes(60), function() use($th, $level) {
             /** @var User $referrals */
             $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
