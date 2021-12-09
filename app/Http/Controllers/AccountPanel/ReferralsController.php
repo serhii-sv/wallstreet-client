@@ -30,28 +30,27 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-//        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
-//            return $user->getAllReferralsInArray(1,1);
-//        });
-        $all_referrals = [];
+        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
+            return $user->getAllReferralsInArray();
+        });
         $activeReferrals = 0;
         $total_referral_invested = 0;
         $usdCurrency = Currency::where('code', 'USD')->first();
 
         /** @var User $referral */
         foreach ($all_referrals as $referral) {
-//            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, now()->addMinutes(60), function () use ($referral, $usdCurrency) {
-//                $invested = 0;
-//                $referral
-//                    ->deposits()
-//                    ->where('active', 1)
-//                    ->get()
-//                    ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
-//                        $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
-//                    });
-//
-//                return $invested;
-//            });
+            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, now()->addMinutes(60), function () use ($referral, $usdCurrency) {
+                $invested = 0;
+                $referral
+                    ->deposits()
+                    ->where('active', 1)
+                    ->get()
+                    ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
+                        $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
+                    });
+
+                return $invested;
+            });
 
             $activeReferrals += $referral->deposits()
                     ->where('active', 1)

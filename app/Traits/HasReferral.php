@@ -224,15 +224,11 @@ trait HasReferral
     /**
      * @return array
      */
-    public function getAllReferralsInArray($level=1, $max=20)
+    public function getAllReferralsInArray()
     {
         $th = $this;
 
-        if ($level > $max) {
-            return [];
-        }
-
-        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addMinutes(60), function() use($th, $level) {
+        return cache()->remember('referrals_array.'.$th->id, now()->addMinutes(60), function() use($th) {
             /** @var User $referrals */
             $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
@@ -241,7 +237,7 @@ trait HasReferral
             if (!empty($referrals)) {
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-                    $result = array_merge_recursive($ref->getAllReferralsInArray($level+1), $result);
+                    $result = array_merge_recursive($ref->getAllReferralsInArray(), $result);
                 }
             }
 
