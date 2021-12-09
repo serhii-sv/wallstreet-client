@@ -30,9 +30,10 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
-            return $user->getAllReferralsInArray(1,1);
-        });
+//        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
+//            return $user->getAllReferralsInArray(1,1);
+//        });
+        $all_referrals = [];
         $activeReferrals = 0;
         $total_referral_invested = 0;
         $usdCurrency = Currency::where('code', 'USD')->first();
