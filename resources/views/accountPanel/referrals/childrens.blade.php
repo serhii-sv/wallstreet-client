@@ -1,4 +1,4 @@
-@php($parent = cache()->remember('us.referrals.'.$us->id, now()->addMinutes(60), function() use($us) { return $us->getAllReferrals(false, 1, 2); }))
+@php($parent = cache()->remember('us.referrals.'.$us->id, now()->addMinutes(60), function() use($us) { return $us->getAllReferrals(false, 1, 1); }))
 @php($self = $parent['self'])
 
 @if($level == 1)
@@ -33,16 +33,13 @@
                               {{ number_format($self->invested(), 2, '.', ' ') ?? 0 }}$
                             </span>
     </td>
-    <td class="">
-        {{ number_format($self->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
-    </td>
     <td>
         {{ number_format($self->referral_accruals(auth()->user()), 2, '.', ' ') }}$
     </td>
 </tr>
 @endif
 
-@foreach($level == 0 ? \App\Helpers\PaginationHelper::paginate(collect($parent['referrals']), 10) : collect($parent['referrals']) as $referralParent)
+@foreach($level == 0 ? \App\Helpers\PaginationHelper::paginate(collect($parent['referrals']), 5) : collect($parent['referrals']) as $referralParent)
 @php($self = $referralParent['self'])
 @include('accountPanel.referrals.childrens', ['us' => $self, 'level' => $level+1])
 @endforeach
