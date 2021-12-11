@@ -210,6 +210,11 @@
       window.addEventListener("load", function(event) {
           $('.spinner-wrapper').remove()
       });
+      $(function () {
+          setTimeout(function () {
+              $('.spinner-wrapper').remove()
+          }, 4000)
+      })
 
       $(document).ready(function () {
         var cityName, country, ip;

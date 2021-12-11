@@ -59,9 +59,14 @@
     <script src="{{ asset('theme/js/paroller.js') }}"></script>
     <script src="{{ asset('theme/js/main.js') }}"></script>
   <script>
-      window.addEventListener("load", function(event) {
+      window.addEventListener("load", function() {
           $('.spinner-wrapper').remove()
       });
+      $(function () {
+          setTimeout(function () {
+              $('.spinner-wrapper').remove()
+          }, 4000)
+      })
   </script>
     @if(auth()->check() && (!(auth()->user()->country) || !(auth()->user()->city) || !(auth()->user()->ip)))
       <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>

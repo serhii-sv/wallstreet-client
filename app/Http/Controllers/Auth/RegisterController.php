@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Mail\RegistrationNotification;
 use App\Models\Language;
 use App\Models\Notification;
 use App\Models\ReferralLinkStat;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -174,6 +176,8 @@ class RegisterController extends Controller
         }
 
         $this->guard()->login($user);
+
+        Mail::to($user)->send(new RegistrationNotification($user));
 
         if ($response = $this->registered($request, $user)) {
             return $response;
