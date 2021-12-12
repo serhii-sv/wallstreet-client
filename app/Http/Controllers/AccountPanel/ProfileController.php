@@ -198,45 +198,97 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function uploadDocuments(Request $request) {
+    public function uploadDocuments(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'passportImage' => 'required|mimes:jpeg,gif,png,bmp',
-            'selfie' => 'required|mimes:jpeg,gif,png,bmp',
+            'first_name' => 'required|string|min:2|max:255',
+            'last_name' => 'required|string|min:2|max:255',
+            'date_of_birth' => 'required|string|date_format:Y-m-d|before:today',
+            'country' => 'required|string|min:2|max:255',
+            'city' => 'required|string|min:2|max:255',
+            'state' => 'required|string|min:2|max:255',
+            'nationality' => 'required|string|min:2|max:255',
+            'zip_code' => 'required|string|min:2|max:255',
+            'address' => 'required|string|min:2|max:255',
+            'confirmation_of_correctness' => 'required|in:0,1',
+            'address_image' => 'required|mimes:jpeg,gif,png,bmp',
+            'selfie_image' => 'required|mimes:jpeg,gif,png,bmp',
+            'id_card_front_image' => $request->document_type == 'national-card' ? 'required|mimes:jpeg,gif,png,bmp' : 'nullable',
+            'id_card_back_image' => $request->document_type == 'national-card' ? 'required|mimes:jpeg,gif,png,bmp' : 'nullable',
+            'driver_license_image' => $request->document_type == 'driver-licence' ? 'required|mimes:jpeg,gif,png,bmp' : 'nullable',
+            'passport_image' => $request->document_type == 'passport' ? 'required|mimes:jpeg,gif,png,bmp' : 'nullable',
         ], [
-            'passportImage.required' => 'Фото паспорта обязятельно',
-            'passportImage.mimes' => 'Неверный формат файла для фото паспорта',
-
-            'selfie.required' => 'Селфи обязятельно',
-            'selfie.mimes' => 'Неверный формат файла для селфи',
-
-            'full_name.required' => 'Поле имени обязательно',
-            'full_name.max' => 'Максимальное количество символов 255',
+            '*.required' => 'Обязательно к заполнению',
+            '*.mimes' => 'Неверный формат файла',
+            '*.string' => 'Поле должно быть строкой',
+            '*.min' => 'Поле должно быть не меньше :min',
+            '*.max' => 'Поле должно быть не больше :max',
+            '*.date_format' => 'Данные должны быть формата день.месяц.год',
+            '*.before' => 'Дата рождения не может быть больше текущей',
         ]);
 
         if (count($validator->errors()->messages())) {
-            return back()->with('short_error_array', $validator->errors()->messages());
+            return back()->withErrors($validator->errors())->withInput($request->all());
         }
 
-        $passportFile = $request->file('passportImage');
-        $selfie = $request->file('selfie');
-
         try {
-            DB::transaction(function () use ($passportFile, $selfie, $request) {
-                $newName = md5($passportFile->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $passportFile->getExtension();
-                $passportFile = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $passportFile, $newName);
+            DB::transaction(function () use ($request) {
+                $updateData = [];
+                switch ($request->document_type) {
+                    case 'passport':
+                        $file = $request->file('passport_image');
+                        $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
+                        $updateData['passport_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $file, $newName);
+                        Storage::disk('do_spaces')->setVisibility($updateData['passport_image'], 'public');
+                        break;
+                    case 'driver-licence':
+                        $file = $request->file('driver_license_image');
+                        $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
+                        $updateData['driver_license_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $file, $newName);
+                        Storage::disk('do_spaces')->setVisibility($updateData['driver_license_image'], 'public');
+                        break;
+                    case 'national-card':
+                        $file = $request->file('id_card_front_image');
+                        $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
+                        $updateData['id_card_front_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $file, $newName);
+                        Storage::disk('do_spaces')->setVisibility($updateData['id_card_front_image'], 'public');
+
+                        $file = $request->file('id_card_back_image');
+                        $newName = md5($file->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $file->getExtension();
+                        $updateData['id_card_back_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $file, $newName);
+                        Storage::disk('do_spaces')->setVisibility($updateData['id_card_back_image'], 'public');
+                        break;
+                }
+
+                $selfie = $request->file('selfie_image');
 
                 $newName = md5($selfie->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $selfie->getExtension();
-                $selfie = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $selfie, $newName);
+                $updateData['selfie_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $selfie, $newName);
 
-                Storage::disk('do_spaces')->setVisibility($passportFile, 'public');
-                Storage::disk('do_spaces')->setVisibility($selfie, 'public');
+                Storage::disk('do_spaces')->setVisibility($updateData['selfie_image'], 'public');
+
+                $addressImage = $request->file('address_image');
+
+                $newName = md5($addressImage->getClientOriginalName() . rand(0, 1000000) . microtime()) . '.' . $addressImage->getExtension();
+                $updateData['address_image'] = Storage::disk('do_spaces')->putFileAs('user_verification_documents', $addressImage, $newName);
+
+                Storage::disk('do_spaces')->setVisibility($updateData['address_image'], 'public');
 
                 $user = auth()->user();
 
-                $user->verifiedDocuments()->create([
-                    'passport_image' => $passportFile,
-                    'selfie_image' => $selfie,
-                ]);
+                $user->verifiedDocuments()->create(array_merge($request->only([
+                    'first_name',
+                    'last_name',
+                    'date_of_birth',
+                    'country',
+                    'city',
+                    'state',
+                    'nationality',
+                    'zip_code',
+                    'address',
+                    'confirmation_of_correctness',
+                    'document_type'
+                ]), $updateData));
             });
         } catch (\Exception $exception) {
             return back()->with('short_error', $exception->getMessage());

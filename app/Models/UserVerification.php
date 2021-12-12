@@ -51,8 +51,22 @@ class UserVerification extends Model
         'user_id',
         'passport_image',
         'selfie_image',
-        'full_name',
-        'accepted'
+        'accepted',
+        'id_card_front_image',
+        'id_card_back_image',
+        'document_type',
+        'driver_license_image',
+        'address_image',
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'country',
+        'city',
+        'state',
+        'nationality',
+        'zip_code',
+        'address',
+        'confirmation_of_correctness'
     ];
 
     /**
