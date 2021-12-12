@@ -34,24 +34,10 @@ class ReferralsController extends Controller
             return $user->getAllReferralsInArray();
         });
         $activeReferrals = 0;
-        $total_referral_invested = 0;
-        $usdCurrency = Currency::where('code', 'USD')->first();
+        $total_referral_invested = $user->referrals_invested_total;
 
         /** @var User $referral */
         foreach ($all_referrals as $referral) {
-            $total_referral_invested += cache()->remember('referrals.total_invested_' . $referral->id, now()->addMinutes(60), function () use ($referral, $usdCurrency) {
-                $invested = 0;
-                $referral
-                    ->deposits()
-                    ->where('active', 1)
-                    ->get()
-                    ->each(function(Deposit $deposit) use(&$invested, $usdCurrency) {
-                        $invested += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
-                    });
-
-                return $invested;
-            });
-
             $activeReferrals += $referral->deposits()
                     ->where('active', 1)
                     ->count() > 0 ? 1 : 0;
@@ -59,13 +45,7 @@ class ReferralsController extends Controller
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);
 
-        $personal_turnover = 0;
-        $user->deposits()
-            ->where('active', 1)
-            ->get()
-            ->each(function(Deposit $deposit) use(&$personal_turnover, $usdCurrency) {
-                $personal_turnover += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
-            });
+        $personal_turnover = $user->personal_turnover;
 
         return view('accountPanel.referrals.index', [
             'all_referrals' => $all_referrals,
