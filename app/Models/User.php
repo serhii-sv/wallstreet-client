@@ -219,7 +219,9 @@ class User extends Authenticatable
         'index',
         'phone_verified',
         'auth_with_phone',
-        'role_color'
+        'role_color',
+        'referrals_invested_total',
+        'personal_turnover'
     ];
 
     /**
