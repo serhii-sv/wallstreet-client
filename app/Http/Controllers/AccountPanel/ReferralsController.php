@@ -30,18 +30,14 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addMinutes(60), function() use($user) {
+        $all_referrals = cache()->rememberForever('referrals.array.'.$user->id, function() use($user) {
             return $user->getAllReferralsInArray();
         });
-        $activeReferrals = 0;
+
         $total_referral_invested = $user->referrals_invested_total;
 
-        /** @var User $referral */
-        foreach ($all_referrals as $referral) {
-            $activeReferrals += $referral->deposits()
-                    ->where('active', 1)
-                    ->count() > 0 ? 1 : 0;
-        }
+        $activeReferrals = $user->referrals_count;
+
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);
 

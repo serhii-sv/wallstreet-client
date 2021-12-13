@@ -7,6 +7,7 @@
 namespace App\Console;
 
 use App\Console\Commands\ChatServer;
+use App\Console\Commands\SetReferralsCaches;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ChatServer::class,
+        SetReferralsCaches::class
     ];
 
     /**
@@ -31,6 +33,7 @@ class Kernel extends ConsoleKernel
     {
         // Logs
         $schedule->command('log:clear')->daily()->withoutOverlapping();
+        $schedule->command('referrals-caches:set')->everyTenMinutes();
     }
 
     /**

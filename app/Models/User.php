@@ -221,7 +221,8 @@ class User extends Authenticatable
         'auth_with_phone',
         'role_color',
         'referrals_invested_total',
-        'personal_turnover'
+        'personal_turnover',
+        'total_referrals_count'
     ];
 
     /**
