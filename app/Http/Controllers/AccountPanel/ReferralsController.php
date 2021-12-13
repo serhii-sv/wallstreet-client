@@ -15,6 +15,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use function React\Promise\all;
 
 class ReferralsController extends Controller
 {
@@ -36,7 +37,7 @@ class ReferralsController extends Controller
 
         $total_referral_invested = $user->referrals_invested_total;
 
-        $activeReferrals = $user->referrals_count;
+        $activeReferrals = $user->total_referrals_count;
 
         $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         $referral_link_registered = count($all_referrals);

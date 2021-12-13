@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-
 class SetReferralsCaches extends Command
 {
     /**
@@ -41,32 +40,20 @@ class SetReferralsCaches extends Command
         foreach (User::all() as $user) {
             $all_referrals = [];
             if (cache()->has('referrals.array.' . $user->id)) {
-                $all_referrals = cache()->rememberForever('referrals.array.' . $user->id, function () use ($user) {
-                    return $user->getAllReferralsInArray();
-                });
+                cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray());
+                $all_referrals = cache()->get('referrals.array.' . $user->id);
             }
 
-            $total_referrals = 0;
-            foreach ($all_referrals as $referral) {
-                if (cache()->has('referrals.active_referral.' . $referral->id)) {
-                    $total_referrals += cache()->rememberForever('referrals.active_referral.' . $referral->id, function () use ($referral) {
-                        return $referral->deposits()
-                            ->where('active', 1)
-                            ->count() > 0 ? 1 : 0;
-                    });
-                }
-
-                $referral = User::find($referral->id);
-                if (cache()->has('us.referrals.' . $referral->id)) {
-                    cache()->rememberForever('us.referrals.' . $referral->id, function () use ($referral) {
-                        return $referral->getAllReferrals(false, 1, 1);
-                    });
+            if (!empty($all_referrals)) {
+                foreach ($all_referrals as $referral) {
+                    $referral = User::find($referral->id);
+                    if (cache()->has('us.referrals.' . $referral->id)) {
+                        cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1));
+                    }
                 }
             }
             if (cache()->has('us.referrals.' . $user->id)) {
-                cache()->rememberForever('us.referrals.' . $user->id, function () use ($user) {
-                    return $user->getAllReferrals(false, 1, 1);
-                });
+                cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1));
             }
         }
         return Command::SUCCESS;
