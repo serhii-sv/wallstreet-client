@@ -438,45 +438,6 @@ select.select-sm { height: 37px; }
 .text-exlight { color: #6e81a9 !important; }
 .text-dark { color: #495463 !important; }
 
-.badge { padding: 2px 10px; font-size: 11px; line-height: 15px; text-align: center; border-radius: 3px; font-weight: 500; color: #fff; border: 1px solid; min-width: 60px; }
-.badge-sq { height: 19px; width: 19px; min-width: 0; padding-left: 2px; padding-right: 2px; }
-.badge-sm { padding: 4px 12px; font-size: 12px; line-height: 16px; font-weight: 400; min-width: 90px; }
-.badge-md { padding: 6px 12px; font-size: 12px; line-height: 16px; font-weight: 400; min-width: 90px; }
-.badge-md.badge-sq { height: 30px; width: 30px; min-width: 0; padding: 6px 0; }
-.badge-lg { padding: 6px 15px; font-size: 13px; font-weight: 600; line-height: 20px; min-width: 120px; }
-.badge-xl { padding: 9px 15px; font-size: 13px; font-weight: 600; line-height: 20px; min-width: 120px; }
-.badge-block { width: 100%; }
-.badge-auto { min-width: 0; }
-.badge-circle { border-radius: 50%; height: 30px; width: 30px; padding: 5px 0; font-size: 14px; line-height: 22px; font-weight: 400; }
-.badge-circle.badge-sm { height: 20px; width: 20px; font-size: 11px; line-height: 12px; }
-.badge.badge-dim { color: #495463; }
-.badge-primary { background: #2c80ff; border-color: #2c80ff; }
-.badge-primary.badge-dim { background: #dfebff; border-color: #accdff; }
-.badge-light { background: #758698; border-color: #758698; color: #fff; }
-.badge-light.badge-dim { background: #eaecef; border-color: #cdd3d9; }
-.badge-lighter { color: #495463; background: #e6effb; border-color: #e6effb; }
-.badge-lighter.badge-dim { color: #495463; border-color: #a4c5f0; }
-.badge-dark { color: #fff; background: #495463; border-color: #495463; }
-.badge-dark.badge-dim { background: #dee2e7; border-color: #b2bac6; }
-.badge-secondary { background: #253992; border-color: #253992; }
-.badge-secondary.badge-dim { background: #dadff6; border-color: #b1bceb; }
-.badge-success { background: #00d285; border-color: #00d285; }
-.badge-success.badge-dim { background: #c8ffeb; border-color: #53ffc0; }
-.badge-info { background: #1babfe; border-color: #1babfe; }
-.badge-info.badge-dim { background: #f0faff; border-color: #cdecff; }
-.badge-warning { background: #ffc100; border-color: #ffc100; }
-.badge-warning.badge-dim { background: #fff5d6; border-color: #ffe080; }
-.badge-danger { background: #ff6868; border-color: #ff6868; }
-.badge-danger.badge-dim { background: #ffe8e8; border-color: #ffb5b5; }
-.badge-purple { background: #bc69fb; border-color: #bc69fb; }
-.badge-purple.badge-dim { background: white; border-color: white; }
-.badge-disabled { color: #495463; background: #d2dde9; border-color: #d2dde9; }
-.badge-disabled.badge-dim { color: #5f6d80; background: #f4f7fa; border-color: #e3eaf1; }
-.badge-outline { background: none; color: #495463; }
-.badge-xs { padding: 1px 8px; font-size: 10px; line-height: 12px; font-weight: 400; min-width: 48px; }
-.badge-xs.round { border-radius: 9px; }
-.badge-xs.badge-sq { height: 16px; width: 16px; min-width: 0; padding-left: 2px; padding-right: 2px; }
-
 .status { padding: 5px 20px; line-height: 22px; font-size: 14px; display: inline-block; border-radius: 4px; }
 .status-primary { color: #2c80ff; background: rgba(44, 128, 255, 0.15); }
 .status-secondary { color: #253992; background: rgba(37, 57, 146, 0.15); }
@@ -1058,7 +1019,6 @@ select.select-sm { height: 37px; }
 .chat-contacts-badges li { padding: 0 3px; display: inline-flex; }
 .chat-contacts-info { justify-content: space-between; align-items: center; }
 .chat-contacts-texts { position: relative; }
-.chat-contacts-texts .badge { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
 .chat-messages { display: flex; flex-direction: column; flex-grow: 1; }
 .chat-messages-head { position: relative; padding: 14px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #d2dde9; }
 .chat-messages-name { font-weight: 500; display: inline-flex; align-items: center; }
@@ -2795,7 +2755,6 @@ p + .timeline-content-info { padding-top: 5px; }
 .navbar-dropdown { position: relative; min-width: 215px; background: #fff; padding: 10px 0; display: none; }
 .navbar-dropdown li a { padding: 10px 25px 10px 34px; line-height: 20px; display: block; position: relative; }
 .navbar-dropdown li a:before { position: absolute; left: 20px; width: 6px; height: 1px; background: #2c80ff; content: ''; top: 19.5px; }
-.navbar-dropdown li a .badge { padding: 0 7px; min-width: 0; margin-left: 6px; font-size: 10px; border-radius: 2px; text-transform: uppercase; }
 .navbar-dropdown li.active > a, .navbar-dropdown li.current > a, .navbar-dropdown li:hover > a { color: #20317e; }
 .navbar-dropdown .navbar-dropdown { padding: 0; }
 .navbar-dropdown .navbar-dropdown li a { padding: 10px 25px 10px 50px; }
