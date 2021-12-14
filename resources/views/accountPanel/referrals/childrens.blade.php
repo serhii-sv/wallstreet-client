@@ -28,6 +28,18 @@
     <td>
         <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ $self->partner->login ?? 'undefined' }}</span>
     </td>
+    <td>
+                        <span class="label">
+                          {{ number_format($self->invested(), 2, '.', ' ') ?? 0 }}$
+                        </span>
+    </td>
+    <td>
+        {{ number_format($self->referral_accruals(auth()->user()), 2, '.', ' ') }}$
+    </td>
+    <td class="">
+        {{ number_format($self->deposits_accruals(), 2, '.', ' ') ?? 0 }}$
+    </td>
+
 </tr>
 @endif
 

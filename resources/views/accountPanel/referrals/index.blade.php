@@ -145,6 +145,9 @@ Referrals page
                         <th>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Reward acc 3' contenteditable="true">{{ __('Reward acc 3') }}</editor_block> @else {{ __('Reward acc 3') }} @endif
                         </th>
+                          <th>@if(canEditLang() && checkRequestOnEdit())
+                                  <editor_block data-name='Accruals acc' contenteditable="true">{{ __('Accruals acc') }}</editor_block> @else {{ __('Accruals acc') }} @endif
+                          </th>
                       </tr>
                     </thead>
                     <tbody>

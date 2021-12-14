@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+
 class SetReferralsCaches extends Command
 {
     /**
@@ -49,6 +50,15 @@ class SetReferralsCaches extends Command
                 foreach ($all_referrals as $referral) {
                     /** @var User $referral */
                     $referral = User::find($referral->id);
+
+                    $invested = $referral->invested();
+                    $this->info('invested '.$invested);
+
+                    $referralAccruals = $referral->referral_accruals($user);
+                    $this->info('referral accruals '.$referralAccruals);
+
+                    $depositAccruals = $referral->deposits_accruals();
+                    $this->info('deposit accruals '.$depositAccruals);
 
                     $this->comment('work with ref '.$referral->login);
                     cache()->forget('us.referrals.' . $referral->id);
