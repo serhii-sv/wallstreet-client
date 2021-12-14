@@ -62,6 +62,7 @@ class SetReferralsCaches extends Command
                 cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1));
             }
         }
+
         return Command::SUCCESS;
     }
 }

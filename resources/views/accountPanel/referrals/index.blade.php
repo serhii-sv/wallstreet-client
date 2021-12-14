@@ -123,34 +123,9 @@ Referrals page
             <div class="best-seller-table responsive-tbl">
               <div class="item">
                 <div class="table-responsive product-list">
-                  <table class="table table-bordernone">
-                    <thead>
-                      <tr>
-                        <th class="f-22">
-                          @if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='User acc' contenteditable="true">{{ __('User acc') }}</editor_block> @else {{ __('User acc') }} @endif
-                        </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Telephone acc' contenteditable="true">{{ __('Telephone acc') }}</editor_block> @else {{ __('Telephone acc') }} @endif
-                        </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Date/Time of registration acc' contenteditable="true">{{ __('Date/Time of registration acc') }}</editor_block> @else {{ __('Date/Time of registration acc') }} @endif
-                        </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Upliner login acc' contenteditable="true">{{ __('Upliner login acc') }}</editor_block> @else {{ __('Upliner login acc') }} @endif
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    @if(cache()->has('us.referrals.' . auth()->user()->id))
-                        @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
-                    @endif
-                    </tbody>
-                  </table>
-                    <div class="f1-buttons" style="text-align: center; margin-top:50px;">
-                        <button class="btn btn-primary btn-next" type="button" style="padding:15px 50px 15px 50px; font-size:21px;" onClick="location.assign('/referrals/progress?page={{ request()->has('page') && request('page') >= 2 ? request('page') - 1 : 1 }}')"> Предыдущая страница</button>
-                        <button class="btn btn-primary btn-next" type="button" style="padding:15px 50px 15px 50px; font-size:21px;" onClick="location.assign('/referrals/progress?page={{ request()->has('page') ? request('page') + 1 : 2 }}')"> Следующая страница</button>
-                    </div>
+
+
+
                 </div>
               </div>
             </div>
