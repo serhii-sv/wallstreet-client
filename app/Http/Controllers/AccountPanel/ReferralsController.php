@@ -37,11 +37,11 @@ class ReferralsController extends Controller
 
         $activeReferrals = $user->total_referrals_count;
 
-        $referral_link_clicks = cache()->remeber('user.'.$user->id, now()->addHours(3), function() use($user) {
+        $referral_link_clicks = cache()->remember('user.'.$user->id, now()->addHours(3), function() use($user) {
             return ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
         });
 
-        $referral_link_registered = cache()->remeber('referrals_count.'.$user->id, now()->addHours(3), function() use($all_referrals) {
+        $referral_link_registered = cache()->remember('referrals_count.'.$user->id, now()->addHours(3), function() use($all_referrals) {
             return count($all_referrals);
         });
 
