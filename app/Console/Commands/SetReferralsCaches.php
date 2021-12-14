@@ -47,18 +47,20 @@ class SetReferralsCaches extends Command
 
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
-                    $this->comment('work with ref '.$referral->id);
-
                     /** @var User $referral */
                     $referral = User::find($referral->id);
+
+                    $this->comment('work with ref '.$referral->login);
                     cache()->forget('us.referrals.' . $referral->id);
                     cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1), now()->addHours(3));
+                    $this->info('referrals count '.count(cache()->get('us.referrals.' . $referral->id)));
                 }
             }
 
             $this->info('get referrals for '.$user->login);
             cache()->forget('us.referrals.' . $user->id);
             cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
+            $this->info('us referrals count '.count(cache()->get('us.referrals.' . $user->id)));
         }
 
         return Command::SUCCESS;
