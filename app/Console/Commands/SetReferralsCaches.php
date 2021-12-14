@@ -37,30 +37,28 @@ class SetReferralsCaches extends Command
      */
     public function handle()
     {
+        /** @var User $user */
         foreach (User::all() as $user) {
-            $all_referrals = [];
+            $this->info('work with user '.$user->login);
 
             cache()->forget('referrals.array.' . $user->id);
-
-            if (cache()->has('referrals.array.' . $user->id)) {
-                cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray(), now()->addHours(3));
-                $all_referrals = cache()->get('referrals.array.' . $user->id);
-            }
+            cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray(), now()->addHours(3));
+            $all_referrals = cache()->get('referrals.array.' . $user->id);
 
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
+                    $this->comment('work with ref '.$referral->login);
+
+                    /** @var User $referral */
                     $referral = User::find($referral->id);
                     cache()->forget('us.referrals.' . $referral->id);
-                    if (cache()->has('us.referrals.' . $referral->id)) {
-                        cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1), now()->addHours(3));
-                    }
+                    cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1), now()->addHours(3));
                 }
             }
 
+            $this->info('get referrals for '.$user->login);
             cache()->forget('us.referrals.' . $user->id);
-            if (cache()->has('us.referrals.' . $user->id)) {
-                cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
-            }
+            cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
         }
 
         return Command::SUCCESS;
