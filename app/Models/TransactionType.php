@@ -61,7 +61,7 @@ class TransactionType extends Model
      */
     public static function getByName($name)
     {
-        return cache()->tags('model_setting')->rememberForever('model_setting_' . $name, function () use ($name) {
+        return cache()->rememberForever('model_setting_' . $name, function () use ($name) {
             return self::where('name', $name)->first();
         });
     }
