@@ -53,14 +53,14 @@ class SetReferralsCaches extends Command
                     $this->comment('work with ref '.$referral->login);
                     cache()->forget('us.referrals.' . $referral->id);
                     cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1), now()->addHours(3));
-                    $this->info('referrals count '.count(cache()->get('us.referrals.' . $referral->id)['referrals']));
+                    $this->info('referrals count '.count(cache()->get('us.referrals.' . $referral->id)['referrals'] ?? []));
                 }
             }
 
             $this->info('get referrals for '.$user->login);
             cache()->forget('us.referrals.' . $user->id);
             cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
-            $this->info('us referrals count '.count(cache()->get('us.referrals.' . $user->id)['referrals']));
+            $this->info('us referrals count '.count(cache()->get('us.referrals.' . $user->id)['referrals'] ?? []));
         }
 
         return Command::SUCCESS;
