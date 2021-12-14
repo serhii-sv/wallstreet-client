@@ -47,7 +47,7 @@ class SetReferralsCaches extends Command
 
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
-                    $this->comment('work with ref '.$referral->login);
+                    $this->comment('work with ref '.$referral->id);
 
                     /** @var User $referral */
                     $referral = User::find($referral->id);
