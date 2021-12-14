@@ -21,7 +21,28 @@ class ReferralsController extends Controller
 {
 
     public function index() {
+        /** @var User $user */
+        $user = Auth::user();
 
+        /** @var User $upliner */
+        $upliner = auth()->user()->partner()->first();
+
+        if ($upliner === null) {
+            $upliner = false;
+        }
+
+//        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addHours(3), function() use($user) {
+//            return $user->getAllReferralsInArray();
+//        });
+
+        $total_referral_invested = $user->referrals_invested_total;
+
+        $activeReferrals = $user->total_referrals_count;
+
+        $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
+//        $referral_link_registered = count($all_referrals);
+
+        $personal_turnover = $user->personal_turnover;
 
         return view('accountPanel.referrals.index');
     }
