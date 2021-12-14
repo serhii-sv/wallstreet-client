@@ -139,12 +139,6 @@ Referrals page
                         <th>@if(canEditLang() && checkRequestOnEdit())
                             <editor_block data-name='Upliner login acc' contenteditable="true">{{ __('Upliner login acc') }}</editor_block> @else {{ __('Upliner login acc') }} @endif
                         </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Invested acc' contenteditable="true">{{ __('Invested acc') }}</editor_block> @else {{ __('Invested acc') }} @endif
-                        </th>
-                        <th>@if(canEditLang() && checkRequestOnEdit())
-                            <editor_block data-name='Reward acc 3' contenteditable="true">{{ __('Reward acc 3') }}</editor_block> @else {{ __('Reward acc 3') }} @endif
-                        </th>
                       </tr>
                     </thead>
                     <tbody>
