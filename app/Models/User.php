@@ -258,7 +258,7 @@ class User extends Authenticatable
 
     public function invested() {
         $th = $this;
-        return cache()->remember('user.total_invested_' . $this->id, now()->addMinutes(60), function () use ($th) {
+        return cache()->remember('user.total_invested_' . $this->id, now()->addMinutes(180), function () use ($th) {
             $invested = 0;
             $usdCurrency = Currency::where('code', 'USD')->first();
             $th->deposits()
@@ -274,7 +274,7 @@ class User extends Authenticatable
     public function deposits_accruals() {
         $th = $this;
 
-        $dividends = cache()->remember('user.deposit_accruals' . $this->id, now()->addMinutes(60), function () use ($th) {
+        $dividends = cache()->remember('user.deposit_accruals' . $this->id, now()->addMinutes(180), function () use ($th) {
             $dividendTypeId = TransactionType::getByName('dividend')->id;
             $dividends = $th->transactions()
                 ->where('type_id', $dividendTypeId)
@@ -283,7 +283,7 @@ class User extends Authenticatable
             return $dividends;
         });
 
-        $reinvestDividends = cache()->remember('user.deposit_reinvests' . $this->id, now()->addMinutes(60), function () use ($th) {
+        $reinvestDividends = cache()->remember('user.deposit_reinvests' . $this->id, now()->addMinutes(180), function () use ($th) {
             $closeDepTypeId = TransactionType::getByName('close_dep')->id;
             $createDepTypeId = TransactionType::getByName('create_dep')->id;
             $dividends = 0;
