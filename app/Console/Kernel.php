@@ -6,6 +6,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CalculateReferralsTotalInvestedAndPersonalTurnover;
 use App\Console\Commands\ChatServer;
 use App\Console\Commands\SetReferralsCaches;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ChatServer::class,
-        SetReferralsCaches::class
+        SetReferralsCaches::class,
+        CalculateReferralsTotalInvestedAndPersonalTurnover::class
     ];
 
     /**
@@ -34,6 +36,7 @@ class Kernel extends ConsoleKernel
         // Logs
         $schedule->command('log:clear')->daily()->withoutOverlapping();
         $schedule->command('referrals-caches:set')->everyTenMinutes();
+        $schedule->command('calculate:invested-total-and-turnover')->hourly();
     }
 
     /**

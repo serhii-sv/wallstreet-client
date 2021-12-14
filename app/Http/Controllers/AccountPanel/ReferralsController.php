@@ -37,12 +37,26 @@ class ReferralsController extends Controller
 
         $activeReferrals = $user->total_referrals_count;
 
-        $referral_link_clicks = ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
-//        $referral_link_registered = count($all_referrals);
+        $referral_link_clicks = cache()->remeber('user.'.$user->id, now()->addHours(3), function() use($user) {
+            return ReferralLinkStat::where('partner_id', $user->id)->sum('click_count');
+        });
+
+        $referral_link_registered = cache()->remeber('referrals_count.'.$user->id, now()->addHours(3), function() use($all_referrals) {
+            return count($all_referrals);
+        });
 
         $personal_turnover = $user->personal_turnover;
 
-        return view('accountPanel.referrals.index');
+        return view('accountPanel.referrals.index', [
+            'all_referrals' => $all_referrals,
+            'activeReferrals' => $activeReferrals,
+            'total_referral_invested' => $total_referral_invested,
+            'user' => $user,
+            'upliner' => $upliner,
+            'personal_turnover' => $personal_turnover,
+            'referral_link_registered' => $referral_link_registered,
+            'referral_link_clicks' => $referral_link_clicks,
+        ]);
     }
 
     public function banners() {

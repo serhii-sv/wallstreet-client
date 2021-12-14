@@ -43,7 +43,7 @@ class SetReferralsCaches extends Command
             cache()->forget('referrals.array.' . $user->id);
 
             if (cache()->has('referrals.array.' . $user->id)) {
-                cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray());
+                cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray(), now()->addHours(3));
                 $all_referrals = cache()->get('referrals.array.' . $user->id);
             }
 
@@ -52,14 +52,14 @@ class SetReferralsCaches extends Command
                     $referral = User::find($referral->id);
                     cache()->forget('us.referrals.' . $referral->id);
                     if (cache()->has('us.referrals.' . $referral->id)) {
-                        cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1));
+                        cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1), now()->addHours(3));
                     }
                 }
             }
 
             cache()->forget('us.referrals.' . $user->id);
             if (cache()->has('us.referrals.' . $user->id)) {
-                cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1));
+                cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
             }
         }
 
