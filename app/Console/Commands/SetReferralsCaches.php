@@ -50,11 +50,14 @@ class SetReferralsCaches extends Command
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
                     $referral = User::find($referral->id);
+                    cache()->forget('us.referrals.' . $referral->id);
                     if (cache()->has('us.referrals.' . $referral->id)) {
                         cache()->put('us.referrals.' . $referral->id, $referral->getAllReferrals(false, 1, 1));
                     }
                 }
             }
+
+            cache()->forget('us.referrals.' . $user->id);
             if (cache()->has('us.referrals.' . $user->id)) {
                 cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1));
             }
