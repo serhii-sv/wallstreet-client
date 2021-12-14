@@ -31,9 +31,7 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = cache()->remember('referrals.array.'.$user->id, now()->addHours(3), function() use($user) {
-            return $user->getAllReferralsInArray();
-        });
+        $all_referrals = $user->getAllReferralsInArray();
 
         $total_referral_invested = $user->referrals_invested_total;
 
