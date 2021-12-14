@@ -39,6 +39,9 @@ class SetReferralsCaches extends Command
     {
         foreach (User::all() as $user) {
             $all_referrals = [];
+
+            cache()->forget('referrals.array.' . $user->id);
+
             if (cache()->has('referrals.array.' . $user->id)) {
                 cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray());
                 $all_referrals = cache()->get('referrals.array.' . $user->id);
