@@ -43,7 +43,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
     {
         $usdCurrency = Currency::where('code', 'USD')->first();
 
-        foreach (User::all() as $user) {
+        foreach (User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
             $all_referrals = $user->getAllReferralsInArray();
             $total_referral_invested = 0;
             $referrals_count = 0;
