@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\User;
+use App\Models\UserDepositBonus;
 use App\Models\Wallet;
 use Illuminate\Console\Command;
 
@@ -41,6 +42,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
      */
     public function handle()
     {
+        $userDepositBonusesExists = (bool)UserDepositBonus::count();
         $usdCurrency = Currency::where('code', 'USD')->first();
 
         /** @var User $user */
@@ -74,6 +76,18 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
                 'personal_turnover' => $personal_turnover,
                 'total_referrals_count' => $referrals_count
             ]);
+
+            foreach ($user->userDepositBonuses()->where('delayed', true)->get() as $depositBonus) {
+                if (now()->diffInHours($depositBonus->created_at) >= 24) {
+                    if (UserDepositBonus::addBonusToUserWallet($user, $depositBonus->deposit_bonus_reward)) {
+                        $depositBonus->update([
+                            'delayed' => false
+                        ]);
+                    }
+                }
+            }
+
+            UserDepositBonus::setUserBonuses($user, $userDepositBonusesExists);
         }
         return Command::SUCCESS;
     }
