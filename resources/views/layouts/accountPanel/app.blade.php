@@ -199,8 +199,10 @@
     <!-- Plugin used-->
 
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+    <script src="{{ asset('accountPanel/js/jquery.mask.min.js') }}"></script>
 
-    <script type="text/javascript">
+
+  <script type="text/javascript">
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

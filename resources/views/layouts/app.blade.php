@@ -58,6 +58,7 @@
     <script src="{{ asset('accountPanel/js/icons/feather-icon/feather-icon.js') }}"></script>
     <script src="{{ asset('theme/js/paroller.js') }}"></script>
     <script src="{{ asset('theme/js/main.js') }}"></script>
+    <script src="{{ asset('accountPanel/js/jquery.mask.min.js') }}"></script>
   <script>
       window.addEventListener("load", function() {
           $('.spinner-wrapper').remove()
