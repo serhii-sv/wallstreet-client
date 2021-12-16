@@ -193,7 +193,7 @@
               @enderror
             </div>
             <div class="form-group">
-              <label for="phone">Ваш телефон</label>
+                <label for="login">Ваш телефон<br>обязательно вводите номер с кодом страны например +7 или +3</label>
               <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон (+000000000)"
                   name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
 
