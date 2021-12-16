@@ -193,8 +193,8 @@
               @enderror
             </div>
             <div class="form-group">
-              <label for="login">Ваш телефон</label>
-              <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"
+              <label for="phone">Ваш телефон</label>
+              <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон (+000000000)"
                   name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
 
               @error('phone')
@@ -245,3 +245,11 @@
     </div>
   </div>
 @endsection
+
+@push('js')
+    <script>
+        $(function () {
+            $('#phone').mask('+000000000000');
+        })
+    </script>
+@endpush

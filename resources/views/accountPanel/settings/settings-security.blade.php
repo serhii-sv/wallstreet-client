@@ -17,7 +17,7 @@ Security settings
                                 <div class="mt-3 mb-3">@include('partials.inform')</div>
                                 <div class="mb-3">
                                     <label class="form-label">Номер телефона:</label>
-                                    <input class="form-control input-air-primary" name="phone" value="{{ $user->phone ?? '' }}">
+                                    <input class="form-control input-air-primary" id="phone" name="phone" value="{{ $user->phone ?? '' }}">
                                 </div>
                                 <button class="btn btn-primary">Сохранить</button>
                             </form>
@@ -182,6 +182,7 @@ Security settings
 @push('scripts')
   <script>
     $(document).ready(() => {
+        $('#phone').mask('+000000000000');
       $("#password_save").click((e) => {
         e.preventDefault();
 

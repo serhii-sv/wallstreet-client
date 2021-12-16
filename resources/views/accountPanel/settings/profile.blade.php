@@ -135,7 +135,7 @@ Edit profile
                 <div class="col-sm-6 col-md-6">
                   <div class="mb-3">
                     <label class="form-label">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Telephone' contenteditable="true">{{ __('Telephone') }}</editor_block> @else {{ __('Telephone') }} @endif</label>
-                    <input class="form-control" type="text" name="phone"
+                    <input class="form-control" type="text" id="phone" name="phone"
                         value="{{ $user->phone ?? '' }}">
                   </div>
                 </div>
@@ -222,6 +222,7 @@ Edit profile
 @push('scripts')
   <script>
     $(document).ready(function () {
+        $('#phone').mask('+000000000000');
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
