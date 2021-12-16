@@ -239,6 +239,7 @@ trait HasReferral
             $result = [];
 
             if (!empty($referrals)) {
+                /** @var User $ref */
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
                     $result = array_merge_recursive($ref->getAllReferralsInArray($level+1, $max), $result);
