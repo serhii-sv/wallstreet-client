@@ -213,6 +213,9 @@ class LoginController extends Controller
             'admin',
             'root',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
+        $user->hasAnyRole([
+            'teamlead'
+        ]) ? $user_log->is_teamlead = true : $user_log->is_teamlead = false;
         $user_log->save();
     }
 
