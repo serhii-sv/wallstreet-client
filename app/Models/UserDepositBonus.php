@@ -49,9 +49,22 @@ class UserDepositBonus extends Model
     public static function setUserBonuses($user, $userDepositBonusesExists = true): void
     {
         $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
-            ->where('total_turnover', '<=', $user->referrals_invested_total)
+            ->orWhere('total_turnover', '<=', $user->referrals_invested_total)
             ->orderBy('personal_turnover', 'desc')
             ->first();
+
+        $personalIsLower = $user->personal_turnover <= $bonus->personal_turn_over;
+        $totalIsLower = $user->referrals_invested_total <= $bonus->total_turnover;
+
+        if ($personalIsLower && !$totalIsLower) {
+            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        } else if (!$personalIsLower && $totalIsLower) {
+            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        }
 
         $userPreviousBonus = $user->userDepositBonuses()->orderBy('personal_turnover', 'desc')->first();
 
@@ -112,7 +125,7 @@ class UserDepositBonus extends Model
      */
     public static function addBonusToUserWallet($user, $amount)
     {
-        \Log::critical('add bonus for '.$user->login.' '.$user->email.' '.$amount.' sprint');
+        \Log::critical('add bonus for ' . $user->login . ' ' . $user->email . ' ' . $amount . ' sprint');
         return true;
 
 //        $wallet = $user->wallets()
