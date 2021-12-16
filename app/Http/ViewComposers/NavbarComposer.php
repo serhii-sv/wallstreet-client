@@ -16,13 +16,19 @@ class NavbarComposer
     public function compose(View $view)
     {
         if (Auth::check()) {
+            $userNotifications = \App\Models\NotificationUser::where('user_id', Auth::user()->id)
+                ->where('is_read', false)
+                ->where('created_at', '>', now()->subDays(7))
+                ->orderBy('created_at', 'desc')
+                ->get();
+
             $view->with('counts', [
-                'notifications' => \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->count(),
+                'notifications' => $userNotifications->count(),
             ]);
-            $view->with('navbar_notifications', \App\Models\NotificationUser::where('user_id', Auth::user()->id)->where('is_read', false)->get());
+            $view->with('navbar_notifications', $userNotifications);
         }
         $currencies = Currency::all();
-    
+
         $rates = [];
         foreach ($currencies as $currency) {
             if (!(strtolower($currency->code) == 'usd')) {
@@ -41,7 +47,7 @@ class NavbarComposer
             }
         }
         $view->with('currency_rates', $rates);
-        
+
         $view->with('languages', Language::all());
         $view->with('default_language', Language::where('default', 'true')->first());
         $total_unread_messages = 0;
