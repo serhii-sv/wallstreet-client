@@ -47,7 +47,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
 
         /** @var User $user */
         foreach (User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
-            $all_referrals = $user->getAllReferralsInArray();
+            $all_referrals = $user->getAllReferralsInArray(1, 9);
             $total_referral_invested = 0;
             $referrals_count = 0;
 

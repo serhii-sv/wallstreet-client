@@ -194,8 +194,7 @@
             </div>
             <div class="form-group">
               <label for="login">Ваш телефон<br>обязательно вводите номер с кодом страны например +7 или +3</label>
-              <input id="login" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"
-                  name="phone" value="{{ old('phone') }}" required autocomplete="name" autofocus>
+              <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"/>
 
               @error('phone')
               <span class="invalid-feedback" role="alert">
@@ -245,3 +244,11 @@
     </div>
   </div>
 @endsection
+
+@push('js')
+    <script>
+        $(function () {
+            $('#phone').mask('+000000000000');
+        })
+    </script>
+@endpush

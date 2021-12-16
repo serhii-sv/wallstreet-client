@@ -420,6 +420,10 @@ class ProfileController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
+        if (null === $user) {
+            return redirect()->route('accountPanel.dashboard');
+        }
+
         /** @var UserPhoneMessages $last_sms */
         $last_sms = UserPhoneMessages::where('user_id', $user->id)
             ->where('type', 'auth')
