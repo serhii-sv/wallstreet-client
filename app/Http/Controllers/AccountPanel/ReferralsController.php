@@ -31,7 +31,7 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = $user->getAllReferralsInArray(1, 1000);
+        $all_referrals = $user->getAllReferralsInArray(1, 9);
 
         $total_referral_invested = $user->referrals_invested_total;
 
