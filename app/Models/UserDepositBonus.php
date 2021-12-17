@@ -112,11 +112,14 @@ class UserDepositBonus extends Model
      */
     public static function userHasBonus($user, $bonus)
     {
-        return (bool)$user->userDepositBonuses()->where('deposit_bonus_id', $bonus->id)
-            ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
-            ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
-            ->orWhere('deposit_bonus_reward', $bonus->revard)
-            ->count();
+        if (!is_null($bonus)) {
+            return (bool)$user->userDepositBonuses()->where('deposit_bonus_id', $bonus->id)
+                ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
+                ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
+                ->orWhere('deposit_bonus_reward', $bonus->revard)
+                ->count();
+        }
+        return false;
     }
 
     /**
