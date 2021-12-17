@@ -362,7 +362,7 @@ trait HasReferral
     public function tmpPartner($user) {
         $partner = $user->partner()->first();
 
-        if ($partner->email == 'magdeevd@mail.ru') {
+        if (null !== $partner && $partner->email == 'magdeevd@mail.ru') {
             return $user;
         }
 
