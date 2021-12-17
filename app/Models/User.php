@@ -560,4 +560,12 @@ class User extends Authenticatable
         }
         return null;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userDepositBonuses()
+    {
+        return $this->hasMany(UserDepositBonus::class);
+    }
 }
