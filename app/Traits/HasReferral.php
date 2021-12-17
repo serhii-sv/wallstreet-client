@@ -232,7 +232,10 @@ trait HasReferral
             $max = 1000;
         }
 
-        if (null !== $this->tmpPartner($this)) {
+        if (cache()->has('tmp_partner'.$this->id) || null !== $this->tmpPartner($this)) {
+            cache()->remember('tmp_partner'.$this->id, now()->addYears(30), function() {
+                return true;
+            });
             $max = 1000;
         }
 
