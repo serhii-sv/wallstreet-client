@@ -228,7 +228,7 @@ trait HasReferral
     {
         $th = $this;
 
-        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
+        if ($this->email == 'magdeevd@mail.ru' || $this->partner_id == 1035550) { // TODO: tmp
             $max = 1000;
         }
 
