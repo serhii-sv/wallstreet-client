@@ -228,6 +228,10 @@ trait HasReferral
     {
         $th = $this;
 
+        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
+            $max = 1000;
+        }
+
         if ($level > $max) {
             return [];
         }
