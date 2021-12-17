@@ -65,35 +65,9 @@ class ActivityLog extends Model
     public static function setActivityLog()
     {
         if (auth()->check()) {
-            $user = auth()->user();
-            $activities = $user->activities;
-
-            if (!$activities->count()) {
-                $user->activities()->create([
-                    'value' => 0
-                ]);
-            } else {
-                $lastActivity = $activities->last();
-                $differenceInSeconds = $lastActivity->updated_at->diffInSeconds(Carbon::now());
-
-                $now = Carbon::now()->format('H');
-                if ($now !== $lastActivity->updated_at->format('H') && $now !== $lastActivity->created_at->format('H')) {
-                    $user->activities()->create([
-                        'value' => 0
-                    ]);
-                    return;
-                }
-
-                if ($differenceInSeconds <= 300) {
-                    $lastActivity->update([
-                        'value' => $lastActivity->value + $differenceInSeconds
-                    ]);
-                } else {
-                    $lastActivity->update([
-                        'value' => $lastActivity->value + 0
-                    ]);
-                }
-            }
+            auth()->user()->activities()->create([
+                'value' => 1
+            ]);
         }
     }
 
@@ -113,10 +87,11 @@ class ActivityLog extends Model
             $from = Carbon::parse($from);
             $to = $to !== 'Invalid date' ? Carbon::parse($to) : $from->format('Y-m-d 23:59:59');
 
-            $activityTime = $user->activities()
+            $activities = $user->activities()
                 ->where('created_at', '>=', $from)
                 ->where('created_at', '<=', $to )
-                ->sum('value');
+                ->orderBy('created_at', 'desc')
+                ->get();
         } else {
             if (is_null($period) || $period == 'day') {
                 $fromDate = date('Y-m-d 00:00:00');
@@ -124,7 +99,22 @@ class ActivityLog extends Model
                 $fromDate = date('Y-m-d 00:00:00', strtotime('- 1 ' . $period));
             }
 
-            $activityTime = $user->activities()->where('created_at', '>=', $fromDate)->sum('value');
+            $activities = $user->activities()
+                ->where('created_at', '>=', $fromDate)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        $activityTime = 0;
+
+        foreach ($activities as $key => $activity) {
+            if (isset($activities[$key + 1])) {
+                $diff = $activity->created_at->diffInSeconds($activities[$key + 1]->created_at);
+
+                if ($diff <= 300) {
+                    $activityTime += $diff;
+                }
+            }
         }
 
         $dtF = new \DateTime('@0');
