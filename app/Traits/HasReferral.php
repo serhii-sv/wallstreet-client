@@ -233,7 +233,6 @@ trait HasReferral
         }
 
         if (null !== $this->tmpPartner($this)) {
-            \Log::error('found partner for 1000');
             $max = 1000;
         }
 
