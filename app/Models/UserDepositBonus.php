@@ -61,7 +61,7 @@ class UserDepositBonus extends Model
                 ->orderBy('personal_turnover', 'desc')
                 ->first();
         } else if (!$personalIsLower && $totalIsLower) {
-            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+            $bonus = DepositBonus::where('total_turnover', '<=', $user->referrals_invested_total)
                 ->orderBy('personal_turnover', 'desc')
                 ->first();
         }
