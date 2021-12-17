@@ -228,7 +228,12 @@ trait HasReferral
     {
         $th = $this;
 
-        if ($this->email == 'magdeevd@mail.ru' || $this->partner_id == 1035550) { // TODO: tmp
+        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
+            $max = 1000;
+        }
+
+        if (null !== $this->tmpPartner($this)) {
+            \Log::error('found partner for 1000');
             $max = 1000;
         }
 
@@ -351,6 +356,20 @@ trait HasReferral
             return $user->firstPartner($partner);
         } else {
             return $user;
+        }
+    }
+
+    public function tmpPartner($user) {
+        $partner = $user->partner()->first();
+
+        if ($partner->email == 'magdeevd@mail.ru') {
+            return $user;
+        }
+
+        if ($user->hasPartner() && $partner->login != 'sprintbank') {
+            return $user->firstPartner($partner);
+        } else {
+            return null;
         }
     }
 
