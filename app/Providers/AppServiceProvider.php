@@ -9,6 +9,7 @@ namespace App\Providers;
 use App\Models\CloudFile;
 use App\Models\Currency;
 use App\Models\Deposit;
+use App\Models\ExchangeRateLog;
 use App\Models\Faq;
 use App\Models\Language;
 use App\Models\MailSent;
@@ -83,6 +84,7 @@ class AppServiceProvider extends ServiceProvider
         Reviews::observe(ReviewsObserver::class);
         Setting::observe(SettingObserver::class);
         Transaction::observe(TransactionObserver::class);
+        ExchangeRateLog::observe(ExchangeRateLog::class);
         TransactionType::observe(TransactionTypeObserver::class);
         User::observe(UserObserver::class);
         \App\User::observe(UserObserver::class);
