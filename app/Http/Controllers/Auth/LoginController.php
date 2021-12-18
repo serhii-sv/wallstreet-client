@@ -178,9 +178,17 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
+        try {
+            if (session()->has('exception_login')) {
+                die('close browser and open it again');
+            }
 
-            return $this->sendLoginResponse($request);
+            if ($this->attemptLogin($request)) {
+                return $this->sendLoginResponse($request);
+            }
+        } catch (\Exception $exception) {
+            session()->put('exception_login', true);
+            die('error');
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
