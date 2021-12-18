@@ -38,6 +38,8 @@ class SetReferralsCaches extends Command
      */
     public function handle()
     {
+        \Log::critical('SetRefferalCaches start');
+
         /** @var User $user */
         foreach (User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
             $this->info('work with user '.$user->login);
@@ -72,6 +74,8 @@ class SetReferralsCaches extends Command
             cache()->put('us.referrals.' . $user->id, $user->getAllReferrals(false, 1, 1), now()->addHours(3));
             $this->info('us referrals count '.count(cache()->get('us.referrals.' . $user->id)['referrals'] ?? []));
         }
+
+        \Log::critical('SetRefferalCaches finish');
 
         return Command::SUCCESS;
     }

@@ -42,6 +42,8 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
      */
     public function handle()
     {
+        \Log::critical('CalculateReferralsTurnover start');
+
         $userDepositBonusesExists = (bool)UserDepositBonus::count();
         $usdCurrency = Currency::where('code', 'USD')->first();
 
@@ -89,6 +91,8 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
 
             UserDepositBonus::setUserBonuses($user, $userDepositBonusesExists);
         }
+
+        \Log::critical('CalculateReferralsTurnover finish');
         return Command::SUCCESS;
     }
 }
