@@ -53,7 +53,7 @@ class UserDepositBonus extends Model
             ->orderBy('personal_turnover', 'desc')
             ->first();
 
-        $personalIsLower = $user->personal_turnover <= $bonus->personal_turn_over;
+        $personalIsLower = $user->personal_turnover <= $bonus->personal_turnover;
         $totalIsLower = $user->referrals_invested_total <= $bonus->total_turnover;
 
         if ($personalIsLower && !$totalIsLower) {
