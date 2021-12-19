@@ -29,6 +29,7 @@ use App\Models\Wallet;
 use App\Observers\CloudFileObserver;
 use App\Observers\CurrencyObserver;
 use App\Observers\DepositObserver;
+use App\Observers\ExchangeRateLogObserver;
 use App\Observers\FaqObserver;
 use App\Observers\LanguageObserver;
 use App\Observers\NewsObserver;
@@ -84,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
         Reviews::observe(ReviewsObserver::class);
         Setting::observe(SettingObserver::class);
         Transaction::observe(TransactionObserver::class);
-        ExchangeRateLog::observe(ExchangeRateLog::class);
+        ExchangeRateLog::observe(ExchangeRateLogObserver::class);
         TransactionType::observe(TransactionTypeObserver::class);
         User::observe(UserObserver::class);
         \App\User::observe(UserObserver::class);
