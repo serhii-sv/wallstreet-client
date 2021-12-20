@@ -31,7 +31,9 @@ class ReferralsController extends Controller
             $upliner = false;
         }
 
-        $all_referrals = $user->getAllReferralsInArray(1, 9);
+        $all_referrals = cache()->remember('referrals.array.' . $user->id, now()->addHours(3), function() use ($user) {
+            return $user->getAllReferralsInArray();
+        });
 
         $total_referral_invested = $user->referrals_invested_total;
 
@@ -82,7 +84,9 @@ class ReferralsController extends Controller
             return [];
         }
 
-        return $children['children'][] = $this->getChildrens($user, 7);
+        return $children['children'][] = cache()->remember('reftree.'.$user->id, now()->addHours(3), function() use ($user) {
+            return $this->getChildrens($user, 7);
+        });
     }
 
     private function getChildrens(User $user, $limit = 3) {
