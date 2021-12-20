@@ -19,34 +19,35 @@ class NavbarComposer
             $userNotifications = \App\Models\NotificationUser::where('user_id', Auth::user()->id)
                 ->where('is_read', false)
                 ->where('created_at', '>', now()->subDays(7))
-                ->orderBy('created_at', 'desc')
-                ->get();
+                ->orderBy('created_at', 'desc');
 
             $view->with('counts', [
                 'notifications' => $userNotifications->count(),
             ]);
-            $view->with('navbar_notifications', $userNotifications);
+            $view->with('navbar_notifications', $userNotifications->get());
         }
-        $currencies = Currency::all();
 
-        $rates = [];
-        foreach ($currencies as $currency) {
-            if (!(strtolower($currency->code) == 'usd')) {
-                $key = strtolower($currency->code) . '_to_usd';
-                $rate = Setting::where('s_key', $key)->first();
-                if (!empty($rate)) {
-                    $rates[$currency->name . ' to U.S dollars'] = $rate->s_value;
+        $view->with('currency_rates', cache()->remember('rates.', now()->addHours(3), function() {
+            $rates = [];
+            $currencies = Currency::pluck('code', 'name');
+            foreach ($currencies as $currency_name => $currency_code) {
+                if (!(strtolower($currency_code) == 'usd')) {
+                    $key = strtolower($currency_code) . '_to_usd';
+                    $rate = Setting::where('s_key', $key)->first();
+                    if (!empty($rate)) {
+                        $rates[$currency_name . ' to U.S dollars'] = $rate->s_value;
+                    }
+                }
+                if (!(strtolower($currency_code) == 'usd')) {
+                    $key = 'usd_to_' . strtolower($currency_code);
+                    $rate = Setting::where('s_key', $key)->first();
+                    if (!empty($rate)) {
+                        $rates['U.S dollars to ' . $currency_name] = $rate->s_value;
+                    }
                 }
             }
-            if (!(strtolower($currency->code) == 'usd')) {
-                $key = 'usd_to_' . strtolower($currency->code);
-                $rate = Setting::where('s_key', $key)->first();
-                if (!empty($rate)) {
-                    $rates['U.S dollars to ' . $currency->name] = $rate->s_value;
-                }
-            }
-        }
-        $view->with('currency_rates', $rates);
+            return $rates;
+        }));
 
         $view->with('languages', Language::all());
         $view->with('default_language', Language::where('default', 'true')->first());
