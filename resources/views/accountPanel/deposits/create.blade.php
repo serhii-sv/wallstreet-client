@@ -84,7 +84,7 @@ Create deposit
                                         <span class="title">
                                 @if(canEditLang() && checkRequestOnEdit())
                                                 <div style="text-align:left;">
-                                <editor_block data-name='Daily earnings {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Daily earnings '.$item->id)) !!}</editor_block>
+                                <editor_block data-name='Daily earnings {{ $item->id }}' contenteditable="true">{!! __('Daily earnings '.$item->id) !!}</editor_block>
                                 </div>
                                             @else
                                                 <div style="text-align:left;">
@@ -94,7 +94,7 @@ Create deposit
 
                                             @if(canEditLang() && checkRequestOnEdit())
                                                 <div style="text-align:left;">
-                                <editor_block data-name='Duration {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Duration '.$item->id)) !!}</editor_block>
+                                <editor_block data-name='Duration {{ $item->id }}' contenteditable="true">{!! __('Duration '.$item->id) !!}</editor_block>
                                 </div>
                                             @else
                                                 <div style="text-align:left;">
@@ -105,7 +105,7 @@ Create deposit
                                                         </span>
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Daily rate {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Daily rate '.$item->id)) !!}</editor_block>
+                                                <editor_block data-name='Daily rate {{ $item->id }}' contenteditable="true">{!! __('Daily rate '.$item->id) !!}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">
@@ -115,7 +115,7 @@ Create deposit
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Add str {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Add str '.$item->id)) !!}</editor_block>
+                                                <editor_block data-name='Add str {{ $item->id }}' contenteditable="true">{!! __('Add str '.$item->id) !!}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">
@@ -125,7 +125,7 @@ Create deposit
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Add str 2 {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Add str 2 '.$item->id)) !!}</editor_block>
+                                                <editor_block data-name='Add str 2 {{ $item->id }}' contenteditable="true">{!! __('Add str 2 '.$item->id) !!}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">
@@ -135,7 +135,7 @@ Create deposit
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Add str 3 {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Add str 3 '.$item->id)) !!}</editor_block>
+                                                <editor_block data-name='Add str 3 {{ $item->id }}' contenteditable="true">{!! __('Add str 3 '.$item->id) !!}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">
@@ -145,10 +145,10 @@ Create deposit
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             @if($item->overall)
-                                                <editor_block style="text-align:left;" data-name='return deposit: true {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: true '.$item->id)) !!}</editor_block>
+                                                <editor_block style="text-align:left;" data-name='return deposit: true {{ $item->id }}' contenteditable="true">{!! __('return deposit: true '.$item->id) !!}</editor_block>
                                             @else
                                                 <div style="text-align:left;">
-                                                    <editor_block data-name='return deposit: false {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: false '.$item->id)) !!}</editor_block>
+                                                    <editor_block data-name='return deposit: false {{ $item->id }}' contenteditable="true">{!! __('return deposit: false '.$item->id) !!}</editor_block>
                                                 </div>
                                             @endif
                                         @else
@@ -163,7 +163,7 @@ Create deposit
 
                                         @if(canEditLang() && checkRequestOnEdit())
                                             <div style="text-align:left;">
-                                                <editor_block data-name='Add str 4 {{ $item->id }}' contenteditable="true">{!! html_entity_decode(__('Add str 4 '.$item->id)) !!}</editor_block>
+                                                <editor_block data-name='Add str 4 {{ $item->id }}' contenteditable="true">{!! __('Add str 4 '.$item->id) !!}</editor_block>
                                             </div>
                                         @else
                                             <div style="text-align:left;">

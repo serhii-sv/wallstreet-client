@@ -898,11 +898,11 @@
                               @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
                                       <div style="text-align:left;">
-                                          <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: true '.$rate->id)) !!}</editor_block>
+                                          <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{!! __('return deposit: true '.$rate->id) !!}</editor_block>
                                       </div>
                                   @else
                                       <div style="text-align:left;">
-                                          <editor_block style="text-align:left;" data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: false '.$rate->id)) !!}</editor_block>
+                                          <editor_block style="text-align:left;" data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{!! __('return deposit: false '.$rate->id) !!}</editor_block>
                                       </div>
                                   @endif
                               @else
