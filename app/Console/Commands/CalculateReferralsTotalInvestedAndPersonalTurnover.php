@@ -42,7 +42,6 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
      */
     public function handle()
     {
-        $userDepositBonusesExists = (bool)UserDepositBonus::count();
         $usdCurrency = Currency::where('code', 'USD')->first();
 
         /** @var User $user */
@@ -71,23 +70,12 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
                 ->each(function(Deposit $deposit) use(&$personal_turnover, $usdCurrency) {
                     $personal_turnover += (new Wallet())->convertToCurrency($deposit->currency, $usdCurrency, $deposit->balance);
                 });
+
             $user->update([
                 'referrals_invested_total' => $total_referral_invested,
                 'personal_turnover' => $personal_turnover,
                 'total_referrals_count' => $referrals_count
             ]);
-
-            foreach ($user->userDepositBonuses()->where('delayed', true)->get() as $depositBonus) {
-                if (now()->diffInHours($depositBonus->created_at) >= 24) {
-                    if (UserDepositBonus::addBonusToUserWallet($user, $depositBonus->deposit_bonus_reward)) {
-                        $depositBonus->update([
-                            'delayed' => false
-                        ]);
-                    }
-                }
-            }
-
-            UserDepositBonus::setUserBonuses($user, $userDepositBonusesExists);
         }
 
         return Command::SUCCESS;
