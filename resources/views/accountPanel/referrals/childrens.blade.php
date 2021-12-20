@@ -28,7 +28,7 @@
     <td>{{ $self->phone ?? 'Не указан' }}</td>
     <td>{{ $self->created_at->format('d.m.Y H:i:s') }}</td>
     <td>
-        <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ cache()->remember('user_ref_login.'.$self->id, now()->addHours(3), function() use($self) { return $self->partner->login ?? 'undefined'; }) }}</span>
+        <span class="badge rounded-pill pill-badge-info" style="color: white;font-size: 16px;">{{ cache()->remember('user_partner_login.'.$self->id, now()->addHours(3), function() use($self) { return $self->partner->login ?? 'undefined'; }) }}</span>
     </td>
     <td>
                         <span class="label">
