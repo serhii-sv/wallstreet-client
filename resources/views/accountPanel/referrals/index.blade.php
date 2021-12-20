@@ -151,7 +151,7 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    @if(cache()->has('us.referrals.' . auth()->user()->id))
+                    @if(cache()->has('referrals.array.' . auth()->user()->id))
                         @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
                     @endif
                     </tbody>

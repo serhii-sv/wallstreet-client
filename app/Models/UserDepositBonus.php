@@ -44,46 +44,10 @@ class UserDepositBonus extends Model
 
     /**
      * @param $user
-     * @param bool $userDepositBonusesExists
      */
-    public static function setUserBonuses($user, $userDepositBonusesExists = true): void
+    public static function setUserBonuses($user): void
     {
-        $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
-            ->orWhere('total_turnover', '<=', $user->referrals_invested_total)
-            ->orderBy('personal_turnover', 'desc')
-            ->first();
-
-        $personalIsLower = $user->personal_turnover <= $bonus->personal_turnover;
-        $totalIsLower = $user->referrals_invested_total <= $bonus->total_turnover;
-
-        if ($personalIsLower && !$totalIsLower) {
-            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
-                ->orderBy('personal_turnover', 'desc')
-                ->first();
-        } else if (!$personalIsLower && $totalIsLower) {
-            $bonus = DepositBonus::where('total_turnover', '<=', $user->referrals_invested_total)
-                ->orderBy('personal_turnover', 'desc')
-                ->first();
-        }
-
-        $userPreviousBonus = $user->userDepositBonuses()->orderBy('personal_turnover', 'desc')->first();
-
-        if ($userPreviousBonus) {
-            if (($user->personal_turnover >= $userPreviousBonus->personal_turnover)
-                && ($user->referrals_invested_total >= $userPreviousBonus->total_turnover)) {
-
-                $nextBonus = DepositBonus::where('personal_turnover', '>=', $user->personal_turnover)
-                    ->where('total_turnover', '>=', $user->referrals_invested_total)
-                    ->orderBy('personal_turnover', 'asc')
-                    ->first();
-
-                $userHasNextBonus = self::userHasBonus($user, $nextBonus);
-
-                if ($userHasNextBonus) {
-                    return;
-                }
-            }
-        }
+        $bonus = self::findDepositBonusByLowerUserStat($user);
 
         $userHasBonus = self::userHasBonus($user, $bonus);
 
@@ -96,13 +60,38 @@ class UserDepositBonus extends Model
                 'deposit_bonus_total_turnover' => $bonus->total_turnover,
                 'deposit_bonus_leadership_bonus' => $bonus->leadership_bonus,
                 'deposit_bonus_reward' => $bonus->reward,
-                'delayed' => !$userDepositBonusesExists
+                'delayed' => 0
             ]);
 
-            if ($userDepositBonusesExists) {
-                self::addBonusToUserWallet($user, $bonus->reward);
-            }
+            self::addBonusToUserWallet($user, $bonus->reward);
         }
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    private static function findDepositBonusByLowerUserStat($user)
+    {
+        $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+            ->orWhere('total_turnover', '<=', $user->referrals_invested_total)
+            ->orderBy('personal_turnover', 'desc')
+            ->first();
+
+        $personalIsLower = $user->personal_turnover < $bonus->personal_turnover;
+        $totalIsLower = $user->referrals_invested_total < $bonus->total_turnover;
+
+        if ($personalIsLower && !$totalIsLower) {
+            $bonus = DepositBonus::where('personal_turnover', '<=', $user->personal_turnover)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        } else if (!$personalIsLower && $totalIsLower) {
+            $bonus = DepositBonus::where('total_turnover', '<=', $user->referrals_invested_total)
+                ->orderBy('personal_turnover', 'desc')
+                ->first();
+        }
+
+        return $bonus;
     }
 
     /**
@@ -113,11 +102,13 @@ class UserDepositBonus extends Model
     public static function userHasBonus($user, $bonus)
     {
         if (!is_null($bonus)) {
-            return (bool)$user->userDepositBonuses()->where('deposit_bonus_id', $bonus->id)
-                ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
-                ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
-                ->orWhere('deposit_bonus_reward', $bonus->revard)
-                ->count();
+            return (bool)UserDepositBonus::where('user_id', $user->id)
+                ->where(function ($q) use ($bonus) {
+                    $q->orWhere('deposit_bonus_id', $bonus->id)
+                        ->orWhere('deposit_bonus_total_turnover', $bonus->total_turnover)
+                        ->orWhere('deposit_bonus_personal_turnover', $bonus->total_turnover)
+                        ->orWhere('deposit_bonus_reward', $bonus->revard);
+                })->count();
         }
         return false;
     }

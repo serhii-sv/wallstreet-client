@@ -43,8 +43,16 @@ class SetReferralsCaches extends Command
             $this->info('work with user '.$user->login);
 
 //            cache()->forget('referrals.array.' . $user->id);
-            cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray(1, 9), now()->addHours(3));
+            cache()->put('referrals.array.' . $user->id, $user->getAllReferralsInArray(), now()->addHours(3));
             $all_referrals = cache()->get('referrals.array.' . $user->id);
+
+            cache()->remember('reftree.'.$user->id, now()->addHours(3), function() use ($user) {
+                return $this->getChildrens($user, 7);
+            });
+
+            cache()->remember('partner_name.'.$user->id, now()->addHours(3), function() use ($user) {
+                return $user->partner->name ?? 'undefined';
+            });
 
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
@@ -74,5 +82,31 @@ class SetReferralsCaches extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param User $user
+     * @param int $limit
+     * @return array
+     */
+    private function getChildrens(User $user, $limit = 3) {
+        if ($limit === 0) {
+            return [];
+        }
+        if (empty($user)) {
+            return [];
+        }
+
+        $referrals = [];
+        $referrals['name'] = $user->login;
+        if (!$user->hasReferrals()) {
+            return $referrals;
+        }
+
+        foreach ($user->referrals()->wherePivot('line', 1)->get() as $r) {
+            $referral = $this->getChildrens($r, $limit - 1);
+            $referrals['children'][] = $referral;
+        }
+        return $referrals;
     }
 }
