@@ -897,18 +897,20 @@
 
                               @if(canEditLang() && checkRequestOnEdit())
                                   @if($rate->overall)
-                                      <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{!! __('return deposit: true '.$rate->id) !!}</editor_block>
+                                      <div style="text-align:left;">
+                                          <editor_block style="text-align:left;" data-name='return deposit: true {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: true '.$rate->id)) !!}</editor_block>
+                                      </div>
                                   @else
                                       <div style="text-align:left;">
-<editor_block data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: true '.$rate->id)) !!}</editor_block>
+                                          <editor_block style="text-align:left;" data-name='return deposit: false {{ $rate->id }}' contenteditable="true">{!! html_entity_decode(__('return deposit: false '.$rate->id)) !!}</editor_block>
                                       </div>
                                   @endif
                               @else
                                   <div style="text-align:left;">
                                       @if($rate->overall)
-                                          <span style="text-align:left;" class="date">{!! __('return deposit: true '.$rate->id) !!}</span>
+                                          <span style="text-align:left;" class="date">{!! html_entity_decode(__('return deposit: true '.$rate->id)) !!}</span>
                                       @else
-                                        <span style="text-align:left;" class="date">{!! __('return deposit: true '.$rate->id) !!}</span>
+                                          <span style="text-align:left;" class="date">{!! html_entity_decode(__('return deposit: false '.$rate->id)) !!}</span>
                                       @endif
                                   </div>
                               @endif
