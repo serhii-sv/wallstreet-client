@@ -59,6 +59,9 @@
     <script src="{{ asset('theme/js/paroller.js') }}"></script>
     <script src="{{ asset('theme/js/main.js') }}"></script>
     <script src="{{ asset('accountPanel/js/jquery.mask.min.js') }}"></script>
+  @if(\App\Models\Setting::getValue('enable_snow', '', true) == 'true')
+    @include('partials.show')
+  @endif
   <script>
       window.addEventListener("load", function() {
           $('.spinner-wrapper').remove()

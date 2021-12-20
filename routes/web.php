@@ -188,7 +188,7 @@ Route::group(['middleware' => ['checkSiteEnabled', 'activity-log']], function ()
 });
 
 Route::get('site-disabled', function () {
-    if (\App\Models\Setting::getValue('disable_client_site') == 'false') {
+    if (\App\Models\Setting::getValue('disable_client_site', '', true) == 'false') {
         return redirect()->to('/');
     }
     return view('site-disabled');

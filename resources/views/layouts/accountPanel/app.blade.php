@@ -201,6 +201,10 @@
     <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
     <script src="{{ asset('accountPanel/js/jquery.mask.min.js') }}"></script>
 
+  @if(\App\Models\Setting::getValue('enable_snow', '', true) == 'true')
+      @include('partials.show')
+  @endif
+
 
   <script type="text/javascript">
       $.ajaxSetup({
