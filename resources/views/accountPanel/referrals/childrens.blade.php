@@ -1,6 +1,8 @@
 @php($parent = cache()->remember('us.referrals.'.$us->id, now()->addHours(3), function() use($us) { return $us->getAllReferrals(false, 1, 1); }))
 @php($self = $parent['self'])
 
+@if(null !== $self)
+
 @if($level == 1)
     <tr>
         <td colspan="7">
@@ -47,3 +49,5 @@
 @php($self = $referralParent['self'])
 @include('accountPanel.referrals.childrens', ['us' => $self, 'level' => $level+1])
 @endforeach
+
+@endif
