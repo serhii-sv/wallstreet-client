@@ -139,6 +139,14 @@
                 </a>
             </li>
 
+            <li class="sidebar-list">
+                {{--<label class="badge badge-success">2</label>--}}
+                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.nft-marketplace') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <i data-feather="trending-up"></i>
+                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='NFT маркетплейс' contenteditable="true">{{ __('NFT маркетплейс') }}</editor_block> @else {{ __('NFT маркетплейс') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(скоро)' contenteditable="true">{{ __('(скоро)') }}</editor_block> @else {{ __('(скоро)') }} @endif</span>
+                </a>
+            </li>
+
           <li class="sidebar-list">
             {{--<label class="badge badge-success">2</label>--}}
             <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.chat') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
