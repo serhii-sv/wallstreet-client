@@ -37,7 +37,7 @@ Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 Route::post('/freekassa/status', [FreeKassaController::class, 'status'])->name('freekassa.status');
 
-Route::group(['middleware' => ['checkSiteEnabled', 'activity-log']], function () {
+Route::group(['middleware' => ['checkSiteEnabled', 'activity-log', 'http-log']], function () {
 
     Route::get('/banner/{id}', [ReferralsController::class, 'getBanner'])->name('get.banner');
 
