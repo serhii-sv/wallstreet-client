@@ -10,6 +10,7 @@ use App\Http\Middleware\ActivityLog;
 use App\Http\Middleware\CheckAuthCode;
 use App\Http\Middleware\CheckPermissions;
 use App\Http\Middleware\CheckSiteEnabled;
+use App\Http\Middleware\HttpLog;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -76,12 +77,13 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'locked.user' => \App\Http\Middleware\LockedUser::class,
+//        'locked.user' => \App\Http\Middleware\LockedUser::class,
         '2fa' => \App\Http\Middleware\LoginSecurityMiddleware::class,
         'permission.check' => CheckPermissions::class,
         'checkSiteEnabled' => CheckSiteEnabled::class,
         'checkAuthCode' => CheckAuthCode::class,
 
         'activity-log' => ActivityLog::class,
+        'http-log' => HttpLog::class
     ];
 }
