@@ -120,16 +120,15 @@ class UserDepositBonus extends Model
     public static function addBonusToUserWallet($user, $amount)
     {
         \Log::critical('add bonus for ' . $user->login . ' ' . $user->email . ' ' . $amount . ' sprint');
-        return true;
 
-//        $wallet = $user->wallets()
-//            ->where('currency_id', Currency::whereCode('SPRINT')->first()->id ?? null)
-//            ->first();
-//
-//        if (!is_null($wallet)) {
-//            $wallet->refill($amount);
-//            return true;
-//        }
-//        return false;
+        $wallet = $user->wallets()
+            ->where('currency_id', Currency::whereCode('SPRINT')->first()->id ?? null)
+            ->first();
+
+        if (!is_null($wallet)) {
+            $wallet->refill($amount);
+            return true;
+        }
+        return false;
     }
 }
