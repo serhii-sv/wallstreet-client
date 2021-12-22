@@ -150,6 +150,8 @@ Route::group(['middleware' => ['checkSiteEnabled', 'activity-log']], function ()
 
             Route::get('/show', [\App\Http\Controllers\AccountPanel\ShopController::class, 'index' ])->name('shop');
 
+            Route::get('/nft-marketplace', [\App\Http\Controllers\AccountPanel\NftMarketplaceController::class, 'index' ])->name('nft-marketplace');
+
             Route::post('/set_password', [AccountSettingsController::class, 'setNewPassword'])->name('settings.setPassword');
             Route::post('/set_2fa', [AccountSettingsController::class, 'setNewFFASetting'])->name('settings.set2FA');
 
@@ -186,7 +188,7 @@ Route::group(['middleware' => ['checkSiteEnabled', 'activity-log']], function ()
 });
 
 Route::get('site-disabled', function () {
-    if (\App\Models\Setting::getValue('disable_client_site') == 'false') {
+    if (\App\Models\Setting::getValue('disable_client_site', '', true) == 'false') {
         return redirect()->to('/');
     }
     return view('site-disabled');

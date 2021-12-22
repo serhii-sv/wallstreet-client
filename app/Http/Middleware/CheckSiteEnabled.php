@@ -16,7 +16,7 @@ class CheckSiteEnabled
      */
     public function handle(Request $request, Closure $next)
     {
-        if (\App\Models\Setting::getValue('disable_client_site') == 'true') {
+        if (\App\Models\Setting::getValue('disable_client_site', '', true) == 'true') {
             return redirect()->to(route('site-disabled'));
         }
         return $next($request);
