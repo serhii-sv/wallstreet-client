@@ -185,8 +185,13 @@
             <img class="b-r-10" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/user.png') }}" alt="" width="36" height="36">
             <div class="media-body">
               <span>{{$user->login}}</span>
-              <p class="mb-0 font-roboto">{{$user->roles()->first()->name ?? "Customer"}}
-                <i class="middle fa fa-angle-down"></i></p>
+              <p class="mb-0 font-roboto d-flex">
+                  @if(canEditLang() && checkRequestOnEdit())
+                      <editor_block data-name='{{ $user->roles()->first()->name ?? "Customer" }}' contenteditable="true">{{ __($user->roles()->first()->name ?? "Customer") }}</editor_block>
+                  @else
+                      {{ __($user->roles()->first()->name ?? "Customer") }}
+                  @endif
+                <i class="middle fa fa-angle-down" style="margin-left: 3px"></i></p>
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
