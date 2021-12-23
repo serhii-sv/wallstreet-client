@@ -24,6 +24,19 @@
     @yield('styles')
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
+      <style>
+          ::-webkit-scrollbar {
+              width: 16px;
+          }
+          ::-webkit-scrollbar-track {
+              background: 0 0;
+              padding: 0 6px;
+          }
+          ::-webkit-scrollbar-thumb {
+              background: url(/accountPanel/images/scroll.png) center no-repeat;
+              background-size: contain;
+          }
+      </style>
   </head>
 
   <body>
