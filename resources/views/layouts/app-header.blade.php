@@ -330,6 +330,9 @@
                         <a href="{{ route('customer.main') }}">
                             <img src="{{ asset('accountPanel/images/logo/sprint_bank.png') }}" width="150" alt="logo">
                         </a>
+                        @if(\App\Models\Setting::getValue('enable_snow', '', true) == 'true')
+                            @include('partials.garland')
+                        @endif
                     @endif
                 </div>
                 <ul class="menu">
