@@ -462,4 +462,23 @@ trait HasReferral
     public function getReferralLinkClickCount() {
         return $this->hasMany(ReferralLinkStat::class, 'partner_id','id')->sum('click_count');
     }
+
+    /**
+     * @param $referrals
+     * @param int $flag
+     * @return array
+     */
+    public function getAllReferralsIds($referrals, $flag = 1)
+    {
+        $result = [];
+        foreach ($referrals as $referral) {
+            if (!isset($referral->id)) {
+                $referral = $referral['self'];
+                $result[] = $referral->id;
+                $this->getAllReferralsIds($referral['referrals'], $flag + 1);
+            }
+        }
+
+        return $result;
+    }
 }
