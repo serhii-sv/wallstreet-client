@@ -99,7 +99,7 @@ class FreeKassaController extends Controller
         //     die("hacking attempt!");
         // }
 
-        $sign = md5($merchant_id.':'.$_REQUEST['AMOUNT'].':'.$merchant_secret.':RUB:'.$_REQUEST['MERCHANT_ORDER_ID']);
+        $sign = md5($_REQUEST['MERCHANT_ID'].':'.$_REQUEST['AMOUNT'].':'.$merchant_secret.':'.$_REQUEST['MERCHANT_ORDER_ID']);
 
         if ($sign != $_REQUEST['SIGN']) {
             \Log::error('Wrong sign from FreeKassa');
