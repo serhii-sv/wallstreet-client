@@ -289,6 +289,21 @@ class Transaction extends Model
         return $transaction->save() ? $transaction : null;
     }
 
+    public static function activityBonus($wallet, $amount) {
+        $type = TransactionType::getByName('activity_bonus');
+        $transaction = self::create([
+            'type_id' => $type->id,
+            'commission' => $type->commission,
+            'user_id' => $wallet->user->id,
+            'currency_id' => $wallet->currency->id,
+            'wallet_id' => $wallet->id,
+            //  'payment_system_id' => $wallet->paymentSystem->id,
+            'amount' => $amount,
+            'approved' => true,
+        ]);
+        return $transaction->save() ? $transaction : null;
+    }
+
     /**
      * @param $wallet
      * @param $amount
