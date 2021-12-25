@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
     {
         // Logs
         $schedule->command('log:clear')->daily()->withoutOverlapping();
-        $schedule->command('referrals-caches:set')->hourly()->withoutOverlapping();
+        $schedule->command('referrals-caches:set')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('calculate:invested-total-and-turnover')->hourly()->withoutOverlapping();
         $schedule->command('deposit-bonuses:set')->hourly()->withoutOverlapping();
     }

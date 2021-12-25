@@ -64,7 +64,7 @@ class FreeKassaController extends Controller
         $memo         = env('FREEKASSA_MEMO');
 
         // Forming an array for signature generation
-        $signature = md5($merchantId.':'.$amount.':'.env('FREEKASSA_MERCHANT_KEY').':'.$orderId);
+        $signature = md5($merchantId.':'.$amount.':'.env('FREEKASSA_MERCHANT_KEY').':RUB:'.$orderId);
 
         return view('accountPanel.ps.freekassa', [
             'currency'   => $currencyCode,
@@ -99,10 +99,10 @@ class FreeKassaController extends Controller
         //     die("hacking attempt!");
         // }
 
-        $sign = md5($merchant_id.':'.$_REQUEST['AMOUNT'].':'.$merchant_secret.':'.$_REQUEST['MERCHANT_ORDER_ID']);
+        $sign = md5($_REQUEST['MERCHANT_ID'].':'.$_REQUEST['AMOUNT'].':'.$merchant_secret.':'.$_REQUEST['MERCHANT_ORDER_ID']);
 
         if ($sign != $_REQUEST['SIGN']) {
-            \Log::info('Wrong sign from FreeKassa');
+            \Log::error('Wrong sign from FreeKassa');
             die('wrong sign');
         }
 
@@ -114,7 +114,7 @@ class FreeKassaController extends Controller
             ->first();
 
         if (null == $transaction) {
-            \Log::info('Bad request from: '.$request->ip().'. Transaction is not found. Entire request is: '.print_r($request->all(),true));
+            \Log::error('Bad request from: '.$request->ip().'. Transaction is not found. Entire request is: '.print_r($request->all(),true));
             return response('ok');
         }
 
@@ -125,12 +125,12 @@ class FreeKassaController extends Controller
         $currency      = $transaction->currency;
 
         if (null == $currency) {
-            \Log::info('FreeKassa. Bad request from: '.$request->ip().'. Currency not found. Entire request is: '.print_r($request->all(),true));
+            \Log::error('FreeKassa. Bad request from: '.$request->ip().'. Currency not found. Entire request is: '.print_r($request->all(),true));
             return response('ok');
         }
 
         if ((float) $_REQUEST['AMOUNT'] < $transaction->amount) {
-            \Log::info('FreeKassa. Bad request from: '.$request->ip().'. Amount is not the same with transaction. Entire request is: '.print_r($request->all(),true));
+            \Log::error('FreeKassa. Bad request from: '.$request->ip().'. Amount is not the same with transaction. Entire request is: '.print_r($request->all(),true));
             return response('ok');
         }
 
@@ -146,7 +146,7 @@ class FreeKassaController extends Controller
             return response('ok');
         }
 
-        \Log::info('FreeKassa hash is not passed. IP: ' . $request->ip());
+        \Log::error('FreeKassa hash is not passed. IP: ' . $request->ip());
         return response('ok');
     }
 }
