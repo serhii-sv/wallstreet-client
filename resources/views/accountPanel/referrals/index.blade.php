@@ -151,9 +151,7 @@ Referrals page
                       </tr>
                     </thead>
                     <tbody>
-                    @if(cache()->has('referrals.array.' . auth()->user()->id))
-                        @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
-                    @endif
+                    @include('accountPanel.referrals.childrens', ['us' => auth()->user(), 'level' => 0])
                     </tbody>
                   </table>
                     <div class="f1-buttons" style="text-align: center; margin-top:50px;">
