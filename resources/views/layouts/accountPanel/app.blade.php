@@ -82,17 +82,17 @@
             left:50px !important;
         }
 
-        ::-webkit-scrollbar {
-            width: 16px;
-        }
-        ::-webkit-scrollbar-track {
-            background: 0 0;
-            padding: 0 6px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: url(/accountPanel/images/scroll.png) center no-repeat;
-            background-size: contain;
-        }
+        /*::-webkit-scrollbar {*/
+        /*    width: 16px;*/
+        /*}*/
+        /*::-webkit-scrollbar-track {*/
+        /*    background: 0 0;*/
+        /*    padding: 0 6px;*/
+        /*}*/
+        /*::-webkit-scrollbar-thumb {*/
+        /*    background: url(/accountPanel/images/scroll.png) center no-repeat;*/
+        /*    background-size: contain;*/
+        /*}*/
     </style>
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->

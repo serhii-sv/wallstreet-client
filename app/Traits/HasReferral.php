@@ -402,40 +402,44 @@ trait HasReferral
     public function getReferralChatId() {
         $user_partner = auth()->user()->id;
         $user_referral = $this->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+        Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
         return $chat->id;
     }
 
     public function getReferralChat() {
         $user_partner = auth()->user()->id;
         $user_referral = $this->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+        Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
         return $chat;
     }
 
     public function getPartnerChatId() {
         $user_partner = $this->id;
         $user_referral = auth()->user()->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+        Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
         return $chat->id;
     }
 
     public function getPartnerChat() {
         $user_partner = $this->id;
         $user_referral = auth()->user()->id;
-        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
+        Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->firstOrCreate([
             'user_partner' => $user_partner,
             'user_referral' => $user_referral,
         ]);
+        $chat = Chat::where('user_partner', $user_partner)->where('user_referral', $user_referral)->first();
         return $chat;
     }
 

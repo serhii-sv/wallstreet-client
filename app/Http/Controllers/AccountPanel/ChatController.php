@@ -16,9 +16,13 @@ use Ramsey\Uuid\Uuid;
 
 class ChatController extends Controller
 {
-    //
-    
+    /**
+     * @param null $chat_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Exception
+     */
     public function index($chat_id = null) {
+        $user = \auth()->user();
         if ($chat_id !== null && Uuid::isValid($chat_id)) {
             $chat = Chat::where('id', $chat_id)->first();
             if ($chat->checkUser(Auth::user()->id)) {
@@ -43,6 +47,17 @@ class ChatController extends Controller
             $companionAvatar = false;
             $chat_messages = false;
         }
+
+        $filteredReferrals = [];
+        $activeCats = [];
+        if (is_null(\request()->login)) {
+            $activeCats = Chat::with('userReferral')->whereHas('chatMessages')->where(function ($q) use ($user) {
+                $q->where('user_partner', $user->id);
+            })->get();
+        } else {
+            $filteredReferrals = $user->referrals()->where('login', 'like', '%' . \request()->login . '%')->get();
+        }
+
         $myAvatar = Auth()->user()->avatar ? route('accountPanel.profile.get.avatar', auth()->user()->id) : asset('accountPanel/images/user/user.png');
         return view('accountPanel.chat.index', [
             'chat_id' => $chat_id,
@@ -51,9 +66,15 @@ class ChatController extends Controller
             'myAvatar' => $myAvatar,
             'companionAvatar' => $companionAvatar,
             'chat_messages' => $chat_messages,
+            'activeChats' => $activeCats,
+            'login' => \request()->login,
+            'filteredReferrals' => $filteredReferrals
         ]);
     }
-    
+
+    /**
+     * @param Request $request
+     */
     public function sendMessage(Request $request) {
         if ($request->post('type') == 'message') {
             $chat_id = $request->post('chat_id');
@@ -77,11 +98,15 @@ class ChatController extends Controller
                 } else {
                     $message = false;
                 }
-                
+
             }
         }
     }
-    
+
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function readMessage(Request $request) {
         $user_id = $request->post('user');
         $message_id = $request->post('message_id');
@@ -92,5 +117,5 @@ class ChatController extends Controller
         }
         return 'not upd';
     }
-    
+
 }
