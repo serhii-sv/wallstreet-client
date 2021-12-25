@@ -127,7 +127,7 @@ class UserDepositBonus extends Model
 
         if (!is_null($wallet)) {
             $wallet->refill($amount);
-            Transaction::activityBonus($wallet, $amount);
+            Transaction::partnerEarnings($wallet, $amount);
 
             return true;
         }
