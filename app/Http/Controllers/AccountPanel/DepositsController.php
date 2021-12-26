@@ -318,8 +318,9 @@ class DepositsController extends Controller
             $deposit_new->autoclose = $rate->autoclose;
             $deposit_new->condition = 'create';
             $deposit_new->datetime_closing = now()->addDays($rate->duration);
+            $deposit_new->save();
 
-            $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
+            $transaction = Transaction::createDeposit($deposit_new);
 
             if (null != $transaction) {
                 $deposit->depositQueue()->where('done', false)->update([
