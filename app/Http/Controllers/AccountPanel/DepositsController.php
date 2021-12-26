@@ -126,41 +126,43 @@ class DepositsController extends Controller
         if (abs($amount) > $balance) {
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
         }
-        $deposit = new Deposit;
-        $deposit->rate_id = $rate->id;
-        $deposit->currency_id = $wallet->currency_id;
-        $deposit->wallet_id = $wallet->id;
-        $deposit->user_id = $user->id;
-        $deposit->invested = $amount;
-        $deposit->daily = $rate->daily;
-        $deposit->overall = $rate->overall;
-        $deposit->duration = $rate->duration;
-        $deposit->payout = $rate->payout;
-        $deposit->balance = $amount;
-        $deposit->reinvest = $reinvest;
-        $deposit->autoclose = $rate->autoclose;
-        $deposit->condition = 'create';
-        $deposit->active = true;
-        $deposit->datetime_closing = now()->addDays($rate->duration);
-        $deposit->save();
 
-        $transaction = Transaction::createDeposit($deposit);
+        DB::transaction(function() use($rate, $user, $amount, $reinvest, $wallet) {
+            $deposit = new Deposit;
+            $deposit->rate_id = $rate->id;
+            $deposit->currency_id = $wallet->currency_id;
+            $deposit->wallet_id = $wallet->id;
+            $deposit->user_id = $user->id;
+            $deposit->invested = $amount;
+            $deposit->daily = $rate->daily;
+            $deposit->overall = $rate->overall;
+            $deposit->duration = $rate->duration;
+            $deposit->payout = $rate->payout;
+            $deposit->balance = $amount;
+            $deposit->reinvest = $reinvest;
+            $deposit->autoclose = $rate->autoclose;
+            $deposit->condition = 'create';
+            $deposit->active = true;
+            $deposit->datetime_closing = now()->addDays($rate->duration);
+            $deposit->save();
 
-        if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
-            $wallet->accrueToPartner($amount, 'refill');
-            $transaction->update(['approved' => true]);
+            $transaction = Transaction::createDeposit($deposit);
 
-            // send notification to user
-            $data = [
-                'deposit' => $deposit,
-            ];
-            //            $deposit->user->sendNotification('deposit_opened', $data);
-            if ($deposit->createSequence()) {
-                return back()->with('success', 'Депозит успешно создан!');
-            } else {
-                return back()->with('error', 'Не удалось создать депозит!');
+            if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
+                $wallet->accrueToPartner($amount, 'refill');
+                $transaction->update(['approved' => true]);
+
+                // send notification to user
+//                $data = [
+//                    'deposit' => $deposit,
+//                ];
+                //            $deposit->user->sendNotification('deposit_opened', $data);
+
+                $deposit->createSequence();
             }
-        }
+        });
+
+        return back()->with('success', 'Депозит успешно создан!');
     }
 
     public function setReinvestPercent(Request $request) {
