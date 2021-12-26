@@ -140,15 +140,15 @@ class DepositsController extends Controller
         $deposit->reinvest = $reinvest;
         $deposit->autoclose = $rate->autoclose;
         $deposit->condition = 'create';
+        $deposit->active = true;
         $deposit->datetime_closing = now()->addDays($rate->duration);
+        $deposit->save();
 
-        $transaction = $deposit->save() ? Transaction::createDeposit($deposit) : null;
+        $transaction = Transaction::createDeposit($deposit);
 
         if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
             $wallet->accrueToPartner($amount, 'refill');
-
             $transaction->update(['approved' => true]);
-            $deposit->update(['active' => true]);
 
             // send notification to user
             $data = [
