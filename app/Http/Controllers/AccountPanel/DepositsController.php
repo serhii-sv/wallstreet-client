@@ -126,41 +126,43 @@ class DepositsController extends Controller
         if (abs($amount) > $balance) {
             return redirect()->route('accountPanel.deposits.create')->with('error', 'Недостаточно средств на балансе!');
         }
-        $deposit = new Deposit;
-        $deposit->rate_id = $rate->id;
-        $deposit->currency_id = $wallet->currency_id;
-        $deposit->wallet_id = $wallet->id;
-        $deposit->user_id = $user->id;
-        $deposit->invested = $amount;
-        $deposit->daily = $rate->daily;
-        $deposit->overall = $rate->overall;
-        $deposit->duration = $rate->duration;
-        $deposit->payout = $rate->payout;
-        $deposit->balance = $amount;
-        $deposit->reinvest = $reinvest;
-        $deposit->autoclose = $rate->autoclose;
-        $deposit->condition = 'create';
-        $deposit->datetime_closing = now()->addDays($rate->duration);
 
-        $transaction = $deposit->save() ? Transaction::createDeposit($deposit) : null;
+        DB::transaction(function() use($rate, $user, $amount, $reinvest, $wallet) {
+            $deposit = new Deposit;
+            $deposit->rate_id = $rate->id;
+            $deposit->currency_id = $wallet->currency_id;
+            $deposit->wallet_id = $wallet->id;
+            $deposit->user_id = $user->id;
+            $deposit->invested = $amount;
+            $deposit->daily = $rate->daily;
+            $deposit->overall = $rate->overall;
+            $deposit->duration = $rate->duration;
+            $deposit->payout = $rate->payout;
+            $deposit->balance = $amount;
+            $deposit->reinvest = $reinvest;
+            $deposit->autoclose = $rate->autoclose;
+            $deposit->condition = 'create';
+            $deposit->active = true;
+            $deposit->datetime_closing = now()->addDays($rate->duration);
+            $deposit->save();
 
-        if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
-            $wallet->accrueToPartner($amount, 'refill');
+            $transaction = Transaction::createDeposit($deposit);
 
-            $transaction->update(['approved' => true]);
-            $deposit->update(['active' => true]);
+            if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
+                $wallet->accrueToPartner($amount, 'refill');
+                $transaction->update(['approved' => true]);
 
-            // send notification to user
-            $data = [
-                'deposit' => $deposit,
-            ];
-            //            $deposit->user->sendNotification('deposit_opened', $data);
-            if ($deposit->createSequence()) {
-                return back()->with('success', 'Депозит успешно создан!');
-            } else {
-                return back()->with('error', 'Не удалось создать депозит!');
+                // send notification to user
+//                $data = [
+//                    'deposit' => $deposit,
+//                ];
+                //            $deposit->user->sendNotification('deposit_opened', $data);
+
+                $deposit->createSequence();
             }
-        }
+        });
+
+        return back()->with('success', 'Депозит успешно создан!');
     }
 
     public function setReinvestPercent(Request $request) {
@@ -296,7 +298,7 @@ class DepositsController extends Controller
 
         DB::transaction(function() use($rate, $from_currency, $deposit, $user) {
             $checkExists = $user->deposits()
-                ->where('created_at', '>=', now()->subSeconds(10)->toDateTimeString())
+                ->where('created_at', '>=', now()->subSeconds(60)->toDateTimeString())
                 ->count();
 
             if ($checkExists > 0){
@@ -318,8 +320,9 @@ class DepositsController extends Controller
             $deposit_new->autoclose = $rate->autoclose;
             $deposit_new->condition = 'create';
             $deposit_new->datetime_closing = now()->addDays($rate->duration);
+            $deposit_new->save();
 
-            $transaction = $deposit_new->save() ? Transaction::createDeposit($deposit_new) : null;
+            $transaction = Transaction::createDeposit($deposit_new);
 
             if (null != $transaction) {
                 $deposit->depositQueue()->where('done', false)->update([

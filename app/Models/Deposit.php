@@ -324,18 +324,22 @@ class Deposit extends Model
         }
 
         for ($i = 1; $i <= $rate->duration; $i++) {
+            $time = Carbon::parse($this->created_at);
+
             $depositQueue = new DepositQueue();
             $depositQueue->deposit_id = $this->id;
             $depositQueue->setTypeAccrue();
-            $depositQueue->setAvailableAt(now()->addDays($i));
+            $depositQueue->setAvailableAt($time->addDays($i));
             $depositQueue->save();
         };
 
         if ($this->autoclose) {
+            $time = Carbon::parse($this->created_at);
+
             $depositQueue = new DepositQueue();
             $depositQueue->deposit_id = $this->id;
             $depositQueue->setTypeClosing();
-            $depositQueue->setAvailableAt(now()->addDays($rate->duration)->addSeconds('30'));
+            $depositQueue->setAvailableAt($time->addDays($rate->duration)->addSeconds(30));
             $depositQueue->save();
         };
 

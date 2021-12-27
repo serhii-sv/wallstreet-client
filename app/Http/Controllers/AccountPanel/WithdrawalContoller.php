@@ -182,7 +182,7 @@ class WithdrawalContoller extends Controller
                     'to_user' => Auth::user(),
                 ];
                 Notification::sendNotification($notification_data, 'new_withdrawal');
-                return redirect()->back()->with('success', 'Заявка на вывод зарегестрирована!');
+                return redirect()->back()->with('success', 'Заявка на вывод зарегистрирована!');
             }
             return redirect()->back()->with('error', 'Не удалось создать транзакцию!');
         }
