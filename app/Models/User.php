@@ -576,4 +576,12 @@ class User extends Authenticatable
     {
         return $this->userDepositBonuses()->orderBy('created_at', 'desc')->first();
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function userProducts()
+    {
+        return $this->belongsToMany(Product::class, 'user_products', 'user_id', 'product_id');
+    }
 }

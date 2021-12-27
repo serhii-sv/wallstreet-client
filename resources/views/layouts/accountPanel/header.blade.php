@@ -207,6 +207,12 @@
               </a>
             </li>
 
+              <li>
+                  <a href="{{ route('accountPanel.user-products.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif><i data-feather="shopping-bag"></i>
+                      <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Покупки' contenteditable="true">{{ __('Покупки') }}</editor_block> @else {{ __('Покупки') }} @endif</span>
+                  </a>
+              </li>
+
             @if(canEditLang() && checkRequestOnEdit())
               <li>
                 <a href="{{ url()->current() }}">

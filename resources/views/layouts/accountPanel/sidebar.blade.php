@@ -131,11 +131,19 @@
                 </a>
             </li>
 
+{{--            <li class="sidebar-list">--}}
+{{--                --}}{{--<label class="badge badge-success">2</label>--}}
+{{--                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.shop') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>--}}
+{{--                    <i data-feather="trending-down"></i>--}}
+{{--                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Shop link' contenteditable="true">{{ __('Shop link') }}</editor_block> @else {{ __('Shop link') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
             <li class="sidebar-list">
                 {{--<label class="badge badge-success">2</label>--}}
-                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.shop') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
-                    <i data-feather="trending-down"></i>
-                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Shop link' contenteditable="true">{{ __('Shop link') }}</editor_block> @else {{ __('Shop link') }} @endif @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='(Soon)' contenteditable="true">{{ __('(Soon)') }}</editor_block> @else {{ __('(Soon)') }} @endif</span>
+                <a class="sidebar-link sidebar-title" href="{{ route('accountPanel.products.index') }}" @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif>
+                    <i data-feather="shopping-bag"></i>
+                    <span>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Магазин' contenteditable="true">{{ __('Магазин') }}</editor_block> @else {{ __('Магазин') }} @endif</span>
                 </a>
             </li>
 
