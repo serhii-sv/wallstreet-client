@@ -6,7 +6,7 @@ Chat page
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col call-chat-sidebar col-sm-12" style="margin-top:50px;">
+      <div class="col call-chat-sidebar col-sm-12" style="margin-top:20px;">
         <div class="card">
           <div class="card-body chat-body">
             <div class="chat-box">
@@ -21,13 +21,39 @@ Chat page
                 </div>
                 <div class="people-list" id="people-list">
                   <div class="search">
-                    <form class="theme-form">
+                    <form class="theme-form" action="{{ route('accountPanel.chat') }}">
                       <div class="mb-3">
-                        <input class="form-control" type="text" placeholder="Search" data-bs-original-title="" title=""><i class="fa fa-search"></i>
+                        <input class="form-control" type="text" name="login" placeholder="Search" data-bs-original-title="" title="" value="{{ $login }}">
+                          <i class="fa fa-search"></i>
                       </div>
                     </form>
                   </div>
                   <ul class="list">
+                      @if(!empty($filteredReferrals))
+                          @forelse($filteredReferrals as $filteredReferral)
+                              <li class="clearfix">
+                                  <a href="{{ route('accountPanel.chat', $filteredReferral->getReferralChatId()) }}">
+                                      <img class="rounded-circle user-image" src="{{ $filteredReferral->avatar ? route('accountPanel.profile.get.avatar',auth()->user()->partner()->first()->id) : asset('accountPanel/images/user/user.png')  }}" alt="">
+                                      <div class="status-circle {{  $filteredReferral->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                                      <div class="about">
+                                          <div class="name">{{ $filteredReferral->login }}</div>
+                                          <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral' contenteditable="true">{{ __('Referral') }}</editor_block> @else {{ __('Referral') }} @endif</div>
+                                      </div>
+                                      <span class="unread badge round-badge-primary">{{$filteredReferral->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' .  $filteredReferral->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
+                                  </a>
+                              </li>
+                          @empty
+                              <li class="clearfix">
+                                  <span>
+                                      @if(canEditLang() && checkRequestOnEdit())
+                                          <editor_block data-name='Пользователь с таким логином не найден' contenteditable="true">{{ __('Пользователь с таким логином не найден') }}</editor_block>
+                                      @else
+                                          {{ __('Пользователь с таким логином не найден') }}
+                                      @endif
+                                  </span>
+                              </li>
+                          @endforelse
+                      @else
                     @if(!empty(auth()->user()->partner()->first()))
                       <li class="clearfix">
                         <a href="{{ route('accountPanel.chat', auth()->user()->partner()->first()->getPartnerChatId()) }}">
@@ -42,17 +68,17 @@ Chat page
                         </a>
                       </li>
                     @endif
-                    @if(!empty(auth()->user()->hasReferrals()))
-                      @foreach(auth()->user()->referrals()->get() as $user)
+{{--                    @if(!empty(auth()->user()->hasReferrals()))--}}
+                      @foreach($activeChats as $activeChat)
                         <li class="clearfix">
-                          <a href="{{ route('accountPanel.chat', $user->getReferralChatId()) }}">
-                            <img class="rounded-circle user-image" src="{{ $user->avatar ? route('accountPanel.profile.get.avatar',$user->id) : asset('accountPanel/images/user/user.png') }}" alt="">
-                            <div class="status-circle {{ $user->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
+                          <a href="{{ route('accountPanel.chat', $activeChat->userReferral->getReferralChatId()) }}">
+                            <img class="rounded-circle user-image" src="{{ $activeChat->userReferral->avatar ? route('accountPanel.profile.get.avatar',$activeChat->userReferral->id) : asset('accountPanel/images/user/user.png') }}" alt="">
+                            <div class="status-circle {{ $activeChat->userReferral->getLastActivityAttribute()['is_online'] ? 'online' : 'offline' }}"></div>
                             <div class="about">
-                              <div class="name">{{ $user->login }}</div>
+                              <div class="name">{{ $activeChat->userReferral->login }}</div>
                               <div class="status">@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Referral' contenteditable="true">{{ __('Referral') }}</editor_block> @else {{ __('Referral') }} @endif</div>
                             </div>
-                            <span class="unread badge round-badge-primary">{{ $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' . $user->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
+                            <span class="unread badge round-badge-primary">{{ $activeChat->userReferral->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) > 0 ? '+' .  $activeChat->userReferral->getReferralChat()->getUnreadMessagesCount(auth()->user()->id) : '' }}</span>
                           </a>
                         </li>
                       @endforeach
@@ -66,7 +92,7 @@ Chat page
           </div>
         </div>
       </div>
-      <div class="col call-chat-body">
+      <div class="col call-chat-body" style="margin-top: 20px">
         <div class="card">
           <div class="card-body p-0">
             <div class="row chat-box">

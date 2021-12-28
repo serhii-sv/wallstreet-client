@@ -31,40 +31,99 @@ class Chat extends Model
 {
     use HasFactory;
     use Uuids;
+
+    /**
+     * @var string
+     */
     public $keyType = 'string';
 
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'socket_id',
+        'user_partner',
+        'user_referral'
+    ];
+
+    /**
+     * @var string[]
+     */
     protected $guarded = ['_token'];
 
-    public function user_partner() {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userPartner()
+    {
         return $this->belongsTo(User::class, 'user_partner', 'id');
     }
-    public function user_referral() {
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userReferral()
+    {
         return $this->belongsTo(User::class, 'user_referral', 'id');
     }
 
 
-    public function checkUser($user) {
-        if ($this->user_partner == $user || $this->user_referral == $user){
-            return true;
-        }
-        return false;
-    }
-    public function checkUsers($partner, $referral) {
-        if ($this->user_partner == $partner && $this->user_referral == $referral){
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function checkUser($user)
+    {
+        if ($this->user_partner == $user || $this->user_referral == $user) {
             return true;
         }
         return false;
     }
 
-    public function getUnreadMessagesCount($user_id) {
+    /**
+     * @param $partner
+     * @param $referral
+     * @return bool
+     */
+    public function checkUsers($partner, $referral)
+    {
+        if ($this->user_partner == $partner && $this->user_referral == $referral) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnreadMessagesCount()
+    {
         return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('is_read', false)->count();
     }
-    public function getUnreadMessages($user_id) {
-        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id','!=', $user_id)->where('is_read', false)->get();
+
+    /**
+     * @param $user_id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getUnreadMessages($user_id)
+    {
+        return $this->hasMany(ChatMessage::class, 'chat_id', 'id')->where('user_id', '!=', $user_id)->where('is_read', false)->get();
     }
 
-    public function getCompanion() {
+    /**
+     * @return mixed
+     */
+    public function getCompanion()
+    {
         $companionId = $this->user_partner == Auth::user()->id ? $this->user_referral : $this->user_partner;
-        return User::where('id',$companionId)->first();
+        return User::where('id', $companionId)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
     }
 }
