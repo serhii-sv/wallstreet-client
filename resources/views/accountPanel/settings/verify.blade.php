@@ -833,7 +833,7 @@
                                                 <span class="status-text">{{ __('Ваши данные проверяются специалистами компании.') }}</span>
                                             @endif
                                             @if(canEditLang() && checkRequestOnEdit())
-                                                <editor_block data-name='Спасибо! Вы успешно прошли верификацию личности.' contenteditable="true">{{ __('Спасибо! Вы успешно прошли верификацию личности.') }}</editor_block>
+                                                <editor_block data-name='Ожидайте, ближайшее время ваши данные будут проверены.' contenteditable="true">{{ __('Ожидайте, ближайшее время ваши данные будут проверены.') }}</editor_block>
                                             @else
                                                 <p>{{ __('Ожидайте, ближайшее время ваши данные будут проверены.') }}</p>
                                             @endif
