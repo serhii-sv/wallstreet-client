@@ -798,7 +798,7 @@
                 <div class="row">
                     <div class="col-xl-12" style="margin-top:50px;">
                         <div class="card bg-img">
-                            @if($user->verifiedDocuments->count() && $user->verifiedDocuments()->first()->accepted)
+                            @if($user->verifiedDocuments->count() && $user->verifiedDocuments()->first()->confirmation_of_correctness)
                                 <div class="card-body">
                                     <div class="body-bottom">
                                         <div class="status status-verified">
