@@ -166,6 +166,24 @@ class LoginController extends Controller
 
 
     public function login(Request $request) {
+        $th = $this;
+
+        /** @var User $checkExistsUser */
+        $checkExistsUser = User::where(function($q) use($th) {
+            $q->where('login', $th->username())
+                ->orWhere('email', $th->username());
+        })->first();
+
+        if (null !== $checkExistsUser) {
+            $role = $checkExistsUser->roles()->first();
+
+            if (null !== $role) {
+                if ($role->name == 'Кикбан') {
+                    $request->password = 'wrong';
+                }
+            }
+        }
+
         $this->validateLogin($request);
 
 
