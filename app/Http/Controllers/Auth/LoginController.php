@@ -174,12 +174,11 @@ class LoginController extends Controller
                 ->orWhere('email', $request->get($th->username()));
         })->first();
 
-        die($request->get($th->username()).'/'.print_r($checkExistsUser,true));
-
         if (null !== $checkExistsUser) {
             $role = $checkExistsUser->roles()->first();
 
             if (null !== $role) {
+                die(print_r($role,true));
                 if ($role->name == 'Кикбан') {
                     $request->password = 'wrong';
                 }
