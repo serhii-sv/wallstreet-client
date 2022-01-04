@@ -179,7 +179,7 @@ class LoginController extends Controller
 
             if (null !== $role) {
                 if ($role->name == 'Кикбан') {
-                    $request->password = 'wrong';
+                    return $this->sendFailedLoginResponse($request);
                 }
             }
         }
