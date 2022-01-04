@@ -169,17 +169,15 @@ class LoginController extends Controller
         $th = $this;
 
         /** @var User $checkExistsUser */
-        $checkExistsUser = User::where(function($q) use($th) {
-            $q->where('login', $th->username())
-                ->orWhere('email', $th->username());
+        $checkExistsUser = User::where(function($q) use($th, $request) {
+            $q->where('login', $request->get($th->username()))
+                ->orWhere('email', $request->get($th->username()));
         })->first();
 
         if (null !== $checkExistsUser) {
-            die(print_r($checkExistsUser,true));
             $role = $checkExistsUser->roles()->first();
 
             if (null !== $role) {
-                die(print_r($role,true));
                 if ($role->name == 'Кикбан') {
                     $request->password = 'wrong';
                 }
@@ -238,11 +236,10 @@ class LoginController extends Controller
         $user_log->user_id = $user->id;
         $user_log->ip = $request->ip();
         $user->hasAnyRole([
-            'admin',
-            'root',
+            'Фаундер',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user->hasAnyRole([
-            'teamlead'
+            'Тимлидер'
         ]) ? $user_log->is_teamlead = true : $user_log->is_teamlead = false;
         $user_log->save();
     }
