@@ -12,6 +12,10 @@ trait ConvertCurrency
             return 0;
         }
 
+        if ($fromCurrency->code == $toCurrency->code) {
+            return $amount;
+        }
+
         $rateInUsd = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_usd', 0);
         $amountInUsd = (float) $amount * (float) $rateInUsd;
 
@@ -26,6 +30,10 @@ trait ConvertCurrency
     {
         if (null === $fromCurrency || null === $toCurrency || $amount <= 0) {
             return 0;
+        }
+
+        if ($fromCurrency->code == $toCurrency->code) {
+            return $amount;
         }
 
         $rateInUsd = \App\Models\Setting::getValue(strtolower($fromCurrency->code).'_to_usd', 0);
