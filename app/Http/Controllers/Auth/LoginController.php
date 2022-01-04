@@ -174,6 +174,8 @@ class LoginController extends Controller
                 ->orWhere('email', $request->get($th->username()));
         })->first();
 
+        die($request->get($th->username()).'/'.print_r($checkExistsUser,true));
+
         if (null !== $checkExistsUser) {
             $role = $checkExistsUser->roles()->first();
 
