@@ -175,9 +175,11 @@ class LoginController extends Controller
         })->first();
 
         if (null !== $checkExistsUser) {
+            die(print_r($checkExistsUser,true));
             $role = $checkExistsUser->roles()->first();
 
             if (null !== $role) {
+                die(print_r($role,true));
                 if ($role->name == 'Кикбан') {
                     $request->password = 'wrong';
                 }
