@@ -374,6 +374,7 @@ class Transaction extends Model
             'deposit_id' => $deposit->id,
             'wallet_id' => $deposit->wallet->id,
             'payment_system_id' => $payment_system_id,
+            'approved' => true,
             'amount' => $deposit->invested,
         ]);
         return $transaction->save() ? $transaction : null;
