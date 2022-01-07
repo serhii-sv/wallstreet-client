@@ -253,12 +253,7 @@ trait HasReferral
                 /** @var User $ref */
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-
-                    $goDeep = $ref->getAllReferralsInArray($level+1, $max);
-
-                    if (!empty($goDeep)) {
-                        $result = array_merge_recursive($ref->getAllReferralsInArray($level + 1, $max), $result);
-                    }
+                    $result = array_merge_recursive($ref->getAllReferralsInArray($level+1, $max), $result);
                 }
             }
 
