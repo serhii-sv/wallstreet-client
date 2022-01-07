@@ -56,6 +56,11 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
             $referrals_count = 0;
 
             foreach ($all_referrals as $referral) {
+                if (is_array($referral)) {
+                    $this->info('ref array '.print_r($referral,true));
+                    continue;
+                }
+
                 $referral
                     ->deposits()
                     ->where('active', 1)
