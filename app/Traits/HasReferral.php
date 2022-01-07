@@ -228,16 +228,16 @@ trait HasReferral
     {
         $th = $this;
 
-//        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
-//            $max = 1000;
-//        }
-//
-//        if (cache()->has('tmp_partner'.$this->id) || null !== $this->tmpPartner($this)) {
-//            cache()->remember('tmp_partner'.$this->id, now()->addYears(30), function() {
-//                return true;
-//            });
-//            $max = 1000;
-//        }
+        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
+            $max = 1000;
+        }
+
+        if (cache()->has('tmp_partner'.$this->id) || null !== $this->tmpPartner($this)) {
+            cache()->remember('tmp_partner'.$this->id, now()->addYears(30), function() {
+                return true;
+            });
+            $max = 1000;
+        }
 
         if ($level > $max) {
             return [];
@@ -368,11 +368,11 @@ trait HasReferral
             return $user;
         }
 
-        if ($user->hasPartner() && $partner->login != 'sprintbank') {
-            return $user->firstPartner($partner);
-        } else {
-            return null;
-        }
+//        if ($user->hasPartner() && $partner->login != 'sprintbank') {
+//            return $user->firstPartner($partner);
+//        } else {
+//            return null;
+//        }
     }
 
     public function getChildrens($limit = 7) {
