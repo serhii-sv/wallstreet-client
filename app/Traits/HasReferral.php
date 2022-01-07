@@ -245,7 +245,7 @@ trait HasReferral
 
         return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addHours(6), function() use($th, $level, $max) {
             /** @var User $referrals */
-            $referrals = $th->referrals()->wherePivot('line', 1)->get();
+            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
             $result = [];
 
@@ -253,7 +253,12 @@ trait HasReferral
                 /** @var User $ref */
                 foreach ($referrals as $ref) {
                     $result[$ref->id] = $ref;
-                    $result = array_merge_recursive($ref->getAllReferralsInArray($level+1, $max), $result);
+
+                    $goDeep = $ref->getAllReferralsInArray($level+1, $max);
+
+                    if (!empty($goDeep) && isset($goDeep[0]->id)) {
+                        $result = array_merge_recursive($ref->getAllReferralsInArray($level + 1, $max), $result);
+                    }
                 }
             }
 
