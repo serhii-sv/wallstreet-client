@@ -368,11 +368,11 @@ trait HasReferral
             return $user;
         }
 
-        if ($user->hasPartner() && $partner->login != 'sprintbank') {
-            return $user->firstPartner($partner);
-        } else {
-            return null;
-        }
+//        if ($user->hasPartner() && $partner->login != 'sprintbank') {
+//            return $user->firstPartner($partner);
+//        } else {
+//            return null;
+//        }
     }
 
     public function getChildrens($limit = 7) {
