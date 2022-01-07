@@ -49,6 +49,9 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
             $this->info('work with user '.$user->email);
 
             $all_referrals = $user->getAllReferralsInArray(1, 9);
+
+            $this->info('got referrals array');
+
             $total_referral_invested = 0;
             $referrals_count = 0;
 
