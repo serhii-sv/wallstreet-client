@@ -256,7 +256,7 @@ trait HasReferral
 
                     $goDeep = $ref->getAllReferralsInArray($level+1, $max);
 
-                    if (!empty($goDeep) && isset($goDeep[0]->id)) {
+                    if (!empty($goDeep)) {
                         $result = array_merge_recursive($ref->getAllReferralsInArray($level + 1, $max), $result);
                     }
                 }
