@@ -58,6 +58,7 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
             foreach ($all_referrals as $referral) {
                 if (is_array($referral)) {
                     $this->warn('is array');
+                    continue 2;
                 }
 
                 $referral
