@@ -37,7 +37,7 @@ class SetReferralsCaches extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical('client-'.self::class);
         /** @var User $user */
         foreach (User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
             $this->info('work with user '.$user->login);

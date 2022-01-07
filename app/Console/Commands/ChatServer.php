@@ -17,14 +17,14 @@ class ChatServer extends Command
      * @var string
      */
     protected $signature = 'websocket:chat';
-    
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Websockets for chat';
-    
+
     /**
      * Create a new command instance.
      *
@@ -33,17 +33,17 @@ class ChatServer extends Command
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Execute the console command.
      *
      * @return int
      */
-    public function handle() {
-        
+    public function handle() {\Log::critical('client-'.self::class);
+
         $loop = \React\EventLoop\Factory::create();
         $webSock = new \React\Socket\Server('0.0.0.0:6001', $loop);
-        
+
         //   $loop = Loop::get();
         //   $webSock = new SocketServer('0.0.0.0:6001', [], $loop);
         //        $webSock->listen(6001, '0.0.0.0');

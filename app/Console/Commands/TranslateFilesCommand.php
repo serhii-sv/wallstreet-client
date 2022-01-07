@@ -39,7 +39,7 @@ class TranslateFilesCommand extends Command
      * @return int
      */
     public function handle()
-    {
+    {\Log::critical('client-'.self::class);
         $translate = new GoogleTranslate(new GoogleTranslateClient(config('googletranslate')));
 
         $from = $this->argument('from');
