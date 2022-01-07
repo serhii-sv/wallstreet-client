@@ -245,7 +245,7 @@ trait HasReferral
 
         return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addHours(6), function() use($th, $level, $max) {
             /** @var User $referrals */
-            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
+            $referrals = $th->referrals()->wherePivot('line', 1)->get();
 
             $result = [];
 
