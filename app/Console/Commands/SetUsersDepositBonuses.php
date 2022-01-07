@@ -38,7 +38,7 @@ class SetUsersDepositBonuses extends Command
      * @return int
      */
     public function handle()
-    {\Log::critical('client-'.self::class);
+    {
         /** @var User $user */
         foreach (User::all() as $user) {
             UserDepositBonus::setUserBonuses($user);

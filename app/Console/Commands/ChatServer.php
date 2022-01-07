@@ -39,7 +39,7 @@ class ChatServer extends Command
      *
      * @return int
      */
-    public function handle() {\Log::critical('client-'.self::class);
+    public function handle() {
 
         $loop = \React\EventLoop\Factory::create();
         $webSock = new \React\Socket\Server('0.0.0.0:6001', $loop);
