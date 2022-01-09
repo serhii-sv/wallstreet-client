@@ -56,6 +56,11 @@ class SetReferralsCaches extends Command
 
             if (!empty($all_referrals)) {
                 foreach ($all_referrals as $referral) {
+                    if (is_array($referral)) {
+                        $this->warn('is array');
+                        continue 2;
+                    }
+
                     /** @var User $referral */
                     $referral = User::find($referral->id);
 
