@@ -150,7 +150,6 @@ class DepositsController extends Controller
 
             if (null != $transaction && $deposit->wallet->removeAmount($amount)) {
                 $wallet->accrueToPartner($amount, 'refill');
-                $transaction->update(['approved' => true]);
 
                 // send notification to user
 //                $data = [

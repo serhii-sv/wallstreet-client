@@ -17,7 +17,8 @@ class NavbarComposer
     public function compose(View $view)
     {
         if (Auth::check()) {
-            $userNotifications = \App\Models\NotificationUser::where('user_id', Auth::user()->id)
+            $userNotifications = \App\Models\NotificationUser::whereHas('notification')
+                ->where('user_id', Auth::user()->id)
                 ->where('is_read', false)
                 ->where('created_at', '>', now()->subDays(7))
                 ->orderBy('created_at', 'desc');

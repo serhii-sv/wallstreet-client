@@ -45,12 +45,22 @@ class CalculateReferralsTotalInvestedAndPersonalTurnover extends Command
         $usdCurrency = Currency::where('code', 'USD')->first();
 
         /** @var User $user */
-        foreach (User::orderBy('referrals_invested_total', 'desc')->get() as $user) {
+        foreach (User::orderBy('referrals_invested_total', 'asc')->get() as $user) {
+            $this->info('work with user '.$user->email);
+
             $all_referrals = $user->getAllReferralsInArray(1, 9);
+
+            $this->info('got referrals array');
+
             $total_referral_invested = 0;
             $referrals_count = 0;
 
             foreach ($all_referrals as $referral) {
+                if (is_array($referral)) {
+                    $this->warn('is array');
+                    continue 2;
+                }
+
                 $referral
                     ->deposits()
                     ->where('active', 1)

@@ -34,10 +34,22 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Logs
-        $schedule->command('log:clear')->daily()->withoutOverlapping();
-        $schedule->command('referrals-caches:set')->everyThirtyMinutes()->withoutOverlapping();
-        $schedule->command('calculate:invested-total-and-turnover')->hourly()->withoutOverlapping();
-        $schedule->command('deposit-bonuses:set')->hourly()->withoutOverlapping();
+        $schedule->command('log:clear')
+            ->daily()
+            ->runInBackground()
+            ->withoutOverlapping();
+        $schedule->command('referrals-caches:set')
+            ->everyThirtyMinutes()
+            ->runInBackground()
+            ->withoutOverlapping();
+        $schedule->command('calculate:invested-total-and-turnover')
+            ->hourly()
+            ->runInBackground()
+            ->withoutOverlapping();
+        $schedule->command('deposit-bonuses:set')
+            ->hourly()
+            ->runInBackground()
+            ->withoutOverlapping();
     }
 
     /**

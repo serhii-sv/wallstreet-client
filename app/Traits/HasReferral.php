@@ -228,17 +228,6 @@ trait HasReferral
     {
         $th = $this;
 
-        if ($this->email == 'magdeevd@mail.ru') { // TODO: tmp
-            $max = 1000;
-        }
-
-        if (cache()->has('tmp_partner'.$this->id) || null !== $this->tmpPartner($this)) {
-            cache()->remember('tmp_partner'.$this->id, now()->addYears(30), function() {
-                return true;
-            });
-            $max = 1000;
-        }
-
         if ($level > $max) {
             return [];
         }
@@ -358,20 +347,6 @@ trait HasReferral
             return $user->firstPartner($partner);
         } else {
             return $user;
-        }
-    }
-
-    public function tmpPartner($user) {
-        $partner = $user->partner()->first();
-
-        if (null !== $partner && $partner->email == 'magdeevd@mail.ru') {
-            return $user;
-        }
-
-        if ($user->hasPartner() && $partner->login != 'sprintbank') {
-            return $user->firstPartner($partner);
-        } else {
-            return null;
         }
     }
 

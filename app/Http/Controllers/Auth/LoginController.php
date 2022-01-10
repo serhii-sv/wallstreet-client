@@ -166,6 +166,24 @@ class LoginController extends Controller
 
 
     public function login(Request $request) {
+        $th = $this;
+
+        /** @var User $checkExistsUser */
+        $checkExistsUser = User::where(function($q) use($th, $request) {
+            $q->where('login', $request->get($th->username()))
+                ->orWhere('email', $request->get($th->username()));
+        })->first();
+
+        if (null !== $checkExistsUser) {
+            $role = $checkExistsUser->roles()->first();
+
+            if (null !== $role) {
+                if ($role->name == 'Кикбан') {
+                    return $this->sendFailedLoginResponse($request);
+                }
+            }
+        }
+
         $this->validateLogin($request);
 
 
@@ -218,11 +236,10 @@ class LoginController extends Controller
         $user_log->user_id = $user->id;
         $user_log->ip = $request->ip();
         $user->hasAnyRole([
-            'admin',
-            'root',
+            'Фаундер',
         ]) ? $user_log->is_admin = true : $user_log->is_admin = false;
         $user->hasAnyRole([
-            'teamlead'
+            'Тимлидер'
         ]) ? $user_log->is_teamlead = true : $user_log->is_teamlead = false;
         $user_log->save();
     }

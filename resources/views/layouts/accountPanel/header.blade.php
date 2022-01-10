@@ -161,8 +161,13 @@
             </li>
 
             @forelse($navbar_notifications as $item)
+                <?php
+                if ($item->notification == null) {
+                    continue;
+                }
+                ?>
               <li class="notification" data-id="{{ $item->id }}" data-count="{{ $counts['notifications'] ?? 0 }}">
-                <p><i class="fa fa-circle-o me-3 font-success"> </i>{{ $item->notification->text }}
+                <p><i class="fa fa-circle-o me-3 font-success"> </i>{{ $item->notification->text ?? '' }}
                   <span class="pull-right">@if($item->notification->created_at){{ $item->notification->created_at->diffForHumans() }}@endif</span>
                 </p>
               </li>
