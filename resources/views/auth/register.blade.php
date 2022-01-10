@@ -160,7 +160,7 @@
             @csrf
             <div class="form-group">
               <label for="sign-up">Ваш Email</label>
-              <input type="text" placeholder="Ваш email" id="sign-up" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}">
+              <input type="text" placeholder="Ваш email" id="sign-up" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
 
               @error('email')
               <span class="invalid-feedback" role="alert">
@@ -194,7 +194,7 @@
             </div>
             <div class="form-group">
               <label for="login">Ваш телефон<br>обязательно вводите номер с кодом страны например +7 или +3</label>
-              <input id="phone" type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон"/>
+              <input id="phone" type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Телефон" value="{{ old('phone') }}"/>
 
               @error('phone')
               <span class="invalid-feedback" role="alert">
