@@ -603,4 +603,14 @@ class User extends Authenticatable
             // ----------
         }
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function lastReferralsRole()
+    {
+        return $this->hasOne(ReferralRole::class)
+            ->where('processed', true)
+            ->orderBy('created_at', 'desc');
+    }
 }
