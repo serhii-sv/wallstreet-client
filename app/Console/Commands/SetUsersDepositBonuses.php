@@ -40,6 +40,7 @@ class SetUsersDepositBonuses extends Command
     public function handle()
     {
         $login = $this->argument('login');
+        $this->info('bonuses for '.$login ?? 'all');
 
         $users = User::where(null);
 
