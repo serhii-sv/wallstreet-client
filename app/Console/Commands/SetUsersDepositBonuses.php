@@ -42,13 +42,11 @@ class SetUsersDepositBonuses extends Command
         $login = $this->argument('login');
         $this->info('bonuses for '.$login ?? 'all');
 
-        $users = User::where(null);
-
         if (!empty($login)) {
-            $users = $users->where('login', $login);
+            $users = User::where('login', 'like', $login)->get();
+        } else {
+            $users = User::get();
         }
-
-        $users->get();
 
         /** @var User $user */
         foreach ($users as $user) {
