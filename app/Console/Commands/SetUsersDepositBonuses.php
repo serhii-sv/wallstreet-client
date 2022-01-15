@@ -13,7 +13,7 @@ class SetUsersDepositBonuses extends Command
      *
      * @var string
      */
-    protected $signature = 'deposit-bonuses:set';
+    protected $signature = 'deposit-bonuses:set{login?}';
 
     /**
      * The console command description.
@@ -39,8 +39,18 @@ class SetUsersDepositBonuses extends Command
      */
     public function handle()
     {
+        $login = $this->argument('login');
+        $this->info('bonuses for '.$login ?? 'all');
+
+        if (!empty($login)) {
+            $users = User::where('login', 'like', $login)->get();
+        } else {
+            $users = User::get();
+        }
+
         /** @var User $user */
-        foreach (User::all() as $user) {
+        foreach ($users as $user) {
+            $this->info('work with user '. $user->login);
             UserDepositBonus::setUserBonuses($user);
         }
         return Command::SUCCESS;
