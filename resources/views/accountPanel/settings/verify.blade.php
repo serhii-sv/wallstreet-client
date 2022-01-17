@@ -9,47 +9,21 @@
 
     <div class="container-fluid">
         <div class="edit-profile">
-            @if(!$user->documents_verified && !$user->verifiedDocuments->count())
+            @if(!$user->documents_verified && ($user->verifiedDocuments()->orderBy('created_at', 'desc')->first()->rejected ?? true) == true && !$user->verifiedDocuments->where('accepted', false)->count())
                 <div class="row">
                     <div class="col-xl-12" style="margin-top:50px;">
+                        @if(($user->verifiedDocuments()->orderBy('created_at', 'desc')->first()->rejected ?? false) == true)
+                            <div class="alert alert-danger" role="alert" style="font-size: 20px;">
+                                @if(canEditLang() && checkRequestOnEdit())
+                                    <editor_block data-name='Ваша предыдущая заявка была отменена. Вам нужно создать еще одну' contenteditable="true">{{ __('Ваша предыдущая заявка была отменена. Вам нужно создать еще одну') }}</editor_block>
+                                @else
+                                    {{ __('Ваша предыдущая заявка была отменена. Вам нужно создать еще одну') }}
+                                @endif
+                            </div>
+                        @endif
                         <form class="card" method="post" action="{{ route('accountPanel.profile.upload-documents') }}" enctype="multipart/form-data">
-{{--                            @include('partials.inform')--}}
                             @csrf
                             <div class="row p-5">
-                                {{--                <div class="col-sm-6">--}}
-                                {{--                  <div class="card">--}}
-                                {{--                    <div class="card-header">--}}
-                                {{--                      <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Passport photo' contenteditable="true">{{ __('Passport photo') }}</editor_block> @else {{ __('Passport photo') }} @endif</h5>--}}
-                                {{--                    </div>--}}
-                                {{--                    <div class="card-body">--}}
-                                {{--                      <div class="d-flex justify-content-center">--}}
-                                {{--                        <div class="btn btn-outline-primary ms-2" id="uploadPassportImage">--}}
-                                {{--                          <i data-feather="upload"></i>--}}
-                                {{--                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upload' contenteditable="true">{{ __('Upload') }}</editor_block> @else {{ __('Upload') }} @endif--}}
-                                {{--                        </div>--}}
-                                {{--                      </div>--}}
-                                {{--                      <input type="file" class="hidden" name="passportImage" id="passportImage" accept="image/jpeg','image/gif','image/png','image/bmp','image/svg+xml">--}}
-                                {{--                      <img class="preview mt-3 {{ is_null($user->lastVerificationRequest()) ? 'hidden' : '' }}" id="passportImagePreview" src="{{ !is_null($user->lastVerificationRequest()) ? Storage::disk('do_spaces')->url($user->lastVerificationRequest()->passport_image) : '' }}">--}}
-                                {{--                    </div>--}}
-                                {{--                  </div>--}}
-                                {{--                </div>--}}
-                                {{--                <div class="col-sm-6">--}}
-                                {{--                  <div class="card">--}}
-                                {{--                    <div class="card-header">--}}
-                                {{--                      <h5>@if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Selfie' contenteditable="true">{{ __('Selfie') }}</editor_block> @else {{ __('Selfie') }} @endif</h5>--}}
-                                {{--                    </div>--}}
-                                {{--                    <div class="card-body">--}}
-                                {{--                      <div class="d-flex justify-content-center">--}}
-                                {{--                        <div class="btn btn-outline-primary ms-2" id="uploadSelfie">--}}
-                                {{--                          <i data-feather="upload"></i>--}}
-                                {{--                          @if(canEditLang() && checkRequestOnEdit()) <editor_block data-name='Upload' contenteditable="true">{{ __('Upload') }}</editor_block> @else {{ __('Upload') }} @endif--}}
-                                {{--                        </div>--}}
-                                {{--                      </div>--}}
-                                {{--                      <input type="file" class="hidden" name="selfie" id="selfie" accept="image/jpeg','image/gif','image/png','image/bmp','image/svg+xml">--}}
-                                {{--                      <img class="preview mt-3 {{ is_null($user->lastVerificationRequest()) ? 'hidden' : '' }}" id="selfiePreview" src="{{ !is_null($user->lastVerificationRequest()) ? Storage::disk('do_spaces')->url($user->lastVerificationRequest()->selfie_image) : '' }}">--}}
-                                {{--                    </div>--}}
-                                {{--                  </div>--}}
-                                {{--                </div>--}}
                                 <div class="kyc-form-wrapper">
                                     <div class="row justify-content-center">
                                         <div class="col-lg-8 col-xl-7 text-center">
@@ -777,20 +751,6 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="card-footer text-end">--}}
-{{--                                @if($user->verifiedDocuments()->where('accepted', false)->count())--}}
-{{--                                    @if(canEditLang() && checkRequestOnEdit())--}}
-{{--                                        <editor_block data-name='Application pending'--}}
-{{--                                                      contenteditable="true">{{ __('Application pending') }}</editor_block> @else {{ __('Application pending') }} @endif--}}
-{{--                                @else--}}
-{{--                                    <button class="btn btn-primary" type="submit"--}}
-{{--                                            @if(canEditLang() && checkRequestOnEdit()) onclick="event.preventDefault()" @endif--}}
-{{--                                    >@if(canEditLang() && checkRequestOnEdit())--}}
-{{--                                            <editor_block data-name='Save'--}}
-{{--                                                          contenteditable="true">{{ __('Save') }}</editor_block> @else {{ __('Save') }} @endif--}}
-{{--                                    </button>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
                         </form>
                     </div>
                 </div>
@@ -841,35 +801,6 @@
                                     </div>
                                 </div>
                             @endif
-{{--                                <div class="card-header">--}}
-{{--                                    <div class="header-top">--}}
-{{--                                        <h5 class="m-0">--}}
-{{--                                            @if(canEditLang() && checkRequestOnEdit())--}}
-{{--                                                <editor_block data-name='Documents confirmed' contenteditable="true">{{ __('Documents confirmed') }}</editor_block>--}}
-{{--                                            @else--}}
-{{--                                                {{ __('Documents confirmed') }}--}}
-{{--                                            @endif--}}
-{{--                                        </h5>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="card-body">--}}
-{{--                                    <div class="body-bottom">--}}
-{{--                                        <h6>--}}
-{{--                                            @if(canEditLang() && checkRequestOnEdit())--}}
-{{--                                                <editor_block data-name='Documents confirmed text 1' contenteditable="true">{{ __('Documents confirmed text 1') }}</editor_block>--}}
-{{--                                            @else--}}
-{{--                                                {{ __('Documents confirmed text 1') }}--}}
-{{--                                            @endif--}}
-{{--                                        </h6>--}}
-{{--                                        <span class="font-roboto">--}}
-{{--                                            @if(canEditLang() && checkRequestOnEdit())--}}
-{{--                                                <editor_block data-name='Documents confirmed text 2' contenteditable="true">{{ __('Documents confirmed text 2') }}</editor_block>--}}
-{{--                                            @else--}}
-{{--                                                {{ __('Documents confirmed text 2') }}--}}
-{{--                                            @endif--}}
-{{--                                        </span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
                         </div>
                     </div>
                 </div>

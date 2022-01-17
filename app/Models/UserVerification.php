@@ -66,7 +66,9 @@ class UserVerification extends Model
         'nationality',
         'zip_code',
         'address',
-        'confirmation_of_correctness'
+        'confirmation_of_correctness',
+        'autoaccept',
+        'rejected'
     ];
 
     /**

@@ -274,6 +274,8 @@ class ProfileController extends Controller
 
                 Storage::disk('do_spaces')->setVisibility($updateData['address_image'], 'public');
 
+                $updateData['autoaccept'] = Setting::getValue('autoaccept_documents_timer_enablde', 'off', true) == 'on';
+
                 $user = auth()->user();
 
                 $user->verifiedDocuments()->create(array_merge($request->only([
@@ -289,6 +291,10 @@ class ProfileController extends Controller
                     'confirmation_of_correctness',
                     'document_type'
                 ]), $updateData));
+
+                $user->verifiedDocuments()->where('rejected', true)->delete();
+
+
             });
         } catch (\Exception $exception) {
             return back()->with('short_error', $exception->getMessage());
