@@ -37,6 +37,9 @@ Route::post('/perfectmoney/status', [PerfectMoneyController::class, 'status'])->
 Route::post('/coinpayments/status', [CoinpaymentsController::class, 'status'])->name('coinpayments.status');
 Route::post('/freekassa/status', [FreeKassaController::class, 'status'])->name('freekassa.status');
 
+Route::get('/translations', [\App\Http\Controllers\Ajax\TranslationController::class, 'getTranslations']);
+Route::post('/translations', [\App\Http\Controllers\Ajax\TranslationController::class, 'setTranslations']);
+
 Route::group(['middleware' => ['checkSiteEnabled', 'activity-log', 'http-log']], function () {
 
     Route::get('/banner/{id}', [ReferralsController::class, 'getBanner'])->name('get.banner');
