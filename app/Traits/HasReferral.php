@@ -232,22 +232,22 @@ trait HasReferral
             return [];
         }
 
-        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addHours(6), function() use($th, $level, $max) {
-            /** @var User $referrals */
-            $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
+//        return cache()->remember('referrals_array.'.$th->id.$level.$max, now()->addHours(6), function() use($th, $level, $max) {
+        /** @var User $referrals */
+        $referrals = $th->referrals()->select(['id'])->wherePivot('line', 1)->get();
 
-            $result = [];
+        $result = [];
 
-            if (!empty($referrals)) {
-                /** @var User $ref */
-                foreach ($referrals as $ref) {
-                    $result[$ref->id] = $ref;
-                    $result = array_merge_recursive($ref->getAllReferralsInArray($level+1, $max), $result);
-                }
+        if (!empty($referrals)) {
+            /** @var User $ref */
+            foreach ($referrals as $ref) {
+                $result[$ref->id] = $ref;
+                $result = array_merge($ref->getAllReferralsInArray($level+1, $max), $result);
             }
+        }
 
-            return $result;
-        });
+        return $result;
+//        });
     }
 
     /**
