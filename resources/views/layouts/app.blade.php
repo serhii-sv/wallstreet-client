@@ -22,7 +22,7 @@
       <link rel="stylesheet" href="{{ asset('accountPanel/css/spinner.css') }}">
 
     @yield('styles')
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+{{--    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">--}}
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
       <style>
           ::-webkit-scrollbar {

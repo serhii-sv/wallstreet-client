@@ -7,8 +7,8 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">
+{{--    <link rel="icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">--}}
+{{--    <link rel="shortcut icon" href="{{ asset('accountPanel/images/favicon.png') }}" type="image/x-icon">--}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <script src="//code-eu1.jivosite.com/widget/WTWc6WTrkx" async></script>
